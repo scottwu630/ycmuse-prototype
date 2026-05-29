@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Backup versions (not needed for RD)
+backup/
+
+# Claude internal
+CLAUDE.md
