@@ -303,6 +303,15 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 /* ── OVERLAYS ── */
 .overlay{position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:120;opacity:0;pointer-events:none;transition:opacity .3s;}
 .overlay.show{opacity:1;pointer-events:all;}
+/* ── Scene text editor ── */
+#scene-editor-wrap{position:absolute;inset:0;z-index:500;display:flex;flex-direction:column;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .22s;}
+#scene-editor-wrap.show{opacity:1;pointer-events:all;}
+#scene-editor-dim{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+#scene-editor-panel{position:relative;z-index:1;background:#1C1C1E;border-radius:20px 20px 0 0;padding:14px 14px calc(16px + var(--safe-bot));animation:none;}
+#scene-editor-box{position:relative;background:#2C2C2E;border-radius:14px;padding:12px 12px 0;display:flex;gap:10px;align-items:flex-start;}
+#scene-editor-ta{flex:1;min-height:100px;max-height:180px;background:transparent;border:none;outline:none;color:#fff;font-size:15px;font-family:-apple-system,'SF Pro Display',system-ui,sans-serif;line-height:1.55;resize:none;overflow-y:auto;}
+#scene-editor-actions{display:flex;gap:8px;align-items:flex-start;flex-shrink:0;padding-top:2px;}
+#scene-editor-counter{font-size:12px;color:rgba(255,255,255,.35);text-align:right;padding:6px 0 10px;}
 .sheet{position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:26px 26px 0 0;z-index:121;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);padding-bottom:var(--safe-bot);}
 .sheet.show{transform:translateY(0);}
 .sheet-handle{width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:14px auto 0;}
@@ -2129,8 +2138,8 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           <div style="display:flex;flex-direction:column;gap:6px;">
             <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Visual Style</div>
             <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:69px;box-sizing:border-box;">
-              <div style="flex:1;font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">Radiant and joyful, with a dreamy yet devoted expression. Her look is glamorous and sophisticated.</div>
-              <div style="flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.7;">
+              <div id="sb-visual-style-text" style="flex:1;font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">Radiant and joyful, with a dreamy yet devoted expression. Her look is glamorous and sophisticated.</div>
+              <div onclick="event.stopPropagation();openSceneEditor('Visual Style','sb-visual-style-text')" style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
                 <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
               </div>
             </div>
@@ -2141,43 +2150,43 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
             <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Synopsis</div>
 
             <!-- Scene 1 -->
-            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;" onclick="goTo('edit-scene')">
+            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;">
               <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;">
                 <div style="display:flex;align-items:flex-end;justify-content:space-between;">
                   <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 1</div>
                   <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:00–00:09</div>
                 </div>
-                <div style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">In a softly lit, elegant dressing room, the woman stands before a grand mirror.</div>
+                <div id="sb-scene-1-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">In a softly lit, elegant dressing room, the woman stands before a grand mirror.</div>
               </div>
-              <div style="flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.7;">
+              <div onclick="openSceneEditor('Scene 1','sb-scene-1-text')" style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
                 <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
               </div>
             </div>
 
             <!-- Scene 2 -->
-            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;" onclick="goTo('edit-scene')">
+            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;">
               <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;">
                 <div style="display:flex;align-items:flex-end;justify-content:space-between;">
                   <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 2</div>
                   <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:09–00:12</div>
                 </div>
-                <div style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">Close-up on the vocalist as she begins to sing, her expression serene.</div>
+                <div id="sb-scene-2-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">Close-up on the vocalist as she begins to sing, her expression serene.</div>
               </div>
-              <div style="flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.7;">
+              <div onclick="openSceneEditor('Scene 2','sb-scene-2-text')" style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
                 <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
               </div>
             </div>
 
             <!-- Scene 3 -->
-            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;" onclick="goTo('edit-scene')">
+            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;">
               <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;">
                 <div style="display:flex;align-items:flex-end;justify-content:space-between;">
                   <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 3</div>
                   <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:12–00:15</div>
                 </div>
-                <div style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">The camera follows her hands as she traces the intricate lace patterns on her dress.</div>
+                <div id="sb-scene-3-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">The camera follows her hands as she traces the intricate lace patterns on her dress.</div>
               </div>
-              <div style="flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.7;">
+              <div onclick="openSceneEditor('Scene 3','sb-scene-3-text')" style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
                 <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
               </div>
             </div>
@@ -3367,6 +3376,31 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
 
   </div><!-- /screen-wrap -->
 
+  <!-- ══════ SCENE TEXT EDITOR ══════ -->
+  <div id="scene-editor-wrap">
+    <div id="scene-editor-dim" onclick="cancelSceneEdit()"></div>
+    <div id="scene-editor-panel">
+      <!-- Label -->
+      <div id="scene-editor-label" style="font-size:12px;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Scene 1</div>
+      <!-- Input row -->
+      <div id="scene-editor-box">
+        <textarea id="scene-editor-ta" maxlength="2500" placeholder="Describe this scene…" oninput="onSceneEditorInput()"></textarea>
+        <div id="scene-editor-actions">
+          <!-- X cancel -->
+          <div onclick="cancelSceneEdit()" style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <!-- Blue checkmark confirm -->
+          <div onclick="confirmSceneEdit()" style="width:44px;height:44px;border-radius:12px;background:#2196F3;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(33,150,243,.4);">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+      </div>
+      <!-- Char counter -->
+      <div id="scene-editor-counter">0/2500</div>
+    </div>
+  </div>
+
   <!-- Sign Out Confirmation Dialog -->
   <div id="signout-overlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:9000;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:inherit;" onclick="hideSignOutDialog()"></div>
   <div id="signout-dialog" style="display:none;position:absolute;left:24px;right:24px;top:50%;transform:translateY(-54%);background:#1C1C1E;border-radius:14px;z-index:9001;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.7);">
@@ -3490,6 +3524,9 @@ window.addEventListener('resize', function() {
 
 // ── Stop all media when navigating away from any screen ──
 function stopAllMedia() {
+  // Dismiss scene editor if open
+  const edWrap = document.getElementById('scene-editor-wrap');
+  if (edWrap && edWrap.classList.contains('show')) cancelSceneEdit();
   // Close character image lightbox if open
   closeCharImage();
   // Pause every <video> element in the prototype
@@ -4144,6 +4181,50 @@ function confirmSignOut() {
   hideSignOutDialog();
   navStack = [];
   goTo('onboard');
+}
+
+// ── Scene Text Editor ──
+let _sceneEditorTargetId = null;
+
+function openSceneEditor(label, targetId) {
+  _sceneEditorTargetId = targetId;
+  const target = document.getElementById(targetId);
+  const ta     = document.getElementById('scene-editor-ta');
+  const lbl    = document.getElementById('scene-editor-label');
+  const ctr    = document.getElementById('scene-editor-counter');
+  const wrap   = document.getElementById('scene-editor-wrap');
+  if (!target || !ta || !wrap) return;
+
+  const txt = target.textContent.trim();
+  lbl.textContent = label;
+  ta.value = txt;
+  ctr.textContent = txt.length + '/2500';
+  wrap.classList.add('show');
+
+  // Focus fires keyboard on real device; slight delay to let overlay animate in
+  setTimeout(() => { ta.focus(); ta.setSelectionRange(txt.length, txt.length); }, 120);
+}
+
+function cancelSceneEdit() {
+  const wrap = document.getElementById('scene-editor-wrap');
+  if (wrap) wrap.classList.remove('show');
+  const ta = document.getElementById('scene-editor-ta');
+  if (ta) { ta.blur(); ta.value = ''; }
+  _sceneEditorTargetId = null;
+}
+
+function confirmSceneEdit() {
+  if (!_sceneEditorTargetId) return;
+  const ta     = document.getElementById('scene-editor-ta');
+  const target = document.getElementById(_sceneEditorTargetId);
+  if (ta && target) target.textContent = ta.value.trim() || target.textContent;
+  cancelSceneEdit();
+}
+
+function onSceneEditorInput() {
+  const ta  = document.getElementById('scene-editor-ta');
+  const ctr = document.getElementById('scene-editor-counter');
+  if (ta && ctr) ctr.textContent = ta.value.length + '/2500';
 }
 
 // ── Buy Credits ──
