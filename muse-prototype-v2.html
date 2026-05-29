@@ -1892,20 +1892,28 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
       <div class="sheet" id="settings-sheet" style="max-height:92vh;overflow-y:auto;">
         <div class="sheet-handle"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;">
-          <div onclick="hideSheet('settings-sheet')" style="font-size:19px;cursor:pointer;color:#9C9CAB;width:28px;">✕</div>
+          <div onclick="hideSheet('settings-sheet')" style="width:32px;height:32px;border-radius:50%;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
           <div style="font-size:17px;font-weight:700;color:#fff;">Settings</div>
-          <div onclick="hideSheet('settings-sheet')" style="font-size:16px;font-weight:600;color:#A855F7;cursor:pointer;width:28px;text-align:right;">✓</div>
+          <div onclick="applySettings()" style="font-size:15px;font-weight:700;color:#A855F7;cursor:pointer;padding:4px 2px;min-width:36px;text-align:right;">Done</div>
         </div>
         <div style="padding:4px 16px calc(16px + var(--safe-bot));">
           <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:10px;">Aspect Ratio</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;" id="aspect-grp">
-            <div class="seg-opt sel" onclick="pickSeg('aspect-grp',this,'stag-ratio','9:16')" style="height:48px;border-radius:12px;border:1.5px solid #A855F7;background:rgba(168,85,247,.07);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#A855F7;cursor:pointer;">📱 9:16</div>
-            <div class="seg-opt" onclick="pickSeg('aspect-grp',this,'stag-ratio','16:9')" style="height:48px;border-radius:12px;border:1.5px solid rgba(255,255,255,.11);background:#212127;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;">🖥 16:9</div>
+            <div class="seg-opt sel" onclick="pickSeg('aspect-grp',this,'stag-ratio','9:16')" style="height:56px;border-radius:12px;border:1.5px solid #A855F7;background:rgba(168,85,247,.07);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px;font-weight:700;color:#A855F7;cursor:pointer;">
+              <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><rect x="1" y="1" width="12" height="20" rx="2.5" stroke="currentColor" stroke-width="1.8"/></svg>
+              9:16
+            </div>
+            <div class="seg-opt" onclick="pickSeg('aspect-grp',this,'stag-ratio','16:9')" style="height:56px;border-radius:12px;border:1.5px solid rgba(255,255,255,.11);background:#212127;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px;font-weight:700;color:rgba(255,255,255,.4);cursor:pointer;">
+              <svg width="22" height="14" viewBox="0 0 22 14" fill="none"><rect x="1" y="1" width="20" height="12" rx="2.5" stroke="currentColor" stroke-width="1.8"/></svg>
+              16:9
+            </div>
           </div>
           <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:10px;">Resolution</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;" id="res-grp">
-            <div class="seg-opt sel" onclick="pickSeg('res-grp',this,'stag-res','720P')" style="height:44px;border-radius:12px;border:1.5px solid #A855F7;background:rgba(168,85,247,.07);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#A855F7;cursor:pointer;">720p</div>
-            <div class="seg-opt" onclick="pickSeg('res-grp',this,'stag-res','1080P')" style="height:44px;border-radius:12px;border:1.5px solid rgba(255,255,255,.11);background:#212127;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;">1080p</div>
+            <div class="seg-opt sel" onclick="pickSeg('res-grp',this,'stag-res','720P')" style="height:48px;border-radius:12px;border:1.5px solid #A855F7;background:rgba(168,85,247,.07);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#A855F7;cursor:pointer;">720p</div>
+            <div class="seg-opt" onclick="pickSeg('res-grp',this,'stag-res','1080P')" style="height:48px;border-radius:12px;border:1.5px solid rgba(255,255,255,.11);background:#212127;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:rgba(255,255,255,.4);cursor:pointer;">1080p</div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><div style="font-size:16px;font-weight:700;color:#fff;">MV Title</div><div class="toggle on" id="tog-title" onclick="togSett('tog-title','stag-title','Title')"><div class="toggle-knob"></div></div></div>
           <input style="width:100%;padding:12px 14px;background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:12px;color:#fff;font-size:14px;font-family:inherit;outline:none;margin-bottom:16px;" type="text" placeholder="Enter MV song name">
@@ -4479,8 +4487,22 @@ function useSample(idx) {
 }
 
 function pickSeg(grpId, el, tagId, label) {
-  document.querySelectorAll(`#${grpId} .seg-opt`).forEach(o => o.classList.remove('sel'));
+  // Reset all options in this group to inactive style
+  document.querySelectorAll(`#${grpId} .seg-opt`).forEach(o => {
+    o.classList.remove('sel');
+    o.style.borderColor = 'rgba(255,255,255,.11)';
+    o.style.background = '#212127';
+    o.style.color = 'rgba(255,255,255,.4)';
+    // SVGs inside also need color update
+    o.querySelectorAll('svg').forEach(s => s.style.color = 'rgba(255,255,255,.4)');
+  });
+  // Apply active style to clicked option
   el.classList.add('sel');
+  el.style.borderColor = '#A855F7';
+  el.style.background = 'rgba(168,85,247,.07)';
+  el.style.color = '#A855F7';
+  el.querySelectorAll('svg').forEach(s => s.style.color = '#A855F7');
+  // Update chip label in settings-tags row
   const tag = document.getElementById(tagId);
   if (tag) tag.textContent = label;
 }
@@ -4490,7 +4512,27 @@ function togSett(togId, tagId, label) {
   if (!tog) return;
   const isOn = tog.classList.toggle('on');
   tog.classList.toggle('off', !isOn);
-  if (tag) tag.classList.toggle('off', !isOn);
+  if (tag) {
+    tag.classList.toggle('off', !isOn);
+    tag.style.color = isOn ? '#fff' : 'rgba(255,255,255,.3)';
+  }
+}
+function applySettings() {
+  // Sync each chip's text & dimmed state from current UI state
+  const ratioSel = document.querySelector('#aspect-grp .seg-opt.sel');
+  const resSel   = document.querySelector('#res-grp .seg-opt.sel');
+  if (ratioSel) { const t = document.getElementById('stag-ratio'); if(t) t.textContent = ratioSel.textContent.trim(); }
+  if (resSel)   { const t = document.getElementById('stag-res');   if(t) t.textContent = resSel.textContent.trim(); }
+  // Sync toggle-driven chips
+  ['title','author','subtitle','watermark'].forEach(key => {
+    const tog = document.getElementById('tog-' + key);
+    const tag = document.getElementById('stag-' + key);
+    if (!tog || !tag) return;
+    const isOn = tog.classList.contains('on');
+    tag.classList.toggle('off', !isOn);
+    tag.style.color = isOn ? '#fff' : 'rgba(255,255,255,.3)';
+  });
+  hideSheet('settings-sheet');
 }
 
 // ── New Songs page dot indicator ──
