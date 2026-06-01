@@ -366,6 +366,8 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 .splash-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:18px;}
 .logo-mark{width:88px;height:88px;border-radius:26px;background:var(--mv-grad);display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(168,85,247,.6),0 20px 40px rgba(0,0,0,.5);animation:logoFloat 3.2s ease-in-out infinite;}
 @keyframes logoFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+@keyframes obWiggle{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.ob-icon-wiggle{animation:obWiggle 3s ease-in-out infinite;}
 .logo-m{font-size:46px;font-weight:900;color:#fff;letter-spacing:-2px;line-height:1;}
 .logo-wordmark{font-size:40px;font-weight:900;letter-spacing:-1px;background:var(--mv-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .logo-tagline{font-size:13px;color:var(--text-2);letter-spacing:.12em;text-transform:uppercase;font-weight:500;}
@@ -1044,7 +1046,19 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
             <div style="position:absolute;left:50px;top:60px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(168,85,247,0.22);pointer-events:none;"></div>
             <div style="position:absolute;left:80px;top:90px;width:160px;height:160px;border-radius:50%;border:1px solid rgba(168,85,247,0.15);pointer-events:none;"></div>
             <!-- Emoji -->
-            <div style="position:absolute;left:110px;top:118px;font-size:100px;line-height:1;pointer-events:none;">🎬</div>
+            <div class="ob-icon-wiggle" style="position:absolute;left:112px;top:118px;width:96px;height:96px;pointer-events:none;">
+              <svg width="96" height="96" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="mv-ob-grad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#FF6BCE"/>
+                    <stop offset="50%" stop-color="#A855F7"/>
+                    <stop offset="100%" stop-color="#4338CA"/>
+                  </linearGradient>
+                </defs>
+                <path d="M18.5844 15.2915C18.7171 14.9034 19.2738 14.9034 19.4154 15.2915L20.0795 17.1167C20.2122 17.496 20.5047 17.7696 20.8763 17.9107L22.7084 18.5806C23.0973 18.7218 23.0971 19.2771 22.7084 19.4185L20.8763 20.0894C20.5135 20.2305 20.2211 20.5217 20.0795 20.8833L19.4154 22.7085C19.2827 23.0966 18.7259 23.0966 18.5844 22.7085L17.9203 20.8833C17.7875 20.5217 17.4951 20.2305 17.1234 20.0894L15.2924 19.4185C14.903 19.2774 14.903 18.7217 15.2924 18.5806L17.1234 17.9107C17.4862 17.7696 17.7787 17.4784 17.9203 17.1167L18.5844 15.2915Z" fill="url(#mv-ob-grad)"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6371 1.13431C18.2197 0.702984 19.8858 1.5535 20.3558 3.10502L21.1556 5.7056C21.2344 5.96143 21.2073 6.23851 21.0805 6.47416C20.9534 6.70959 20.7367 6.88458 20.4799 6.95951L16.0131 8.25736C15.8626 8.34745 15.6957 8.3934 15.5287 8.39798L10.0189 9.99955H21.0004C21.5525 9.9996 22.0001 10.4475 22.0004 10.9995V12.9995C22.0004 13.5518 21.5526 13.9995 21.0004 13.9995C20.4483 13.9994 20.0004 13.5517 20.0004 12.9995V11.9995H4.00037V18.9995L4.00526 19.0982C4.02793 19.327 4.1294 19.5425 4.29334 19.7066C4.48079 19.894 4.73529 19.9995 5.00037 19.9995H12.0004C12.5525 19.9996 13.0001 20.4475 13.0004 20.9995C13.0004 21.5518 12.5526 21.9995 12.0004 21.9995H5.00037C4.20485 21.9995 3.4418 21.6832 2.87928 21.1206C2.31689 20.5581 2.00037 19.795 2.00037 18.9995V11.1812L1.16444 8.95072C1.15367 8.92199 1.14321 8.89242 1.13514 8.86283C0.703099 7.27784 1.55677 5.60934 3.11268 5.14213L3.11658 5.14115L11.889 2.54154C12.0354 2.45407 12.1975 2.40844 12.3597 2.40189L16.6166 1.14115L16.6371 1.13431ZM3.6869 7.05619L3.68787 7.05716C3.2521 7.1881 2.91038 7.70409 3.05799 8.30521L3.61072 9.77982L7.56873 8.62845L5.81678 6.42435L3.6869 7.05619ZM7.88514 5.81205L9.64393 8.02591L13.7875 6.82084L12.0492 4.57767L7.88514 5.81205ZM18.4428 3.68705C18.3098 3.24461 17.7793 2.89777 17.1664 3.06302L14.1058 3.9683L15.8519 6.22123L18.9457 5.32279L18.4447 3.69388L18.4428 3.68705Z" fill="url(#mv-ob-grad)"/>
+              </svg>
+            </div>
             <!-- Message -->
             <div style="position:absolute;left:24px;right:24px;bottom:16px;display:flex;flex-direction:column;gap:8px;">
               <!-- Badge -->
@@ -1069,7 +1083,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
             <div style="position:absolute;left:50px;top:60px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(245,158,11,0.2);pointer-events:none;"></div>
             <div style="position:absolute;left:80px;top:90px;width:160px;height:160px;border-radius:50%;border:1px solid rgba(255,78,80,0.15);pointer-events:none;"></div>
             <!-- Emoji -->
-            <div style="position:absolute;left:105px;top:118px;font-size:100px;line-height:1;pointer-events:none;">🎵</div>
+            <div class="ob-icon-wiggle" style="position:absolute;left:112px;top:118px;width:96px;height:96px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);-webkit-mask:url(assets/icons/ui/ic_song_ai.svg) center/contain no-repeat;mask:url(assets/icons/ui/ic_song_ai.svg) center/contain no-repeat;pointer-events:none;"></div>
             <!-- Message -->
             <div style="position:absolute;left:24px;right:24px;bottom:16px;display:flex;flex-direction:column;gap:8px;">
               <!-- Badge -->
@@ -2116,7 +2130,13 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           <div class="think-ring"></div>
           <div class="think-ring"></div>
           <div class="think-ring"></div>
-          <div class="think-center">🎬</div>
+          <div class="think-center" style="background:none;display:flex;align-items:center;justify-content:center;">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="mv-think-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF6BCE"/><stop offset="50%" stop-color="#A855F7"/><stop offset="100%" stop-color="#4338CA"/></linearGradient></defs>
+              <path d="M18.5844 15.2915C18.7171 14.9034 19.2738 14.9034 19.4154 15.2915L20.0795 17.1167C20.2122 17.496 20.5047 17.7696 20.8763 17.9107L22.7084 18.5806C23.0973 18.7218 23.0971 19.2771 22.7084 19.4185L20.8763 20.0894C20.5135 20.2305 20.2211 20.5217 20.0795 20.8833L19.4154 22.7085C19.2827 23.0966 18.7259 23.0966 18.5844 22.7085L17.9203 20.8833C17.7875 20.5217 17.4951 20.2305 17.1234 20.0894L15.2924 19.4185C14.903 19.2774 14.903 18.7217 15.2924 18.5806L17.1234 17.9107C17.4862 17.7696 17.7787 17.4784 17.9203 17.1167L18.5844 15.2915Z" fill="url(#mv-think-grad)"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6371 1.13431C18.2197 0.702984 19.8858 1.5535 20.3558 3.10502L21.1556 5.7056C21.2344 5.96143 21.2073 6.23851 21.0805 6.47416C20.9534 6.70959 20.7367 6.88458 20.4799 6.95951L16.0131 8.25736C15.8626 8.34745 15.6957 8.3934 15.5287 8.39798L10.0189 9.99955H21.0004C21.5525 9.9996 22.0001 10.4475 22.0004 10.9995V12.9995C22.0004 13.5518 21.5526 13.9995 21.0004 13.9995C20.4483 13.9994 20.0004 13.5517 20.0004 12.9995V11.9995H4.00037V18.9995L4.00526 19.0982C4.02793 19.327 4.1294 19.5425 4.29334 19.7066C4.48079 19.894 4.73529 19.9995 5.00037 19.9995H12.0004C12.5525 19.9996 13.0001 20.4475 13.0004 20.9995C13.0004 21.5518 12.5526 21.9995 12.0004 21.9995H5.00037C4.20485 21.9995 3.4418 21.6832 2.87928 21.1206C2.31689 20.5581 2.00037 19.795 2.00037 18.9995V11.1812L1.16444 8.95072C1.15367 8.92199 1.14321 8.89242 1.13514 8.86283C0.703099 7.27784 1.55677 5.60934 3.11268 5.14213L3.11658 5.14115L11.889 2.54154C12.0354 2.45407 12.1975 2.40844 12.3597 2.40189L16.6166 1.14115L16.6371 1.13431ZM3.6869 7.05619L3.68787 7.05716C3.2521 7.1881 2.91038 7.70409 3.05799 8.30521L3.61072 9.77982L7.56873 8.62845L5.81678 6.42435L3.6869 7.05619ZM7.88514 5.81205L9.64393 8.02591L13.7875 6.82084L12.0492 4.57767L7.88514 5.81205ZM18.4428 3.68705C18.3098 3.24461 17.7793 2.89777 17.1664 3.06302L14.1058 3.9683L15.8519 6.22123L18.9457 5.32279L18.4447 3.69388L18.4428 3.68705Z" fill="url(#mv-think-grad)"/>
+            </svg>
+          </div>
         </div>
         <div class="think-ttl">Crafting Your Storyboard</div>
         <div class="think-sub">AI is analyzing your audio and description<br>to build the perfect cinematic sequence.</div>
@@ -2256,7 +2276,11 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
         <div class="creating-visual">
           <div class="cv-bg"></div>
           <div class="cv-overlay">
-            <div style="font-size:44px;">🎬</div>
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="mv-cv-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF6BCE"/><stop offset="50%" stop-color="#A855F7"/><stop offset="100%" stop-color="#4338CA"/></linearGradient></defs>
+              <path d="M18.5844 15.2915C18.7171 14.9034 19.2738 14.9034 19.4154 15.2915L20.0795 17.1167C20.2122 17.496 20.5047 17.7696 20.8763 17.9107L22.7084 18.5806C23.0973 18.7218 23.0971 19.2771 22.7084 19.4185L20.8763 20.0894C20.5135 20.2305 20.2211 20.5217 20.0795 20.8833L19.4154 22.7085C19.2827 23.0966 18.7259 23.0966 18.5844 22.7085L17.9203 20.8833C17.7875 20.5217 17.4951 20.2305 17.1234 20.0894L15.2924 19.4185C14.903 19.2774 14.903 18.7217 15.2924 18.5806L17.1234 17.9107C17.4862 17.7696 17.7787 17.4784 17.9203 17.1167L18.5844 15.2915Z" fill="url(#mv-cv-grad)"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6371 1.13431C18.2197 0.702984 19.8858 1.5535 20.3558 3.10502L21.1556 5.7056C21.2344 5.96143 21.2073 6.23851 21.0805 6.47416C20.9534 6.70959 20.7367 6.88458 20.4799 6.95951L16.0131 8.25736C15.8626 8.34745 15.6957 8.3934 15.5287 8.39798L10.0189 9.99955H21.0004C21.5525 9.9996 22.0001 10.4475 22.0004 10.9995V12.9995C22.0004 13.5518 21.5526 13.9995 21.0004 13.9995C20.4483 13.9994 20.0004 13.5517 20.0004 12.9995V11.9995H4.00037V18.9995L4.00526 19.0982C4.02793 19.327 4.1294 19.5425 4.29334 19.7066C4.48079 19.894 4.73529 19.9995 5.00037 19.9995H12.0004C12.5525 19.9996 13.0001 20.4475 13.0004 20.9995C13.0004 21.5518 12.5526 21.9995 12.0004 21.9995H5.00037C4.20485 21.9995 3.4418 21.6832 2.87928 21.1206C2.31689 20.5581 2.00037 19.795 2.00037 18.9995V11.1812L1.16444 8.95072C1.15367 8.92199 1.14321 8.89242 1.13514 8.86283C0.703099 7.27784 1.55677 5.60934 3.11268 5.14213L3.11658 5.14115L11.889 2.54154C12.0354 2.45407 12.1975 2.40844 12.3597 2.40189L16.6166 1.14115L16.6371 1.13431ZM3.6869 7.05619L3.68787 7.05716C3.2521 7.1881 2.91038 7.70409 3.05799 8.30521L3.61072 9.77982L7.56873 8.62845L5.81678 6.42435L3.6869 7.05619ZM7.88514 5.81205L9.64393 8.02591L13.7875 6.82084L12.0492 4.57767L7.88514 5.81205ZM18.4428 3.68705C18.3098 3.24461 17.7793 2.89777 17.1664 3.06302L14.1058 3.9683L15.8519 6.22123L18.9457 5.32279L18.4447 3.69388L18.4428 3.68705Z" fill="url(#mv-cv-grad)"/>
+            </svg>
             <div class="cv-pct" id="cv-pct">0%</div>
             <div class="cv-stat" id="cv-stat">Preparing...</div>
           </div>
