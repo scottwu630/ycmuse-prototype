@@ -472,18 +472,20 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 
 
 /* Fixed height = active card height so content below never shifts */
-.style-carousel-wrap{overflow:hidden;width:100%;flex-shrink:0;touch-action:pan-y;height:310px;}
-.style-carousel-track{display:flex;gap:12px;align-items:center;will-change:transform;transition:transform .42s cubic-bezier(.25,.46,.45,.94);}
-.style-vid-card{flex-shrink:0;width:264px;border-radius:20px;overflow:hidden;position:relative;cursor:pointer;background:#1a1a1a;transition:height .38s cubic-bezier(.25,.46,.45,.94),opacity .38s;}
-.style-vid-card.active{height:310px;opacity:1;}
-.style-vid-card.adj{height:280px;opacity:.55;}
+.style-carousel-wrap{overflow:visible;width:100%;flex-shrink:0;touch-action:pan-y;height:320px;}
+.style-carousel-track{display:flex;gap:0;align-items:center;will-change:transform;transition:transform .42s cubic-bezier(.25,.46,.45,.94);}
+.style-vid-card{flex-shrink:0;width:220px;height:293px;border-radius:20px;overflow:hidden;position:relative;cursor:pointer;background:#1a1a1a;transition:transform .38s cubic-bezier(.25,.46,.45,.94),opacity .38s,width .38s,height .38s;}
+.style-vid-card.active{width:220px;height:293px;opacity:1;transform:rotate(0deg);z-index:2;}
+.style-vid-card.adj-left{width:190px;height:253px;opacity:.5;transform:rotate(-3deg);}
+.style-vid-card.adj-right{width:190px;height:253px;opacity:.5;transform:rotate(3deg);}
+.style-vid-card.adj{width:190px;height:253px;opacity:.5;transform:rotate(3deg);}
 .style-vid-card video{width:100%;height:100%;object-fit:cover;display:block;}
 .style-sound-btn{position:absolute;bottom:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.52);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;z-index:5;border:none;color:#fff;}
 .style-info-area{flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 28px calc(90px + var(--safe-bot));text-align:center;overflow:hidden;}
 .c-dots{display:flex;gap:5px;justify-content:center;margin-bottom:12px;}
 .c-dot{height:4px;border-radius:3px;background:rgba(255,255,255,.4);cursor:pointer;transition:all .3s;width:8px;}
 .c-dot.on{background:var(--accent);width:22px;}
-.style-info-name{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.2px;line-height:26px;margin-bottom:6px;transition:opacity .25s;}
+.style-info-name{font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.3px;line-height:32px;margin-bottom:6px;transition:opacity .25s;}
 .style-info-desc{font-size:12px;font-weight:500;color:#9C9CAB;line-height:1.55;max-width:264px;transition:opacity .25s;}
 
 /* ════════════════════════════
@@ -1132,7 +1134,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
                   <path d="M11.5877 2.72083C11.7746 2.39376 12.2424 2.3832 12.4442 2.7013L16.1453 8.53821C16.3027 8.78618 16.6389 8.84589 16.8719 8.66712L19.741 6.46595C20.1289 6.16842 20.6692 6.54674 20.5223 7.01282L17.9998 15.0001H5.99983L3.44417 6.9054C3.30034 6.44994 3.81549 6.07143 4.20687 6.34485L7.55062 8.68567C7.7916 8.85436 8.1263 8.77989 8.2723 8.52454L11.5877 2.72083Z" fill="#F59E0B"/>
                 </svg>
               </div>
-              <div class="ico-btn" onclick="goTo('profile')">
+              <div class="ico-btn" onclick="showSheet('signin-sheet')">
                 <img src="assets/icons/ui/ic_account.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
               </div>
             </div>
@@ -1615,14 +1617,14 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
             </div>
 
             <!-- Storytelling -->
-            <div class="style-vid-card adj" onclick="setStyleActive(1)">
+            <div class="style-vid-card adj-right" style="margin-left:16px;" onclick="setStyleActive(1)">
               <video id="style-vid-1"
                 src="assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4"
                 muted loop playsinline preload="auto"></video>
             </div>
 
             <!-- Hybrid -->
-            <div class="style-vid-card adj" onclick="setStyleActive(2)">
+            <div class="style-vid-card adj-right" style="margin-left:16px;" onclick="setStyleActive(2)">
               <video id="style-vid-2"
                 src="assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4"
                 muted loop playsinline preload="auto"></video>
@@ -1698,28 +1700,22 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 
           <!-- CHOOSE A SONG -->
           <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Choose a Song <span style="color:rgba(255,255,255,.28);font-weight:500;text-transform:none;letter-spacing:0;">(Required)</span></div>
-          <div id="mvr-song-grid" style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;">
-            <!-- Row 1: Song Library — full width, horizontal layout -->
-            <div onclick="startAudio('sample')" style="background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;height:68px;padding:0 16px;cursor:pointer;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:10px;transition:border-color .15s;">
-              <img src="assets/icons/ui/ic_song_list.svg" width="22" height="22" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
+          <div id="mvr-song-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;">
+            <!-- Song Library -->
+            <div onclick="startAudio('sample')" style="background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;height:68px;padding:0 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:border-color .15s;">
+              <img src="assets/icons/ui/ic_song_list.svg" width="22" height="22" style="display:block;filter:brightness(0) invert(1);">
               <span style="font-size:13px;font-weight:600;color:#fff;">Song Library</span>
             </div>
-            <!-- Row 2: Import Audio + Create AI Song -->
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-              <div onclick="startAudio('import')" style="background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;height:68px;padding:0 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:border-color .15s;">
-                <img src="assets/icons/ui/ic_upload.svg" width="22" height="22" style="display:block;filter:brightness(0) invert(1);">
-                <span style="font-size:13px;font-weight:600;color:#fff;">Import Audio</span>
-              </div>
-              <div onclick="_songCtx='mv';goTo('song-create')" style="background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;height:68px;padding:0 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:border-color .15s;">
-                <img src="assets/icons/ui/ic_song_ai.svg" width="22" height="22" style="display:block;filter:brightness(0) invert(1);">
-                <span style="font-size:13px;font-weight:600;color:#fff;">Create AI Song</span>
-              </div>
+            <!-- Import Audio -->
+            <div onclick="startAudio('import')" style="background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;height:68px;padding:0 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:border-color .15s;">
+              <img src="assets/icons/ui/ic_upload.svg" width="22" height="22" style="display:block;filter:brightness(0) invert(1);">
+              <span style="font-size:13px;font-weight:600;color:#fff;">Import Audio</span>
             </div>
           </div>
           <!-- Song added state -->
           <div id="mvr-song-added" style="display:none;background:#212127;border-radius:14px;overflow:hidden;margin-bottom:20px;">
             <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);">
-              <span id="added-method-lbl" style="font-size:14px;font-weight:700;color:#fff;">Import Audio</span>
+              <span id="added-method-lbl" onclick="reopenSongLibrary()" style="font-size:14px;font-weight:700;color:#fff;cursor:pointer;">Import Audio</span>
               <button onclick="clearSong()" style="width:26px;height:26px;border-radius:50%;background:#383842;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;">
                 <img src="assets/icons/ui/ic_close.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;">
               </button>
@@ -1784,14 +1780,18 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 
           <!-- SETTINGS -->
           <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Settings</div>
-          <div id="settings-tags" onclick="showSheet('settings-sheet')" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;padding:12px 14px;cursor:pointer;margin-bottom:8px;">
-            <span id="stag-ratio" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">9:16</span>
-            <span id="stag-res" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">720P</span>
-            <span id="stag-title" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Title</span>
-            <span id="stag-author" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Author</span>
-            <span id="stag-subtitle" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Subtitle</span>
-            <span id="stag-watermark" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:rgba(255,255,255,.35);">Watermark</span>
-            <span style="margin-left:auto;font-size:18px;color:rgba(255,255,255,.35);">›</span>
+          <div id="settings-tags" onclick="showSheet('settings-sheet')" style="display:flex;align-items:center;background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;padding:12px 14px;cursor:pointer;margin-bottom:8px;gap:8px;">
+            <!-- Tags wrap area -->
+            <div style="flex:1;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+              <span id="stag-ratio" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">9:16</span>
+              <span id="stag-res" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">720P</span>
+              <span id="stag-title" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Title</span>
+              <span id="stag-author" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Author</span>
+              <span id="stag-subtitle" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Subtitle</span>
+              <span id="stag-watermark" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:rgba(255,255,255,.35);">Watermark</span>
+            </div>
+            <!-- Chevron always centered -->
+            <span style="flex-shrink:0;font-size:18px;color:rgba(255,255,255,.35);line-height:1;">›</span>
           </div>
         </div>
       </div>
@@ -1846,7 +1846,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
         <!-- Sample Songs List (hidden by default) -->
         <div id="ss-panel-sample" style="display:none;overflow-y:auto;">
           <div id="sample-song-list">
-            <div class="sample-song-row sel" onclick="pickSampleSong(this,'Top Flow - Party','--:--','assets/images/album-art/album_05.jpg','assets/songs/Top%20Flow%20Production%20-%20Party.mp3')">
+            <div class="sample-song-row" onclick="pickSampleSong(this,'Top Flow - Party','--:--','assets/images/album-art/album_05.jpg','assets/songs/Top%20Flow%20Production%20-%20Party.mp3')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;"><div class="sample-song-name">Top Flow - Party</div><div class="sample-song-dur">--:--</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
@@ -1888,7 +1888,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
         <div id="ss-panel-my" style="display:flex;flex-direction:column;overflow-y:auto;flex:1;">
           <!-- My Songs list — re-uses same row style; songs created by the user -->
           <div id="my-song-list">
-            <div class="sample-song-row sel" onclick="pickSampleSong(this,'My Wedding Ballad','03:12','assets/images/album-art/album_04.jpg')">
+            <div class="sample-song-row" onclick="pickSampleSong(this,'My Wedding Ballad','03:12','assets/images/album-art/album_04.jpg')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_04.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;"><div class="sample-song-name">My Wedding Ballad</div><div class="sample-song-dur">03:12</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
@@ -2859,10 +2859,16 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
     </div>
 
     <!-- ══════ SONG RESULT ══════ -->
-    <div id="screen-song-result" class="screen" style="background:#070707;">
+    <div id="screen-song-result" class="screen" style="background:#070707;overflow:hidden;">
+
+      <!-- Blurred album art background -->
+      <div style="position:absolute;inset:0;pointer-events:none;">
+        <img src="assets/images/album-art/album_14.jpg" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(28px);opacity:.45;transform:scale(1.1);">
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,7,7,.3) 0%,rgba(7,7,7,.6) 50%,rgba(7,7,7,.95) 100%);"></div>
+      </div>
 
       <!-- NavBar -->
-      <div style="position:absolute;top:0;left:0;right:0;z-index:20;background:linear-gradient(to bottom,rgba(0,0,0,.5),transparent);padding:calc(var(--safe-top) + 12px) 16px 16px;display:flex;align-items:center;gap:6px;">
+      <div style="position:absolute;top:0;left:0;right:0;z-index:20;padding:calc(var(--safe-top) + 12px) 16px 16px;display:flex;align-items:center;gap:6px;">
         <div onclick="goBack()" style="width:28px;height:28px;border-radius:18px;background:rgba(33,33,39,.7);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
           <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
         </div>
@@ -2872,63 +2878,60 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
         </div>
       </div>
 
-      <!-- Album Art: 200×200, centered (left:60px), top:130px, gradient with music note -->
-      <div style="position:absolute;top:130px;left:60px;width:200px;height:200px;border-radius:18px;box-shadow:0 16px 48px rgba(0,0,0,.55);background:linear-gradient(45deg,#FFB347 14.6%,#FF4E50 50%,#D63AF9 85.4%);display:flex;align-items:center;justify-content:center;">
-        <img src="assets/icons/ui/ic_song.svg" width="74" height="74" style="display:block;filter:brightness(0) invert(1);opacity:.9;">
+      <!-- Album Art — large, centered -->
+      <div style="position:absolute;top:118px;left:50%;transform:translateX(-50%);width:220px;height:220px;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.7);flex-shrink:0;">
+        <img src="assets/images/album-art/album_14.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
       </div>
 
-      <!-- Controller: top:360px -->
-      <div style="position:absolute;top:360px;left:16px;width:288px;display:flex;flex-direction:column;gap:20px;">
+      <!-- Player -->
+      <div style="position:absolute;top:362px;left:16px;width:288px;display:flex;flex-direction:column;gap:16px;">
 
-        <!-- Song name + share -->
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
-              <div id="sr-title" style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Golden Hour</div>
-              <div id="sr-genre" style="font-size:14px;font-weight:500;color:#9C9CAB;letter-spacing:-.14px;line-height:20px;">R&amp;B · Warm</div>
-            </div>
-            <!-- Share button -->
-            <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;flex-shrink:0;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="white" stroke-width="2"/><circle cx="6" cy="12" r="3" stroke="white" stroke-width="2"/><circle cx="18" cy="19" r="3" stroke="white" stroke-width="2"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="white" stroke-width="2"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="white" stroke-width="2"/></svg>
-            </div>
+        <!-- Title + share -->
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <div style="flex:1;min-width:0;">
+            <div id="sr-title" style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Golden Hour</div>
+            <div id="sr-genre" style="font-size:14px;font-weight:500;color:rgba(255,255,255,.5);letter-spacing:-.14px;line-height:20px;margin-top:2px;">R&amp;B · Warm</div>
           </div>
+          <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;flex-shrink:0;margin-top:2px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="white" stroke-width="2"/><circle cx="6" cy="12" r="3" stroke="white" stroke-width="2"/><circle cx="18" cy="19" r="3" stroke="white" stroke-width="2"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="white" stroke-width="2"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="white" stroke-width="2"/></svg>
+          </div>
+        </div>
 
-          <!-- Progress bar -->
+        <!-- Progress bar -->
+        <div style="display:flex;flex-direction:column;gap:6px;">
           <div id="sr-progress-bar" onclick="seekSongResult(event,this)" style="position:relative;height:12px;display:flex;align-items:center;cursor:pointer;">
             <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;background:rgba(255,255,255,.2);border-radius:2px;pointer-events:none;">
               <div id="sr-progress-fill" style="position:absolute;left:0;top:0;width:35%;height:100%;background:linear-gradient(to right,#FFB347,#FF4E50);border-radius:2px;"></div>
             </div>
             <div id="sr-progress-thumb" style="position:absolute;left:35%;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(0,0,0,.4);pointer-events:none;"></div>
           </div>
-
-          <!-- Time -->
-          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:500;color:#9C9CAB;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:500;color:rgba(255,255,255,.4);">
             <span id="sr-time-now">0:22</span>
             <span id="sr-time-total">1:02</span>
           </div>
         </div>
 
         <!-- Control buttons -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 35px;">
-          <div onclick="prevSongResult()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;opacity:0.3;">
-            <img src="assets/icons/ui/ic_skip_back.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 20px;">
+          <div onclick="prevSongResult()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;opacity:0.35;">
+            <img src="assets/icons/ui/ic_skip_back.svg" width="24" height="24" style="display:block;filter:brightness(0) invert(1);">
           </div>
-          <div onclick="toggleSongResultPlay()" style="width:56px;height:56px;border-radius:30px;background:#fff;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(255,255,255,.15);">
+          <div onclick="toggleSongResultPlay()" style="width:60px;height:60px;border-radius:30px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(255,255,255,.2);">
             <img id="sr-play-ico" src="assets/icons/ui/ic_play.svg" width="32" height="32" style="display:block;filter:brightness(0);">
           </div>
-          <div onclick="nextSongResult()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;opacity:0.3;">
-            <img src="assets/icons/ui/ic_skip_forward.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+          <div onclick="nextSongResult()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;opacity:0.35;">
+            <img src="assets/icons/ui/ic_skip_forward.svg" width="24" height="24" style="display:block;filter:brightness(0) invert(1);">
           </div>
         </div>
       </div>
 
-      <!-- CTAs: anchored to bottom, 20px gap clears home indicator without lifting above the controller -->
-      <div style="position:absolute;bottom:0;left:0;right:0;padding:0 15px 20px;display:flex;flex-direction:column;gap:10px;">
-        <button onclick="useAISongInMV()" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+      <!-- CTAs -->
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:0 16px calc(var(--safe-bot) + 16px);display:flex;flex-direction:column;gap:10px;">
+        <button onclick="useAISongInMV()" style="width:100%;height:52px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Use in Music Video
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button onclick="goTo('song-create')" style="width:100%;height:46px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);color:#D3D3D9;font-size:17px;font-weight:500;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+        <button onclick="goTo('song-create')" style="width:100%;height:52px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:16px;font-weight:600;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Regenerate
         </button>
       </div>
@@ -3664,6 +3667,45 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
     </div>
   </div>
 
+  <!-- Sign-in Sheet -->
+  <div class="overlay" id="signin-overlay" onclick="hideSheet('signin-sheet')"></div>
+  <div class="sheet" id="signin-sheet" style="padding:0 0 calc(var(--safe-bot) + 16px);">
+    <div class="sheet-handle"></div>
+    <!-- Header -->
+    <div style="padding:16px 20px 24px;text-align:center;">
+      <!-- Logo mark -->
+      <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+        <span style="font-size:22px;font-weight:900;color:#fff;letter-spacing:-.5px;">M</span>
+      </div>
+      <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.3px;margin-bottom:6px;">Sign in to YouCam Muse</div>
+      <div style="font-size:13px;font-weight:500;color:#9C9CAB;line-height:1.6;">Save your creations, sync across devices,<br>and unlock your full creative history.</div>
+    </div>
+    <!-- Sign-in buttons -->
+    <div style="padding:0 16px;display:flex;flex-direction:column;gap:10px;">
+      <!-- Apple -->
+      <button onclick="signInWith('Apple')" style="width:100%;height:52px;border-radius:14px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.05 12.536c-.028-2.87 2.346-4.254 2.45-4.318-1.335-1.953-3.41-2.22-4.147-2.248-1.763-.178-3.44 1.04-4.333 1.04-.893 0-2.27-1.014-3.733-.987-1.916.028-3.69 1.11-4.678 2.814-1.99 3.454-.512 8.577 1.434 11.382.953 1.374 2.09 2.916 3.58 2.858 1.44-.058 1.983-.927 3.724-.927 1.74 0 2.23.927 3.74.9 1.55-.028 2.527-1.402 3.47-2.782 1.097-1.594 1.548-3.14 1.576-3.22-.035-.014-3.017-1.157-3.047-4.597-.003-.005-.034-.005-.037-.005zM14.236 4.16c.79-.957 1.323-2.287 1.178-3.61-1.138.047-2.517.757-3.336 1.714-.732.847-1.375 2.202-1.202 3.503 1.27.098 2.568-.644 3.36-1.607z" fill="#000"/></svg>
+        <span style="font-size:15px;font-weight:700;color:#000;">Continue with Apple</span>
+      </button>
+      <!-- Google -->
+      <button onclick="signInWith('Google')" style="width:100%;height:52px;border-radius:14px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''">
+        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        <span style="font-size:15px;font-weight:700;color:#000;">Continue with Google</span>
+      </button>
+      <!-- Terms -->
+      <p style="font-size:11px;font-weight:500;color:#9C9CAB;text-align:center;line-height:1.6;margin-top:4px;">By continuing, you agree to our <span style="color:rgba(255,255,255,.5);">Terms of Service</span> and <span style="color:rgba(255,255,255,.5);">Privacy Policy</span>.</p>
+    </div>
+
+    <!-- Sign-in success overlay (inside sheet) -->
+    <div id="signin-success" style="display:none;position:absolute;inset:0;background:#151519;border-radius:26px 26px 0 0;z-index:10;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:40px 24px;">
+      <div style="width:64px;height:64px;border-radius:50%;background:rgba(34,197,94,.15);border:1.5px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;margin-bottom:4px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.3px;text-align:center;">Signed in successfully!</div>
+      <div id="signin-provider-msg" style="font-size:13px;font-weight:500;color:#9C9CAB;text-align:center;line-height:1.6;">Welcome back, Scott</div>
+    </div>
+  </div>
+
 </div><!-- /device -->
 </div><!-- /device-wrap -->
 
@@ -4137,15 +4179,28 @@ function startSongCreating() {
       wv.appendChild(b);
     }
   }
-  const songSteps = ['Setting the tempo...','Building chord progressions...','Crafting the melody...','Adding instrumentation...','Mixing and mastering...','Your song is ready!'];
-  const bar = document.getElementById('song-bar');
+  const songSteps = [
+    { pct: 0,  msg: 'Setting the mood...' },
+    { pct: 20, msg: 'Setting the mood...' },
+    { pct: 21, msg: 'Composing your melody...' },
+    { pct: 45, msg: 'Composing your melody...' },
+    { pct: 46, msg: 'Writing the lyrics...' },
+    { pct: 65, msg: 'Writing the lyrics...' },
+    { pct: 66, msg: 'Producing the track...' },
+    { pct: 85, msg: 'Producing the track...' },
+    { pct: 86, msg: 'Creating album art...' },
+    { pct: 100, msg: 'Creating album art...' },
+  ];
+  const bar  = document.getElementById('song-bar');
   const step = document.getElementById('song-step');
+  const pcts = [0, 20, 45, 65, 85, 100];
+  const msgs = ['Setting the mood...','Composing your melody...','Writing the lyrics...','Producing the track...','Creating album art...'];
   if (bar) { bar.style.animation = 'none'; bar.offsetHeight; bar.style.animation = 'tbar 6s ease-in-out forwards'; }
   let i = 0;
   function nextStep() {
-    if (step) step.textContent = songSteps[i % songSteps.length];
+    if (step) step.textContent = msgs[Math.min(i, msgs.length - 1)];
     i++;
-    if (i < songSteps.length) songTimer = setTimeout(nextStep, 1000);
+    if (i < msgs.length) songTimer = setTimeout(nextStep, 1200);
     else setTimeout(() => { if (document.getElementById('screen-song-creating')?.classList.contains('active')) { showToastDone('song'); goTo('song-result'); } }, 1000);
   }
   nextStep();
@@ -5071,6 +5126,25 @@ function addSongToRoom(method, title, dur, art, audioSrc) {
   resetSongPlay();
 }
 
+function signInWith(provider) {
+  const success = document.getElementById('signin-success');
+  const msg = document.getElementById('signin-provider-msg');
+  if (msg) msg.textContent = 'Welcome back, Scott · via ' + provider;
+  if (success) { success.style.display = 'flex'; }
+  setTimeout(() => {
+    hideSheet('signin-sheet');
+    if (success) success.style.display = 'none';
+    goTo('profile');
+  }, 1800);
+}
+
+function reopenSongLibrary() {
+  const lbl = document.getElementById('added-method-lbl');
+  if (!lbl || lbl.textContent.trim() !== 'Song Library') return;
+  clearSong();
+  setTimeout(() => showSheet('sampleSong-sheet'), 150);
+}
+
 function clearSong() {
   const grid = document.getElementById('mvr-song-grid');
   const added = document.getElementById('mvr-song-added');
@@ -5162,13 +5236,18 @@ function setStyleActive(idx) {
   const cards = document.querySelectorAll('.style-vid-card');
   const dots  = document.querySelectorAll('.c-dot');
   const track = document.getElementById('style-track');
-  const wrap  = document.getElementById('style-carousel');
-  if (!track || !wrap) return;
+  if (!track) return;
 
   // Update card classes + video playback
   cards.forEach((c, i) => {
-    c.classList.remove('active','adj');
-    c.classList.add(i === idx ? 'active' : 'adj');
+    c.classList.remove('active','adj','adj-left','adj-right');
+    if (i === idx) {
+      c.classList.add('active');
+    } else if (i < idx) {
+      c.classList.add('adj-left');
+    } else {
+      c.classList.add('adj-right');
+    }
     const vid = document.getElementById(`style-vid-${i}`);
     if (vid) {
       vid.muted = !styleSoundOn;
@@ -5183,9 +5262,14 @@ function setStyleActive(idx) {
 
   dots.forEach((d, i) => d.classList.toggle('on', i === idx));
 
-  // Track position: active card starts at x=28 (left offset)
-  const cardW = 264, gap = 12, startX = 28;
-  const offset = startX - idx * (cardW + gap);
+  // Center active card (220px wide) in 320px viewport
+  // Adjacent cards are 190px wide. Layout: [adj(190)] [active(220)] [adj(190)]
+  // Gap between cards: 16px. Center of viewport: 160px.
+  // Offset so active card center = 160px
+  const activeW = 220, adjW = 190, gap = 16;
+  const totalLeft = idx * (adjW + gap); // width of all left adj cards
+  const activeCenter = totalLeft + activeW / 2;
+  const offset = 160 - activeCenter;
   track.style.transform = `translateX(${offset}px)`;
 
   // Fade-swap text
