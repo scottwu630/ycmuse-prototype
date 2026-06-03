@@ -921,7 +921,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 .describe-ta{width:100%;min-height:108px;padding:14px 15px 6px;background:transparent;border:none;color:var(--text);font-size:14px;font-family:inherit;resize:none;outline:none;line-height:1.55;}
 .describe-ta::placeholder{color:var(--text-3);}
 .describe-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 12px 10px;}
-.insp-btn{background:rgba(255,255,255,.1);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:background .15s;}
+.insp-btn{background:rgba(255,255,255,.1);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);border:none;cursor:pointer;transition:background .15s;}
 .insp-btn:active{background:rgba(255,255,255,.18);}
 .desc-counter{font-size:12px;color:var(--text-3);}
 .clear-btn{width:22px;height:22px;border-radius:50%;background:var(--card-3);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-3);cursor:pointer;}
@@ -1662,7 +1662,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 
         <!-- CTA — Figma Button/Pill Primary -->
         <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 22px calc(20px + var(--safe-bot));">
-          <button onclick="goTo('mv-room')" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Try Now</button>
+          <button onclick="_mvFromTemplate=false;resetMvRoom();updateSongClearBtn();goTo('mv-room')" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Try Now</button>
         </div>
       </div>
     </div>
@@ -1732,7 +1732,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           <div id="mvr-song-added" style="display:none;background:#212127;border-radius:14px;overflow:hidden;margin-bottom:20px;">
             <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);">
               <span id="added-method-lbl" onclick="reopenSongLibrary()" style="font-size:14px;font-weight:700;color:#fff;cursor:pointer;">Import Audio</span>
-              <button onclick="clearSong()" style="width:26px;height:26px;border-radius:50%;background:#383842;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+              <button id="song-clear-btn" onclick="clearSong()" style="width:26px;height:26px;border-radius:50%;background:#383842;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;">
                 <img src="assets/icons/ui/ic_close.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;">
               </button>
             </div>
@@ -1756,7 +1756,16 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           <div style="background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;overflow:hidden;margin-bottom:20px;">
             <textarea id="mvr-describe" oninput="updateDescCount(this)" placeholder="Describe your video to help AI create a more compelling story." style="width:100%;min-height:100px;padding:12px 14px 6px;background:transparent;border:none;color:#fff;font-size:14px;font-family:inherit;resize:none;outline:none;line-height:1.55;"></textarea>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 10px;">
-              <button class="insp-btn" onclick="showSheet('insp-sheet')">+ Inspiration</button>
+              <div style="display:flex;gap:4px;align-items:center;">
+                <button class="insp-btn" onclick="showSheet('insp-sheet')" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
+                  <img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.8;flex-shrink:0;">
+                  Templates
+                </button>
+                <button class="insp-btn" onclick="generateVideoIdea()" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 5.5V17H9v-2.5C7.5 13.5 6 11.5 6 9a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Ideas
+                </button>
+              </div>
               <div style="display:flex;align-items:center;gap:8px;">
                 <span id="desc-cnt" style="font-size:12px;color:#9C9CAB;">0/2500</span>
                 <div id="desc-clear-btn" onclick="clearDescribe()" style="display:none;width:20px;height:20px;border-radius:18px;background:#212127;border:none;display:none;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
@@ -1817,29 +1826,33 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
         <button onclick="requireLogin(()=>showSheet('mv-mode-sheet'))" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create Music Video</button>
       </div>
 
-      <!-- Inspiration Sheet -->
+      <!-- Template Sheet -->
       <div class="overlay" id="insp-overlay" onclick="hideSheet('insp-sheet')"></div>
-      <div class="sheet" id="insp-sheet" style="max-height:82vh;overflow-y:auto;">
+      <div class="sheet" id="insp-sheet" style="padding-bottom:calc(var(--safe-bot) + 24px);">
         <div class="sheet-handle"></div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;">
-          <div onclick="hideSheet('insp-sheet')" style="font-size:19px;cursor:pointer;color:#9C9CAB;width:28px;">✕</div>
-          <div style="font-size:17px;font-weight:700;color:#fff;">Inspiration</div>
-          <div onclick="applyInsp()" style="font-size:16px;font-weight:600;color:#A855F7;cursor:pointer;width:28px;text-align:right;">✓</div>
+        <!-- Header -->
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 20px 12px;">
+          <div onclick="hideSheet('insp-sheet')" style="width:28px;height:28px;border-radius:14px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#9C9CAB" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">Select a Template</div>
+          <div onclick="applyInsp()" style="width:28px;height:28px;border-radius:14px;background:rgba(168,85,247,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#A855F7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
         </div>
-        <div style="margin:0 16px 14px;height:160px;border-radius:14px;background:#212127;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.065);">
-          <div style="text-align:center;"><div style="font-size:28px;margin-bottom:6px;">🎬</div><div style="font-size:12px;color:#9C9CAB;" id="insp-preview-label">Select an inspiration</div></div>
+
+        <!-- Large preview -->
+        <div style="margin:0 20px 12px;border-radius:14px;overflow:hidden;height:144px;background:#212127;position:relative;">
+          <img id="insp-preview-img" src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5),transparent);"></div>
+          <div id="insp-preview-name" style="position:absolute;bottom:10px;left:14px;font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Neon City</div>
         </div>
-        <div style="padding:0 16px 6px;display:flex;flex-wrap:wrap;gap:10px;" id="insp-chips-wrap">
-          <div class="insp-chip sel" onclick="pickInsp(this,'Midnight rain falls on empty streets. Neon lights reflect in puddles as a lone figure walks, lost in thought and memory.')">Midnight Rain</div>
-          <div class="insp-chip" onclick="pickInsp(this,'City lights blur as we race through the night. The world fades — only this moment, this music, this feeling remains.')">Neon City</div>
-          <div class="insp-chip" onclick="pickInsp(this,'A single uncut performance — raw, unfiltered, intimate. Just the artist, the song, and the truth behind every word.')">One Take Studio</div>
-          <div class="insp-chip" onclick="pickInsp(this,'Like a Polaroid slowly developing, memories surface — warm light, quiet laughter, a love that never fully fades.')">Polaroid Love</div>
-          <div class="insp-chip" onclick="pickInsp(this,'Salt air and golden hour light. Waves roll as the sun dips low, carrying the weight of summer last perfect day.')">Beachside Memory</div>
-          <div class="insp-chip" onclick="pickInsp(this,'One final meeting. Unsaid words fill every glance. A goodbye that lingers long after the last note fades.')">Last Goodbye</div>
-          <div class="insp-chip" onclick="pickInsp(this,'A film within a film. The director calls action and a deeply personal story begins — cinematic and dramatic.')">Film Moment</div>
-          <div class="insp-chip" onclick="pickInsp(this,'The last rays of daylight paint everything gold. A moment suspended in time, fleeting as the day turns to dusk.')">Golden Hour</div>
+
+        <!-- Thumbnail strip -->
+        <div style="padding:0 20px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+          <div id="insp-thumb-row" style="display:flex;gap:2px;padding-bottom:4px;">
+          </div>
         </div>
-        <div style="height:20px;"></div>
       </div>
 
       <!-- Sample Song Sheet -->
@@ -3118,7 +3131,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
               <div style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">Scott Wu</div>
               <div style="font-size:12px;font-weight:500;color:#9C9CAB;line-height:1.3;margin-top:1px;">scott_wu@mail.com</div>
             </div>
-            <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;cursor:pointer;">
+            <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;cursor:pointer;" onclick="showSheet('edit-profile-sheet')">
           </div>
 
           <!-- Stats row: flat with dividers -->
@@ -3578,6 +3591,51 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
     </div>
   </div>
 
+  <!-- Edit Profile Sheet -->
+  <div class="overlay" id="edit-profile-overlay" onclick="hideSheet('edit-profile-sheet')"></div>
+  <div class="sheet" id="edit-profile-sheet" style="padding-bottom:calc(var(--safe-bot) + 24px);">
+    <div class="sheet-handle"></div>
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px 20px;">
+      <div onclick="hideSheet('edit-profile-sheet')" style="font-size:15px;font-weight:500;color:#9C9CAB;cursor:pointer;min-width:48px;">Cancel</div>
+      <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.2px;">Edit Profile</div>
+      <div onclick="saveProfile()" style="font-size:15px;font-weight:700;color:#A855F7;cursor:pointer;min-width:48px;text-align:right;">Save</div>
+    </div>
+
+    <!-- Avatar -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:28px;">
+      <div onclick="changeAvatar()" style="position:relative;width:80px;height:80px;cursor:pointer;">
+        <div id="ep-avatar" style="width:80px;height:80px;border-radius:40px;background:linear-gradient(45deg,#FF6BCE 14.6%,#A855F7 50%,#4338CA 85.4%) center/cover;display:flex;align-items:center;justify-content:center;">
+          <img src="assets/icons/ui/ic_account.svg" id="ep-avatar-placeholder" width="36" height="36" style="display:block;filter:brightness(0) invert(1);">
+        </div>
+        <!-- Camera badge -->
+        <div style="position:absolute;bottom:0;right:0;width:26px;height:26px;border-radius:13px;background:#A855F7;border:2px solid #09090B;display:flex;align-items:center;justify-content:center;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="13" r="4" stroke="#fff" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <div onclick="changeAvatar()" style="font-size:13px;font-weight:600;color:#A855F7;cursor:pointer;">Change Photo</div>
+    </div>
+
+    <!-- Nickname input -->
+    <div style="padding:0 16px;display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;">Nickname</div>
+      <input id="ep-nickname" type="text" value="Scott Wu" maxlength="30"
+        style="width:100%;height:48px;background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;padding:0 14px;color:#fff;font-size:15px;font-weight:500;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color .15s;"
+        onfocus="this.style.borderColor='rgba(168,85,247,.5)'" onblur="this.style.borderColor='rgba(255,255,255,.065)'"
+        oninput="document.getElementById('ep-char-count').textContent=this.value.length+'/30'">
+      <div id="ep-char-count" style="font-size:11px;color:#676779;text-align:right;">7/30</div>
+    </div>
+
+    <!-- Email (read-only) -->
+    <div style="padding:0 16px;display:flex;flex-direction:column;gap:6px;">
+      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;">Email</div>
+      <div style="width:100%;height:48px;background:#151519;border:1px solid rgba(255,255,255,.04);border-radius:14px;padding:0 14px;color:#676779;font-size:15px;font-weight:500;display:flex;align-items:center;">scott_wu@mail.com</div>
+    </div>
+  </div>
+
   <!-- Sign Out Confirmation Dialog -->
   <div id="signout-overlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:9000;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:inherit;" onclick="hideSignOutDialog()"></div>
   <div id="signout-dialog" style="display:none;position:absolute;left:24px;right:24px;top:50%;transform:translateY(-54%);background:#1C1C1E;border-radius:14px;z-index:9001;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.7);">
@@ -3845,7 +3903,7 @@ function goTo(id, dir) {
 
   // Screen-specific actions
   if (id === 'mv-style') setTimeout(initStyleCarousel, 50);
-  if (id === 'mv-room')  setTimeout(() => mvrPickStyle(styleIdx, null), 400);
+  if (id === 'mv-room')  { setTimeout(() => mvrPickStyle(styleIdx, null), 400); updateSongClearBtn(); }
   if (id === 'mv-edit')  setTimeout(checkMergeEnable, 60);
   if (id === 'onboard') setTimeout(() => obGoTo(0), 50);
   if (id === 'history') {
@@ -4462,6 +4520,47 @@ function selectPlan(plan) {
   }
 }
 
+// ── Edit Profile ──
+const _avatarSamples = [
+  'assets/images/character-photos/samples/Sample_P1.jpg',
+  'assets/images/character-photos/samples/Sample_P2.jpg',
+  'assets/images/character-photos/samples/Sample_P3.jpg',
+  'assets/images/character-photos/samples/Sample_P4.jpg',
+];
+let _avatarIdx = -1; // -1 = default gradient
+
+function changeAvatar() {
+  _avatarIdx = (_avatarIdx + 1) % _avatarSamples.length;
+  const avatarEl  = document.getElementById('ep-avatar');
+  const placeholder = document.getElementById('ep-avatar-placeholder');
+  if (!avatarEl) return;
+  // Use background-image — no img tag, no overflow/clipping issues
+  avatarEl.style.backgroundImage = `url(${_avatarSamples[_avatarIdx]})`;
+  avatarEl.style.backgroundSize     = 'cover';
+  avatarEl.style.backgroundPosition = 'center';
+  if (placeholder) placeholder.style.display = 'none';
+}
+
+function saveProfile() {
+  const nickname = document.getElementById('ep-nickname')?.value.trim() || 'Scott Wu';
+  // Update name on account screen
+  const nameEl = document.querySelector('#screen-profile [style*="font-size:20px"]');
+  if (nameEl) nameEl.textContent = nickname;
+  // Update avatar on account screen using background-image on the gradient circle
+  if (_avatarIdx >= 0) {
+    const profileCircle = document.querySelector('#screen-profile [style*="border-radius:30px"]');
+    if (profileCircle) {
+      profileCircle.style.backgroundImage = `url(${_avatarSamples[_avatarIdx]})`;
+      profileCircle.style.backgroundSize     = 'cover';
+      profileCircle.style.backgroundPosition = 'center';
+      // Hide the icon inside
+      const icon = profileCircle.querySelector('img');
+      if (icon) icon.style.display = 'none';
+    }
+  }
+  hideSheet('edit-profile-sheet');
+}
+
 // ── Sign Out Dialog ──
 function showSignOutDialog() {
   const device = document.querySelector('.device');
@@ -4754,20 +4853,94 @@ function clearDescribe() {
   if (ta) { ta.value = ''; updateDescCount(ta); }
 }
 
-let inspSelected = null;
-function pickInsp(el, text) {
-  document.querySelectorAll('.insp-chip').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-  inspSelected = text;
-  const lbl = document.getElementById('insp-preview-label');
-  if (lbl) lbl.textContent = el.textContent;
+// ── Template picker ─────────────────────────────────────────────────────────
+const _templates = [
+  { name: 'Neon City',        thumb: 'assets/videos/sample-mvs/mv_03_neon_city.jpg',       prompt: 'City lights blur as we race through the night. The world fades — only this moment, this music, this feeling remains.' },
+  { name: 'One Take Studio',  thumb: 'assets/videos/sample-mvs/mv_02_late_night_stage.jpg', prompt: 'A single uncut performance — raw, unfiltered, intimate. Just the artist, the song, and the truth behind every word.' },
+  { name: 'Midnight Rain',    thumb: 'assets/videos/sample-mvs/mv_01_cinematic_dark.jpg',   prompt: 'Midnight rain falls on empty streets. Neon lights reflect in puddles as a lone figure walks, lost in thought and memory.' },
+  { name: 'Polaroid Love',    thumb: 'assets/videos/sample-mvs/mv_07_nature_earth.jpg',     prompt: 'Like a Polaroid slowly developing, memories surface — warm light, quiet laughter, a love that never fully fades.' },
+  { name: 'Last Goodbye',     thumb: 'assets/videos/sample-mvs/mv_05_anime_style.jpg',      prompt: 'One final meeting. Unsaid words fill every glance. A goodbye that lingers long after the last note fades.' },
+  { name: 'Beachside Memory', thumb: 'assets/videos/sample-mvs/mv_04_eletronic.jpg',        prompt: 'Salt air and golden hour light. Waves roll as the sun dips low, carrying the weight of summer\'s last perfect day.' },
+  { name: 'Film Moment',      thumb: 'assets/videos/sample-mvs/mv_09_urban_performer.jpg',  prompt: 'A film within a film. The director calls action and a deeply personal story begins — cinematic and dramatic.' },
+  { name: 'Golden Hour',      thumb: 'assets/videos/sample-mvs/mv_10_monochrome.jpg',       prompt: 'The last rays of daylight paint everything gold. A moment suspended in time, fleeting as the day turns to dusk.' },
+];
+let _inspIdx = 0; // selected template index
+
+function _buildInspSheet() {
+  const row = document.getElementById('insp-thumb-row');
+  if (!row || row.children.length > 0) return; // already built
+  _templates.forEach((tpl, i) => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;width:62px;cursor:pointer;';
+    wrap.onclick = () => pickInspTpl(i);
+
+    const thumb = document.createElement('div');
+    thumb.id = `insp-thumb-${i}`;
+    thumb.style.cssText = `width:54px;height:54px;border-radius:8px;overflow:hidden;flex-shrink:0;border:2.5px solid ${i === _inspIdx ? '#A855F7' : 'transparent'};box-shadow:${i === _inspIdx ? '0 0 0 3px rgba(168,85,247,.25)' : 'none'};transition:border .2s;`;
+    const img = document.createElement('img');
+    img.src = tpl.thumb;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+    thumb.appendChild(img);
+
+    const lbl = document.createElement('div');
+    lbl.id = `insp-lbl-${i}`;
+    lbl.style.cssText = `font-size:11px;font-weight:500;color:${i === _inspIdx ? '#A855F7' : '#9C9CAB'};text-align:center;line-height:1.3;width:100%;`;
+    lbl.textContent = tpl.name;
+
+    wrap.appendChild(thumb);
+    wrap.appendChild(lbl);
+    row.appendChild(wrap);
+  });
 }
+
+function pickInspTpl(idx) {
+  _inspIdx = idx;
+  // Update preview
+  const previewImg  = document.getElementById('insp-preview-img');
+  const previewName = document.getElementById('insp-preview-name');
+  if (previewImg)  previewImg.src = _templates[idx].thumb;
+  if (previewName) previewName.textContent = _templates[idx].name;
+  // Update thumbnails
+  _templates.forEach((_, i) => {
+    const t = document.getElementById(`insp-thumb-${i}`);
+    const l = document.getElementById(`insp-lbl-${i}`);
+    if (t) { t.style.border = `2.5px solid ${i === idx ? '#A855F7' : 'transparent'}`; t.style.boxShadow = i === idx ? '0 0 0 3px rgba(168,85,247,.25)' : 'none'; }
+    if (l) { l.style.color = i === idx ? '#A855F7' : '#9C9CAB'; }
+  });
+}
+
 function applyInsp() {
-  if (inspSelected) {
-    const ta = document.getElementById('mvr-describe');
-    if (ta) { ta.value = inspSelected; updateDescCount(ta); }
-  }
+  const ta = document.getElementById('mvr-describe');
+  if (ta) { ta.value = _templates[_inspIdx].prompt; updateDescCount(ta); }
   hideSheet('insp-sheet');
+}
+
+// Initialise sheet on first open — hook into showSheet
+const _origShowSheet = window.showSheet;
+window.showSheet = function(id) {
+  if (id === 'insp-sheet') _buildInspSheet();
+  _origShowSheet(id);
+};
+
+// ── Ideas (random prompt generator) ──────────────────────────────────────────
+const _ideaPrompts = [
+  'Midnight rain falls on empty streets. Neon lights reflect in puddles as a lone figure walks through the city, chasing a fading dream.',
+  'A letter never sent. Words that lived only in the heart, now released through music and memory.',
+  'Two strangers meet in a laundromat at 2am. Their eyes lock. The whole world slows down.',
+  'Sunlight through apartment blinds on a lazy Sunday. Coffee, vinyl records, and the warmth of someone you love beside you.',
+  'A dancer rehearses alone on stage — every stumble, every rise, a story of resilience and passion.',
+  'Road trip at golden hour. Windows down, wind in your hair, singing at the top of your lungs to a song that defines a summer.',
+  'Backstage moments before the show: nervous hands, quiet prayers, then the lights come on and everything transforms.',
+  'An old photograph comes to life. The past and present blur as memories play out in vivid, saturated scenes.',
+  'A city at night seen from a rooftop — the hum of life below, the stars above, and one person finding peace in the middle of it all.',
+  'The last dance at a party no one wants to end. Time slows. Every face becomes precious.',
+];
+let _ideaIdx = -1;
+
+function generateVideoIdea() {
+  _ideaIdx = (_ideaIdx + 1) % _ideaPrompts.length;
+  const ta = document.getElementById('mvr-describe');
+  if (ta) { ta.value = _ideaPrompts[_ideaIdx]; updateDescCount(ta); ta.focus(); }
 }
 
 // ── Face picker state ──
@@ -5222,6 +5395,9 @@ function useAISongInMV() {
   const genre = document.getElementById('sr-genre')?.textContent || '';
   const dur   = document.getElementById('sr-time-total')?.textContent || '1:02';
   _songCtx = 'standalone'; // reset after use
+  _mvFromTemplate = false;
+  resetMvRoom();
+  updateSongClearBtn();
   goTo('mv-room');
   setTimeout(() => openTrim('AI Song', title, dur), 420);
 }
@@ -5434,6 +5610,47 @@ function scrollNewSongsTo(idx) {
 let _mvTpl = { style:'', vid:'', prompt:'', meta:'' };
 let _mvLiked = false, _mvMuted = true;
 let _mvProgressTimer = null;
+let _mvFromTemplate = false; // true when entering MV room from a template card
+
+function updateSongClearBtn() {
+  const btn = document.getElementById('song-clear-btn');
+  if (btn) btn.style.display = _mvFromTemplate ? 'none' : 'flex';
+}
+
+function resetMvRoom() {
+  // Clear song
+  clearSong();
+
+  // Clear describe textarea
+  const ta = document.getElementById('mvr-describe');
+  if (ta) { ta.value = ''; const cnt = document.getElementById('desc-cnt'); if (cnt) cnt.textContent = '0/2500'; }
+
+  // Reset photo slot 1
+  const slot1 = document.getElementById('pslot-1');
+  if (slot1) {
+    slot1.dataset.filled = '';
+    slot1.style.border = '1px dashed rgba(255,255,255,0.15)';
+    slot1.style.background = '#151519';
+    slot1.innerHTML = `
+      <div style="width:36px;height:36px;border-radius:20px;background:#A855F7;display:flex;align-items:center;justify-content:center;">
+        <img src="assets/icons/ui/ic_add.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+      </div>
+      <div style="font-size:12px;font-weight:600;color:#fff;text-align:center;padding:0 8px;line-height:1.4;">Add photos with single face</div>`;
+  }
+
+  // Reset photo slot 2
+  const slot2 = document.getElementById('pslot-2');
+  if (slot2) {
+    slot2.dataset.filled = '';
+    slot2.style.border = '1px dashed rgba(255,255,255,0.15)';
+    slot2.style.background = '#151519';
+    slot2.innerHTML = `
+      <div style="width:36px;height:36px;border-radius:20px;background:#212127;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;">
+        <img src="assets/icons/ui/ic_add.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);opacity:.4;">
+      </div>
+      <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.4);text-align:center;padding:0 8px;line-height:1.4;">2nd face photo<br><span style="font-weight:400;">(Optional)</span></div>`;
+  }
+}
 
 // ── MV Result: full controller ──
 function toggleMvResultPlay() {
@@ -5585,6 +5802,10 @@ function createMvFromTemplate() {
   // Pre-select a matching song for the user
   const song = _styleSongMap[_mvTpl.style] || { title:'Golden Hour', dur:'02:30', art:'assets/images/album-art/album_01.jpg' };
   addSongToRoom('Top Picks', song.title, song.dur, song.art);
+
+  // Entered from template — lock the song selection (hide clear button)
+  _mvFromTemplate = true;
+  updateSongClearBtn();
 
   goTo('mv-room');
 }
