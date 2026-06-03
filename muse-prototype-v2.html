@@ -1616,7 +1616,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 
       <div class="mv-style-screen">
         <!-- Subtitle -->
-        <div class="mv-style-sub-hdr">Select a style to create your MV</div>
+        <div class="mv-style-sub-hdr">Select a type to create your MV</div>
 
         <!-- Video carousel -->
         <div class="style-carousel-wrap" id="style-carousel">
@@ -1689,7 +1689,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 
         <!-- SELECT MV STYLE -->
         <div style="padding:0 16px;">
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Select MV Style</div>
+          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Select MV Type</div>
           <div id="mvr-mini-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">
             <div onclick="mvrPickStyle(0,this)" style="border-radius:12px;position:relative;aspect-ratio:3/4;cursor:pointer;border:2px solid #A855F7;background:#1a1a1a;overflow:hidden;min-width:0;">
               <div style="position:absolute;inset:0;z-index:1;">
@@ -1715,15 +1715,15 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           </div>
 
           <!-- CHOOSE A SONG -->
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Choose a Song <span style="color:rgba(255,255,255,.28);font-weight:500;text-transform:none;letter-spacing:0;">(Required)</span></div>
+          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Choose a Song <span style="color:rgba(255,255,255,.4);font-weight:500;text-transform:none;letter-spacing:0;">(Required)</span></div>
           <div id="mvr-song-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;">
             <!-- Song Library -->
-            <div onclick="startAudio('sample')" style="background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;height:68px;padding:0 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:border-color .15s;">
+            <div onclick="startAudio('sample')" style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;height:68px;padding:0 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:border-color .15s;">
               <img src="assets/icons/ui/ic_song_list.svg" width="22" height="22" style="display:block;filter:brightness(0) invert(1);">
               <span style="font-size:13px;font-weight:600;color:#fff;">Song Library</span>
             </div>
             <!-- Import Audio -->
-            <div onclick="startAudio('import')" style="background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;height:68px;padding:0 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:border-color .15s;">
+            <div onclick="startAudio('import')" style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;height:68px;padding:0 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:border-color .15s;">
               <img src="assets/icons/ui/ic_upload.svg" width="22" height="22" style="display:block;filter:brightness(0) invert(1);">
               <span style="font-size:13px;font-weight:600;color:#fff;">Import Audio</span>
             </div>
@@ -1752,8 +1752,8 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           </div>
 
           <!-- DESCRIBE YOUR VIDEO IDEA -->
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Describe Your Video Idea <span style="color:rgba(255,255,255,.28);font-weight:500;text-transform:none;letter-spacing:0;">(Required)</span></div>
-          <div style="background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;overflow:hidden;margin-bottom:20px;">
+          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Describe Your Video Idea <span style="color:rgba(255,255,255,.4);font-weight:500;text-transform:none;letter-spacing:0;">(Required)</span></div>
+          <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;margin-bottom:20px;">
             <textarea id="mvr-describe" oninput="updateDescCount(this)" placeholder="Describe your video to help AI create a more compelling story." style="width:100%;min-height:100px;padding:12px 14px 6px;background:transparent;border:none;color:#fff;font-size:14px;font-family:inherit;resize:none;outline:none;line-height:1.55;"></textarea>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 10px;">
               <div style="display:flex;gap:4px;align-items:center;">
@@ -1776,7 +1776,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           </div>
 
           <!-- UPLOAD CHARACTER PHOTO -->
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Upload Character Photo</div>
+          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Upload Character Photo</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
             <div id="pslot-1" onclick="addCharPhoto(1)" style="background:#151519;border:1px dashed rgba(255,255,255,0.15);border-radius:14px;height:150px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;">
               <div style="width:36px;height:36px;border-radius:20px;background:#A855F7;display:flex;align-items:center;justify-content:center;">
@@ -1804,8 +1804,8 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           </div>
 
           <!-- SETTINGS -->
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Settings</div>
-          <div id="settings-tags" onclick="showSheet('settings-sheet')" style="display:flex;align-items:center;background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;padding:12px 14px;cursor:pointer;margin-bottom:8px;gap:8px;">
+          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Settings</div>
+          <div id="settings-tags" onclick="showSheet('settings-sheet')" style="display:flex;align-items:center;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:12px 14px;cursor:pointer;margin-bottom:8px;gap:8px;">
             <!-- Tags wrap area -->
             <div style="flex:1;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
               <span id="stag-ratio" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">9:16</span>
