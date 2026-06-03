@@ -5333,15 +5333,21 @@ function setStyleActive(idx) {
   const offset = 160 - activeCenter;
   track.style.transform = `translateX(${offset}px)`;
 
-  // Fade-swap text
+  // Fade-swap text — cancel any in-flight timeout first to prevent overlap
   const nameEl = document.getElementById('style-name-disp');
   const descEl = document.getElementById('style-desc-disp');
   if (nameEl && descEl) {
+    if (setStyleActive._fadeTimer) clearTimeout(setStyleActive._fadeTimer);
+    nameEl.style.transition = descEl.style.transition = 'none';
     nameEl.style.opacity = descEl.style.opacity = '0';
-    setTimeout(() => {
+    // Force reflow so the opacity:0 is committed before re-enabling transition
+    void nameEl.offsetWidth;
+    nameEl.style.transition = descEl.style.transition = '';
+    setStyleActive._fadeTimer = setTimeout(() => {
       nameEl.textContent = mvStyleData[idx].name;
       descEl.textContent = mvStyleData[idx].desc;
       nameEl.style.opacity = descEl.style.opacity = '1';
+      setStyleActive._fadeTimer = null;
     }, 150);
   }
 }
@@ -5358,17 +5364,26 @@ function initStyleCarousel() {
 // Swipe on style carousel
 (function() {
   let sx = 0;
+  let _didSwipe = false; // suppress onclick after a swipe gesture
   window.addEventListener('load', () => {
     const wrap = document.getElementById('style-carousel');
     if (!wrap) return;
-    wrap.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    wrap.addEventListener('touchstart', e => {
+      sx = e.touches[0].clientX;
+      _didSwipe = false;
+    }, { passive: true });
     wrap.addEventListener('touchend', e => {
       const dx = sx - e.changedTouches[0].clientX;
       if (Math.abs(dx) > 36) {
+        _didSwipe = true;
         if (dx > 0 && styleIdx < 2) setStyleActive(styleIdx + 1);
         if (dx < 0 && styleIdx > 0) setStyleActive(styleIdx - 1);
       }
     }, { passive: true });
+    // Block the subsequent click event that fires after a touch swipe
+    wrap.addEventListener('click', e => {
+      if (_didSwipe) { e.stopPropagation(); _didSwipe = false; }
+    }, true);
     wrap.addEventListener('mousedown', e => { sx = e.clientX; });
     wrap.addEventListener('mouseup',   e => {
       const dx = sx - e.clientX;
