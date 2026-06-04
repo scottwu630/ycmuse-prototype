@@ -1279,17 +1279,31 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
     <!-- ══════ MV PREVIEW PLAYER ══════ -->
     <div id="screen-mv-preview" class="screen" style="background:#000;overflow:hidden;">
 
-      <!-- Swipe feed container — slides up/down between MVs -->
-      <div id="mvp-feed" style="position:absolute;inset:0;transition:transform .32s cubic-bezier(.4,0,.2,1);">
+      <!-- VIDEO TRACK — 3 slots stacked vertically, only this moves during drag -->
+      <!-- Container starts at top:-693px so current slot (at y=693 internally) lands at screen y=0 -->
+      <div id="mvp-track" style="position:absolute;top:-693px;left:0;right:0;height:2079px;will-change:transform;">
+        <!-- Prev slot — background-image always visible behind video, eliminates black flash -->
+        <div id="mvp-slot-prev" style="position:absolute;top:0;left:0;right:0;height:693px;background:#000;">
+          <video id="mv-prev-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;" playsinline loop muted></video>
+        </div>
+        <!-- Current slot -->
+        <div id="mvp-slot-curr" style="position:absolute;top:693px;left:0;right:0;height:693px;background:#000;">
+          <video id="mv-preview-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;" playsinline loop></video>
+        </div>
+        <!-- Next slot -->
+        <div id="mvp-slot-next" style="position:absolute;top:1386px;left:0;right:0;height:693px;background:#000;">
+          <video id="mv-next-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;" playsinline loop muted></video>
+        </div>
+      </div>
 
-        <!-- Video (full screen) -->
-        <video id="mv-preview-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" playsinline loop></video>
+      <!-- UI CHROME — always fixed, never moves -->
+      <div id="mvp-ui" style="position:absolute;inset:0;z-index:10;pointer-events:none;">
 
-        <!-- Tap area (left 80%) to toggle play/pause -->
-        <div onclick="toggleMvPlay()" style="position:absolute;inset:0;right:54px;z-index:1;cursor:pointer;"></div>
+        <!-- Tap area to toggle play/pause (pointer-events on) -->
+        <div onclick="toggleMvPlay()" style="position:absolute;inset:0;right:54px;bottom:140px;top:80px;pointer-events:all;cursor:pointer;"></div>
 
         <!-- Top navbar -->
-        <div style="position:absolute;top:0;left:0;right:0;z-index:20;background:linear-gradient(to bottom,rgba(0,0,0,.55),transparent);padding:calc(var(--safe-top) + 12px) 16px 28px;display:flex;align-items:center;gap:6px;">
+        <div style="position:absolute;top:0;left:0;right:0;pointer-events:all;background:linear-gradient(to bottom,rgba(0,0,0,.55),transparent);padding:calc(var(--safe-top) + 12px) 16px 28px;display:flex;align-items:center;gap:6px;">
           <div onclick="goBack();document.getElementById('mv-preview-video').pause();"
             style="width:28px;height:28px;border-radius:14px;background:#212127;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
             <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
@@ -1301,20 +1315,19 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           <div style="width:28px;height:28px;opacity:0;flex-shrink:0;"></div>
         </div>
 
-        <!-- Right-side action buttons (vertically centred on video) -->
-        <div style="position:absolute;right:0;top:0;bottom:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 10px;z-index:10;">
-          <div id="mvp-fav-btn" onclick="event.stopPropagation();toggleMvFavorite()" style="width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+        <!-- Right-side action buttons -->
+        <div style="position:absolute;right:0;top:0;bottom:0;pointer-events:all;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 10px;">
+          <div id="mvp-fav-btn" onclick="toggleMvFavorite()" style="width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
             <img id="mvp-fav-ico" src="assets/icons/ui/ic_favorite_off.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
           </div>
-          <div onclick="event.stopPropagation()" style="width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          <div style="width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
             <img src="assets/icons/ui/ic_share.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
           </div>
         </div>
 
-        <!-- Bottom gradient: controls + CTA -->
-        <div style="position:absolute;bottom:0;left:0;right:0;z-index:10;background:linear-gradient(to bottom,transparent,rgba(7,7,7,.95));padding:20px 16px 40px;">
-          <!-- Playback controls -->
-          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;overflow:hidden;">
+        <!-- Bottom: controls + CTA -->
+        <div style="position:absolute;bottom:0;left:0;right:0;pointer-events:all;background:linear-gradient(to bottom,transparent,rgba(7,7,7,.95));padding:20px 16px 40px;">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;">
             <img id="mvp-ctrl-icon" src="assets/icons/ui/ic_pause.svg" width="20" height="20"
               style="display:block;filter:brightness(0) invert(1);flex-shrink:0;cursor:pointer;" onclick="toggleMvPlay()">
             <div id="mvp-progress-bar" style="flex:1;position:relative;height:12px;display:flex;align-items:center;cursor:pointer;">
@@ -1326,7 +1339,6 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
             <img id="mvp-speaker-icon" src="assets/icons/ui/ic_speaker_on.svg" width="20" height="20"
               style="display:block;filter:brightness(0) invert(1);flex-shrink:0;cursor:pointer;" onclick="toggleMvMute()">
           </div>
-          <!-- CTA -->
           <button onclick="createMvFromTemplate()"
             style="width:100%;height:46px;border-radius:14px;background:linear-gradient(to right,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit;transition:opacity .15s;"
             onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
@@ -1335,13 +1347,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           </button>
         </div>
 
-        <!-- Swipe hint arrows (fade out after first swipe) -->
-        <div id="mvp-swipe-hint" style="position:absolute;left:50%;transform:translateX(-50%);top:50%;margin-top:-40px;display:flex;flex-direction:column;align-items:center;gap:6px;z-index:5;opacity:0;pointer-events:none;transition:opacity .3s;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7 7-7-7" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-
-      </div><!-- /mvp-feed -->
+      </div><!-- /mvp-ui -->
 
     </div>
 
@@ -3158,7 +3164,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
             </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
               <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Muse Pro</div>
-              <div style="font-size:11px;font-weight:500;color:#676779;letter-spacing:-.11px;line-height:16px;">Active</div>
+              <div style="font-size:11px;font-weight:500;color:#676779;letter-spacing:-.11px;line-height:16px;">Validity: 2026-08-10</div>
             </div>
             <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;opacity:.4;">
           </div>
@@ -3577,46 +3583,53 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
 
   <!-- Edit Profile Sheet -->
   <div class="overlay" id="edit-profile-overlay" onclick="hideSheet('edit-profile-sheet')"></div>
-  <div class="sheet" id="edit-profile-sheet" style="padding-bottom:calc(var(--safe-bot) + 24px);">
-    <div class="sheet-handle"></div>
-    <!-- Header -->
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px 20px;">
-      <div onclick="hideSheet('edit-profile-sheet')" style="font-size:15px;font-weight:500;color:#9C9CAB;cursor:pointer;min-width:48px;">Cancel</div>
-      <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.2px;">Edit Profile</div>
-      <div onclick="saveProfile()" style="font-size:15px;font-weight:700;color:#A855F7;cursor:pointer;min-width:48px;text-align:right;">Save</div>
+  <div id="edit-profile-sheet" class="sheet" style="background:#151519;border-radius:26px 26px 0 0;padding-bottom:calc(var(--safe-bot) + 40px);">
+    <!-- Handle -->
+    <div style="display:flex;justify-content:center;padding-top:12px;padding-bottom:2px;">
+      <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);"></div>
+    </div>
+
+    <!-- Header: X | Edit Profile | Done (dimmed until photo selected) -->
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 20px 12px;">
+      <div onclick="hideSheet('edit-profile-sheet')" style="width:28px;height:28px;border-radius:14px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#9C9CAB" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">Edit Profile</div>
+      <div id="ep-done-btn" onclick="saveProfile()" style="width:28px;height:28px;border-radius:14px;background:#383842;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .2s;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="opacity:.3;" id="ep-done-icon"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
     </div>
 
     <!-- Avatar -->
-    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:28px;">
-      <div onclick="changeAvatar()" style="position:relative;width:80px;height:80px;cursor:pointer;">
-        <div id="ep-avatar" style="width:80px;height:80px;border-radius:40px;background:linear-gradient(45deg,#FF6BCE 14.6%,#A855F7 50%,#4338CA 85.4%) center/cover;display:flex;align-items:center;justify-content:center;">
-          <img src="assets/icons/ui/ic_account.svg" id="ep-avatar-placeholder" width="36" height="36" style="display:block;filter:brightness(0) invert(1);">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding-bottom:10px;">
+      <!-- Avatar circle with camera badge overlaid at lower-right -->
+      <div style="position:relative;width:64px;height:64px;cursor:pointer;" onclick="changeAvatar()">
+        <div id="ep-avatar" style="width:64px;height:64px;border-radius:32px;background:linear-gradient(45deg,#FF6BCE 14.6%,#A855F7 50%,#4338CA 85.4%) center/cover;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+          <img src="assets/icons/ui/ic_account.svg" id="ep-avatar-placeholder" width="32" height="32" style="display:block;filter:brightness(0) invert(1);">
         </div>
-        <!-- Camera badge -->
-        <div style="position:absolute;bottom:0;right:0;width:26px;height:26px;border-radius:13px;background:#A855F7;border:2px solid #09090B;display:flex;align-items:center;justify-content:center;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="12" cy="13" r="4" stroke="#fff" stroke-width="2"/>
+        <!-- Camera badge — absolute lower-right -->
+        <div style="position:absolute;bottom:0;right:0;width:22px;height:22px;border-radius:11px;background:#A855F7;border:2px solid #151519;display:flex;align-items:center;justify-content:center;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="13" r="3.5" stroke="#fff" stroke-width="2"/>
           </svg>
         </div>
       </div>
-      <div onclick="changeAvatar()" style="font-size:13px;font-weight:600;color:#A855F7;cursor:pointer;">Change Photo</div>
+      <div onclick="changeAvatar()" style="font-size:13px;font-weight:700;color:#A855F7;cursor:pointer;letter-spacing:-.13px;">Change Photo</div>
     </div>
 
     <!-- Nickname input -->
-    <div style="padding:0 16px;display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;">Nickname</div>
+    <div style="padding:0 20px;display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
+      <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;">NICKNAME</div>
       <input id="ep-nickname" type="text" value="Scott Wu" maxlength="30"
-        style="width:100%;height:48px;background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;padding:0 14px;color:#fff;font-size:15px;font-weight:500;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color .15s;"
-        onfocus="this.style.borderColor='rgba(168,85,247,.5)'" onblur="this.style.borderColor='rgba(255,255,255,.065)'"
-        oninput="document.getElementById('ep-char-count').textContent=this.value.length+'/30'">
-      <div id="ep-char-count" style="font-size:11px;color:#676779;text-align:right;">7/30</div>
+        style="width:100%;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:16px 10px;color:#fff;font-size:12px;font-weight:500;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color .15s;"
+        onfocus="this.style.borderColor='rgba(168,85,247,.5)'" onblur="this.style.borderColor='rgba(255,255,255,.15)'">
     </div>
 
     <!-- Email (read-only) -->
-    <div style="padding:0 16px;display:flex;flex-direction:column;gap:6px;">
-      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;">Email</div>
-      <div style="width:100%;height:48px;background:#151519;border:1px solid rgba(255,255,255,.04);border-radius:14px;padding:0 14px;color:#676779;font-size:15px;font-weight:500;display:flex;align-items:center;">scott_wu@mail.com</div>
+    <div style="padding:0 20px;display:flex;flex-direction:column;gap:6px;">
+      <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;">EMAIL</div>
+      <div style="width:100%;background:#212127;border-radius:14px;padding:16px 10px;color:#fff;font-size:12px;font-weight:500;box-sizing:border-box;">scott_wu@mail.com</div>
     </div>
   </div>
 
@@ -4515,14 +4528,19 @@ let _avatarIdx = -1; // -1 = default gradient
 
 function changeAvatar() {
   _avatarIdx = (_avatarIdx + 1) % _avatarSamples.length;
-  const avatarEl  = document.getElementById('ep-avatar');
+  const avatarEl    = document.getElementById('ep-avatar');
   const placeholder = document.getElementById('ep-avatar-placeholder');
   if (!avatarEl) return;
   // Use background-image — no img tag, no overflow/clipping issues
-  avatarEl.style.backgroundImage = `url(${_avatarSamples[_avatarIdx]})`;
+  avatarEl.style.backgroundImage    = `url(${_avatarSamples[_avatarIdx]})`;
   avatarEl.style.backgroundSize     = 'cover';
   avatarEl.style.backgroundPosition = 'center';
   if (placeholder) placeholder.style.display = 'none';
+  // Activate the done button (purple) once a photo is selected
+  const doneBtn  = document.getElementById('ep-done-btn');
+  const doneIcon = document.getElementById('ep-done-icon');
+  if (doneBtn)  doneBtn.style.background = '#A855F7';
+  if (doneIcon) doneIcon.style.opacity   = '1';
 }
 
 function saveProfile() {
@@ -4903,6 +4921,19 @@ function applyInsp() {
 const _origShowSheet = window.showSheet;
 window.showSheet = function(id) {
   if (id === 'insp-sheet') _buildInspSheet();
+  if (id === 'edit-profile-sheet') {
+    // Reset done button to dimmed state on each open
+    const doneBtn  = document.getElementById('ep-done-btn');
+    const doneIcon = document.getElementById('ep-done-icon');
+    if (doneBtn)  doneBtn.style.background = '#383842';
+    if (doneIcon) doneIcon.style.opacity   = '.3';
+    // Reset avatar to gradient default
+    _avatarIdx = -1;
+    const av = document.getElementById('ep-avatar');
+    const ph = document.getElementById('ep-avatar-placeholder');
+    if (av) { av.style.backgroundImage = 'linear-gradient(45deg,#FF6BCE 14.6%,#A855F7 50%,#4338CA 85.4%)'; av.style.backgroundSize = ''; av.style.backgroundPosition = ''; }
+    if (ph) ph.style.display = 'block';
+  }
   _origShowSheet(id);
 };
 
@@ -5458,6 +5489,8 @@ function setStyleActive(idx) {
   const dots  = document.querySelectorAll('.c-dot');
   const track = document.getElementById('style-track');
   if (!track) return;
+  // Clear any inline styles set during drag so CSS classes take over cleanly
+  cards.forEach(c => { c.style.width = ''; c.style.height = ''; c.style.opacity = ''; c.style.transform = ''; c.style.transition = ''; });
 
   // Update card classes + video playback
   cards.forEach((c, i) => {
@@ -5521,37 +5554,116 @@ function initStyleCarousel() {
   }
 }
 
-// Swipe on style carousel
+// Drag on style carousel — track + card scale/rotation follow finger in real-time
 (function() {
-  let sx = 0;
-  let _didSwipe = false; // suppress onclick after a swipe gesture
+  const THRESHOLD = 60;
+  const ACTIVE_W = 220, ACTIVE_H = 293, ADJ_W = 190, ADJ_H = 253, GAP = 16;
+  const CARD_DIST = ADJ_W + GAP; // 206px between card positions
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function baseOffset(idx) {
+    return 160 - (idx * CARD_DIST + ACTIVE_W / 2);
+  }
+
+  // Apply interpolated card styles directly — called during drag
+  function applyCardProgress(dragDir, progress) {
+    const p = Math.min(1, Math.max(0, progress));
+    const cards = document.querySelectorAll('.style-vid-card');
+
+    cards.forEach((card, i) => {
+      let w, h, op, rot;
+
+      if (i === styleIdx) {
+        // Current card: active → adj (shrink, rotate toward drag direction)
+        const rotTarget = dragDir < 0 ? -3 : 3;
+        w   = lerp(ACTIVE_W, ADJ_W, p);
+        h   = lerp(ACTIVE_H, ADJ_H, p);
+        op  = lerp(1, 0.5, p);
+        rot = lerp(0, rotTarget, p);
+      } else if (i === styleIdx + (dragDir < 0 ? 1 : -1)) {
+        // Incoming neighbour: adj → active (grow, unrotate)
+        const rotStart = dragDir < 0 ? 3 : -3;
+        w   = lerp(ADJ_W, ACTIVE_W, p);
+        h   = lerp(ADJ_H, ACTIVE_H, p);
+        op  = lerp(0.5, 1, p);
+        rot = lerp(rotStart, 0, p);
+      } else {
+        // Far card: stays adj, no change needed
+        return;
+      }
+
+      card.style.transition = 'none';
+      card.style.width      = w + 'px';
+      card.style.height     = h + 'px';
+      card.style.opacity    = op;
+      card.style.transform  = `rotate(${rot}deg)`;
+    });
+  }
+
+  let sx = 0, dragging = false, _didSwipe = false;
+
+  function getTrack() { return document.getElementById('style-track'); }
+
+  function onStart(clientX) {
+    sx = clientX; dragging = true; _didSwipe = false;
+    const t = getTrack();
+    if (t) t.style.transition = 'none';
+  }
+
+  function onMove(clientX) {
+    if (!dragging) return;
+    const dx    = clientX - sx;
+    const base  = baseOffset(styleIdx);
+    const atStart = styleIdx === 0;
+    const atEnd   = styleIdx === 2;
+
+    let delta = dx;
+    if (dx > 0 && atStart) delta = dx / 3;
+    if (dx < 0 && atEnd)   delta = dx / 3;
+
+    // Move track
+    const t = getTrack();
+    if (t) t.style.transform = `translateX(${base + delta}px)`;
+
+    // Interpolate card scale/rotation based on drag progress
+    const canNavigate = (dx < 0 && !atEnd) || (dx > 0 && !atStart);
+    if (canNavigate) {
+      const progress = Math.abs(delta) / CARD_DIST;
+      applyCardProgress(dx, progress);
+    }
+  }
+
+  function onEnd(clientX) {
+    if (!dragging) return;
+    dragging = false;
+    const dx = clientX - sx;
+
+    if (Math.abs(dx) > THRESHOLD) {
+      _didSwipe = true;
+      if (dx < 0 && styleIdx < 2)      setStyleActive(styleIdx + 1);
+      else if (dx > 0 && styleIdx > 0) setStyleActive(styleIdx - 1);
+      else                              setStyleActive(styleIdx);
+    } else {
+      setStyleActive(styleIdx);
+    }
+  }
+
   window.addEventListener('load', () => {
     const wrap = document.getElementById('style-carousel');
     if (!wrap) return;
-    wrap.addEventListener('touchstart', e => {
-      sx = e.touches[0].clientX;
-      _didSwipe = false;
-    }, { passive: true });
-    wrap.addEventListener('touchend', e => {
-      const dx = sx - e.changedTouches[0].clientX;
-      if (Math.abs(dx) > 36) {
-        _didSwipe = true;
-        if (dx > 0 && styleIdx < 2) setStyleActive(styleIdx + 1);
-        if (dx < 0 && styleIdx > 0) setStyleActive(styleIdx - 1);
-      }
-    }, { passive: true });
-    // Block the subsequent click event that fires after a touch swipe
+
+    wrap.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true });
+    wrap.addEventListener('touchmove',  e => onMove(e.touches[0].clientX),  { passive: true });
+    wrap.addEventListener('touchend',   e => { onEnd(e.changedTouches[0].clientX); }, { passive: true });
+
     wrap.addEventListener('click', e => {
       if (_didSwipe) { e.stopPropagation(); _didSwipe = false; }
     }, true);
-    wrap.addEventListener('mousedown', e => { sx = e.clientX; });
-    wrap.addEventListener('mouseup',   e => {
-      const dx = sx - e.clientX;
-      if (Math.abs(dx) > 36) {
-        if (dx > 0 && styleIdx < 2) setStyleActive(styleIdx + 1);
-        if (dx < 0 && styleIdx > 0) setStyleActive(styleIdx - 1);
-      }
-    });
+
+    wrap.addEventListener('mousedown', e => onStart(e.clientX));
+    window.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX); });
+    window.addEventListener('mouseup',   e => { if (dragging) onEnd(e.clientX); });
   });
 })();
 
@@ -5699,142 +5811,226 @@ function initMvResultController() {
 let _mvFavorited = false;
 
 // ── MV Preview Feed ──────────────────────────────────────────────────────────
-// All available MVs in feed order
 const _mvFeed = [
-  { style:'Cinematic Dark',  vid:'assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4',      prompt:'A cinematic dark visual journey — neon lights, dramatic angles, emotive close-ups.',                     meta:'Popular | 2-3 min' },
-  { style:'Nature & Earth',  vid:'assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4', prompt:'Nature meets music — sweeping landscapes, organic textures, earthy tones.',                              meta:'Trending | 1-2 min' },
-  { style:'Late Night Stage',vid:'assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4',      prompt:'Late night stage performance — moody lighting, intimate venue, raw energy.',                             meta:'New | 2-3 min' },
-  { style:'Neon City',       vid:'assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4', prompt:'Urban neon city vibes — glowing streets, fast cuts, electric atmosphere.',                              meta:'Hot | 2-3 min' },
-  { style:'Anime Style',     vid:'assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4',       prompt:'Anime-inspired visual adventure — vibrant colors, dynamic motion, bold style.',                         meta:'Fan fav | 1-2 min' },
+  { style:'Cinematic Dark',  vid:'assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4',      prompt:'A cinematic dark visual journey — neon lights, dramatic angles, emotive close-ups.',      meta:'Popular | 2-3 min' },
+  { style:'Nature & Earth',  vid:'assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4', prompt:'Nature meets music — sweeping landscapes, organic textures, earthy tones.',             meta:'Trending | 1-2 min' },
+  { style:'Late Night Stage',vid:'assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4',      prompt:'Late night stage performance — moody lighting, intimate venue, raw energy.',            meta:'New | 2-3 min' },
+  { style:'Neon City',       vid:'assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4', prompt:'Urban neon city vibes — glowing streets, fast cuts, electric atmosphere.',             meta:'Hot | 2-3 min' },
+  { style:'Anime Style',     vid:'assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4',       prompt:'Anime-inspired visual adventure — vibrant colors, dynamic motion, bold style.',       meta:'Fan fav | 1-2 min' },
 ];
 let _mvFeedIdx = 0;
-let _mvSwipeHintShown = false;
 
-function _loadMvFeedItem(idx, animate) {
-  const item  = _mvFeed[idx];
-  _mvTpl = { style: item.style, vid: item.vid, prompt: item.prompt, meta: item.meta };
+// ── Slot rotation ─────────────────────────────────────────────────────────────
+// Instead of reloading the visible video, we rotate which div plays which role.
+// _mvRoles[0]=prev slot index, [1]=curr slot index, [2]=next slot index
+// into _mvSlots array (fixed div+vid pairs, never renamed).
+const _mvSlots = [
+  { div: 'mvp-slot-prev', vid: 'mv-prev-video'    },
+  { div: 'mvp-slot-curr', vid: 'mv-preview-video' },
+  { div: 'mvp-slot-next', vid: 'mv-next-video'    },
+];
+const _SLOT_TOPS = [0, 693, 1386]; // px top values for [prev, curr, next] roles
+let _mvRoles = [0, 1, 2]; // which slot index plays which role
 
-  // Title / meta
-  document.getElementById('mv-preview-title').textContent = item.style;
-  document.getElementById('mv-preview-meta').textContent  = item.meta;
+function _mvCurrVideo() { return document.getElementById(_mvSlots[_mvRoles[1]].vid); }
+function _mvPrevVideo() { return document.getElementById(_mvSlots[_mvRoles[0]].vid); }
+function _mvNextVideo() { return document.getElementById(_mvSlots[_mvRoles[2]].vid); }
 
-  // Video
-  const video = document.getElementById('mv-preview-video');
-  video.src = item.vid;
-  video.load();
-  video.muted = _mvMuted;
-  video.currentTime = 0;
-  video.oncanplay = function() { video.play().catch(() => {}); video.oncanplay = null; };
+function _applySlotTops() {
+  _mvRoles.forEach((slotIdx, roleIdx) => {
+    const el = document.getElementById(_mvSlots[slotIdx].div);
+    if (el) el.style.top = _SLOT_TOPS[roleIdx] + 'px';
+  });
+}
 
-  // Controls
-  const ctrlIcon = document.getElementById('mvp-ctrl-icon');
-  if (ctrlIcon) ctrlIcon.src = 'assets/icons/ui/ic_pause.svg';
+function _loadVideoEl(videoEl, idx) {
+  if (!videoEl) return;
+  if (idx < 0 || idx >= _mvFeed.length) { videoEl.src = ''; videoEl.load(); return; }
+  const item = _mvFeed[idx];
+  const fileName = item.vid.split('/').pop();
+  if (videoEl.src.includes(fileName)) return; // already loaded, skip reload
+  videoEl.src = item.vid;
+  videoEl.load();
+  videoEl.muted = true;
+  videoEl.currentTime = 0;
+  videoEl.oncanplay = function() { videoEl.play().catch(() => {}); videoEl.oncanplay = null; };
+}
+
+function _updateCurrControls() {
+  const video = _mvCurrVideo();
   const fill  = document.getElementById('mvp-progress-fill');
   const thumb = document.getElementById('mvp-progress-thumb');
+  const bar   = document.getElementById('mvp-progress-bar');
   if (fill)  fill.style.width = '0%';
   if (thumb) thumb.style.left  = '0%';
-  const spkr = document.getElementById('mvp-speaker-icon');
-  if (spkr) spkr.src = _mvMuted ? 'assets/icons/ui/ic_speaker_off.svg' : 'assets/icons/ui/ic_speaker_on.svg';
-
-  // Progress
-  video.ontimeupdate = function() {
-    if (!video.duration) return;
-    const pct = (video.currentTime / video.duration) * 100;
-    if (fill)  fill.style.width = pct + '%';
-    if (thumb) thumb.style.left  = pct + '%';
-  };
-
-  // Seek
-  const bar = document.getElementById('mvp-progress-bar');
-  if (bar) {
-    bar.onclick = function(e) {
+  if (video) {
+    video.ontimeupdate = function() {
       if (!video.duration) return;
-      const rect = bar.getBoundingClientRect();
-      const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      video.currentTime = pct * video.duration;
+      const pct = (video.currentTime / video.duration) * 100;
+      if (fill)  fill.style.width = pct + '%';
+      if (thumb) thumb.style.left  = pct + '%';
     };
   }
+  if (bar) {
+    bar.onclick = function(e) {
+      const v = _mvCurrVideo();
+      if (!v || !v.duration) return;
+      const rect = bar.getBoundingClientRect();
+      const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      v.currentTime = pct * v.duration;
+    };
+  }
+  const ctrlIcon = document.getElementById('mvp-ctrl-icon');
+  if (ctrlIcon) ctrlIcon.src = 'assets/icons/ui/ic_pause.svg';
+  const spkr = document.getElementById('mvp-speaker-icon');
+  if (spkr) spkr.src = _mvMuted ? 'assets/icons/ui/ic_speaker_off.svg' : 'assets/icons/ui/ic_speaker_on.svg';
+}
 
-  // Reset favorite
+function _updateTitle(idx) {
+  const item = _mvFeed[idx];
+  _mvTpl = { style: item.style, vid: item.vid, prompt: item.prompt, meta: item.meta };
+  document.getElementById('mv-preview-title').textContent = item.style;
+  document.getElementById('mv-preview-meta').textContent  = item.meta;
+}
+
+// Full init — called on first open or direct openMvPreview
+function _initMvFeed(idx) {
+  _mvFeedIdx = idx;
+  _mvRoles = [0, 1, 2]; // reset to default slot assignment
+  _applySlotTops();
+
+  // Load all 3 slots
+  _loadVideoEl(_mvPrevVideo(), idx - 1);
+  _loadVideoEl(_mvNextVideo(), idx + 1);
+
+  const curr = _mvCurrVideo();
+  if (curr) {
+    curr.src = _mvFeed[idx].vid;
+    curr.load();
+    curr.muted = _mvMuted;
+    curr.currentTime = 0;
+    curr.oncanplay = function() { curr.play().catch(() => {}); curr.oncanplay = null; };
+  }
+
+  _updateTitle(idx);
+  _updateCurrControls();
   _mvFavorited = false;
   const favIco = document.getElementById('mvp-fav-ico');
   if (favIco) { favIco.src = 'assets/icons/ui/ic_favorite_off.svg'; favIco.style.filter = 'brightness(0) invert(1)'; }
+}
 
-  // Animate feed slide
-  if (animate) {
-    const feed = document.getElementById('mvp-feed');
-    if (feed) {
-      const dir = animate === 'up' ? '-100%' : '100%';
-      feed.style.transition = 'none';
-      feed.style.transform  = `translateY(${dir})`;
-      void feed.offsetWidth; // reflow
-      feed.style.transition = 'transform .32s cubic-bezier(.4,0,.2,1)';
-      feed.style.transform  = 'translateY(0)';
-    }
-  }
+// Rotate slots forward (commit next) — no video reload for the newly visible slot
+function _commitSlotForward() {
+  _mvFeedIdx++;
+  // Rotate: [prev, curr, next] → [curr, next, prev(repurposed as new next)]
+  _mvRoles = [_mvRoles[1], _mvRoles[2], _mvRoles[0]];
+  _applySlotTops();
+  // The new curr was already playing as "next" — just unmute and wire controls
+  const curr = _mvCurrVideo();
+  if (curr) { curr.muted = _mvMuted; curr.play().catch(() => {}); }
+  // Load new content into the recycled slot (now in "next" position, off-screen)
+  _loadVideoEl(_mvNextVideo(), _mvFeedIdx + 1);
+  _updateTitle(_mvFeedIdx);
+  _updateCurrControls();
+}
+
+// Rotate slots backward (commit prev)
+function _commitSlotBackward() {
+  _mvFeedIdx--;
+  // Rotate: [prev, curr, next] → [next(repurposed as new prev), prev, curr]
+  _mvRoles = [_mvRoles[2], _mvRoles[0], _mvRoles[1]];
+  _applySlotTops();
+  const curr = _mvCurrVideo();
+  if (curr) { curr.muted = _mvMuted; curr.play().catch(() => {}); }
+  _loadVideoEl(_mvPrevVideo(), _mvFeedIdx - 1);
+  _updateTitle(_mvFeedIdx);
+  _updateCurrControls();
 }
 
 function openMvPreview(style, vid, prompt, meta) {
-  // Find index in feed, or add as first item if not found
   const idx = _mvFeed.findIndex(m => m.style === style);
-  _mvFeedIdx = idx >= 0 ? idx : 0;
-  _loadMvFeedItem(_mvFeedIdx, null);
+  _initMvFeed(idx >= 0 ? idx : 0);
   goTo('mv-preview');
+}
 
-  // Show swipe hint briefly on first open
-  if (!_mvSwipeHintShown && _mvFeed.length > 1) {
-    _mvSwipeHintShown = true;
-    const hint = document.getElementById('mvp-swipe-hint');
-    if (hint) {
-      setTimeout(() => { hint.style.opacity = '1'; }, 600);
-      setTimeout(() => { hint.style.opacity = '0'; }, 2200);
+// Drag-to-navigate — track moves, UI chrome stays fixed
+(function() {
+  const THRESHOLD = 80;
+  const SCREEN_H  = 693;
+  let sy = 0, dragging = false;
+
+  function getTrack() { return document.getElementById('mvp-track'); }
+
+  function setTrackY(y, animated) {
+    const t = getTrack();
+    if (!t) return;
+    t.style.transition = animated ? 'transform .28s cubic-bezier(.4,0,.2,1)' : 'none';
+    t.style.transform  = y === 0 ? '' : `translateY(${y}px)`;
+  }
+
+  function onStart(clientY) {
+    if (!document.getElementById('screen-mv-preview')?.classList.contains('active')) return;
+    sy = clientY; dragging = true;
+    setTrackY(0, false);
+  }
+
+  function onMove(clientY) {
+    if (!dragging) return;
+    const dy = clientY - sy;
+    const atStart = _mvFeedIdx === 0;
+    const atEnd   = _mvFeedIdx === _mvFeed.length - 1;
+    let clamped = dy;
+    if (dy < 0 && atEnd)   clamped = dy / 4;
+    if (dy > 0 && atStart) clamped = dy / 4;
+    setTrackY(clamped, false);
+  }
+
+  function onEnd(clientY) {
+    if (!dragging) return;
+    dragging = false;
+    const dy = clientY - sy;
+
+    if (dy < -THRESHOLD && _mvFeedIdx < _mvFeed.length - 1) {
+      // Animate track up, then rotate slots (no video reload for visible content)
+      _mvCurrVideo()?.pause();
+      setTrackY(-SCREEN_H, true);
+      setTimeout(() => {
+        _commitSlotForward();
+        setTrackY(0, false); // instant reset — new curr was already decoded
+      }, 270);
+    } else if (dy > THRESHOLD && _mvFeedIdx > 0) {
+      _mvCurrVideo()?.pause();
+      setTrackY(SCREEN_H, true);
+      setTimeout(() => {
+        _commitSlotBackward();
+        setTrackY(0, false);
+      }, 270);
+    } else {
+      setTrackY(0, true);
     }
   }
-}
 
-function _mvNavigate(direction) {
-  const newIdx = _mvFeedIdx + direction;
-  if (newIdx < 0 || newIdx >= _mvFeed.length) return;
-  document.getElementById('mv-preview-video')?.pause();
-  _mvFeedIdx = newIdx;
-  _loadMvFeedItem(_mvFeedIdx, direction > 0 ? 'up' : 'down');
-}
-
-// Swipe up/down gesture on MV preview screen
-(function() {
-  let sy = 0, _mvSwiping = false;
   window.addEventListener('load', () => {
     const screen = document.getElementById('screen-mv-preview');
     if (!screen) return;
-    screen.addEventListener('touchstart', e => {
-      sy = e.touches[0].clientY;
-      _mvSwiping = false;
-    }, { passive: true });
-    screen.addEventListener('touchend', e => {
-      const dy = sy - e.changedTouches[0].clientY;
-      if (Math.abs(dy) > 60) {
-        _mvSwiping = true;
-        _mvNavigate(dy > 0 ? 1 : -1); // swipe up = next, swipe down = prev
-      }
-    }, { passive: true });
-    // Mouse drag (desktop testing)
-    screen.addEventListener('mousedown', e => { sy = e.clientY; });
-    screen.addEventListener('mouseup', e => {
-      const dy = sy - e.clientY;
-      if (Math.abs(dy) > 60) _mvNavigate(dy > 0 ? 1 : -1);
-    });
+    screen.addEventListener('touchstart', e => onStart(e.touches[0].clientY), { passive: true });
+    screen.addEventListener('touchmove',  e => onMove(e.touches[0].clientY),  { passive: true });
+    screen.addEventListener('touchend',   e => onEnd(e.changedTouches[0].clientY), { passive: true });
+    screen.addEventListener('mousedown',  e => onStart(e.clientY));
+    window.addEventListener('mousemove',  e => { if (dragging) onMove(e.clientY); });
+    window.addEventListener('mouseup',    e => { if (dragging) onEnd(e.clientY); });
   });
 })();
 
 function toggleMvPlay() {
-  const v    = document.getElementById('mv-preview-video');
+  const v    = _mvCurrVideo();
   const icon = document.getElementById('mvp-ctrl-icon');
   if (!v) return;
   if (v.paused) { v.play().catch(() => {}); if (icon) icon.src = 'assets/icons/ui/ic_pause.svg'; }
   else          { v.pause();                if (icon) icon.src = 'assets/icons/ui/ic_play.svg';  }
 }
 function toggleMvMute() {
-  const v    = document.getElementById('mv-preview-video');
+  const v    = _mvCurrVideo();
   const icon = document.getElementById('mvp-speaker-icon');
   if (!v) return;
   _mvMuted = !_mvMuted;
