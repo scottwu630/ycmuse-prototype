@@ -83,7 +83,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
   :root{--safe-top:48px;}
   .scr-scroll{scrollbar-width:none;}
   .scr-scroll::-webkit-scrollbar{display:none;}
-  #song-simple-idea::-webkit-scrollbar,#song-lyrics::-webkit-scrollbar{display:none;}
+  #song-simple-idea::-webkit-scrollbar,#song-lyrics::-webkit-scrollbar,#mvr-describe::-webkit-scrollbar{display:none;}
 }
 
 /* ── iPhone / mobile: full screen, no frame, scale up to fill screen ── */
@@ -1750,7 +1750,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           <!-- DESCRIBE YOUR VIDEO IDEA -->
           <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Describe Your Video Idea <span style="color:rgba(255,255,255,.4);font-weight:500;text-transform:none;letter-spacing:0;">(Required)</span></div>
           <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;margin-bottom:20px;">
-            <textarea id="mvr-describe" oninput="updateDescCount(this)" placeholder="Describe your video to help AI create a more compelling story." style="width:100%;min-height:100px;padding:12px 14px 6px;background:transparent;border:none;color:#fff;font-size:14px;font-family:inherit;resize:none;outline:none;line-height:1.55;"></textarea>
+            <textarea id="mvr-describe" oninput="updateDescCount(this)" placeholder="Describe your video to help AI create a more compelling story." style="width:100%;min-height:100px;padding:12px 14px 6px;background:transparent;border:none;color:#fff;font-size:14px;font-family:inherit;resize:none;outline:none;line-height:1.55;scrollbar-width:none;-ms-overflow-style:none;"></textarea>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 10px;">
               <div style="display:flex;gap:4px;align-items:center;">
                 <button class="insp-btn" onclick="showSheet('insp-sheet')" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
@@ -3028,9 +3028,9 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
             </div>
             <div class="hist-info">
               <div class="hist-name">New AI Song</div>
-              <div class="hist-meta">AI Song · Just now</div>
-              <div class="hist-badge badge-proc" style="display:inline-flex;align-items:center;gap:3px;">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.65708 12.9427L7.77876 14.4509C8.61504 14.7685 9.27212 15.4234 9.5708 16.237L11.0642 20.3451C11.3827 21.2183 12.6372 21.2183 12.9358 20.3451L14.4292 16.237C14.7478 15.4234 15.4049 14.7685 16.2212 14.4509L20.3429 12.9427C21.219 12.6251 21.219 11.3749 20.3429 11.0573L16.2212 9.54906C15.385 9.23153 14.7279 8.61632 14.4292 7.76295L12.9358 3.65491C12.6173 2.7817 11.3628 2.7817 11.0642 3.65491L9.5708 7.76295C9.25221 8.57663 8.59513 9.23153 7.77876 9.54906L3.65708 11.0573C2.78097 11.3749 2.78097 12.6251 3.65708 12.9427Z" fill="currentColor"/></svg>
+              <div class="hist-meta">AI Song</div>
+              <div class="hist-badge badge-proc">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M3.65708 12.9427L7.77876 14.4509C8.61504 14.7685 9.27212 15.4234 9.5708 16.237L11.0642 20.3451C11.3827 21.2183 12.6372 21.2183 12.9358 20.3451L14.4292 16.237C14.7478 15.4234 15.4049 14.7685 16.2212 14.4509L20.3429 12.9427C21.219 12.6251 21.219 11.3749 20.3429 11.0573L16.2212 9.54906C15.385 9.23153 14.7279 8.61632 14.4292 7.76295L12.9358 3.65491C12.6173 2.7817 11.3628 2.7817 11.0642 3.65491L9.5708 7.76295C9.25221 8.57663 8.59513 9.23153 7.77876 9.54906L3.65708 11.0573C2.78097 11.3749 2.78097 12.6251 3.65708 12.9427Z" fill="currentColor"/></svg>
                 Generating...
               </div>
             </div>
@@ -3038,16 +3038,19 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
           </div>
 
           <!-- 1. Cinematic Night — Music Video · Done -->
-          <div class="hist-row" data-htype="mv" onclick="goTo('mv-result')">
+          <div class="hist-row" data-htype="mv" onclick="histMarkPlayed(this);goTo('mv-result')">
             <div class="hist-thumb">
               <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg">
             </div>
             <div class="hist-info">
               <div class="hist-name">Cinematic Night</div>
-              <div class="hist-meta">Music Video · 1:24 · Today</div>
-              <div class="hist-badge badge-done">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Done
+              <div class="hist-meta">Music Video · 1:24</div>
+              <div class="hist-status">
+                <div class="hist-badge badge-done">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Done
+                </div>
+                <div class="hist-time">Today</div>
               </div>
             </div>
             <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
@@ -3060,9 +3063,9 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
             </div>
             <div class="hist-info">
               <div class="hist-name">New AI Song</div>
-              <div class="hist-meta">AI Song · Just now</div>
-              <div class="hist-badge badge-proc" style="display:inline-flex;align-items:center;gap:3px;">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.65708 12.9427L7.77876 14.4509C8.61504 14.7685 9.27212 15.4234 9.5708 16.237L11.0642 20.3451C11.3827 21.2183 12.6372 21.2183 12.9358 20.3451L14.4292 16.237C14.7478 15.4234 15.4049 14.7685 16.2212 14.4509L20.3429 12.9427C21.219 12.6251 21.219 11.3749 20.3429 11.0573L16.2212 9.54906C15.385 9.23153 14.7279 8.61632 14.4292 7.76295L12.9358 3.65491C12.6173 2.7817 11.3628 2.7817 11.0642 3.65491L9.5708 7.76295C9.25221 8.57663 8.59513 9.23153 7.77876 9.54906L3.65708 11.0573C2.78097 11.3749 2.78097 12.6251 3.65708 12.9427Z" fill="currentColor"/></svg>
+              <div class="hist-meta">AI Song</div>
+              <div class="hist-badge badge-proc">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M3.65708 12.9427L7.77876 14.4509C8.61504 14.7685 9.27212 15.4234 9.5708 16.237L11.0642 20.3451C11.3827 21.2183 12.6372 21.2183 12.9358 20.3451L14.4292 16.237C14.7478 15.4234 15.4049 14.7685 16.2212 14.4509L20.3429 12.9427C21.219 12.6251 21.219 11.3749 20.3429 11.0573L16.2212 9.54906C15.385 9.23153 14.7279 8.61632 14.4292 7.76295L12.9358 3.65491C12.6173 2.7817 11.3628 2.7817 11.0642 3.65491L9.5708 7.76295C9.25221 8.57663 8.59513 9.23153 7.77876 9.54906L3.65708 11.0573C2.78097 11.3749 2.78097 12.6251 3.65708 12.9427Z" fill="currentColor"/></svg>
                 Generating...
               </div>
             </div>
@@ -3070,49 +3073,57 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
           </div>
 
           <!-- 3. Golden Hour — AI Song · Done -->
-          <div class="hist-row" data-htype="song" onclick="goTo('song-result')">
+          <div class="hist-row" data-htype="song" onclick="histMarkPlayed(this);goTo('song-result')">
             <div class="hist-thumb">
               <img src="assets/images/album-art/album_01.jpg">
             </div>
             <div class="hist-info">
               <div class="hist-name">Golden Hour</div>
-              <div class="hist-meta">AI Song · 1:02 · Today</div>
-              <div class="hist-badge badge-done">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Done
+              <div class="hist-meta">AI Song · 1:02</div>
+              <div class="hist-status">
+                <div class="hist-badge badge-done">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Done
+                </div>
+                <div class="hist-time">Today</div>
               </div>
             </div>
             <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
           </div>
 
           <!-- 4. Neon City Nights — Music Video · Done -->
-          <div class="hist-row" data-htype="mv">
+          <div class="hist-row" data-htype="mv" onclick="histMarkPlayed(this);goTo('mv-result')">
             <div class="hist-thumb">
               <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg">
             </div>
             <div class="hist-info">
               <div class="hist-name">Neon City Nights</div>
-              <div class="hist-meta">Music Video · 2 days ago</div>
-              <div class="hist-badge badge-done">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Done
+              <div class="hist-meta">Music Video · 3:12</div>
+              <div class="hist-status">
+                <div class="hist-badge badge-done">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Done
+                </div>
+                <div class="hist-time">2 days ago</div>
               </div>
             </div>
             <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
           </div>
 
-          <!-- 5. Midnight Drive — AI Song · Done (with dark overlay) -->
-          <div class="hist-row" data-htype="song">
-            <div class="hist-thumb" style="position:relative;">
+          <!-- 5. Midnight Drive — AI Song · Done -->
+          <div class="hist-row" data-htype="song" onclick="histMarkPlayed(this);goTo('song-result')">
+            <div class="hist-thumb">
               <img src="assets/images/album-art/album_08.jpg">
-              <div style="position:absolute;inset:0;background:rgba(0,0,0,.2);border-radius:10px;pointer-events:none;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Midnight Drive</div>
-              <div class="hist-meta">AI Song · 3 days ago</div>
-              <div class="hist-badge badge-done">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Done
+              <div class="hist-meta">AI Song · 1:02</div>
+              <div class="hist-status">
+                <div class="hist-badge badge-done">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Done
+                </div>
+                <div class="hist-time">3 days ago</div>
               </div>
             </div>
             <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
@@ -3125,10 +3136,13 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
             </div>
             <div class="hist-info">
               <div class="hist-name">Midnight Drive</div>
-              <div class="hist-meta">AI Song · 3 days ago</div>
-              <div class="hist-badge badge-failed">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18" stroke="#FF2600" stroke-width="2.5" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="#FF2600" stroke-width="2.5" stroke-linecap="round"/></svg>
-                Failed
+              <div class="hist-meta">AI Song</div>
+              <div class="hist-status">
+                <div class="hist-badge badge-failed">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18" stroke="#FF2600" stroke-width="2.5" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="#FF2600" stroke-width="2.5" stroke-linecap="round"/></svg>
+                  Failed
+                </div>
+                <div class="hist-time">3 days ago</div>
               </div>
             </div>
             <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
@@ -4499,6 +4513,20 @@ document.addEventListener('click', function(e) {
   if (tt && wrap && !wrap.contains(e.target)) tt.style.display = 'none';
 });
 
+// Hide the Done badge when a history item is played
+function histMarkPlayed(row) {
+  const status = row.querySelector('.hist-status');
+  const badge  = row.querySelector('.hist-badge.badge-done');
+  const time   = row.querySelector('.hist-time');
+  if (badge) badge.style.display = 'none';
+  // If only the time remains in .hist-status, move it out so it still shows
+  if (status && time) {
+    time.classList.add('hist-time'); // keep styling
+    // Replace .hist-status with just the time div
+    status.replaceWith(time);
+  }
+}
+
 function filterTab(btn) {
   // Only apply to tabs within the History screen
   btn.closest('div').querySelectorAll('.ftab').forEach(b => b.classList.remove('on'));
@@ -4990,7 +5018,7 @@ let _ideaIdx = -1;
 function generateVideoIdea() {
   _ideaIdx = (_ideaIdx + 1) % _ideaPrompts.length;
   const ta = document.getElementById('mvr-describe');
-  if (ta) { ta.value = _ideaPrompts[_ideaIdx]; updateDescCount(ta); ta.focus(); }
+  if (ta) { ta.value = _ideaPrompts[_ideaIdx]; updateDescCount(ta); }
 }
 
 // ── Face picker state ──
