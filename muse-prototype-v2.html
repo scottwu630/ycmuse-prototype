@@ -1145,30 +1145,91 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           </div>
         </div>
 
+        <!-- Trending Carousel — 16:9, 288×162px cards -->
+        <div style="margin-top:12px;margin-bottom:10px;overflow:hidden;position:relative;">
+          <div id="trend-track" style="display:flex;gap:10px;transition:transform .48s cubic-bezier(.4,0,.2,1);will-change:transform;">
+
+            <!-- Card 1: Trending MV — Adventurous Echoes -->
+            <div style="min-width:288px;height:162px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
+              onclick="openMvPreview('Adventurous Echoes','assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','Wide-open landscapes and soaring cinematic shots — earthy tones, golden light.','Fan fav | 2-3 min')">
+              <img src="assets/videos/sample-mvs/mv_12_Splash.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
+              <div style="position:absolute;top:8px;left:8px;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">
+                <img src="assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
+                <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending MV</span>
+              </div>
+              <div style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
+                <div>
+                  <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Adventurous Echoes</div>
+                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Adventure · 2-3 min</div>
+                </div>
+                <button onclick="event.stopPropagation();openMvPreview('Adventurous Echoes','assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','Wide-open landscapes and soaring cinematic shots — earthy tones, golden light.','Fan fav | 2-3 min')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create MV</button>
+              </div>
+            </div>
+
+            <!-- Card 2: Trending Song — Thrilling Harmonies -->
+            <div style="min-width:288px;height:162px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
+              onclick="openSongPlayer('Thrilling Harmonies','Hip-Pop · 3-4 min','assets/videos/sample-mvs/mv_13_Urban%20Fashion.jpg','Hip-Pop','Energetic')">
+              <img src="assets/videos/sample-mvs/mv_13_Urban Fashion.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
+              <div style="position:absolute;top:8px;left:8px;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">
+                <img src="assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
+                <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending Song</span>
+              </div>
+              <div style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
+                <div>
+                  <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Thrilling Harmonies</div>
+                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Hip-Pop · 3-4 min</div>
+                </div>
+                <button onclick="event.stopPropagation();openSongPlayer('Thrilling Harmonies','Hip-Pop · 3-4 min','assets/videos/sample-mvs/mv_13_Urban%20Fashion.jpg','Hip-Pop','Energetic')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create Song</button>
+              </div>
+            </div>
+
+            <!-- Card 3: Trending MV — Epic Journeys -->
+            <div style="min-width:288px;height:162px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
+              onclick="openMvPreview('Epic Journeys','assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','A cinematic road trip — vintage car, golden light, open highway.','Storytelling | 3-4 min')">
+              <img src="assets/videos/sample-mvs/mv_14_Vintage Car.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
+              <div style="position:absolute;top:8px;left:8px;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">
+                <img src="assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
+                <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending MV</span>
+              </div>
+              <div style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
+                <div>
+                  <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Epic Journeys</div>
+                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Storytelling · 3-4 min</div>
+                </div>
+                <button onclick="event.stopPropagation();openMvPreview('Epic Journeys','assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','A cinematic road trip — vintage car, golden light, open highway.','Storytelling | 3-4 min')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create MV</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         <!-- Feature Cards — side by side -->
-        <div id="home-feature-cards" style="padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;margin-bottom:10px;">
-          <div onclick="goTo('mv-style')" style="height:140px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);display:flex;flex-direction:column;justify-content:space-between;padding:10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-            <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
+        <div id="home-feature-cards" style="padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;margin-bottom:16px;">
+          <div onclick="goTo('mv-style')" style="height:86px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);display:flex;flex-direction:column;justify-content:space-between;padding:10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+            <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
               <img src="assets/icons/ui/ic_video_ai.svg" width="16" height="16" style="display:block;filter:brightness(10);">
             </div>
             <div>
-              <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.8);letter-spacing:.04em;line-height:14px;">AI CREATOR</div>
-              <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:22px;">Music Video</div>
+              <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.8);letter-spacing:.04em;line-height:11px;margin-bottom:0;">AI CREATOR</div>
+              <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:17px;">Music Video</div>
             </div>
           </div>
-          <div onclick="resetSongCreate();goTo('song-create')" style="height:140px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);display:flex;flex-direction:column;justify-content:space-between;padding:10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-            <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
+          <div onclick="resetSongCreate();goTo('song-create')" style="height:86px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);display:flex;flex-direction:column;justify-content:space-between;padding:10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+            <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
               <img src="assets/icons/ui/ic_song.svg" width="16" height="16" style="display:block;filter:brightness(10);">
             </div>
             <div>
-              <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.8);letter-spacing:.04em;line-height:14px;">AI COMPOSER</div>
-              <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:22px;">AI Song</div>
+              <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.8);letter-spacing:.04em;line-height:11px;margin-bottom:0;">AI COMPOSER</div>
+              <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:17px;">AI Song</div>
             </div>
           </div>
         </div>
 
-        <!-- Banner Ad — hidden when signed in -->
-        <div id="home-banner-ad" style="padding:0 16px;margin-bottom:16px;">
+        <!-- Banner Ad — hidden -->
+        <div id="home-banner-ad" style="padding:0 16px;margin-bottom:16px;display:none;">
           <div onclick="_signinSource='banner';showSheet('signin-sheet')" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''" style="position:relative;border-radius:18px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.15);display:flex;flex-direction:column;gap:5px;justify-content:center;padding:12px;min-height:72px;cursor:pointer;transition:opacity .15s;-webkit-tap-highlight-color:transparent;">
             <img src="../assets/images/banner/img_banner_newer.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
             <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:5px;">
@@ -4625,6 +4686,83 @@ function saveProfile() {
   }
   hideSheet('edit-profile-sheet');
 }
+
+// ── Trending Carousel — drag to navigate ──────────────────────────────────
+(function() {
+  const CARD_W = 288, GAP = 10, LEFT_PAD = 16, TOTAL = 3, INTERVAL = 4000;
+  const THRESHOLD = 60;
+  let trendIdx = 0, trendTimer = null;
+  let sx = 0, dragging = false, _trendDidSwipe = false;
+
+  function baseX(idx) { return LEFT_PAD - idx * (CARD_W + GAP); }
+
+  function setTrackX(x, animated) {
+    const t = document.getElementById('trend-track');
+    if (!t) return;
+    t.style.transition = animated ? 'transform .38s cubic-bezier(.4,0,.2,1)' : 'none';
+    t.style.transform  = `translateX(${x}px)`;
+  }
+
+  function goToIdx(idx, animated) {
+    trendIdx = Math.max(0, Math.min(TOTAL - 1, idx));
+    setTrackX(baseX(trendIdx), animated);
+  }
+
+  function startAuto() {
+    clearInterval(trendTimer);
+    trendTimer = setInterval(() => goToIdx((trendIdx + 1) % TOTAL, true), INTERVAL);
+  }
+
+  function onStart(clientX) {
+    sx = clientX; dragging = true; _trendDidSwipe = false;
+    clearInterval(trendTimer);
+    setTrackX(baseX(trendIdx), false);
+  }
+
+  function onMove(clientX) {
+    if (!dragging) return;
+    const dx = clientX - sx;
+    if (Math.abs(dx) > 8) _trendDidSwipe = true; // mark as swipe once moved enough
+    const atStart = trendIdx === 0;
+    const atEnd   = trendIdx === TOTAL - 1;
+    let delta = dx;
+    if (dx > 0 && atStart) delta = dx / 3;
+    if (dx < 0 && atEnd)   delta = dx / 3;
+    setTrackX(baseX(trendIdx) + delta, false);
+  }
+
+  function onEnd(clientX) {
+    if (!dragging) return;
+    dragging = false;
+    const dx = clientX - sx;
+    if (dx < -THRESHOLD && trendIdx < TOTAL - 1)      goToIdx(trendIdx + 1, true);
+    else if (dx > THRESHOLD && trendIdx > 0)           goToIdx(trendIdx - 1, true);
+    else                                               goToIdx(trendIdx, true);
+    startAuto();
+  }
+
+  window.addEventListener('load', () => {
+    goToIdx(0, false);
+    startAuto();
+
+    const wrap = document.getElementById('trend-track')?.parentElement;
+    if (!wrap) return;
+    wrap.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true });
+    wrap.addEventListener('touchmove',  e => onMove(e.touches[0].clientX),  { passive: true });
+    wrap.addEventListener('touchend',   e => onEnd(e.changedTouches[0].clientX), { passive: true });
+    // Block click after a swipe gesture
+    wrap.addEventListener('click', e => {
+      if (_trendDidSwipe) { e.stopPropagation(); _trendDidSwipe = false; }
+    }, true);
+    wrap.addEventListener('mousedown',  e => onStart(e.clientX));
+    window.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX); });
+    window.addEventListener('mouseup',   e => { if (dragging) onEnd(e.clientX); });
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearInterval(trendTimer); else startAuto();
+  });
+})();
 
 // ── Sign Out Dialog ──
 function showSignOutDialog() {
