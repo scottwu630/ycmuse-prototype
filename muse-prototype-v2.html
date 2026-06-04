@@ -1277,87 +1277,71 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 
 
     <!-- ══════ MV PREVIEW PLAYER ══════ -->
-    <div id="screen-mv-preview" class="screen" style="background:#000;">
+    <div id="screen-mv-preview" class="screen" style="background:#000;overflow:hidden;">
 
-      <!-- Blurred background image -->
-      <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
-        <img id="mvp-bg-img" src="" style="position:absolute;left:-41px;top:-23px;width:402px;height:739px;object-fit:cover;filter:blur(10px);opacity:.4;">
-      </div>
+      <!-- Swipe feed container — slides up/down between MVs -->
+      <div id="mvp-feed" style="position:absolute;inset:0;transition:transform .32s cubic-bezier(.4,0,.2,1);">
 
-      <!-- ── MAIN CONTENT (vertically centred, pushed 33px down) ── -->
-      <div style="position:absolute;left:0;width:320px;top:calc(50% + 33px);transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:16px;padding:12px 0;">
+        <!-- Video (full screen) -->
+        <video id="mv-preview-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" playsinline loop></video>
 
-        <!-- VIDEO CARD 300×485 -->
-        <div style="position:relative;width:300px;height:485px;border-radius:16px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.3);flex-shrink:0;">
+        <!-- Tap area (left 80%) to toggle play/pause -->
+        <div onclick="toggleMvPlay()" style="position:absolute;inset:0;right:54px;z-index:1;cursor:pointer;"></div>
 
-          <!-- Video -->
-          <video id="mv-preview-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" playsinline loop></video>
-
-          <!-- Tap to play/pause -->
-          <div onclick="toggleMvPlay()" style="position:absolute;inset:0;right:54px;cursor:pointer;z-index:1;"></div>
-
-          <!-- Right side: Favorite + Share (no labels, gap 10px) -->
-          <div style="position:absolute;top:0;right:0;height:445px;display:flex;align-items:center;">
-            <div style="display:flex;flex-direction:column;gap:10px;align-items:center;padding:0 10px;">
-
-              <!-- Favorite -->
-              <div id="mvp-fav-btn" onclick="event.stopPropagation();toggleMvFavorite()" style="width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;">
-                <img id="mvp-fav-ico" src="assets/icons/ui/ic_favorite_off.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
-              </div>
-
-              <!-- Share -->
-              <div onclick="event.stopPropagation()" style="width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;">
-                <img src="assets/icons/ui/ic_share.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
-              </div>
-
-            </div>
+        <!-- Top navbar -->
+        <div style="position:absolute;top:0;left:0;right:0;z-index:20;background:linear-gradient(to bottom,rgba(0,0,0,.55),transparent);padding:calc(var(--safe-top) + 12px) 16px 28px;display:flex;align-items:center;gap:6px;">
+          <div onclick="goBack();document.getElementById('mv-preview-video').pause();"
+            style="width:28px;height:28px;border-radius:14px;background:#212127;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
           </div>
-
-          <!-- Bottom controller (pause / progress / speaker) -->
-          <div style="position:absolute;bottom:0;left:0;right:0;">
-            <div style="background:linear-gradient(to bottom,transparent,rgba(0,0,0,.4));padding:10px 12px;display:flex;align-items:center;gap:6px;">
-              <img id="mvp-ctrl-icon" src="assets/icons/ui/ic_pause.svg" width="20" height="20"
-                style="display:block;filter:brightness(0) invert(1);flex-shrink:0;cursor:pointer;"
-                onclick="toggleMvPlay()">
-              <!-- Progress bar -->
-              <div id="mvp-progress-bar" style="flex:1;position:relative;height:12px;display:flex;align-items:center;cursor:pointer;">
-                <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;background:rgba(255,255,255,.3);border-radius:2px;">
-                  <div id="mvp-progress-fill" style="position:absolute;left:0;top:0;width:0%;height:100%;background:#A855F7;border-radius:2px;"></div>
-                </div>
-                <div id="mvp-progress-thumb" style="position:absolute;left:0%;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(0,0,0,.4);pointer-events:none;"></div>
-              </div>
-              <img id="mvp-speaker-icon" src="assets/icons/ui/ic_speaker_on.svg" width="20" height="20"
-                style="display:block;filter:brightness(0) invert(1);flex-shrink:0;cursor:pointer;"
-                onclick="toggleMvMute()">
-            </div>
+          <div style="flex:1;text-align:center;">
+            <div id="mv-preview-title" style="font-size:17px;font-weight:700;color:#fff;line-height:22px;"></div>
+            <div id="mv-preview-meta" style="font-size:11px;font-weight:500;color:#D3D3D9;line-height:16px;letter-spacing:-.11px;"></div>
           </div>
-
-        </div><!-- /video card -->
-
-        <!-- CTA: Create MV (288×46) -->
-        <button onclick="createMvFromTemplate()"
-          style="width:288px;height:46px;border-radius:14px;background:linear-gradient(to right,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;flex-shrink:0;font-family:inherit;"
-          onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-          Create MV
-        </button>
-
-      </div><!-- /main content -->
-
-      <!-- NavBar (top gradient) -->
-      <div style="position:absolute;top:0;left:0;right:0;z-index:20;background:linear-gradient(to bottom,rgba(0,0,0,.5),transparent);padding:calc(var(--safe-top) + 12px) 16px 16px;display:flex;align-items:center;gap:6px;">
-        <!-- Back -->
-        <div onclick="goBack();var v=document.getElementById('mv-preview-video');if(v)v.pause();"
-          style="width:28px;height:28px;border-radius:18px;background:rgba(9,9,11,.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-          <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+          <div style="width:28px;height:28px;opacity:0;flex-shrink:0;"></div>
         </div>
-        <!-- Two-line title -->
-        <div style="flex:1;text-align:center;">
-          <div id="mv-preview-title" style="font-size:17px;font-weight:700;color:#fff;line-height:22px;"></div>
-          <div id="mv-preview-meta" style="font-size:11px;font-weight:500;color:#9C9CAB;line-height:16px;letter-spacing:-.11px;"></div>
+
+        <!-- Right-side action buttons (vertically centred on video) -->
+        <div style="position:absolute;right:0;top:0;bottom:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 10px;z-index:10;">
+          <div id="mvp-fav-btn" onclick="event.stopPropagation();toggleMvFavorite()" style="width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+            <img id="mvp-fav-ico" src="assets/icons/ui/ic_favorite_off.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
+          </div>
+          <div onclick="event.stopPropagation()" style="width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+            <img src="assets/icons/ui/ic_share.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
+          </div>
         </div>
-        <!-- Home btn placeholder (opacity:0, keeps layout) -->
-        <div style="width:28px;height:28px;opacity:0;flex-shrink:0;"></div>
-      </div>
+
+        <!-- Bottom gradient: controls + CTA -->
+        <div style="position:absolute;bottom:0;left:0;right:0;z-index:10;background:linear-gradient(to bottom,transparent,rgba(7,7,7,.95));padding:20px 16px 40px;">
+          <!-- Playback controls -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;overflow:hidden;">
+            <img id="mvp-ctrl-icon" src="assets/icons/ui/ic_pause.svg" width="20" height="20"
+              style="display:block;filter:brightness(0) invert(1);flex-shrink:0;cursor:pointer;" onclick="toggleMvPlay()">
+            <div id="mvp-progress-bar" style="flex:1;position:relative;height:12px;display:flex;align-items:center;cursor:pointer;">
+              <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;background:rgba(255,255,255,.3);border-radius:2px;">
+                <div id="mvp-progress-fill" style="position:absolute;left:0;top:0;width:0%;height:100%;background:linear-gradient(to right,#FF6BCE,#A855F7);border-radius:2px;"></div>
+              </div>
+              <div id="mvp-progress-thumb" style="position:absolute;left:0%;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(0,0,0,.4);pointer-events:none;"></div>
+            </div>
+            <img id="mvp-speaker-icon" src="assets/icons/ui/ic_speaker_on.svg" width="20" height="20"
+              style="display:block;filter:brightness(0) invert(1);flex-shrink:0;cursor:pointer;" onclick="toggleMvMute()">
+          </div>
+          <!-- CTA -->
+          <button onclick="createMvFromTemplate()"
+            style="width:100%;height:46px;border-radius:14px;background:linear-gradient(to right,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit;transition:opacity .15s;"
+            onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+            Create Music Video
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <!-- Swipe hint arrows (fade out after first swipe) -->
+        <div id="mvp-swipe-hint" style="position:absolute;left:50%;transform:translateX(-50%);top:50%;margin-top:-40px;display:flex;flex-direction:column;align-items:center;gap:6px;z-index:5;opacity:0;pointer-events:none;transition:opacity .3s;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7 7-7-7" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+      </div><!-- /mvp-feed -->
 
     </div>
 
@@ -5714,21 +5698,35 @@ function initMvResultController() {
 
 let _mvFavorited = false;
 
-function openMvPreview(style, vid, prompt, meta) {
-  _mvTpl = { style, vid, prompt, meta };
-  // Set navbar title + meta
-  document.getElementById('mv-preview-title').textContent = style;
-  document.getElementById('mv-preview-meta').textContent  = meta;
-  // Set blurred background (derive thumbnail from video path)
-  const bgImg = document.getElementById('mvp-bg-img');
-  if (bgImg) bgImg.src = vid; // video as bg (browser will show first frame)
-  // Set video
+// ── MV Preview Feed ──────────────────────────────────────────────────────────
+// All available MVs in feed order
+const _mvFeed = [
+  { style:'Cinematic Dark',  vid:'assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4',      prompt:'A cinematic dark visual journey — neon lights, dramatic angles, emotive close-ups.',                     meta:'Popular | 2-3 min' },
+  { style:'Nature & Earth',  vid:'assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4', prompt:'Nature meets music — sweeping landscapes, organic textures, earthy tones.',                              meta:'Trending | 1-2 min' },
+  { style:'Late Night Stage',vid:'assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4',      prompt:'Late night stage performance — moody lighting, intimate venue, raw energy.',                             meta:'New | 2-3 min' },
+  { style:'Neon City',       vid:'assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4', prompt:'Urban neon city vibes — glowing streets, fast cuts, electric atmosphere.',                              meta:'Hot | 2-3 min' },
+  { style:'Anime Style',     vid:'assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4',       prompt:'Anime-inspired visual adventure — vibrant colors, dynamic motion, bold style.',                         meta:'Fan fav | 1-2 min' },
+];
+let _mvFeedIdx = 0;
+let _mvSwipeHintShown = false;
+
+function _loadMvFeedItem(idx, animate) {
+  const item  = _mvFeed[idx];
+  _mvTpl = { style: item.style, vid: item.vid, prompt: item.prompt, meta: item.meta };
+
+  // Title / meta
+  document.getElementById('mv-preview-title').textContent = item.style;
+  document.getElementById('mv-preview-meta').textContent  = item.meta;
+
+  // Video
   const video = document.getElementById('mv-preview-video');
-  video.src = vid;
+  video.src = item.vid;
   video.load();
-  video.muted = false;
+  video.muted = _mvMuted;
   video.currentTime = 0;
-  // Reset controls
+  video.oncanplay = function() { video.play().catch(() => {}); video.oncanplay = null; };
+
+  // Controls
   const ctrlIcon = document.getElementById('mvp-ctrl-icon');
   if (ctrlIcon) ctrlIcon.src = 'assets/icons/ui/ic_pause.svg';
   const fill  = document.getElementById('mvp-progress-fill');
@@ -5736,21 +5734,17 @@ function openMvPreview(style, vid, prompt, meta) {
   if (fill)  fill.style.width = '0%';
   if (thumb) thumb.style.left  = '0%';
   const spkr = document.getElementById('mvp-speaker-icon');
-  if (spkr) spkr.src = 'assets/icons/ui/ic_speaker_on.svg';
-  // Reset favorite
-  _mvFavorited = false;
-  const favIco = document.getElementById('mvp-fav-ico');
-  if (favIco) { favIco.src = 'assets/icons/ui/ic_favorite_off.svg'; favIco.style.filter = 'brightness(0) invert(1)'; }
-  goTo('mv-preview');
-  video.oncanplay = function() { video.play().catch(() => {}); video.oncanplay = null; };
-  // Wire up progress bar
+  if (spkr) spkr.src = _mvMuted ? 'assets/icons/ui/ic_speaker_off.svg' : 'assets/icons/ui/ic_speaker_on.svg';
+
+  // Progress
   video.ontimeupdate = function() {
     if (!video.duration) return;
     const pct = (video.currentTime / video.duration) * 100;
     if (fill)  fill.style.width = pct + '%';
     if (thumb) thumb.style.left  = pct + '%';
   };
-  // Wire up seek
+
+  // Seek
   const bar = document.getElementById('mvp-progress-bar');
   if (bar) {
     bar.onclick = function(e) {
@@ -5760,7 +5754,77 @@ function openMvPreview(style, vid, prompt, meta) {
       video.currentTime = pct * video.duration;
     };
   }
+
+  // Reset favorite
+  _mvFavorited = false;
+  const favIco = document.getElementById('mvp-fav-ico');
+  if (favIco) { favIco.src = 'assets/icons/ui/ic_favorite_off.svg'; favIco.style.filter = 'brightness(0) invert(1)'; }
+
+  // Animate feed slide
+  if (animate) {
+    const feed = document.getElementById('mvp-feed');
+    if (feed) {
+      const dir = animate === 'up' ? '-100%' : '100%';
+      feed.style.transition = 'none';
+      feed.style.transform  = `translateY(${dir})`;
+      void feed.offsetWidth; // reflow
+      feed.style.transition = 'transform .32s cubic-bezier(.4,0,.2,1)';
+      feed.style.transform  = 'translateY(0)';
+    }
+  }
 }
+
+function openMvPreview(style, vid, prompt, meta) {
+  // Find index in feed, or add as first item if not found
+  const idx = _mvFeed.findIndex(m => m.style === style);
+  _mvFeedIdx = idx >= 0 ? idx : 0;
+  _loadMvFeedItem(_mvFeedIdx, null);
+  goTo('mv-preview');
+
+  // Show swipe hint briefly on first open
+  if (!_mvSwipeHintShown && _mvFeed.length > 1) {
+    _mvSwipeHintShown = true;
+    const hint = document.getElementById('mvp-swipe-hint');
+    if (hint) {
+      setTimeout(() => { hint.style.opacity = '1'; }, 600);
+      setTimeout(() => { hint.style.opacity = '0'; }, 2200);
+    }
+  }
+}
+
+function _mvNavigate(direction) {
+  const newIdx = _mvFeedIdx + direction;
+  if (newIdx < 0 || newIdx >= _mvFeed.length) return;
+  document.getElementById('mv-preview-video')?.pause();
+  _mvFeedIdx = newIdx;
+  _loadMvFeedItem(_mvFeedIdx, direction > 0 ? 'up' : 'down');
+}
+
+// Swipe up/down gesture on MV preview screen
+(function() {
+  let sy = 0, _mvSwiping = false;
+  window.addEventListener('load', () => {
+    const screen = document.getElementById('screen-mv-preview');
+    if (!screen) return;
+    screen.addEventListener('touchstart', e => {
+      sy = e.touches[0].clientY;
+      _mvSwiping = false;
+    }, { passive: true });
+    screen.addEventListener('touchend', e => {
+      const dy = sy - e.changedTouches[0].clientY;
+      if (Math.abs(dy) > 60) {
+        _mvSwiping = true;
+        _mvNavigate(dy > 0 ? 1 : -1); // swipe up = next, swipe down = prev
+      }
+    }, { passive: true });
+    // Mouse drag (desktop testing)
+    screen.addEventListener('mousedown', e => { sy = e.clientY; });
+    screen.addEventListener('mouseup', e => {
+      const dy = sy - e.clientY;
+      if (Math.abs(dy) > 60) _mvNavigate(dy > 0 ? 1 : -1);
+    });
+  });
+})();
 
 function toggleMvPlay() {
   const v    = document.getElementById('mv-preview-video');
@@ -5773,8 +5837,9 @@ function toggleMvMute() {
   const v    = document.getElementById('mv-preview-video');
   const icon = document.getElementById('mvp-speaker-icon');
   if (!v) return;
-  v.muted = !v.muted;
-  if (icon) icon.src = v.muted ? 'assets/icons/ui/ic_speaker_off.svg' : 'assets/icons/ui/ic_speaker_on.svg';
+  _mvMuted = !_mvMuted;
+  v.muted = _mvMuted;
+  if (icon) icon.src = _mvMuted ? 'assets/icons/ui/ic_speaker_off.svg' : 'assets/icons/ui/ic_speaker_on.svg';
 }
 function toggleMvFavorite() {
   _mvFavorited = !_mvFavorited;
