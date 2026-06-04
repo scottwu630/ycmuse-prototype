@@ -1143,7 +1143,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 
         <!-- Feature Cards — side by side -->
         <div id="home-feature-cards" style="padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;margin-bottom:10px;">
-          <div onclick="goTo('mv-style')" style="aspect-ratio:1/1;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);display:flex;flex-direction:column;justify-content:space-between;padding:10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+          <div onclick="goTo('mv-style')" style="height:140px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);display:flex;flex-direction:column;justify-content:space-between;padding:10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
             <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
               <img src="assets/icons/ui/ic_video_ai.svg" width="16" height="16" style="display:block;filter:brightness(10);">
             </div>
@@ -1152,7 +1152,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
               <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:22px;">Music Video</div>
             </div>
           </div>
-          <div onclick="goTo('song-create')" style="aspect-ratio:1/1;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);display:flex;flex-direction:column;justify-content:space-between;padding:10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+          <div onclick="goTo('song-create')" style="height:140px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);display:flex;flex-direction:column;justify-content:space-between;padding:10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
             <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
               <img src="assets/icons/ui/ic_song.svg" width="16" height="16" style="display:block;filter:brightness(10);">
             </div>
@@ -1440,78 +1440,80 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
       </div>
       <div class="scr-scroll">
         <div class="mvall-content">
-          <div class="mvall-grid">
+          <!-- Masonry-style 2-col layout: portrait=185px, landscape(4:3)=104px -->
+          <div style="display:flex;gap:10px;align-items:flex-start;">
 
-            <div class="mvall-item" onclick="openMvPreview('Law Rhythm','assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','Electric rhythms and hypnotic beats — pulsing neon, raw energy, bold performance.','Fan fav | 1-2 min')">
-              <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_04_eletronic.jpg" alt="Law Rhythm"></div>
-              <div class="mvall-thumb-grad"></div>
-              <div class="mvall-info">
-                <div class="mvall-title">Law Rhythm</div>
-                <div class="mvall-meta">Fan fav | 1-2 min</div>
+            <!-- Left column -->
+            <div style="display:flex;flex-direction:column;gap:10px;flex:1;min-width:0;">
+
+              <div class="mvall-item" style="height:185px;" onclick="openMvPreview('Law Rhythm','assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','Electric rhythms and hypnotic beats — pulsing neon, raw energy, bold performance.','Fan fav | 1-2 min')">
+                <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_04_eletronic.jpg" alt="Law Rhythm"></div>
+                <div class="mvall-thumb-grad"></div>
+                <div class="mvall-info"><div class="mvall-title">Law Rhythm</div><div class="mvall-meta">Fan fav | 1-2 min</div></div>
               </div>
+
+              <div class="mvall-item" style="height:185px;" onclick="openMvPreview('Cinematic Dark','assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','A cinematic dark visual journey — neon lights, dramatic angles, emotive close-ups.','Popular | 2-3 min')">
+                <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" alt="Cinematic Dark"></div>
+                <div class="mvall-thumb-grad"></div>
+                <div class="mvall-info"><div class="mvall-title">Cinematic Dark</div><div class="mvall-meta">Popular | 2-3 min</div></div>
+              </div>
+
+              <!-- Landscape 4:3 -->
+              <div class="mvall-item" style="height:104px;" onclick="openMvPreview('Adventurous Echoes','assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','Wide-open nature landscapes and soaring cinematic shots — earthy tones, golden light.','Trending | 1-2 min')">
+                <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_06_cinematic_movie.jpg" alt="Adventurous Echoes"></div>
+                <div class="mvall-thumb-grad"></div>
+                <div class="mvall-info"><div class="mvall-title">Adventurous Echoes</div><div class="mvall-meta">Trending | 1-2 min</div></div>
+              </div>
+
+              <div class="mvall-item" style="height:185px;" onclick="openMvPreview('Dreamy Pastel','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','Soft pastel dreamscape — floating visuals, delicate palette, surreal atmosphere.','New | 1-3 min')">
+                <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_11_halo.jpg" alt="Dreamy Pastel"></div>
+                <div class="mvall-thumb-grad"></div>
+                <div class="mvall-info"><div class="mvall-title">Dreamy Pastel</div><div class="mvall-meta">New | 1-3 min</div></div>
+              </div>
+
+              <div class="mvall-item" style="height:185px;" onclick="openMvPreview('Anime Style','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','Anime-inspired visual adventure — vibrant colors, dynamic motion, bold style.','Fan fav | 1-2 min')">
+                <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_05_anime_style.jpg" alt="Anime Style"></div>
+                <div class="mvall-thumb-grad"></div>
+                <div class="mvall-info"><div class="mvall-title">Anime Style</div><div class="mvall-meta">Fan fav | 1-2 min</div></div>
+              </div>
+
             </div>
 
-            <div class="mvall-item" onclick="openMvPreview('Hot Love','assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','Passionate story of love and desire — warm tones, cinematic storytelling, emotional depth.','Fan fav | 1-2 min')">
-              <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_02_late_night_stage.jpg" alt="Hot Love"></div>
-              <div class="mvall-thumb-grad"></div>
-              <div class="mvall-info">
-                <div class="mvall-title">Hot Love</div>
-                <div class="mvall-meta">Fan fav | 1-2 min</div>
-              </div>
-            </div>
+            <!-- Right column -->
+            <div style="display:flex;flex-direction:column;gap:10px;flex:1;min-width:0;">
 
-            <div class="mvall-item" onclick="openMvPreview('Cinematic Dark','assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','A cinematic dark visual journey — neon lights, dramatic angles, emotive close-ups.','Popular | 2-3 min')">
-              <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" alt="Cinematic Dark"></div>
-              <div class="mvall-thumb-grad"></div>
-              <div class="mvall-info">
-                <div class="mvall-title">Cinematic Dark</div>
-                <div class="mvall-meta">Popular | 2-3 min</div>
+              <!-- Landscape 4:3 -->
+              <div class="mvall-item" style="height:104px;" onclick="openMvPreview('Nature &amp; Earth','assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','Nature meets music — sweeping landscapes, organic textures, earthy tones.','Trending | 1-2 min')">
+                <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_07_nature_earth.jpg" alt="Nature & Earth"></div>
+                <div class="mvall-thumb-grad"></div>
+                <div class="mvall-info"><div class="mvall-title">Nature &amp; Earth</div><div class="mvall-meta">Trending | 1-2 min</div></div>
               </div>
-            </div>
 
-            <div class="mvall-item" onclick="openMvPreview('Nature &amp; Earth','assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','Nature meets music — sweeping landscapes, organic textures, earthy tones.','Trending | 1-2 min')">
-              <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_07_nature_earth.jpg" alt="Nature & Earth"></div>
-              <div class="mvall-thumb-grad"></div>
-              <div class="mvall-info">
-                <div class="mvall-title">Nature &amp; Earth</div>
-                <div class="mvall-meta">Trending | 1-2 min</div>
+              <div class="mvall-item" style="height:185px;" onclick="openMvPreview('Hot Love','assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','Passionate story of love and desire — warm tones, cinematic storytelling, emotional depth.','Fan fav | 1-2 min')">
+                <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_02_late_night_stage.jpg" alt="Hot Love"></div>
+                <div class="mvall-thumb-grad"></div>
+                <div class="mvall-info"><div class="mvall-title">Hot Love</div><div class="mvall-meta">Fan fav | 1-2 min</div></div>
               </div>
-            </div>
 
-            <div class="mvall-item" onclick="openMvPreview('Dreamy Pastel','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','Soft pastel dreamscape — floating visuals, delicate palette, surreal atmosphere.','New | 1-3 min')">
-              <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_11_halo.jpg" alt="Dreamy Pastel"></div>
-              <div class="mvall-thumb-grad"></div>
-              <div class="mvall-info">
-                <div class="mvall-title">Dreamy Pastel</div>
-                <div class="mvall-meta">New | 1-3 min</div>
+              <!-- Landscape 4:3 -->
+              <div class="mvall-item" style="height:104px;" onclick="openMvPreview('Urban Fashion','assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','Street style meets music — bold fashion, urban energy, attitude-filled performance.','Hot | 2-3 min')">
+                <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_10_monochrome.jpg" alt="Urban Fashion"></div>
+                <div class="mvall-thumb-grad"></div>
+                <div class="mvall-info"><div class="mvall-title">Urban Fashion</div><div class="mvall-meta">Hot | 2-3 min</div></div>
               </div>
-            </div>
 
-            <div class="mvall-item" onclick="openMvPreview('Neon City','assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','Urban neon city vibes — glowing streets, fast cuts, electric atmosphere.','Hot | 2-3 min')">
-              <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" alt="Neon City"></div>
-              <div class="mvall-thumb-grad"></div>
-              <div class="mvall-info">
-                <div class="mvall-title">Neon City</div>
-                <div class="mvall-meta">Hot | 2-3 min</div>
+              <div class="mvall-item" style="height:185px;" onclick="openMvPreview('Neon City','assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','Urban neon city vibes — glowing streets, fast cuts, electric atmosphere.','Hot | 2-3 min')">
+                <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" alt="Neon City"></div>
+                <div class="mvall-thumb-grad"></div>
+                <div class="mvall-info"><div class="mvall-title">Neon City</div><div class="mvall-meta">Hot | 2-3 min</div></div>
               </div>
-            </div>
 
-            <div class="mvall-item" onclick="openMvPreview('Anime Style','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','Anime-inspired visual adventure — vibrant colors, dynamic motion, bold style.','Fan fav | 1-2 min')">
-              <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_05_anime_style.jpg" alt="Anime Style"></div>
-              <div class="mvall-thumb-grad"></div>
-              <div class="mvall-info">
-                <div class="mvall-title">Anime Style</div>
-                <div class="mvall-meta">Fan fav | 1-2 min</div>
+              <div class="mvall-item" style="height:185px;" onclick="openMvPreview('Rock &amp; Roll','assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','Raw rock energy — guitar-driven visuals, stage presence, electrifying performance.','Fan fav | 1-2 min')">
+                <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_09_urban_performer.jpg" alt="Rock & Roll"></div>
+                <div class="mvall-thumb-grad"></div>
+                <div class="mvall-info"><div class="mvall-title">Rock &amp; Roll</div><div class="mvall-meta">Fan fav | 1-2 min</div></div>
               </div>
-            </div>
 
-            <div class="mvall-item" onclick="openMvPreview('Rock &amp; Roll','assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','Raw rock energy — guitar-driven visuals, stage presence, electrifying performance.','Fan fav | 1-2 min')">
-              <div class="mvall-thumb"><img src="assets/videos/sample-mvs/mv_09_urban_performer.jpg" alt="Rock & Roll"></div>
-              <div class="mvall-thumb-grad"></div>
-              <div class="mvall-info">
-                <div class="mvall-title">Rock &amp; Roll</div>
-                <div class="mvall-meta">Fan fav | 1-2 min</div>
-              </div>
             </div>
 
           </div>
