@@ -904,7 +904,7 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
 /* ── ONBOARDING SLIDER ── */
 #screen-onboard{display:flex;flex-direction:column;}
 .ob-slides-wrap{flex:1;overflow:hidden;min-height:0;}
-.ob-track{display:flex;height:100%;transition:transform .42s cubic-bezier(.25,.46,.45,.94);will-change:transform;}
+.ob-track{display:flex;height:100%;will-change:transform;}
 .ob-slide{flex-shrink:0;width:100%;height:100%;display:flex;flex-direction:column;}
 
 /* ── MV FEATURE ROOM NEW ── */
@@ -1274,7 +1274,8 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
           <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">New Songs</div>
           <div style="display:flex;align-items:center;gap:2px;font-size:11px;font-weight:500;color:#A855F7;cursor:pointer;">All <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;"><path d="M8.29295 5.29298C8.65907 4.92686 9.23807 4.90427 9.63084 5.22462L9.70702 5.29298L15.707 11.293C16.0975 11.6835 16.0975 12.3165 15.707 12.707L9.70702 18.707C9.31649 19.0976 8.68348 19.0976 8.29295 18.707C7.90243 18.3165 7.90243 17.6835 8.29295 17.293L13.5859 12L8.29295 6.70704L8.22459 6.63087C7.90424 6.2381 7.92684 5.65909 8.29295 5.29298Z" fill="#A855F7"/></svg></div>
         </div>
-        <div id="new-songs-wrap" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;width:320px;-webkit-overflow-scrolling:touch;" onscroll="updateNewSongsDots(this)">
+        <div id="new-songs-wrap" style="overflow:hidden;width:320px;">
+          <div id="new-songs-track" style="display:flex;will-change:transform;transition:transform .52s cubic-bezier(.22,1,.36,1);">
           <!-- Page 1 -->
           <div style="flex-shrink:0;width:320px;scroll-snap-align:start;">
             <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Down the Memory Lane','Lo-fi · Soothing · Cozy','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
@@ -1329,7 +1330,8 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
               <button onclick="event.stopPropagation();applySongTemplate('Winter Song','Acoustic','Calm');goTo('song-create')" style="flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:#A855F7;font-size:12px;font-weight:500;cursor:pointer;">Create</button>
             </div>
           </div>
-        </div>
+          </div><!-- /new-songs-track -->
+        </div><!-- /new-songs-wrap -->
         <!-- Dots -->
         <div id="new-songs-dots" style="display:flex;gap:5px;justify-content:center;padding:10px 0 8px;">
           <div onclick="scrollNewSongsTo(0)" style="width:22px;height:4px;border-radius:3px;background:#A855F7;transition:all .3s;cursor:pointer;"></div>
@@ -2880,10 +2882,16 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
               <textarea id="song-lyrics" placeholder="Write your lyrics here...
 
 Or leave blank — AI will generate them based on your chosen style and mood." style="width:100%;min-height:88px;padding:10px 10px 6px;background:transparent;border:none;color:#fff;font-size:12px;font-family:inherit;resize:none;outline:none;line-height:1.6;scrollbar-width:none;-ms-overflow-style:none;" oninput="updateLyricsClear(this)"></textarea>
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:4px 10px 10px;">
-                <span id="lyrics-cnt" style="font-size:12px;color:#9C9CAB;">0/2500</span>
-                <div id="lyrics-clear-btn" onclick="document.getElementById('song-lyrics').value='';updateLyricsClear(document.getElementById('song-lyrics'))" style="display:none;width:20px;height:20px;border-radius:10px;background:#383842;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-                  <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#9C9CAB" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 10px 10px;">
+                <button class="insp-btn" onclick="event.stopPropagation();generateLyricsIdea()" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 5.5V17H9v-2.5C7.5 13.5 6 11.5 6 9a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Ideas
+                </button>
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <span id="lyrics-cnt" style="font-size:12px;color:#9C9CAB;">0/2500</span>
+                  <div id="lyrics-clear-btn" onclick="document.getElementById('song-lyrics').value='';updateLyricsClear(document.getElementById('song-lyrics'))" style="display:none;width:20px;height:20px;border-radius:10px;background:#383842;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+                    <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#9C9CAB" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -4973,51 +4981,83 @@ function showIAPConfirm() {
   document.querySelector('.device').appendChild(overlay);
 }
 
-// ── Onboarding slider ──
-let obIdx = 0, obTouchX = 0;
-function obGoTo(idx) {
-  obIdx = idx;
-  const track = document.getElementById('ob-track');
-  if (track) track.style.transform = `translateX(-${idx * 100}%)`;
+// ── Onboarding slider — drag to navigate ──
+const OB_SLIDES = 2, OB_W = 320, OB_THRESHOLD = 60;
+let obIdx = 0;
 
-  // Sync inline pagination dots inside each slide
+function _obSetTrack(px, animated) {
+  const track = document.getElementById('ob-track');
+  if (!track) return;
+  track.style.transition = animated ? 'transform .52s cubic-bezier(.22,1,.36,1)' : 'none';
+  track.style.transform  = `translateX(${px}px)`;
+}
+
+function obGoTo(idx, animated = true) {
+  obIdx = Math.max(0, Math.min(OB_SLIDES - 1, idx));
+  _obSetTrack(-obIdx * OB_W, animated);
+
   const d0 = document.getElementById('ob-dot-0');
   const d1 = document.getElementById('ob-dot-1');
-  if (d0) { d0.style.width = idx === 0 ? '22px' : '8px'; d0.style.background = idx === 0 ? '#fff' : 'rgba(255,255,255,0.4)'; }
-  if (d1) { d1.style.width = idx === 1 ? '22px' : '8px'; d1.style.background = idx === 1 ? '#fff' : 'rgba(255,255,255,0.4)'; }
+  if (d0) { d0.style.width = obIdx === 0 ? '22px' : '8px'; d0.style.background = obIdx === 0 ? '#fff' : 'rgba(255,255,255,0.4)'; }
+  if (d1) { d1.style.width = obIdx === 1 ? '22px' : '8px'; d1.style.background = obIdx === 1 ? '#fff' : 'rgba(255,255,255,0.4)'; }
 
-  // Switch button label and gradient per slide
   const btn = document.getElementById('ob-cta');
   if (btn) {
-    btn.textContent = idx === 0 ? 'Continue' : 'Get Started';
-    btn.style.background = idx === 0
+    btn.textContent = obIdx === 0 ? 'Continue' : 'Get Started';
+    btn.style.background = obIdx === 0
       ? 'linear-gradient(to right,#ff6bce,#a855f7,#4338ca)'
       : 'linear-gradient(to right,#ffb347,#ff4e50,#d63af9)';
-    btn.style.boxShadow = idx === 0
+    btn.style.boxShadow = obIdx === 0
       ? '0 8px 12px rgba(168,85,247,0.32)'
       : '0 8px 12px rgba(255,78,80,0.28)';
   }
   const skip = document.getElementById('ob-skip');
-  if (skip) skip.style.visibility = idx === 0 ? 'visible' : 'hidden';
+  if (skip) skip.style.visibility = obIdx === 0 ? 'visible' : 'hidden';
 }
+
 function obNext() {
-  if (obIdx < 1) {
-    obGoTo(obIdx + 1);
-  } else {
-    localStorage.setItem('muse_onboarded', '1');
-    navStack = [];          // wipe history so Back never returns to onboarding
-    goTo('home');
-  }
+  if (obIdx < OB_SLIDES - 1) { obGoTo(obIdx + 1); }
+  else { localStorage.setItem('muse_onboarded', '1'); navStack = []; goTo('home'); }
 }
-window.addEventListener('load', () => {
-  const ob = document.getElementById('screen-onboard');
-  if (!ob) return;
-  ob.addEventListener('touchstart', e => { obTouchX = e.touches[0].clientX; }, { passive: true });
-  ob.addEventListener('touchend', e => {
-    const dx = obTouchX - e.changedTouches[0].clientX;
-    if (Math.abs(dx) > 44) { dx > 0 && obIdx < 1 ? obGoTo(1) : dx < 0 && obIdx > 0 ? obGoTo(0) : null; }
-  }, { passive: true });
-});
+
+// Drag handler — only slides area moves, footer stays fixed
+(function() {
+  let sx = 0, dragging = false, _obDid = false;
+
+  function onStart(clientX) { sx = clientX; dragging = true; _obDid = false; _obSetTrack(-obIdx * OB_W, false); }
+  function onMove(clientX) {
+    if (!dragging) return;
+    const dx = clientX - sx;
+    if (Math.abs(dx) > 6) _obDid = true;
+    const atS = obIdx === 0, atE = obIdx === OB_SLIDES - 1;
+    let delta = dx;
+    if (dx > 0 && atS) delta = dx / 3;
+    if (dx < 0 && atE) delta = dx / 3;
+    _obSetTrack(-obIdx * OB_W + delta, false);
+  }
+  function onEnd(clientX) {
+    if (!dragging) return;
+    dragging = false;
+    const dx = clientX - sx;
+    if (dx < -OB_THRESHOLD && obIdx < OB_SLIDES - 1)  obGoTo(obIdx + 1);
+    else if (dx > OB_THRESHOLD && obIdx > 0)           obGoTo(obIdx - 1);
+    else if (Math.abs(dx) > 4)                        obGoTo(obIdx);
+    else { const t = document.getElementById('ob-track'); if (t) t.style.transition = ''; }
+  }
+
+  window.addEventListener('load', () => {
+    // Only attach to the slides area, not the footer
+    const wrap = document.querySelector('.ob-slides-wrap');
+    if (!wrap) return;
+    wrap.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true });
+    wrap.addEventListener('touchmove',  e => onMove(e.touches[0].clientX),  { passive: true });
+    wrap.addEventListener('touchend',   e => onEnd(e.changedTouches[0].clientX), { passive: true });
+    wrap.addEventListener('click', e => { if (_obDid) { e.stopPropagation(); _obDid = false; } }, true);
+    wrap.addEventListener('mousedown', e => onStart(e.clientX));
+    window.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX); });
+    window.addEventListener('mouseup',   e => { if (dragging) onEnd(e.clientX); });
+  });
+})();
 
 // ── MV Feature Room interactions ──
 function mvrPickStyle(idx, el) {
@@ -5701,6 +5741,21 @@ function resetSongCreate() {
   document.querySelectorAll('[data-group="vocal"] .schip').forEach(c => c.classList.remove('sel'));
 }
 
+const _lyricsIdeas = [
+  `Verse 1:\nIn the quiet of the morning light\nI trace the words you left behind\nEvery shadow tells a different story\nEvery silence speaks your mind\n\nChorus:\nI'm still here, still standing\nAfter everything we've been through\nStill here, still breathing\nFinding my way back to you`,
+  `Verse 1:\nNeon signs and empty streets\nThe city hums a melody\nI walk alone through midnight heat\nChasing who I used to be\n\nChorus:\nWe were fire, we were thunder\nWe were everything and more\nNow I wonder, now I wander\nBack to where we were before`,
+  `Verse 1:\nSunday morning, coffee cold\nYour laugh still rings inside these walls\nSome things you can't let go\nSome love never really falls\n\nChorus:\nStay a little longer\nLet the moment breathe\nMake me feel this stronger\nBefore you have to leave`,
+  `Verse 1:\nI built my walls up high and strong\nThought I'd be safer on my own\nBut you found a way to all along\nMake this empty place feel like home\n\nChorus:\nBreak me open, let the light in\nI've been running from the truth\nBreak me open, let you in now\nI was waiting just for you`,
+  `Verse 1:\nRemember when we had no plans\nJust windows down and open roads\nWe had the world in our young hands\nNow those summers turn to gold\n\nChorus:\nTake me back to golden days\nWhen everything was ours to take\nThose golden, golden days\nToo beautiful to let them fade`,
+];
+let _lyricsIdeaIdx = -1;
+
+function generateLyricsIdea() {
+  _lyricsIdeaIdx = (_lyricsIdeaIdx + 1) % _lyricsIdeas.length;
+  const ta = document.getElementById('song-lyrics');
+  if (ta) { ta.value = _lyricsIdeas[_lyricsIdeaIdx]; updateLyricsClear(ta); }
+}
+
 function updateLyricsClear(ta) {
   const cnt = document.getElementById('lyrics-cnt');
   if (cnt) cnt.textContent = ta.value.length + '/2500';
@@ -5989,23 +6044,79 @@ function iapSuccess() {
   setTimeout(() => toast.remove(), 2800);
   goBack();
 }
-function updateNewSongsDots(wrap) {
-  const idx = Math.round(wrap.scrollLeft / 320);
-  const dots = document.querySelectorAll('#new-songs-dots > div');
-  dots.forEach((d, i) => {
-    d.style.width = i === idx ? '22px' : '8px';
-    d.style.background = i === idx ? '#A855F7' : 'rgba(255,255,255,.4)';
+// ── New Songs drag pager ──────────────────────────────────────────────────
+(function() {
+  const PAGE_W = 320, TOTAL = 3, THRESHOLD = 60;
+  let nsIdx = 0, sx = 0, dragging = false, _nsDid = false;
+
+  function getTrack() { return document.getElementById('new-songs-track'); }
+
+  function setNsPage(idx, animated) {
+    nsIdx = Math.max(0, Math.min(TOTAL - 1, idx));
+    const t = getTrack();
+    if (!t) return;
+    t.style.transition = animated ? 'transform .52s cubic-bezier(.22,1,.36,1)' : 'none';
+    t.style.transform  = `translateX(${-nsIdx * PAGE_W}px)`;
+    const dots = document.querySelectorAll('#new-songs-dots > div');
+    dots.forEach((d, i) => {
+      d.style.width      = i === nsIdx ? '22px' : '8px';
+      d.style.background = i === nsIdx ? '#A855F7' : 'rgba(255,255,255,.4)';
+    });
+  }
+
+  function onStart(clientX) { sx = clientX; dragging = true; _nsDid = false; const t = getTrack(); if (t) t.style.transition = 'none'; }
+  function onMove(clientX) {
+    if (!dragging) return;
+    const dx = clientX - sx;
+    if (Math.abs(dx) > 6) _nsDid = true;
+    const atS = nsIdx === 0, atE = nsIdx === TOTAL - 1;
+    let delta = dx;
+    if (dx > 0 && atS) delta = dx / 3;
+    if (dx < 0 && atE) delta = dx / 3;
+    const t = getTrack();
+    if (t) t.style.transform = `translateX(${-nsIdx * PAGE_W + delta}px)`;
+  }
+  function onEnd(clientX) {
+    if (!dragging) return;
+    dragging = false;
+    const dx = clientX - sx;
+    if (dx < -THRESHOLD && nsIdx < TOTAL - 1)     setNsPage(nsIdx + 1, true);
+    else if (dx > THRESHOLD && nsIdx > 0)          setNsPage(nsIdx - 1, true);
+    else if (Math.abs(dx) > 4)                    setNsPage(nsIdx, true);
+    else { const t = getTrack(); if (t) t.style.transition = ''; }
+  }
+
+  window.addEventListener('load', () => {
+    setNsPage(0, false);
+    const wrap = document.getElementById('new-songs-wrap');
+    if (!wrap) return;
+    wrap.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true });
+    wrap.addEventListener('touchmove',  e => onMove(e.touches[0].clientX),  { passive: true });
+    wrap.addEventListener('touchend',   e => onEnd(e.changedTouches[0].clientX), { passive: true });
+    wrap.addEventListener('click', e => { if (_nsDid) { e.stopPropagation(); _nsDid = false; } }, true);
+    wrap.addEventListener('mousedown', e => onStart(e.clientX));
+    window.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX); });
+    window.addEventListener('mouseup',   e => { if (dragging) onEnd(e.clientX); });
   });
-}
-function scrollNewSongsTo(idx) {
-  const wrap = document.getElementById('new-songs-wrap');
-  if (wrap) wrap.scrollTo({ left: idx * 320, behavior: 'smooth' });
-  const dots = document.querySelectorAll('#new-songs-dots > div');
-  dots.forEach((d, i) => {
-    d.style.width = i === idx ? '22px' : '8px';
-    d.style.background = i === idx ? '#A855F7' : 'rgba(255,255,255,.4)';
+})();
+
+function updateNewSongsDots() {} // legacy stub — handled by drag pager above
+function scrollNewSongsTo(idx) { /* dot click */ (function(){ const fn = window._nsSetPage; }()); }
+// expose setNsPage for dot clicks
+window.addEventListener('load', () => {
+  // Dot clicks
+  document.querySelectorAll('#new-songs-dots > div').forEach((d, i) => {
+    d.onclick = () => {
+      const t = document.getElementById('new-songs-track');
+      const dots = document.querySelectorAll('#new-songs-dots > div');
+      if (!t) return;
+      // inline setNsPage equivalent
+      t.style.transition = 'transform .52s cubic-bezier(.22,1,.36,1)';
+      t.style.transform  = `translateX(${-i * 320}px)`;
+      dots.forEach((dd, ii) => { dd.style.width = ii === i ? '22px' : '8px'; dd.style.background = ii === i ? '#A855F7' : 'rgba(255,255,255,.4)'; });
+    };
   });
-}
+});
 
 // ═══════════════════════════════════════════════════
 // MV PREVIEW PLAYER
