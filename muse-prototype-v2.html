@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>YouCam Muse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="YouCam Muse">
@@ -53,7 +56,7 @@
   /* ── Brand accents ── */
   --accent:   #A855F7;  /* color/accent/purple  */
   --accent-2: #EC4899;  /* color/accent/pink    */
-  --blue:     #A855F7;  /* color/accent/blue    */
+  --blue:     #38bdf8;  /* color/accent/blue    */
   --gold:     #f59e0b;  /* color/accent/gold    */
   --orange:   #f97316;  /* color/accent/orange  */
   --green:    #01B37B;  /* PF Green             */
@@ -62,7 +65,24 @@
 
   /* ── Gradients ── */
   --mv-grad:   linear-gradient(135deg, #FF6BCE 0%, #A855F7 50%, #4338CA 100%);
-  --song-grad: linear-gradient(135deg, #FFB347 0%, #FF4E50 60%, #D63AF9 100%);
+  --song-grad: linear-gradient(135deg, #FFB347 0%, #FF4E50 50%, #D63AF9 100%);
+
+  /* ── Typography scale (Inter, matches Figma Design System node 36:92) ── */
+  /* Display    */ --fs-display:  42px; --fw-display:  800; --lh-display:  1.1;
+  /* Title L    */ --fs-title-l:  30px; --fw-title-l:  800; --lh-title-l:  1.13;
+  /* Title M    */ --fs-title-m:  26px; --fw-title-m:  700; --lh-title-m:  1.15;
+  /* Title S    */ --fs-title-s:  17px; --fw-title-s:  700; --lh-title-s:  22px;
+  /* Title XS   */ --fs-title-xs: 15px; --fw-title-xs: 700; --lh-title-xs: 18px;
+  /* Headline   */ --fs-headline: 20px; --fw-headline: 700; --lh-headline: 26px;
+  /* Section    */ --fs-section:  17px; --fw-section:  700; --lh-section:  22px;
+  /* Body L     */ --fs-body-l:   17px; --fw-body-l:   500; --lh-body-l:   22px;
+  /* Body M     */ --fs-body-m:   14px; --fw-body-m:   500; --lh-body-m:   20px;
+  /* Body S     */ --fs-body-s:   12px; --fw-body-s:   500; --lh-body-s:   1.5;
+  /* Body XS    */ --fs-body-xs:   9px; --fw-body-xs:  500; --lh-body-xs:  11px;
+  /* Label M    */ --fs-label-m:  13px; --fw-label-m:  700; --lh-label-m:  18px;
+  /* Label S    */ --fs-label-s:  12px; --fw-label-s:  500; --lh-label-s:  15px;
+  /* Caption M  */ --fs-cap-m:    11px; --fw-cap-m:    700; --lh-cap-m:    16px;
+  /* Caption S  */ --fs-cap-s:     9px; --fw-cap-s:    700; --lh-cap-s:    11px;
 
   /* ── Layout ── */
   --safe-top: env(safe-area-inset-top, 48px);
@@ -70,8 +90,25 @@
   --tab-h: 66px;
   --nav-h: 52px;
 }
+/* ── Typography utility classes (Figma Design System — Inter) ───────────── */
+.t-display  { font-size:var(--fs-display);  font-weight:var(--fw-display);  line-height:var(--lh-display);  letter-spacing:-.4px;  }
+.t-title-l  { font-size:var(--fs-title-l);  font-weight:var(--fw-title-l);  line-height:var(--lh-title-l);  letter-spacing:-.3px;  }
+.t-title-m  { font-size:var(--fs-title-m);  font-weight:var(--fw-title-m);  line-height:var(--lh-title-m);  letter-spacing:-.26px; }
+.t-title-s  { font-size:var(--fs-title-s);  font-weight:var(--fw-title-s);  line-height:var(--lh-title-s);  letter-spacing:-.17px; }
+.t-title-xs { font-size:var(--fs-title-xs); font-weight:var(--fw-title-xs); line-height:var(--lh-title-xs); letter-spacing:-.15px; }
+.t-headline  { font-size:var(--fs-headline); font-weight:var(--fw-headline); line-height:var(--lh-headline); letter-spacing:-.2px;  }
+.t-section   { font-size:var(--fs-section);  font-weight:var(--fw-section);  line-height:var(--lh-section);  letter-spacing:-.17px; }
+.t-body-l    { font-size:var(--fs-body-l);   font-weight:var(--fw-body-l);   line-height:var(--lh-body-l);   letter-spacing:-.17px; }
+.t-body-m    { font-size:var(--fs-body-m);   font-weight:var(--fw-body-m);   line-height:var(--lh-body-m);   letter-spacing:-.14px; }
+.t-body-s    { font-size:var(--fs-body-s);   font-weight:var(--fw-body-s);   line-height:var(--lh-body-s);   letter-spacing:-.12px; }
+.t-body-xs   { font-size:var(--fs-body-xs);  font-weight:var(--fw-body-xs);  line-height:var(--lh-body-xs);  letter-spacing:-.09px; }
+.t-label-m   { font-size:var(--fs-label-m);  font-weight:var(--fw-label-m);  line-height:var(--lh-label-m);  letter-spacing:-.13px; }
+.t-label-s   { font-size:var(--fs-label-s);  font-weight:var(--fw-label-s);  line-height:var(--lh-label-s);  letter-spacing:-.12px; }
+.t-cap-m     { font-size:var(--fs-cap-m);    font-weight:var(--fw-cap-m);    line-height:var(--lh-cap-m);    letter-spacing:-.11px; }
+.t-cap-s     { font-size:var(--fs-cap-s);    font-weight:var(--fw-cap-s);    line-height:var(--lh-cap-s);    letter-spacing:-.09px; }
+
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;}
-html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF Pro Display',system-ui,sans-serif;overflow:hidden;user-select:none;}
+html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-system,'SF Pro Display',system-ui,sans-serif;overflow:hidden;user-select:none;}
 
 /* ── DEVICE FRAME (desktop) ── */
 .device-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 50% 40%,#1a0a3a 0%,#000 70%);}
@@ -1030,12 +1067,20 @@ html,body{width:100%;height:100%;background:#000;font-family:-apple-system,'SF P
       <div class="splash-bg"></div>
       <div class="splash-particles" id="splash-particles"></div>
       <div class="splash-center">
-        <div class="logo-mark"><span class="logo-m">M</span></div>
-        <div class="logo-wordmark">MUSE</div>
-        <div class="logo-tagline">Your cinematic moment</div>
+        <!-- App icon -->
+        <img src="../assets/icons/app/ic_app_ycm.png" alt="YouCam Muse"
+          style="width:88px;height:88px;border-radius:26px;object-fit:cover;box-shadow:0 0 60px rgba(168,85,247,.6),0 20px 40px rgba(0,0,0,.5);animation:logoFloat 3.2s ease-in-out infinite;">
+        <!-- Wordmark gradient logo -->
+        <img src="../assets/icons/app/muse_wordmark_logo_gradient.png" alt="MUSE"
+          style="height:26px;width:auto;object-fit:contain;margin-top:4px;">
       </div>
+      <!-- Loading dots -->
       <div class="splash-dots" style="left:50%;transform:translateX(-50%)">
         <div class="sdot"></div><div class="sdot"></div><div class="sdot"></div>
+      </div>
+      <!-- Powered by — bottom of screen -->
+      <div style="position:absolute;bottom:40px;left:0;right:0;text-align:center;font-size:12px;font-weight:500;color:rgba(255,255,255,.35);letter-spacing:.02em;">
+        Powered by Perfect Corp.
       </div>
     </div>
 
@@ -3854,10 +3899,9 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
     <div class="sheet-handle"></div>
     <!-- Header -->
     <div style="padding:16px 20px 24px;text-align:center;">
-      <!-- Logo mark -->
-      <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
-        <span style="font-size:22px;font-weight:900;color:#fff;letter-spacing:-.5px;">M</span>
-      </div>
+      <!-- App icon -->
+      <img src="../assets/icons/app/ic_app_ycm.png" alt="YouCam Muse"
+        style="width:56px;height:56px;border-radius:16px;object-fit:cover;display:block;margin:0 auto 14px;box-shadow:0 4px 20px rgba(168,85,247,.35);">
       <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.3px;margin-bottom:6px;">Sign in to YouCam Muse</div>
       <div style="font-size:13px;font-weight:500;color:#9C9CAB;line-height:1.6;">Save your creations, sync across devices,<br>and unlock your full creative history.</div>
     </div>
@@ -3878,12 +3922,20 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
     </div>
 
     <!-- Sign-in success overlay (inside sheet) -->
-    <div id="signin-success" style="display:none;position:absolute;inset:0;background:#151519;border-radius:26px 26px 0 0;z-index:10;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:40px 24px;">
-      <div style="width:64px;height:64px;border-radius:50%;background:rgba(34,197,94,.15);border:1.5px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;margin-bottom:4px;">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div id="signin-success" style="display:none;position:absolute;inset:0;background:#151519;border-radius:26px 26px 0 0;z-index:10;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:40px 24px;">
+      <!-- Gradient success circle -->
+      <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);display:flex;align-items:center;justify-content:center;margin-bottom:4px;box-shadow:0 8px 24px rgba(255,78,80,.3);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.3px;text-align:center;">Signed in successfully!</div>
       <div id="signin-provider-msg" style="font-size:13px;font-weight:500;color:#9C9CAB;text-align:center;line-height:1.6;">Welcome back, Scott</div>
+      <div style="font-size:13px;font-weight:500;color:#fff;text-align:center;margin-top:4px;">Entering your account...</div>
+      <!-- Loading dots -->
+      <div style="display:flex;gap:6px;margin-top:4px;">
+        <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);animation:sdotP 1.4s ease-in-out infinite;"></div>
+        <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);animation:sdotP 1.4s ease-in-out infinite;animation-delay:.2s;"></div>
+        <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);animation:sdotP 1.4s ease-in-out infinite;animation-delay:.4s;"></div>
+      </div>
     </div>
   </div>
 
