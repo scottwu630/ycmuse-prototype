@@ -697,8 +697,30 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .hist-meta{font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.11px;line-height:16px;margin-top:1px;}
 .hist-badge{display:inline-flex;align-items:center;gap:2px;padding:3px 4px;border-radius:14px;font-size:9px;font-weight:700;}
 .hist-status{display:flex;align-items:center;gap:6px;margin-top:3px;}
+#screen-history.filter-liked .hist-status{display:none;}
 .hist-time{font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.11px;line-height:16px;margin-top:3px;}
 .hist-status .hist-time{margin-top:0;}
+.hist-more-btn{flex-shrink:0;width:24px;height:24px;background:#212127;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:opacity .15s;}
+.hist-more-btn:active{opacity:.6;}
+.hist-row[data-status="proc"] .hist-more-btn{display:none;}
+#hist-more-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:200;}
+#hist-more-sheet{position:absolute;bottom:0;left:0;right:0;background:#151519;border-radius:20px 20px 0 0;padding-bottom:calc(var(--safe-bot) + 40px);transform:translateY(100%);transition:transform .32s cubic-bezier(.22,1,.36,1);}
+#hist-more-sheet.open{transform:translateY(0);}
+#hist-more-toast{position:absolute;left:50%;transform:translateX(-50%) translateY(8px);bottom:calc(100% + 12px);background:rgba(21,21,25,.96);border:1px solid rgba(168,85,247,.35);border-radius:14px;padding:12px 20px;font-size:14px;font-weight:600;color:#fff;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 4px 24px rgba(168,85,247,.2);}
+#hist-more-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.hist-cta-row{display:flex;gap:8px;padding:16px 16px 8px;}
+.hist-cta-primary{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:44px;border-radius:22px;background:linear-gradient(135deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);border:none;color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:opacity .15s;letter-spacing:-.12px;}
+.hist-cta-primary:active{opacity:.75;}
+.hist-cta-secondary{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:44px;border-radius:22px;background:#fff;border:none;color:#09090B;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s;letter-spacing:-.12px;}
+.hist-cta-secondary:active{opacity:.7;}
+.hist-opt-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 16px 4px;}
+.hist-opt-row{display:flex;align-items:center;gap:14px;padding:0 20px;height:40px;cursor:pointer;transition:opacity .15s;}
+.hist-opt-row:active{opacity:.6;}
+.hist-opt-label{font-size:15px;font-weight:500;color:#fff;flex:1;letter-spacing:-.15px;}
+.hist-opt-toggle{width:44px;height:26px;border-radius:13px;background:#3a3a40;border:none;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.hist-opt-toggle.on{background:#A855F7;}
+.hist-opt-toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.4);}
+.hist-opt-toggle.on::after{left:21px;}
 .badge-done{background:rgba(1,179,123,.2);color:#01B37B;}
 .badge-proc{background:var(--n14);color:var(--n100);padding:3px 6px;border-radius:20px;}
 .badge-failed{background:rgba(255,38,0,.2);color:#FF2600;}
@@ -917,6 +939,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .songsall-tags{font-size:11px;font-weight:500;color:#676779;line-height:16px;letter-spacing:-.11px;margin-top:2px;}
 .songsall-create{flex-shrink:0;padding:6px 8px;border-radius:14px;background:#212127;border:0;color:#fff;font-size:12px;font-weight:500;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
 .songsall-create:active{opacity:.7;}
+.song-like-btn,.song-share-btn{flex-shrink:0;background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;width:20px;height:20px;transition:transform .15s;}
+.song-like-btn:active,.song-share-btn:active{transform:scale(.88);}
 
 /* ── NEW SONGS LIST SECTION ── */
 .new-songs-wrap{overflow-x:auto;overflow-y:hidden;display:flex;width:100%;max-width:320px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 0 32px;}
@@ -1212,21 +1236,21 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               </div>
             </div>
 
-            <!-- Card 2: Trending Song — Thrilling Harmonies -->
+            <!-- Card 2: Trending MV — Thrilling Harmonies -->
             <div style="min-width:288px;height:162px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
-              onclick="openSongPlayer('Thrilling Harmonies','Hip-Pop · 3-4 min','assets/videos/sample-mvs/mv_13_Urban%20Fashion.jpg','Hip-Pop','Energetic')">
+              onclick="openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Hybrid | 3-4 min')">
               <img src="assets/videos/sample-mvs/mv_13_Urban Fashion.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
               <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
               <div style="position:absolute;top:8px;left:8px;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">
                 <img src="assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
-                <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending Song</span>
+                <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending MV</span>
               </div>
               <div style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
                 <div>
                   <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Thrilling Harmonies</div>
-                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Hip-Pop · 3-4 min</div>
+                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Hybrid | 3-4 min</div>
                 </div>
-                <button onclick="event.stopPropagation();openSongPlayer('Thrilling Harmonies','Hip-Pop · 3-4 min','assets/videos/sample-mvs/mv_13_Urban%20Fashion.jpg','Hip-Pop','Energetic')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create Song</button>
+                <button onclick="event.stopPropagation();openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Hybrid | 3-4 min')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create MV</button>
               </div>
             </div>
 
@@ -1253,23 +1277,17 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
         <!-- Feature Cards — side by side -->
         <div id="home-feature-cards" style="padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;margin-bottom:16px;">
-          <div onclick="goTo('mv-style')" style="height:86px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);display:flex;flex-direction:column;justify-content:space-between;padding:10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-            <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
+          <div onclick="goTo('mv-style')" style="height:68px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);display:flex;flex-direction:column;justify-content:space-between;padding:8px 10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+            <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
               <img src="assets/icons/ui/ic_video_ai.svg" width="16" height="16" style="display:block;filter:brightness(10);">
             </div>
-            <div>
-              <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.8);letter-spacing:.04em;line-height:11px;margin-bottom:0;">AI CREATOR</div>
-              <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:17px;">Music Video</div>
-            </div>
+            <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:17px;">Music Video</div>
           </div>
-          <div onclick="resetSongCreate();goTo('song-create')" style="height:86px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);display:flex;flex-direction:column;justify-content:space-between;padding:10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-            <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
+          <div onclick="resetSongCreate();goTo('song-create')" style="height:68px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);display:flex;flex-direction:column;justify-content:space-between;padding:8px 10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+            <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
               <img src="assets/icons/ui/ic_song.svg" width="16" height="16" style="display:block;filter:brightness(10);">
             </div>
-            <div>
-              <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.8);letter-spacing:.04em;line-height:11px;margin-bottom:0;">AI COMPOSER</div>
-              <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:17px;">AI Song</div>
-            </div>
+            <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:17px;">AI Song</div>
           </div>
         </div>
 
@@ -1326,17 +1344,17 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Down the Memory Lane','Lo-fi · Soothing · Cozy','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Down the Memory Lane</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Lo-fi · Soothing · Cozy</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Down the Memory Lane','Lo-fi','Calm');goTo('song-create')" style="flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:#A855F7;font-size:12px;font-weight:500;cursor:pointer;">Create</button>
+              <button onclick="event.stopPropagation();applySongTemplate('Down the Memory Lane','Lo-fi','Calm');goTo('song-create')" class="songsall-create">Create</button>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','assets/images/album-art/album_08.jpg','Electronic','Dark')">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" data-preliked="true" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','assets/images/album-art/album_08.jpg','Electronic','Dark')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_08.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Midnight Drive</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Electronic · Dark</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Midnight Drive','Electronic','Dark');goTo('song-create')" style="flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:#A855F7;font-size:12px;font-weight:500;cursor:pointer;">Create</button>
+              <button onclick="event.stopPropagation();applySongTemplate('Midnight Drive','Electronic','Dark');goTo('song-create')" class="songsall-create">Create</button>
             </div>
             <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Forest Morning','Acoustic · Folk','assets/images/album-art/album_01.jpg','Acoustic','Calm')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_01.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Forest Morning</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Acoustic · Folk</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Forest Morning','Acoustic','Calm');goTo('song-create')" style="flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:#A855F7;font-size:12px;font-weight:500;cursor:pointer;">Create</button>
+              <button onclick="event.stopPropagation();applySongTemplate('Forest Morning','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button>
             </div>
           </div>
           <!-- Page 2 -->
@@ -1344,17 +1362,17 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Neon Pulse','Electronic · Energetic','assets/images/album-art/album_02.jpg','Electronic','Energetic')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_02.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Neon Pulse</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Electronic · Energetic</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Neon Pulse','Electronic','Energetic');goTo('song-create')" style="flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:#A855F7;font-size:12px;font-weight:500;cursor:pointer;">Create</button>
+              <button onclick="event.stopPropagation();applySongTemplate('Neon Pulse','Electronic','Energetic');goTo('song-create')" class="songsall-create">Create</button>
             </div>
             <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Golden Hour','R&B · Warm','assets/images/album-art/album_03.jpg','R&B','Uplifting')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_03.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Golden Hour</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">R&B · Warm</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Golden Hour','R&B','Uplifting');goTo('song-create')" style="flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:#A855F7;font-size:12px;font-weight:500;cursor:pointer;">Create</button>
+              <button onclick="event.stopPropagation();applySongTemplate('Golden Hour','R&B','Uplifting');goTo('song-create')" class="songsall-create">Create</button>
             </div>
             <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Ocean Dreams','Ambient · Calm','assets/images/album-art/album_04.jpg','Acoustic','Calm')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_04.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Ocean Dreams</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Ambient · Calm</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Ocean Dreams','Acoustic','Calm');goTo('song-create')" style="flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:#A855F7;font-size:12px;font-weight:500;cursor:pointer;">Create</button>
+              <button onclick="event.stopPropagation();applySongTemplate('Ocean Dreams','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button>
             </div>
           </div>
           <!-- Page 3 -->
@@ -1362,17 +1380,17 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Last September','Pop · Nostalgic','assets/images/album-art/album_06.jpg','Pop','Melancholic')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_06.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Last September</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Pop · Nostalgic</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Last September','Pop','Melancholic');goTo('song-create')" style="flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:#A855F7;font-size:12px;font-weight:500;cursor:pointer;">Create</button>
+              <button onclick="event.stopPropagation();applySongTemplate('Last September','Pop','Melancholic');goTo('song-create')" class="songsall-create">Create</button>
             </div>
             <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('City Lights','Jazz · Cinematic','assets/images/album-art/album_07.jpg','Jazz','Calm')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_07.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">City Lights</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Jazz · Cinematic</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('City Lights','Jazz','Calm');goTo('song-create')" style="flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:#A855F7;font-size:12px;font-weight:500;cursor:pointer;">Create</button>
+              <button onclick="event.stopPropagation();applySongTemplate('City Lights','Jazz','Calm');goTo('song-create')" class="songsall-create">Create</button>
             </div>
             <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Winter Song','Acoustic · Cozy','assets/images/album-art/album_09.jpg','Acoustic','Calm')">
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_09.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
               <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Winter Song</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Acoustic · Cozy</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Winter Song','Acoustic','Calm');goTo('song-create')" style="flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:#A855F7;font-size:12px;font-weight:500;cursor:pointer;">Create</button>
+              <button onclick="event.stopPropagation();applySongTemplate('Winter Song','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button>
             </div>
           </div>
           </div><!-- /new-songs-track -->
@@ -3129,6 +3147,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
             <button class="ftab on" data-filter="all" onclick="filterTab(this)">All</button>
             <button class="ftab" data-filter="mv" onclick="filterTab(this)">Music Videos</button>
             <button class="ftab" data-filter="song" onclick="filterTab(this)">Songs</button>
+            <button class="ftab" data-filter="liked" onclick="filterTab(this)">Liked</button>
           </div>
         </div>
 
@@ -3136,7 +3155,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
         <div style="padding-bottom:calc(var(--tab-h) + 16px);">
 
           <!-- Dynamic: Processing item shown after "View Later" -->
-          <div id="hist-song-proc" style="display:none;" class="hist-row" data-htype="song">
+          <div id="hist-song-proc" style="display:none;" class="hist-row" data-htype="song" data-status="proc">
             <div class="hist-thumb-icon" style="background:linear-gradient(135deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);">
               <img src="assets/icons/ui/ic_timer.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
             </div>
@@ -3148,11 +3167,11 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                 Generating...
               </div>
             </div>
-            <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
           </div>
 
           <!-- 1. Cinematic Night — Music Video · Done -->
-          <div class="hist-row" data-htype="mv" onclick="histMarkPlayed(this);goTo('mv-result')">
+          <div class="hist-row" data-htype="mv" data-liked="true" onclick="histMarkPlayed(this);goTo('mv-result')">
             <div class="hist-thumb">
               <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg">
             </div>
@@ -3167,11 +3186,11 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                 <div class="hist-time">Today</div>
               </div>
             </div>
-            <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
           </div>
 
           <!-- 2. New AI Song — Processing -->
-          <div class="hist-row" data-htype="song">
+          <div class="hist-row" data-htype="song" data-status="proc">
             <div class="hist-thumb-icon" style="background:linear-gradient(135deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);">
               <img src="assets/icons/ui/ic_timer.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
             </div>
@@ -3183,11 +3202,11 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                 Generating...
               </div>
             </div>
-            <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
           </div>
 
           <!-- 3. Golden Hour — AI Song · Done -->
-          <div class="hist-row" data-htype="song" onclick="histMarkPlayed(this);goTo('song-result')">
+          <div class="hist-row" data-htype="song" data-liked="true" onclick="histMarkPlayed(this);goTo('song-result')">
             <div class="hist-thumb">
               <img src="assets/images/album-art/album_01.jpg">
             </div>
@@ -3202,7 +3221,26 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                 <div class="hist-time">Today</div>
               </div>
             </div>
-            <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
+          </div>
+
+          <!-- 3b. Starlight in Your Eyes — Storyboard · Done -->
+          <div class="hist-row" data-htype="storyboard" onclick="histMarkPlayed(this);goTo('mv-storyboard')">
+            <div class="hist-thumb">
+              <img src="assets/images/storyboard/storyboard_01.jpg">
+            </div>
+            <div class="hist-info">
+              <div class="hist-name">Starlight in Your Eyes</div>
+              <div class="hist-meta">Storyboard</div>
+              <div class="hist-status">
+                <div class="hist-badge badge-done">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Done
+                </div>
+                <div class="hist-time">2026-06-06</div>
+              </div>
+            </div>
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
           </div>
 
           <!-- 4. Neon City Nights — Music Video · Done -->
@@ -3221,7 +3259,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                 <div class="hist-time">2 days ago</div>
               </div>
             </div>
-            <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
           </div>
 
           <!-- 5. Midnight Drive — AI Song · Done -->
@@ -3240,11 +3278,11 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                 <div class="hist-time">3 days ago</div>
               </div>
             </div>
-            <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
           </div>
 
           <!-- 6. Midnight Drive — AI Song · Failed -->
-          <div class="hist-row" data-htype="song">
+          <div class="hist-row" data-htype="song" data-status="failed">
             <div class="hist-thumb-icon" style="background:#383842;">
               <img src="assets/icons/ui/ic_alert.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
             </div>
@@ -3259,7 +3297,72 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                 <div class="hist-time">3 days ago</div>
               </div>
             </div>
-            <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="flex-shrink:0;filter:invert(1);opacity:.3;">
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ PROOF OF CREATION ══════ -->
+    <div id="screen-proof" class="screen" style="background:#09090B;">
+      <div class="nav nav-blur">
+        <div class="nav-back" onclick="goBack()"><img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
+        <div class="nav-title">Proof of Creation</div>
+        <div style="width:36px;"></div>
+      </div>
+      <div class="scr-scroll" style="padding-top:calc(var(--safe-top) + var(--nav-h));">
+        <div style="padding:16px 16px 40px;display:flex;flex-direction:column;gap:16px;">
+
+          <!-- Certificate card -->
+          <div style="background:#fff;border-radius:16px;padding:20px;position:relative;overflow:hidden;">
+            <!-- decorative corner accents -->
+            <div style="position:absolute;top:0;left:0;width:60px;height:60px;border-top:6px solid #9BA4C4;border-left:6px solid #9BA4C4;border-radius:14px 0 0 0;pointer-events:none;"></div>
+            <div style="position:absolute;top:0;right:0;width:60px;height:60px;border-top:6px solid #9BA4C4;border-right:6px solid #9BA4C4;border-radius:0 14px 0 0;pointer-events:none;"></div>
+            <div style="position:absolute;bottom:0;left:0;width:60px;height:60px;border-bottom:6px solid #9BA4C4;border-left:6px solid #9BA4C4;border-radius:0 0 0 14px;pointer-events:none;"></div>
+            <div style="position:absolute;bottom:0;right:0;width:60px;height:60px;border-bottom:6px solid #9BA4C4;border-right:6px solid #9BA4C4;border-radius:0 0 14px 0;pointer-events:none;"></div>
+            <!-- Content -->
+            <div style="text-align:center;padding:8px 12px;">
+              <div style="font-size:11px;font-weight:600;color:#9BA4C4;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;">YouCam Muse</div>
+              <div style="font-size:16px;font-weight:700;color:#2D2D40;margin-bottom:16px;">Proof of Creation</div>
+              <div style="font-size:22px;font-weight:800;color:#2D2D40;letter-spacing:-.4px;margin-bottom:6px;font-style:italic;">Golden Hour</div>
+              <div style="width:40px;height:2px;background:#9BA4C4;margin:0 auto 14px;border-radius:2px;"></div>
+              <div style="font-size:11px;color:#6B7280;line-height:1.6;margin-bottom:14px;">This proves that the song was created using YouCam Muse and is attributed to</div>
+              <div style="font-size:18px;font-weight:700;color:#2D2D40;letter-spacing:-.3px;margin-bottom:16px;font-style:italic;">{{Owner Name}}</div>
+              <div style="text-align:left;background:#F3F4F8;border-radius:10px;padding:10px 14px;margin-bottom:12px;">
+                <div style="font-size:11px;font-weight:700;color:#2D2D40;margin-bottom:4px;">Details of the Work</div>
+                <div style="font-size:11px;color:#6B7280;line-height:1.7;">Song Title: Golden Hour<br>Date Created: Jun/05/2026</div>
+              </div>
+              <div style="font-size:9px;color:#9CA3AF;line-height:1.6;text-align:left;margin-bottom:14px;">It is the user's responsibility to ensure that any lyrics or elements they input into YouCam Muse do not infringe on the copyrights of third parties. YouCam Muse does not claim ownership of the inputted material.</div>
+              <!-- Hash row -->
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#FF6BCE,#A855F7);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <img src="assets/icons/ui/ic_certified.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
+                </div>
+                <div style="font-size:9px;color:#9BA4C4;word-break:break-all;text-align:left;flex:1;">6456474747444888g6457dhjuu64777</div>
+                <div style="width:32px;height:32px;border-radius:6px;background:#E5E7EB;flex-shrink:0;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Song Owner input -->
+          <div style="background:#151519;border-radius:16px;overflow:hidden;">
+            <div style="padding:14px 16px 10px;font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Song Owner</div>
+            <div style="padding:0 16px 14px;">
+              <input type="text" placeholder="Creator Name" style="width:100%;background:#212127;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;font-size:14px;color:#fff;outline:none;box-sizing:border-box;" />
+            </div>
+          </div>
+
+          <!-- Unlock CTA -->
+          <button style="width:100%;height:52px;border-radius:26px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+            Unlock For $4.90
+          </button>
+
+          <!-- Footer links -->
+          <div style="text-align:center;font-size:12px;color:rgba(255,255,255,.35);">
+            <span style="text-decoration:underline;cursor:pointer;">Restore</span>
+            <span style="margin:0 8px;">|</span>
+            <span style="text-decoration:underline;cursor:pointer;">Privacy Policy</span>
           </div>
 
         </div>
@@ -3318,7 +3421,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
         <div style="display:flex;flex-direction:column;width:100%;margin-top:8px;">
 
           <!-- Muse Pro -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;">
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;">
             <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.9998 17.0001C19.1044 17.0001 19.9998 17.8956 19.9998 19.0001C19.9998 20.1046 19.1044 21.0001 17.9998 21.0001H5.99983C4.89539 21 3.9999 20.1046 3.99983 19.0001C3.99983 17.8956 4.89535 17.0002 5.99983 17.0001H17.9998Z" fill="#F59E0B"/>
@@ -3329,7 +3432,14 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
               <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Muse Pro</div>
               <div style="font-size:11px;font-weight:500;color:#676779;letter-spacing:-.11px;line-height:16px;">Validity: 2026-08-10</div>
             </div>
-            <img src="assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;opacity:.4;">
+            <div onclick="goTo('iap')" style="background:#fff;border-radius:16px;padding:6px 8px;min-width:48px;width:66px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;">
+              <span style="font-size:12px;font-weight:500;color:#09090B;text-align:center;white-space:nowrap;">Upgrade</span>
+            </div>
+          </div>
+
+          <!-- Divider: Muse Pro / Notifications -->
+          <div style="padding:8px 16px;">
+            <div style="height:1px;background:rgba(255,255,255,.15);width:100%;"></div>
           </div>
 
           <!-- Notifications -->
@@ -3797,6 +3907,18 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
   </div>
 
   <!-- Sign Out Confirmation Dialog -->
+  <div id="hist-delete-overlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:9000;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:inherit;" onclick="hideHistDeleteDialog()"></div>
+  <div id="hist-delete-dialog" style="display:none;position:absolute;left:24px;right:24px;top:50%;transform:translateY(-54%);background:#1C1C1E;border-radius:14px;z-index:9001;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.7);">
+    <div style="padding:20px 20px 14px;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);">
+      <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.2px;margin-bottom:6px;">Delete</div>
+      <div style="font-size:14px;color:#9C9CAB;line-height:1.5;">Are you sure you want to delete this item? This action cannot be undone.</div>
+    </div>
+    <div style="display:flex;">
+      <div onclick="hideHistDeleteDialog()" style="flex:1;padding:14px;text-align:center;font-size:17px;font-weight:500;color:#0A84FF;cursor:pointer;border-right:1px solid rgba(255,255,255,.1);">Cancel</div>
+      <div onclick="confirmHistDelete()" style="flex:1;padding:14px;text-align:center;font-size:17px;font-weight:600;color:#FF453A;cursor:pointer;">Delete</div>
+    </div>
+  </div>
+
   <div id="signout-overlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:9000;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:inherit;" onclick="hideSignOutDialog()"></div>
   <div id="signout-dialog" style="display:none;position:absolute;left:24px;right:24px;top:50%;transform:translateY(-54%);background:#1C1C1E;border-radius:14px;z-index:9001;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.7);">
     <div style="padding:20px 20px 14px;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);">
@@ -3869,6 +3991,15 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
       <span class="tab-notif-dot" id="hist-notif-dot"></span>
       <div class="tab-icon"><img src="assets/icons/ui/ic_history_OL.svg" width="18" height="18" style="display:block;filter:brightness(10);"></div>
       <div class="tab-label">History</div>
+    </div>
+  </div>
+
+  <!-- ══════ HISTORY — MORE OPTIONS SHEET ══════ -->
+  <div id="hist-more-overlay" onclick="closeHistMore()">
+    <div id="hist-more-sheet" onclick="event.stopPropagation()">
+      <div id="hist-more-toast"></div>
+      <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.2);margin:12px auto 4px;"></div>
+      <div id="hist-more-options"></div>
     </div>
   </div>
 
@@ -4648,9 +4779,9 @@ function filterTab(btn) {
   btn.closest('div').querySelectorAll('.ftab').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   const filter = btn.dataset.filter || 'all';
+  document.getElementById('screen-history').classList.toggle('filter-liked', filter === 'liked');
   document.querySelectorAll('#screen-history .hist-row').forEach(row => {
     // hist-song-proc has its own show/hide logic (controlled by goTo 'song-creating')
-    // respect its current display state for the "song" type
     if (row.id === 'hist-song-proc') {
       if (filter === 'all' || filter === 'song') {
         // keep whatever display it already has (none or flex)
@@ -4660,10 +4791,192 @@ function filterTab(btn) {
       return;
     }
     const type = row.dataset.htype || '';
-    const visible = filter === 'all' || filter === type;
+    const liked = row.dataset.liked === 'true';
+    let visible;
+    if (filter === 'all')         visible = true;
+    else if (filter === 'liked')  visible = liked;
+    else if (filter === 'mv')     visible = (type === 'mv' || type === 'storyboard');
+    else                          visible = filter === type;
     row.style.display = visible ? 'flex' : 'none';
   });
 }
+
+// ── History more-options sheet ──
+let _histMoreRow = null;
+
+const _moreIcons = {
+  heart: (on) => on
+    ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9.5C2 8.387 2.338 7.3 2.968 6.384 3.599 5.467 4.493 4.763 5.532 4.364 6.571 3.966 7.706 3.892 8.788 4.153 9.87 4.414 10.847 4.996 11.591 5.824c.052.056.116.1.186.131.07.03.146.047.223.047.077 0 .153-.016.223-.047.07-.031.134-.075.186-.131C13.15 4.991 14.128 4.403 15.212 4.14c1.084-.264 2.222-.191 3.263.208 1.042.399 1.937 1.106 2.566 2.026C21.671 7.294 22.005 8.385 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313c-.187.214-.416.386-.674.504-.258.119-.538.181-.818.183-.28.002-.56-.057-.82-.172-.258-.115-.49-.284-.679-.496L5 15c-1.5-1.5-3-3.2-3-5.5z" fill="#A855F7"/></svg>`
+    : `<img src="assets/icons/ui/ic_favorite_off.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">`,
+  share:    `<img src="assets/icons/ui/ic_share.svg"    width="20" height="20" style="display:block;filter:brightness(0) invert(1);">`,
+  publish:  `<img src="assets/icons/ui/ic_publish.svg"  width="20" height="20" style="display:block;filter:brightness(0) invert(1);">`,
+  download: `<img src="assets/icons/ui/ic_download.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">`,
+  delete:   `<img src="assets/icons/ui/ic_delete.svg"   width="20" height="20" style="display:block;filter:brightness(0) invert(1);">`
+};
+
+function openHistMore(btn) {
+  _histMoreRow = btn.closest('.hist-row');
+  const htype    = _histMoreRow.dataset.htype || '';
+  const liked    = _histMoreRow.dataset.liked === 'true';
+  const status   = _histMoreRow.dataset.status || '';
+  const isDone   = !!_histMoreRow.querySelector('.badge-done');
+  const isFailed = status === 'failed';
+
+  const opts = document.getElementById('hist-more-options');
+  opts.innerHTML = '';
+
+  function addOpt(iconHtml, label, extra, onClick, danger) {
+    const row = document.createElement('div');
+    row.className = 'hist-opt-row';
+    row.innerHTML = `
+      <div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${iconHtml}</div>
+      <span class="hist-opt-label">${label}</span>
+      ${extra || ''}`;
+    if (onClick) row.addEventListener('click', onClick);
+    opts.appendChild(row);
+  }
+
+  // ── CTA row helper ──
+  function addCtaRow(btns) {
+    const row = document.createElement('div');
+    row.className = 'hist-cta-row';
+    btns.forEach(({icon, label, primary, onClick}) => {
+      const btn = document.createElement('button');
+      btn.className = primary ? 'hist-cta-primary' : 'hist-cta-secondary';
+      btn.innerHTML = `<img src="assets/icons/ui/${icon}" width="16" height="16" style="display:block;${primary ? 'filter:brightness(0) invert(1);' : 'filter:brightness(0);'}">${label}`;
+      btn.addEventListener('click', () => { closeHistMore(); if (onClick) onClick(); });
+      row.appendChild(btn);
+    });
+    opts.appendChild(row);
+  }
+
+  if (isFailed) {
+    // Failed: Delete only
+    addOpt(_moreIcons.delete, 'Delete', null, () => { showHistDeleteDialog(); });
+
+  } else if (htype === 'storyboard') {
+    // Storyboard: Create MV (full width) + Download
+    addCtaRow([{icon:'ic_video_ai.svg', label:'Create MV', primary:true, onClick:()=>goTo('mv-storyboard')}]);
+    addOpt(_moreIcons.delete, 'Delete', null, () => { showHistDeleteDialog(); });
+
+  } else if (htype === 'song') {
+    // Song: always show [Create MV | Get Proof] + Like, Share, Publish, Download
+    addCtaRow([
+      {icon:'ic_video_ai.svg',   label:'Create MV',  primary:true,  onClick:()=>goTo('mv-style')},
+      {icon:'ic_certified.svg',  label:'Get Proof',  primary:false, onClick:()=>goTo('proof')}
+    ]);
+    addOpt(_moreIcons.heart(liked), liked ? 'Unlike' : 'Like', null, () => {
+      _histMoreRow.dataset.liked = liked ? 'false' : 'true';
+      closeHistMore();
+    });
+    addOpt(_moreIcons.share, 'Share', null, () => { closeHistMore(); });
+    if (isDone) {
+      addOpt(_moreIcons.publish, 'Publish',
+        `<button class="hist-opt-toggle" onclick="event.stopPropagation();this.classList.toggle('on');showHistToast(this.classList.contains('on')?'Published success':'Unpublished success')"></button>`);
+      addOpt(_moreIcons.download, 'Download', null, () => { closeHistMore(); });
+    }
+
+  } else {
+    // MV (and anything else): Like, Share, Download
+    addOpt(_moreIcons.heart(liked), liked ? 'Unlike' : 'Like', null, () => {
+      _histMoreRow.dataset.liked = liked ? 'false' : 'true';
+      closeHistMore();
+    });
+    addOpt(_moreIcons.share, 'Share', null, () => { closeHistMore(); });
+    if (isDone) {
+      addOpt(_moreIcons.download, 'Download', null, () => { closeHistMore(); });
+    }
+  }
+
+  const overlay = document.getElementById('hist-more-overlay');
+  const sheet   = document.getElementById('hist-more-sheet');
+  overlay.style.display = 'block';
+  requestAnimationFrame(() => sheet.classList.add('open'));
+}
+
+let _histToastTimer = null;
+function showHistToast(msg) {
+  const t = document.getElementById('hist-more-toast');
+  if (!t) return;
+  clearTimeout(_histToastTimer);
+  t.textContent = msg;
+  t.classList.add('show');
+  _histToastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+let _histDeleteRow = null;
+
+function showHistDeleteDialog() {
+  _histDeleteRow = _histMoreRow;           // save reference before anything clears it
+  // close the more sheet immediately (no async delay)
+  const sheet   = document.getElementById('hist-more-sheet');
+  const overlay = document.getElementById('hist-more-overlay');
+  if (sheet)   sheet.classList.remove('open');
+  if (overlay) overlay.style.display = 'none';
+  _histMoreRow = null;
+  // show delete confirmation
+  document.getElementById('hist-delete-overlay').style.display = 'block';
+  document.getElementById('hist-delete-dialog').style.display = 'block';
+}
+function hideHistDeleteDialog() {
+  document.getElementById('hist-delete-overlay').style.display = 'none';
+  document.getElementById('hist-delete-dialog').style.display = 'none';
+  _histDeleteRow = null;
+}
+function confirmHistDelete() {
+  if (_histDeleteRow) _histDeleteRow.style.display = 'none';
+  hideHistDeleteDialog();
+}
+
+function closeHistMore() {
+  const sheet   = document.getElementById('hist-more-sheet');
+  const overlay = document.getElementById('hist-more-overlay');
+  sheet.classList.remove('open');
+  setTimeout(() => { overlay.style.display = 'none'; _histMoreRow = null; }, 320);
+}
+
+// ── Song like / share injection ──
+(function initSongLikeButtons() {
+  const heartOff = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+  const heartOn  = `<svg width="16" height="16" viewBox="0 0 24 24" fill="#A855F7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+  const shareSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>`;
+
+  function inject(createBtn) {
+    if (createBtn.previousElementSibling?.classList.contains('song-like-btn')) return;
+    const row = createBtn.closest('[data-preliked]') || createBtn.parentElement;
+    const preliked = row.dataset && row.dataset.preliked === 'true';
+
+    const likeBtn = document.createElement('button');
+    likeBtn.className = 'song-like-btn';
+    likeBtn.dataset.liked = preliked ? 'true' : 'false';
+    likeBtn.innerHTML = preliked ? heartOn : heartOff;
+    likeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const on = likeBtn.dataset.liked === 'true';
+      likeBtn.dataset.liked = on ? 'false' : 'true';
+      likeBtn.innerHTML = on ? heartOff : heartOn;
+    });
+
+    const shareBtn = document.createElement('button');
+    shareBtn.className = 'song-share-btn';
+    shareBtn.innerHTML = shareSvg;
+    shareBtn.addEventListener('click', function(e) { e.stopPropagation(); });
+
+    createBtn.parentNode.insertBefore(likeBtn, createBtn);
+    createBtn.parentNode.insertBefore(shareBtn, createBtn);
+  }
+
+  function run() {
+    document.querySelectorAll('#new-songs-track button[onclick*="applySongTemplate"]').forEach(inject);
+    document.querySelectorAll('.songsall-content .songsall-create').forEach(inject);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
 
 // ── Edit chips ──
 function selectChip(chip) {
@@ -6732,6 +7045,7 @@ function fmtTime(s) {
 }
 
 </script>
+
 
 </body>
 </html>
