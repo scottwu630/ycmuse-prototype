@@ -383,7 +383,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .section-link{font-size:14px;font-weight:500;color:var(--accent);}
 .h-scroll{display:flex;gap:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;}
 .h-scroll::-webkit-scrollbar{display:none;}
-.cta-footer{position:absolute;bottom:0;left:0;right:0;padding:16px 22px calc(16px + var(--safe-bot));background:linear-gradient(to top,rgba(7,7,7,1) 65%,rgba(7,7,7,0) 100%);z-index:10;}
+.cta-footer{position:absolute;bottom:0;left:0;right:0;padding:16px 16px calc(40px + var(--safe-bot));background:linear-gradient(to top,rgba(7,7,7,1) 65%,rgba(7,7,7,0) 100%);z-index:10;}
 .input-lbl{font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
 .input-card{background:var(--card);border:1px solid var(--border);border-radius:16px;cursor:pointer;transition:border-color .2s;}
 .input-row{display:flex;align-items:center;padding:15px 16px;gap:12px;}
@@ -679,7 +679,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .player-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;color:var(--text-2);}
 .player-play{width:62px;height:62px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;box-shadow:0 8px 24px rgba(255,255,255,.18);transition:transform .15s;}
 .player-play:active{transform:scale(.92);}
-.song-result-btns{display:flex;flex-direction:column;gap:11px;padding:0 22px calc(40px + var(--safe-bot));}
+.song-result-btns{display:flex;flex-direction:column;gap:11px;padding:0 16px calc(40px + var(--safe-bot));}
 
 /* ════════════════════════════
    SCREEN: HISTORY
@@ -786,10 +786,32 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .sb-ctrl-bar{flex:1;height:3px;background:rgba(255,255,255,.2);border-radius:2px;}
 .sb-ctrl-exp{font-size:15px;color:#fff;}
 .emv-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);}
+/* Cover image — 9:16 ratio */
+#emv-cover-wrap{position:relative;width:123px;height:219px;border-radius:14px;overflow:hidden;margin:0 auto;}
+#emv-cover-generating.active ~ #emv-cover-fullscreen-btn,
+#emv-cover-generating.active + * + #emv-cover-fullscreen-btn{display:none!important;}
+#emv-cover-img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s;}
+#emv-cover-generating{position:absolute;inset:0;background:linear-gradient(160deg,#6D28D9,#A855F7);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;}
+#emv-cover-generating.active{opacity:1;}
+#emv-cover-img.hidden{opacity:0;}
+.emv-cover-gen-label{font-size:13px;font-weight:600;color:#fff;letter-spacing:-.13px;}
+/* Cover description row */
+.emv-cover-desc-row{display:flex;align-items:center;gap:10px;background:#151519;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px 12px;cursor:pointer;transition:opacity .15s;}
+.emv-cover-desc-row:active{opacity:.7;}
+.emv-cover-desc-text{flex:1;min-width:0;font-size:12px;font-weight:500;color:#9C9CAB;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.emv-cover-desc-badge{display:flex;align-items:center;gap:4px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.25);border-radius:20px;padding:4px 8px;flex-shrink:0;}
+/* Cover Description sheet */
+#emv-cover-sheet-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
+#emv-cover-sheet-overlay.show{opacity:1;pointer-events:all;}
+#emv-cover-sheet{position:absolute;bottom:0;left:0;right:0;background:#151519;border-radius:26px 26px 0 0;padding:0 0 40px;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
+#emv-cover-sheet.open{transform:translateY(0);}
+#emv-cover-textarea{width:100%;min-height:120px;background:#212127;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 14px 32px;font-size:14px;font-weight:500;color:#fff;font-family:inherit;outline:none;resize:none;box-sizing:border-box;line-height:1.5;}
+#emv-cover-textarea:focus{border-color:rgba(168,85,247,.4);}
 .emv-toggle-row:last-of-type{border-bottom:none;}
 .emv-lbl{font-size:16px;font-weight:700;color:var(--text);}
 .emv-sub{font-size:12px;color:var(--text-2);margin-top:2px;}
 .emv-input{width:100%;padding:13px 15px;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:15px;font-family:inherit;outline:none;margin:10px 0 16px;}
+#screen-mv-edit input[type="text"],#emv-cover-textarea{color:#fff!important;-webkit-text-fill-color:#fff!important;}
 .emv-input::placeholder{color:var(--text-3);}
 .emv-input:focus{border-color:var(--border-2);}
 .pill-cta{width:100%;height:56px;border-radius:16px;background:var(--mv-grad);border:none;color:#fff;font-size:17px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 24px rgba(168,85,247,.32);transition:transform .15s,opacity .15s;}
@@ -1547,7 +1569,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
 
       <!-- CTA: Create AI Song — anchored to bottom, 20px gap clears home indicator without lifting above the controller -->
-      <div style="position:absolute;bottom:0;left:0;right:0;padding:0 15px 20px;z-index:5;">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:0 16px calc(40px + var(--safe-bot));z-index:5;">
         <button onclick="requireLogin(()=>createSongFromTemplate())" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create AI Song</button>
       </div>
 
@@ -1784,7 +1806,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
 
         <!-- CTA — Figma Button/Pill Primary -->
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 22px calc(20px + var(--safe-bot));">
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 16px calc(40px + var(--safe-bot));">
           <button onclick="_mvFromTemplate=false;resetMvRoom();updateSongClearBtn();goTo('mv-room')" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Try Now</button>
         </div>
       </div>
@@ -2747,6 +2769,35 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div class="scr-scroll" style="padding:calc(var(--safe-top) + var(--nav-h) + 14px) 16px calc(90px + var(--safe-bot));">
         <div style="display:flex;flex-direction:column;gap:20px;">
 
+          <!-- COVER IMAGE -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+            <div id="emv-cover-wrap">
+              <img id="emv-cover-img" src="assets/images/storyboard/storyboard_01.jpg" alt="Cover">
+              <div id="emv-cover-generating">
+                <span class="emv-cover-gen-label">✦ Generating...</span>
+              </div>
+              <!-- Fullscreen button — bottom-right, same style as char-img -->
+              <div id="emv-cover-fullscreen-btn" onclick="openCoverFullscreen()" style="position:absolute;bottom:8px;right:8px;width:28px;height:28px;border-radius:18px;background:rgba(9,9,11,0.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;">
+                <img src="assets/icons/ui/ic_expand.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+              </div>
+            </div>
+          </div>
+
+          <!-- COVER DESCRIPTION -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">COVER DESCRIPTION</div>
+            <div class="emv-cover-desc-row" style="cursor:default;">
+              <!-- Text area — tap to open sheet with keyboard -->
+              <div class="emv-cover-desc-text" id="emv-cover-desc-preview" onclick="openCoverDescSheet()" style="cursor:pointer;">Create a captivating cover image for "Starlight in Your Eyes" that embodies the essence of a dreamy night sky filled with shimmering stars.</div>
+              <!-- Regenerate button — tap to regen directly, purple gradient -->
+              <div onclick="generateCoverImage()" style="display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border-radius:20px;padding:6px 10px;flex-shrink:0;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
+                <img src="assets/icons/ui/ic_reload.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                <img src="assets/icons/ui/ic_credit.svg" width="14" height="14" style="display:block;">
+                <span style="font-size:12px;font-weight:700;color:#fff;">10</span>
+              </div>
+            </div>
+          </div>
+
           <!-- STORYBOARD -->
           <div style="display:flex;flex-direction:column;gap:6px;">
             <div style="display:flex;flex-direction:column;gap:2px;">
@@ -2859,6 +2910,12 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;">
             <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">SHOW WATERMARK</span>
             <div class="toggle off" id="emv-tog-wm" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
+          </div>
+
+          <!-- DELETE PROJECT -->
+          <div onclick="showDeleteProjectDialog()" style="display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:opacity .15s;margin-top:4px;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
+            <img src="assets/icons/ui/ic_delete.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);opacity:.7;">
+            <span style="font-size:14px;font-weight:600;color:#fff;letter-spacing:-.14px;">Delete this Project</span>
           </div>
 
         </div>
@@ -3113,7 +3170,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
       </div>
 
       <!-- CTAs -->
-      <div style="position:absolute;bottom:0;left:0;right:0;padding:0 16px calc(var(--safe-bot) + 16px);display:flex;flex-direction:column;gap:10px;">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:0 16px calc(40px + var(--safe-bot));display:flex;flex-direction:column;gap:10px;">
         <button onclick="useAISongInMV()" style="width:100%;height:52px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Use in Music Video
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -3184,7 +3241,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   Done
                 </div>
-                <div class="hist-time">Today</div>
+                <div class="hist-time">2026-06-08</div>
               </div>
             </div>
             <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
@@ -3219,7 +3276,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   Done
                 </div>
-                <div class="hist-time">Today</div>
+                <div class="hist-time">2026-06-08</div>
               </div>
             </div>
             <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
@@ -3257,7 +3314,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   Done
                 </div>
-                <div class="hist-time">2 days ago</div>
+                <div class="hist-time">2026-06-06</div>
               </div>
             </div>
             <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
@@ -3276,7 +3333,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   Done
                 </div>
-                <div class="hist-time">3 days ago</div>
+                <div class="hist-time">2026-06-05</div>
               </div>
             </div>
             <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
@@ -3295,7 +3352,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18" stroke="#FF2600" stroke-width="2.5" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="#FF2600" stroke-width="2.5" stroke-linecap="round"/></svg>
                   Failed
                 </div>
-                <div class="hist-time">3 days ago</div>
+                <div class="hist-time">2026-06-05</div>
               </div>
             </div>
             <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
@@ -3992,6 +4049,36 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
       <span class="tab-notif-dot" id="hist-notif-dot"></span>
       <div class="tab-icon"><img src="assets/icons/ui/ic_history_OL.svg" width="18" height="18" style="display:block;filter:brightness(10);"></div>
       <div class="tab-label">History</div>
+    </div>
+  </div>
+
+  <!-- ══════ COVER DESCRIPTION SHEET ══════ -->
+  <div id="emv-cover-sheet-overlay" onclick="closeCoverDescSheet()">
+    <div id="emv-cover-sheet" onclick="event.stopPropagation()">
+      <div style="width:36px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:14px auto 0;"></div>
+      <!-- Header -->
+      <div style="display:flex;align-items:center;padding:14px 16px 10px;">
+        <div onclick="closeCoverDescSheet()" style="width:32px;height:32px;border-radius:50%;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+          <img src="assets/icons/ui/ic_close.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+        </div>
+        <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">Cover Description</div>
+        <div onclick="generateCoverImage()" style="display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border-radius:20px;padding:6px 10px;flex-shrink:0;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
+          <img src="assets/icons/ui/ic_reload.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+          <img src="assets/icons/ui/ic_credit.svg" width="14" height="14" style="display:block;">
+          <span style="font-size:13px;font-weight:700;color:#fff;">10</span>
+        </div>
+      </div>
+      <!-- Textarea -->
+      <div style="padding:0 16px;">
+        <div style="position:relative;">
+          <textarea id="emv-cover-textarea" oninput="onCoverDescInput(this)" maxlength="2500" style="padding-bottom:32px;color:#fff;-webkit-text-fill-color:#fff;">Create a captivating cover image for "Starlight in Your Eyes" that embodies the essence of a dreamy night sky filled with shimmering stars.</textarea>
+          <!-- Count + clear — pinned bottom-right inside the textarea box -->
+          <div style="position:absolute;bottom:10px;right:12px;display:flex;align-items:center;gap:8px;pointer-events:none;">
+            <span id="emv-cover-charcount" style="font-size:12px;font-weight:500;color:#676779;">150/2500</span>
+            <span onclick="event.stopPropagation();document.getElementById('emv-cover-textarea').value='';onCoverDescInput(document.getElementById('emv-cover-textarea'));" style="font-size:13px;color:#676779;cursor:pointer;pointer-events:all;line-height:1;">✕</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -4800,6 +4887,77 @@ function filterTab(btn) {
     else                          visible = filter === type;
     row.style.display = visible ? 'flex' : 'none';
   });
+}
+
+// ── Cover Description sheet ──
+function openCoverFullscreen() {
+  // Point the lightbox image at the cover image src
+  const coverImg = document.getElementById('emv-cover-img');
+  const lbImg    = document.querySelector('#char-img-lightbox img');
+  if (lbImg && coverImg) lbImg.src = coverImg.src;
+  openCharImage();
+}
+function openCoverDescSheet() {
+  const overlay = document.getElementById('emv-cover-sheet-overlay');
+  const sheet   = document.getElementById('emv-cover-sheet');
+  overlay.style.display = 'block';
+  requestAnimationFrame(() => { overlay.classList.add('show'); sheet.classList.add('open'); });
+  // Auto-focus textarea after sheet finishes sliding up
+  setTimeout(() => {
+    const ta = document.getElementById('emv-cover-textarea');
+    if (ta) ta.focus();
+  }, 380);
+}
+function closeCoverDescSheet() {
+  const overlay = document.getElementById('emv-cover-sheet-overlay');
+  const sheet   = document.getElementById('emv-cover-sheet');
+  sheet.classList.remove('open');
+  overlay.classList.remove('show');
+  setTimeout(() => { overlay.style.display = 'none'; }, 350);
+}
+function onCoverDescInput(ta) {
+  const len = ta.value.length;
+  const el = document.getElementById('emv-cover-charcount');
+  if (el) el.textContent = len + '/2500';
+  // sync preview text
+  const preview = document.getElementById('emv-cover-desc-preview');
+  if (preview) preview.textContent = ta.value || '';
+}
+function generateCoverImage() {
+  closeCoverDescSheet();
+  const gen   = document.getElementById('emv-cover-generating');
+  const img   = document.getElementById('emv-cover-img');
+  const btn   = document.getElementById('merge-mv-btn');
+  const fsBtn = document.getElementById('emv-cover-fullscreen-btn');
+  if (gen)   gen.classList.add('active');
+  if (img)   img.classList.add('hidden');
+  if (fsBtn) fsBtn.style.display = 'none';
+  if (btn)   { btn.disabled = true; btn.style.opacity = '.38'; }
+  setTimeout(() => {
+    if (gen)   gen.classList.remove('active');
+    if (img)   img.classList.remove('hidden');
+    if (fsBtn) fsBtn.style.display = 'flex';
+    if (btn)   { btn.disabled = false; btn.style.opacity = '1'; setEmvDirty(); }
+  }, 3000);
+}
+
+// ── Delete Project dialog ──
+function showDeleteProjectDialog() {
+  document.getElementById('hist-delete-overlay').style.display = 'block';
+  // Reuse delete dialog but change the title/body text
+  const dlg = document.getElementById('hist-delete-dialog');
+  const titleEl = dlg.querySelector('div[style*="font-size:17px"][style*="font-weight:700"]');
+  const bodyEl  = dlg.querySelector('div[style*="font-size:14px"]');
+  if (titleEl) titleEl.textContent = 'Delete Project';
+  if (bodyEl)  bodyEl.textContent  = 'Are you sure you want to delete this project? This action cannot be undone.';
+  // Wire confirm to go back
+  const confirmEl = dlg.querySelector('[onclick="confirmHistDelete()"]');
+  if (confirmEl) confirmEl.setAttribute('onclick', 'confirmDeleteProject()');
+  dlg.style.display = 'block';
+}
+function confirmDeleteProject() {
+  hideHistDeleteDialog();
+  goBack();
 }
 
 // ── History more-options sheet ──
