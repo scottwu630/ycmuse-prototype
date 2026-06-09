@@ -703,8 +703,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .hist-more-btn{flex-shrink:0;width:24px;height:24px;background:#212127;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:opacity .15s;}
 .hist-more-btn:active{opacity:.6;}
 .hist-row[data-status="proc"] .hist-more-btn{display:none;}
-#hist-more-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:200;}
-#hist-more-sheet{position:absolute;bottom:0;left:0;right:0;background:#151519;border-radius:20px 20px 0 0;padding-bottom:calc(var(--safe-bot) + 40px);transform:translateY(100%);transition:transform .32s cubic-bezier(.22,1,.36,1);}
+#hist-more-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
+#hist-more-overlay.show{opacity:1;pointer-events:all;}
+#hist-more-sheet{position:absolute;bottom:0;left:0;right:0;background:#151519;border-radius:26px 26px 0 0;padding-bottom:calc(var(--safe-bot) + 40px);transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
 #hist-more-sheet.open{transform:translateY(0);}
 #hist-more-toast{position:absolute;left:50%;transform:translateX(-50%) translateY(8px);bottom:calc(100% + 12px);background:rgba(21,21,25,.96);border:1px solid rgba(168,85,247,.35);border-radius:14px;padding:12px 20px;font-size:14px;font-weight:600;color:#fff;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 4px 24px rgba(168,85,247,.2);}
 #hist-more-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -4891,7 +4892,10 @@ function openHistMore(btn) {
   const overlay = document.getElementById('hist-more-overlay');
   const sheet   = document.getElementById('hist-more-sheet');
   overlay.style.display = 'block';
-  requestAnimationFrame(() => sheet.classList.add('open'));
+  requestAnimationFrame(() => {
+    overlay.classList.add('show');
+    sheet.classList.add('open');
+  });
 }
 
 let _histToastTimer = null;
@@ -4932,7 +4936,8 @@ function closeHistMore() {
   const sheet   = document.getElementById('hist-more-sheet');
   const overlay = document.getElementById('hist-more-overlay');
   sheet.classList.remove('open');
-  setTimeout(() => { overlay.style.display = 'none'; _histMoreRow = null; }, 320);
+  overlay.classList.remove('show');
+  setTimeout(() => { overlay.style.display = 'none'; _histMoreRow = null; }, 350);
 }
 
 // ── Song like / share injection ──
