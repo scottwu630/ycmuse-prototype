@@ -2,31 +2,32 @@
 
 ## More Button Visibility
 
-The More button visibility is controlled by `data-status` on the row, not the Done badge. The Done badge is hidden after the user first opens an item (`histMarkPlayed`), but the underlying completed status is preserved in the DOM.
+Controlled by `data-status` on the row. `isDone` is derived from status, not the Done badge (which is removed from the DOM after the user first taps an item).
 
-| `data-status` value | More Button |
+| `data-status` | More Button |
 |---|---|
 | `proc` (Generating) | Hidden |
 | `failed` | Shown |
-| *(none — completed, with or without visible Done badge)* | Shown |
+| *(none — completed)* | Shown |
 
 ---
 
 ## Option Menu Content by Type × Status
 
-"Done" below means the item has completed generation (badge-done present in DOM, even if visually hidden after first play).
-
 | Type | Status | CTA Row | Options |
 |---|---|---|---|
-| **MV** | Completed (Done / Played) | — | Like / Unlike, Share, Download |
+| **MV** | Completed | — | Like / Unlike, Share, Download, **Delete** |
 | **MV** | Failed | — | Delete |
 | **MV** | Generating | *(button hidden)* | — |
-| **Song** | Completed (Done / Played) | Create MV · Get Proof | Like / Unlike, Share, Publish (toggle), Download |
+| **Song** | Completed · Publish OFF | Create MV · Get Proof | Like / Unlike, Share, Publish (toggle), Download, **Delete** |
+| **Song** | Completed · Publish ON | Create MV · Get Proof | Like / Unlike, Share, Publish (toggle ON), Download *(Delete hidden)* |
 | **Song** | Failed | — | Delete |
 | **Song** | Generating | *(button hidden)* | — |
-| **Storyboard** | Completed (Done / Played) | Create MV | Delete |
+| **Storyboard** | Completed | Create MV | Delete |
 | **Storyboard** | Failed | — | Delete |
 | **Storyboard** | Generating | *(button hidden)* | — |
+
+> **Publish ↔ Delete live sync:** When the Publish toggle is flipped inside the open menu, the Delete row shows/hides immediately without closing and reopening the menu.
 
 ---
 
@@ -44,12 +45,12 @@ The More button visibility is controlled by `data-status` on the row, not the Do
 
 | Option | Behaviour |
 |---|---|
-| Like | Marks row as liked; label changes to "Unlike" next open |
+| Like | Marks row as liked; label switches to "Unlike" |
 | Unlike | Removes liked state; label reverts to "Like" |
 | Share | Closes menu (action TBD) |
-| Publish (toggle) | Toggle ON → "Published success" toast; Toggle OFF → "Unpublished success" toast |
+| Publish (toggle) | ON → "Published success" toast + hides Delete live; OFF → "Unpublished success" toast + shows Delete live |
 | Download | Closes menu (action TBD) |
-| Delete | Opens confirmation dialog → confirm removes row |
+| Delete | Opens confirmation dialog → confirm removes row from list |
 
 ---
 
@@ -60,4 +61,4 @@ The More button visibility is controlled by `data-status` on the row, not the Do
 | All | All types |
 | Music Videos | MV + Storyboard |
 | Songs | Song only |
-| Liked | Any type with liked = true |
+| Liked | Any type with `data-liked="true"` |

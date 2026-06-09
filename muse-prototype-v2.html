@@ -4978,8 +4978,8 @@ function openHistMore(btn) {
   const htype    = _histMoreRow.dataset.htype || '';
   const liked    = _histMoreRow.dataset.liked === 'true';
   const status   = _histMoreRow.dataset.status || '';
-  const isDone   = !!_histMoreRow.querySelector('.badge-done');
   const isFailed = status === 'failed';
+  const isDone   = !isFailed && status !== 'proc'; // done = not failed, not generating
 
   const opts = document.getElementById('hist-more-options');
   opts.innerHTML = '';
@@ -5019,7 +5019,8 @@ function openHistMore(btn) {
     addOpt(_moreIcons.delete, 'Delete', null, () => { showHistDeleteDialog(); });
 
   } else if (htype === 'song') {
-    // Song: always show [Create MV | Get Proof] + Like, Share, Publish, Download
+    // Song: always show [Create MV | Get Proof] + Like, Share, Publish, Download, Delete (if not published)
+    const isPublished = _histMoreRow.dataset.published === 'true';
     addCtaRow([
       {icon:'ic_video_ai.svg',   label:'Create MV',  primary:true,  onClick:()=>goTo('mv-style')},
       {icon:'ic_certified.svg',  label:'Get Proof',  primary:false, onClick:()=>goTo('proof')}
@@ -5031,12 +5032,15 @@ function openHistMore(btn) {
     addOpt(_moreIcons.share, 'Share', null, () => { closeHistMore(); });
     if (isDone) {
       addOpt(_moreIcons.publish, 'Publish',
-        `<button class="hist-opt-toggle" onclick="event.stopPropagation();this.classList.toggle('on');showHistToast(this.classList.contains('on')?'Published success':'Unpublished success')"></button>`);
+        `<button class="hist-opt-toggle${isPublished ? ' on' : ''}" onclick="event.stopPropagation();this.classList.toggle('on');const pub=this.classList.contains('on');if(_histMoreRow)_histMoreRow.dataset.published=String(pub);const dr=document.getElementById('hist-opt-delete-row');if(dr)dr.style.display=pub?'none':'flex';showHistToast(pub?'Published success':'Unpublished success')"></button>`);
       addOpt(_moreIcons.download, 'Download', null, () => { closeHistMore(); });
+      addOpt(_moreIcons.delete, 'Delete', null, () => { showHistDeleteDialog(); });
+      opts.lastElementChild.id = 'hist-opt-delete-row';
+      if (isPublished) opts.lastElementChild.style.display = 'none';
     }
 
   } else {
-    // MV (and anything else): Like, Share, Download
+    // MV: Like, Share, Download, Delete (done items)
     addOpt(_moreIcons.heart(liked), liked ? 'Unlike' : 'Like', null, () => {
       _histMoreRow.dataset.liked = liked ? 'false' : 'true';
       closeHistMore();
@@ -5044,6 +5048,7 @@ function openHistMore(btn) {
     addOpt(_moreIcons.share, 'Share', null, () => { closeHistMore(); });
     if (isDone) {
       addOpt(_moreIcons.download, 'Download', null, () => { closeHistMore(); });
+      addOpt(_moreIcons.delete, 'Delete', null, () => { showHistDeleteDialog(); });
     }
   }
 
