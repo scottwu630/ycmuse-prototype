@@ -718,10 +718,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .hist-opt-row{display:flex;align-items:center;gap:14px;padding:0 20px;height:40px;cursor:pointer;transition:opacity .15s;}
 .hist-opt-row:active{opacity:.6;}
 .hist-opt-label{font-size:15px;font-weight:500;color:#fff;flex:1;letter-spacing:-.15px;}
-.hist-opt-toggle{width:44px;height:26px;border-radius:13px;background:#3a3a40;border:none;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.hist-opt-toggle{width:36px;height:20px;border-radius:10px;background:#3a3a40;border:none;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
 .hist-opt-toggle.on{background:#A855F7;}
-.hist-opt-toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.4);}
-.hist-opt-toggle.on::after{left:21px;}
+.hist-opt-toggle::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.4);}
+.hist-opt-toggle.on::after{left:18px;}
 .badge-done{background:rgba(1,179,123,.2);color:#01B37B;}
 .badge-proc{background:var(--n14);color:var(--n100);padding:3px 6px;border-radius:20px;}
 .badge-failed{background:rgba(255,38,0,.2);color:#FF2600;}
@@ -930,10 +930,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .ds-ctrl-sub{font-size:12px;font-weight:400;color:var(--text-2);line-height:16px;letter-spacing:-.1px;margin-top:2px;}
 
 /* ── Toggle (pill switch 44×24) ── */
-.ds-toggle{-webkit-appearance:none;appearance:none;width:44px;height:24px;border-radius:12px;background:var(--n34);border:none;cursor:pointer;position:relative;flex-shrink:0;transition:background .22s ease;outline:none;}
+.ds-toggle{-webkit-appearance:none;appearance:none;width:36px;height:20px;border-radius:10px;background:var(--n34);border:none;cursor:pointer;position:relative;flex-shrink:0;transition:background .22s ease;outline:none;}
 .ds-toggle:checked{background:var(--accent);}
-.ds-toggle::after{content:'';position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:2px;left:2px;transition:transform .22s cubic-bezier(.34,1.3,.64,1);box-shadow:0 1px 4px rgba(0,0,0,.35);}
-.ds-toggle:checked::after{transform:translateX(20px);}
+.ds-toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:2px;left:2px;transition:transform .22s cubic-bezier(.34,1.3,.64,1);box-shadow:0 1px 4px rgba(0,0,0,.35);}
+.ds-toggle:checked::after{transform:translateX(16px);}
 
 /* ── Radio (24×24 circle) ── */
 .ds-radio{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:transparent;border:2px solid var(--n44);cursor:pointer;position:relative;flex-shrink:0;transition:border-color .15s ease,background .15s ease;outline:none;}
@@ -1042,10 +1042,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .coin{width:17px;height:17px;border-radius:50%;background:#f59e0b;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;flex-shrink:0;}
 .insp-chip{padding:8px 16px;border-radius:20px;border:1.5px solid var(--border-2);color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;}
 .insp-chip.sel{border-color:#A855F7;background:rgba(168,85,247,.1);color:#A855F7;}
-.toggle{width:46px;height:28px;border-radius:14px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.toggle{width:36px;height:20px;border-radius:10px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
 .toggle.on{background:#A855F7;}.toggle.off{background:rgba(255,255,255,.2);}
-.toggle-knob{position:absolute;top:4px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3);transition:left .2s;}
-.toggle.on .toggle-knob{left:22px;}.toggle.off .toggle-knob{left:4px;}
+.toggle-knob{position:absolute;top:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3);transition:left .2s;}
+.toggle.on .toggle-knob{left:18px;}.toggle.off .toggle-knob{left:2px;}
 .sett-input{width:100%;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:14px;font-family:inherit;outline:none;margin-top:8px;}
 .sett-input::placeholder{color:var(--text-3);}
 .sett-input:focus{border-color:var(--border-2);}
@@ -2989,21 +2989,37 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div id="song-panel-custom" style="display:none;">
 
             <!-- LYRICS -->
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;position:relative;">
-              <div style="font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:-0.01em;">Lyrics</div>
-              <button id="lyrics-info-btn" onclick="toggleLyricsTooltip(event)" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;flex-shrink:0;">
-                <img src="assets/icons/ui/ic_info.svg" width="14" height="14" style="display:block;opacity:.5;filter:brightness(10);">
-              </button>
-              <div id="lyrics-tooltip" style="display:none;position:absolute;top:calc(100% + 8px);left:0;z-index:99;background:#212127;border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:10px 12px;width:240px;box-shadow:0 8px 24px rgba(0,0,0,.5);">
-                <div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:-.1px;">Supported Languages</div>
-                <div style="font-size:11px;font-weight:500;color:#9C9CAB;line-height:1.7;letter-spacing:-.1px;">English, Japanese, German, Portuguese, Italian, French, Spanish, Turkish, Chinese, Korean, and Hindi</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:10px;position:relative;">
+              <!-- Left: label + info -->
+              <div style="display:flex;align-items:center;gap:4px;">
+                <div style="font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:-0.01em;">LYRICS</div>
+                <button id="lyrics-info-btn" onclick="toggleLyricsTooltip(event)" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;flex-shrink:0;">
+                  <img src="assets/icons/ui/ic_info.svg" width="14" height="14" style="display:block;opacity:.5;filter:brightness(10);">
+                </button>
+                <div id="lyrics-tooltip" style="display:none;position:absolute;top:calc(100% + 8px);left:0;z-index:99;background:#212127;border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:10px 12px;width:240px;box-shadow:0 8px 24px rgba(0,0,0,.5);">
+                  <div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:-.1px;">Supported Languages</div>
+                  <div style="font-size:11px;font-weight:500;color:#9C9CAB;line-height:1.7;letter-spacing:-.1px;">English, Japanese, German, Portuguese, Italian, French, Spanish, Turkish, Chinese, Korean, and Hindi</div>
+                </div>
+              </div>
+              <!-- Right: Instrumental toggle -->
+              <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+                <span style="font-size:11px;font-weight:500;color:#676779;letter-spacing:-0.11px;line-height:16px;">Instrumental</span>
+                <!-- Toggle switch -->
+                <div id="instrumental-toggle" onclick="toggleInstrumental()" style="width:36px;height:20px;border-radius:10px;background:#3A3A47;cursor:pointer;position:relative;flex-shrink:0;transition:background .2s;">
+                  <div id="instrumental-knob" style="width:16px;height:16px;border-radius:8px;background:#fff;position:absolute;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.4);"></div>
+                </div>
               </div>
             </div>
-            <div style="background:#151519;border:1px solid rgba(255,255,255,0.15);border-radius:14px;overflow:hidden;margin-bottom:20px;">
+            <!-- Lyrics input box — wraps both normal and instrumental states -->
+            <div id="lyrics-box" style="background:#151519;border:1px solid rgba(255,255,255,0.15);border-radius:14px;overflow:hidden;margin-bottom:20px;transition:background .2s,border-color .2s;">
+              <!-- Normal textarea -->
               <textarea id="song-lyrics" placeholder="Write your lyrics here...
 
 Or leave blank — AI will generate them based on your chosen style and mood." style="width:100%;min-height:88px;padding:10px 10px 6px;background:transparent;border:none;color:#fff;font-size:12px;font-family:inherit;resize:none;outline:none;line-height:1.6;scrollbar-width:none;-ms-overflow-style:none;" oninput="updateLyricsClear(this)"></textarea>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 10px 10px;">
+              <!-- Instrumental placeholder (shown when toggle is ON) -->
+              <div id="instrumental-placeholder" style="display:none;padding:10px 10px 10px;min-height:88px;font-size:12px;font-weight:500;color:rgba(255,255,255,0.4);line-height:1.6;font-family:inherit;">No lyrics needed — your song will be created as a pure instrumental track.</div>
+              <!-- Toolbar (hidden when instrumental is ON) -->
+              <div id="lyrics-toolbar" style="display:flex;align-items:center;justify-content:space-between;padding:4px 10px 10px;">
                 <button class="insp-btn" onclick="event.stopPropagation();generateLyricsIdea()" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 5.5V17H9v-2.5C7.5 13.5 6 11.5 6 9a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   Ideas
@@ -3461,14 +3477,14 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
             <!-- Divider -->
             <div style="width:1px;height:30px;background:rgba(255,255,255,.15);flex-shrink:0;"></div>
             <!-- MVs -->
-            <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px;">
+            <div onclick="goToHistory('mv')" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px;cursor:pointer;">
               <div style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">12</div>
               <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.35);letter-spacing:-.11px;line-height:16px;">MVs</div>
             </div>
             <!-- Divider -->
             <div style="width:1px;height:30px;background:rgba(255,255,255,.15);flex-shrink:0;"></div>
             <!-- Songs -->
-            <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px;">
+            <div onclick="goToHistory('song')" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px;cursor:pointer;">
               <div style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">28</div>
               <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.35);letter-spacing:-.11px;line-height:16px;">Songs</div>
             </div>
@@ -4862,6 +4878,13 @@ function histMarkPlayed(row) {
   }
 }
 
+function goToHistory(type) {
+  // Navigate to History tab, then activate the correct filter tab
+  tabNav('history');
+  var filterBtn = document.querySelector('#screen-history .ftab[data-filter="' + type + '"]');
+  if (filterBtn) filterTab(filterBtn);
+}
+
 function filterTab(btn) {
   // Only apply to tabs within the History screen
   btn.closest('div').querySelectorAll('.ftab').forEach(b => b.classList.remove('on'));
@@ -6189,6 +6212,38 @@ function useAISongInMV() {
   setTimeout(() => openTrim('AI Song', title, dur), 420);
 }
 
+// ── Instrumental Toggle ───────────────────────────────────────────────────
+var _instrumentalOn = false;
+function toggleInstrumental() {
+  _instrumentalOn = !_instrumentalOn;
+  var toggle  = document.getElementById('instrumental-toggle');
+  var knob    = document.getElementById('instrumental-knob');
+  var ta      = document.getElementById('song-lyrics');
+  var ph      = document.getElementById('instrumental-placeholder');
+  var toolbar = document.getElementById('lyrics-toolbar');
+  var box     = document.getElementById('lyrics-box');
+
+  if (_instrumentalOn) {
+    // ON state
+    toggle.style.background = '#A855F7';
+    knob.style.transform = 'translateX(16px)';
+    ta.style.display = 'none';
+    ph.style.display = 'block';
+    toolbar.style.display = 'none';
+    box.style.background = '#212127';
+    box.style.borderColor = 'rgba(255,255,255,0.06)';
+  } else {
+    // OFF state
+    toggle.style.background = '#3A3A47';
+    knob.style.transform = 'translateX(0)';
+    ta.style.display = '';
+    ph.style.display = 'none';
+    toolbar.style.display = 'flex';
+    box.style.background = '#151519';
+    box.style.borderColor = 'rgba(255,255,255,0.15)';
+  }
+}
+
 function toggleLyricsTooltip(e) {
   e.stopPropagation();
   var tt = document.getElementById('lyrics-tooltip');
@@ -6261,6 +6316,8 @@ function resetSongCreate() {
   // Clear Simple textarea
   const simpleTA = document.getElementById('song-simple-idea');
   if (simpleTA) { simpleTA.value = ''; updateSimpleSongCTA(simpleTA); }
+  // Reset instrumental toggle
+  if (_instrumentalOn) toggleInstrumental();
   // Clear Custom fields
   const lyrics = document.getElementById('song-lyrics');
   if (lyrics) { lyrics.value = ''; updateLyricsClear(lyrics); }
