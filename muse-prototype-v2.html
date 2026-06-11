@@ -369,6 +369,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .sheet{position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:26px 26px 0 0;z-index:121;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);padding-bottom:var(--safe-bot);}
 .sheet.show{transform:translateY(0);}
 .sheet-handle{width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:14px auto 0;}
+/* ── POPUP DIALOGS ── */
+.popup-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:inherit;z-index:9000;opacity:0;pointer-events:none;transition:opacity .3s ease-in;}
+.popup-overlay.show{opacity:1;pointer-events:all;transition:opacity .3s ease-out;}
+.popup-dialog{position:absolute;left:16px;right:16px;top:50%;transform:translateY(calc(-50% + 30px));z-index:9001;background:#212127;border-radius:26px;padding:16px;display:flex;flex-direction:column;gap:16px;box-shadow:0 24px 64px rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:opacity .3s ease-in,transform .3s ease-in;}
+.popup-dialog.show{opacity:1;pointer-events:all;transform:translateY(-50%);transition:opacity .3s ease-out,transform .3s ease-out;}
 .sheet-ttl{font-size:15px;font-weight:700;color:var(--text);padding:8px 20px 4px;text-align:center;line-height:18px;}
 .sheet-opt{display:flex;align-items:center;gap:8px;padding:8px 20px;cursor:pointer;transition:background .15s;}
 .sheet-opt:active{background:rgba(255,255,255,.04);}
@@ -3217,7 +3222,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
               </div>
             </div>
           </div>
-          <div style="display:flex;gap:6px;">
+          <div id="hist-filter-bar" style="display:flex;gap:6px;">
             <button class="ftab on" data-filter="all" onclick="filterTab(this)">All</button>
             <button class="ftab" data-filter="mv" onclick="filterTab(this)">Music Videos</button>
             <button class="ftab" data-filter="song" onclick="filterTab(this)">Songs</button>
@@ -3225,8 +3230,18 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
           </div>
         </div>
 
+        <!-- Logged-out empty state -->
+        <div id="hist-loggedout-state" style="display:none;flex-direction:column;align-items:center;text-align:center;padding-top:80px;gap:20px;">
+          <img src="assets/icons/ui/ic_media.svg" width="64" height="64" style="display:block;flex-shrink:0;filter:brightness(0) invert(1);">
+          <div style="display:flex;flex-direction:column;gap:4px;padding:0 16px;">
+            <div style="font-size:17px;font-weight:700;color:#fff;line-height:22px;letter-spacing:-.17px;">Your Creative Space Awaits</div>
+            <div style="font-size:14px;font-weight:500;color:#9C9CAB;line-height:20px;letter-spacing:-.14px;">Sign in to see your AI music videos and songs all in one place.</div>
+          </div>
+          <div onclick="requireLogin(()=>{})" style="width:180px;border-radius:14px;background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);padding:14px 32px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">Sign In</div>
+        </div>
+
         <!-- LIST -->
-        <div style="padding-bottom:calc(var(--tab-h) + 16px);">
+        <div id="hist-list-wrap" style="padding-bottom:calc(var(--tab-h) + 16px);">
 
           <!-- Dynamic: Processing item shown after "View Later" -->
           <div id="hist-song-proc" style="display:none;" class="hist-row" data-htype="song" data-status="proc">
@@ -3980,28 +3995,29 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
     </div>
   </div>
 
-  <!-- Sign Out Confirmation Dialog -->
-  <div id="hist-delete-overlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:9000;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:inherit;" onclick="hideHistDeleteDialog()"></div>
-  <div id="hist-delete-dialog" style="display:none;position:absolute;left:24px;right:24px;top:50%;transform:translateY(-54%);background:#1C1C1E;border-radius:14px;z-index:9001;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.7);">
-    <div style="padding:20px 20px 14px;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);">
-      <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.2px;margin-bottom:6px;">Delete</div>
-      <div style="font-size:14px;color:#9C9CAB;line-height:1.5;">Are you sure you want to delete this item? This action cannot be undone.</div>
+  <!-- Delete Confirmation Dialog -->
+  <div id="hist-delete-overlay" class="popup-overlay" onclick="hideHistDeleteDialog()"></div>
+  <div id="hist-delete-dialog" class="popup-dialog">
+    <div style="display:flex;flex-direction:column;gap:4px;text-align:center;">
+      <div id="hist-delete-title" style="font-size:17px;font-weight:700;color:#fff;line-height:22px;letter-spacing:-.17px;">Delete</div>
+      <div id="hist-delete-body" style="font-size:14px;font-weight:500;color:#9C9CAB;line-height:20px;letter-spacing:-.14px;">Are you sure you want to delete this item? This action cannot be undone.</div>
     </div>
-    <div style="display:flex;">
-      <div onclick="hideHistDeleteDialog()" style="flex:1;padding:14px;text-align:center;font-size:17px;font-weight:500;color:#0A84FF;cursor:pointer;border-right:1px solid rgba(255,255,255,.1);">Cancel</div>
-      <div onclick="confirmHistDelete()" style="flex:1;padding:14px;text-align:center;font-size:17px;font-weight:600;color:#FF453A;cursor:pointer;">Delete</div>
+    <div style="display:flex;gap:8px;">
+      <div onclick="hideHistDeleteDialog()" style="flex:1;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:12px 14px;text-align:center;font-size:12px;font-weight:600;color:#fff;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">Cancel</div>
+      <div id="hist-delete-confirm-btn" onclick="confirmHistDelete()" style="flex:1;background:#ef4444;border-radius:20px;padding:12px 14px;text-align:center;font-size:12px;font-weight:600;color:#fff;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">Delete</div>
     </div>
   </div>
 
-  <div id="signout-overlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:9000;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:inherit;" onclick="hideSignOutDialog()"></div>
-  <div id="signout-dialog" style="display:none;position:absolute;left:24px;right:24px;top:50%;transform:translateY(-54%);background:#1C1C1E;border-radius:14px;z-index:9001;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.7);">
-    <div style="padding:20px 20px 14px;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);">
-      <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.2px;margin-bottom:6px;">Sign Out</div>
-      <div style="font-size:14px;color:#9C9CAB;line-height:1.5;">Are you sure you want to sign out of your account?</div>
+  <!-- Sign Out Confirmation Dialog -->
+  <div id="signout-overlay" class="popup-overlay" onclick="hideSignOutDialog()"></div>
+  <div id="signout-dialog" class="popup-dialog">
+    <div style="display:flex;flex-direction:column;gap:4px;text-align:center;">
+      <div style="font-size:17px;font-weight:700;color:#fff;line-height:22px;letter-spacing:-.17px;">Sign Out</div>
+      <div style="font-size:14px;font-weight:500;color:#9C9CAB;line-height:20px;letter-spacing:-.14px;">Are you sure you want to sign out of your account?</div>
     </div>
-    <div style="display:flex;">
-      <div onclick="hideSignOutDialog()" style="flex:1;padding:14px;text-align:center;font-size:17px;font-weight:500;color:#0A84FF;cursor:pointer;border-right:1px solid rgba(255,255,255,.1);">Cancel</div>
-      <div onclick="confirmSignOut()" style="flex:1;padding:14px;text-align:center;font-size:17px;font-weight:600;color:#FF453A;cursor:pointer;">Sign Out</div>
+    <div style="display:flex;gap:8px;">
+      <div onclick="hideSignOutDialog()" style="flex:1;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:12px 14px;text-align:center;font-size:12px;font-weight:600;color:#fff;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">Cancel</div>
+      <div onclick="confirmSignOut()" style="flex:1;background:#fff;border-radius:20px;padding:12px 14px;text-align:center;font-size:12px;font-weight:600;color:#09090b;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">Sign Out</div>
     </div>
   </div>
 
@@ -4342,6 +4358,7 @@ function tabNav(id) {
   if (id === 'history') {
     var dot = document.getElementById('hist-notif-dot');
     if (dot) dot.classList.remove('show');
+    syncHistoryLoginState();
   }
   goTo(id);
 }
@@ -4966,17 +4983,12 @@ function generateCoverImage() {
 
 // ── Delete Project dialog ──
 function showDeleteProjectDialog() {
-  document.getElementById('hist-delete-overlay').style.display = 'block';
-  // Reuse delete dialog but change the title/body text
-  const dlg = document.getElementById('hist-delete-dialog');
-  const titleEl = dlg.querySelector('div[style*="font-size:17px"][style*="font-weight:700"]');
-  const bodyEl  = dlg.querySelector('div[style*="font-size:14px"]');
-  if (titleEl) titleEl.textContent = 'Delete Project';
-  if (bodyEl)  bodyEl.textContent  = 'Are you sure you want to delete this project? This action cannot be undone.';
-  // Wire confirm to go back
-  const confirmEl = dlg.querySelector('[onclick="confirmHistDelete()"]');
-  if (confirmEl) confirmEl.setAttribute('onclick', 'confirmDeleteProject()');
-  dlg.style.display = 'block';
+  // Reuse delete dialog with updated content
+  document.getElementById('hist-delete-title').textContent = 'Delete Project';
+  document.getElementById('hist-delete-body').textContent  = 'Are you sure you want to delete this project? This action cannot be undone.';
+  document.getElementById('hist-delete-confirm-btn').setAttribute('onclick', 'confirmDeleteProject()');
+  document.getElementById('hist-delete-overlay').classList.add('show');
+  document.getElementById('hist-delete-dialog').classList.add('show');
 }
 function confirmDeleteProject() {
   hideHistDeleteDialog();
@@ -5104,13 +5116,16 @@ function showHistDeleteDialog() {
   if (sheet)   sheet.classList.remove('open');
   if (overlay) overlay.style.display = 'none';
   _histMoreRow = null;
-  // show delete confirmation
-  document.getElementById('hist-delete-overlay').style.display = 'block';
-  document.getElementById('hist-delete-dialog').style.display = 'block';
+  // show delete confirmation (reset content to default "Delete item" text)
+  document.getElementById('hist-delete-title').textContent = 'Delete';
+  document.getElementById('hist-delete-body').textContent  = 'Are you sure you want to delete this item? This action cannot be undone.';
+  document.getElementById('hist-delete-confirm-btn').setAttribute('onclick', 'confirmHistDelete()');
+  document.getElementById('hist-delete-overlay').classList.add('show');
+  document.getElementById('hist-delete-dialog').classList.add('show');
 }
 function hideHistDeleteDialog() {
-  document.getElementById('hist-delete-overlay').style.display = 'none';
-  document.getElementById('hist-delete-dialog').style.display = 'none';
+  document.getElementById('hist-delete-overlay').classList.remove('show');
+  document.getElementById('hist-delete-dialog').classList.remove('show');
   _histDeleteRow = null;
 }
 function confirmHistDelete() {
@@ -5323,19 +5338,35 @@ function saveProfile() {
   });
 })();
 
+// ── History login-state sync ──
+function syncHistoryLoginState() {
+  var loggedOut = document.getElementById('hist-loggedout-state');
+  var listWrap  = document.getElementById('hist-list-wrap');
+  var filterBar = document.getElementById('hist-filter-bar');
+  if (_isLoggedIn) {
+    if (loggedOut)  loggedOut.style.display  = 'none';
+    if (listWrap)   listWrap.style.display   = '';
+    if (filterBar)  filterBar.style.display  = 'flex';
+  } else {
+    if (loggedOut)  loggedOut.style.display  = 'flex';
+    if (listWrap)   listWrap.style.display   = 'none';
+    if (filterBar)  filterBar.style.display  = 'none';
+  }
+}
+
 // ── Sign Out Dialog ──
 function showSignOutDialog() {
-  const device = document.querySelector('.device');
-  document.getElementById('signout-overlay').style.display = 'block';
-  document.getElementById('signout-dialog').style.display = 'block';
+  document.getElementById('signout-overlay').classList.add('show');
+  document.getElementById('signout-dialog').classList.add('show');
 }
 function hideSignOutDialog() {
-  document.getElementById('signout-overlay').style.display = 'none';
-  document.getElementById('signout-dialog').style.display = 'none';
+  document.getElementById('signout-overlay').classList.remove('show');
+  document.getElementById('signout-dialog').classList.remove('show');
 }
 function confirmSignOut() {
   hideSignOutDialog();
   _isLoggedIn = false;
+  syncHistoryLoginState();
   // Show banner again after sign-out, restore cards margin
   const banner = document.getElementById('home-banner-ad');
   if (banner) banner.style.display = '';
@@ -6167,6 +6198,7 @@ function signInWith(provider) {
     const cards = document.getElementById('home-feature-cards');
     if (cards) cards.style.marginBottom = '16px';
     _isLoggedIn = true;
+    syncHistoryLoginState();
     // Run any pending gated action
     const action = _pendingAction;
     _pendingAction = null;
