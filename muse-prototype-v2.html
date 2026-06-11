@@ -1230,8 +1230,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div class="ob-foot" style="padding-top:8px;">
         <!-- Stationary pagination dots -->
         <div style="display:flex;justify-content:center;gap:6px;margin-bottom:14px;">
-          <div id="ob-dot-0" onclick="obGoTo(0)" style="width:22px;height:4px;background:#fff;border-radius:3px;transition:all .3s;cursor:pointer;"></div>
-          <div id="ob-dot-1" onclick="obGoTo(1)" style="width:8px;height:4px;background:rgba(255,255,255,0.4);border-radius:3px;transition:all .3s;cursor:pointer;"></div>
+          <div id="ob-dot-0" onclick="obGoTo(0)" style="width:16px;height:4px;background:#fff;border-radius:3px;transition:all .3s;cursor:pointer;"></div>
+          <div id="ob-dot-1" onclick="obGoTo(1)" style="width:6px;height:4px;background:rgba(255,255,255,0.4);border-radius:3px;transition:all .3s;cursor:pointer;"></div>
         </div>
         <button id="ob-cta" onclick="obNext()" style="width:100%;height:46px;border-radius:14px;border:none;font-size:17px;font-weight:700;color:#fff;cursor:pointer;background:linear-gradient(135deg,#ff6bce,#a855f7,#4338ca);box-shadow:0 8px 12px rgba(168,85,247,0.32);transition:opacity .15s;">Continue</button>
         <button id="ob-skip" onclick="localStorage.setItem('muse_onboarded','1');navStack=[];goTo('home')" style="background:transparent;border:none;padding:14px;width:100%;font-size:15px;font-weight:500;color:rgba(255,255,255,0.52);cursor:pointer;letter-spacing:-0.15px;">Skip</button>
@@ -1382,71 +1382,274 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <!-- New Songs -->
         <div style="padding:0 16px 10px;display:flex;align-items:center;justify-content:space-between;">
           <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">New Songs</div>
-          <div style="display:flex;align-items:center;gap:2px;font-size:11px;font-weight:500;color:#A855F7;cursor:pointer;">All <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;"><path d="M8.29295 5.29298C8.65907 4.92686 9.23807 4.90427 9.63084 5.22462L9.70702 5.29298L15.707 11.293C16.0975 11.6835 16.0975 12.3165 15.707 12.707L9.70702 18.707C9.31649 19.0976 8.68348 19.0976 8.29295 18.707C7.90243 18.3165 7.90243 17.6835 8.29295 17.293L13.5859 12L8.29295 6.70704L8.22459 6.63087C7.90424 6.2381 7.92684 5.65909 8.29295 5.29298Z" fill="#A855F7"/></svg></div>
+          <div onclick="goTo('songs-all')" style="display:flex;align-items:center;gap:2px;font-size:11px;font-weight:500;color:#A855F7;cursor:pointer;">See all <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;"><path d="M8.29295 5.29298C8.65907 4.92686 9.23807 4.90427 9.63084 5.22462L9.70702 5.29298L15.707 11.293C16.0975 11.6835 16.0975 12.3165 15.707 12.707L9.70702 18.707C9.31649 19.0976 8.68348 19.0976 8.29295 18.707C7.90243 18.3165 7.90243 17.6835 8.29295 17.293L13.5859 12L8.29295 6.70704L8.22459 6.63087C7.90424 6.2381 7.92684 5.65909 8.29295 5.29298Z" fill="#A855F7"/></svg></div>
         </div>
         <div id="new-songs-wrap" style="overflow:hidden;width:320px;">
           <div id="new-songs-track" style="display:flex;will-change:transform;transition:transform .52s cubic-bezier(.22,1,.36,1);">
           <!-- Page 1 -->
-          <div style="flex-shrink:0;width:320px;scroll-snap-align:start;">
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Down the Memory Lane','Lo-fi · Soothing · Cozy','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Down the Memory Lane</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Lo-fi · Soothing · Cozy</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Down the Memory Lane','Lo-fi','Calm');goTo('song-create')" class="songsall-create">Create</button>
+          <div style="flex-shrink:0;width:320px;">
+            <div class="songsall-item" onclick="openSongPlayer('Down the Memory Lane','Lo-fi · Soothing · Cozy','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_05.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Down the Memory Lane</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">StarryNights</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">286</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">107</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">68</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Down the Memory Lane','Lo-fi','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" data-preliked="true" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','assets/images/album-art/album_08.jpg','Electronic','Dark')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_08.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Midnight Drive</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Electronic · Dark</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Midnight Drive','Electronic','Dark');goTo('song-create')" class="songsall-create">Create</button>
+            <div class="songsall-item" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','assets/images/album-art/album_08.jpg','Electronic','Dark')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_08.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Midnight Drive</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">ChasingWaves</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">108</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">68</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">34</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Midnight Drive','Electronic','Dark');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Forest Morning','Acoustic · Folk','assets/images/album-art/album_01.jpg','Acoustic','Calm')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_01.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Forest Morning</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Acoustic · Folk</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Forest Morning','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button>
+            <div class="songsall-item" onclick="openSongPlayer('Forest Morning','Acoustic · Folk','assets/images/album-art/album_01.jpg','Acoustic','Calm')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_01.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Forest Morning</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">MysticRhythm</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">68</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">42</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">26</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Forest Morning','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
           </div>
           <!-- Page 2 -->
-          <div style="flex-shrink:0;width:320px;scroll-snap-align:start;">
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Neon Pulse','Electronic · Energetic','assets/images/album-art/album_02.jpg','Electronic','Energetic')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_02.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Neon Pulse</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Electronic · Energetic</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Neon Pulse','Electronic','Energetic');goTo('song-create')" class="songsall-create">Create</button>
+          <div style="flex-shrink:0;width:320px;">
+            <div class="songsall-item" onclick="openSongPlayer('Neon Pulse','Electronic · Energetic','assets/images/album-art/album_02.jpg','Electronic','Energetic')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_02.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Neon Pulse</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">LyricLover</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">195</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">84</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">41</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Neon Pulse','Electronic','Energetic');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Golden Hour','R&B · Warm','assets/images/album-art/album_03.jpg','R&B','Uplifting')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_03.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Golden Hour</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">R&B · Warm</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Golden Hour','R&B','Uplifting');goTo('song-create')" class="songsall-create">Create</button>
+            <div class="songsall-item" onclick="openSongPlayer('Golden Hour','R&B · Warm','assets/images/album-art/album_03.jpg','R&B','Uplifting')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_03.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Golden Hour</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">SoundSculptor</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">143</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">56</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">29</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Golden Hour','R&B','Uplifting');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Ocean Dreams','Ambient · Calm','assets/images/album-art/album_04.jpg','Acoustic','Calm')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_04.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Ocean Dreams</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Ambient · Calm</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Ocean Dreams','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button>
+            <div class="songsall-item" onclick="openSongPlayer('Ocean Dreams','Ambient · Calm','assets/images/album-art/album_04.jpg','Acoustic','Calm')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_04.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Ocean Dreams</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">TuneTraveler</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">92</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">31</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">17</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Ocean Dreams','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
           </div>
           <!-- Page 3 -->
-          <div style="flex-shrink:0;width:320px;scroll-snap-align:start;">
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Last September','Pop · Nostalgic','assets/images/album-art/album_06.jpg','Pop','Melancholic')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_06.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Last September</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Pop · Nostalgic</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Last September','Pop','Melancholic');goTo('song-create')" class="songsall-create">Create</button>
+          <div style="flex-shrink:0;width:320px;">
+            <div class="songsall-item" onclick="openSongPlayer('Last September','Pop · Nostalgic','assets/images/album-art/album_06.jpg','Pop','Melancholic')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_06.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Last September</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">BeatExplorer</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">74</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">28</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">12</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Last September','Pop','Melancholic');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('City Lights','Jazz · Cinematic','assets/images/album-art/album_07.jpg','Jazz','Calm')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_07.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">City Lights</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Jazz · Cinematic</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('City Lights','Jazz','Calm');goTo('song-create')" class="songsall-create">Create</button>
+            <div class="songsall-item" onclick="openSongPlayer('City Lights','Jazz · Cinematic','assets/images/album-art/album_07.jpg','Jazz','Calm')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_07.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">City Lights</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">HarmonicWaves</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">57</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">18</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">6</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('City Lights','Jazz','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;" onclick="openSongPlayer('Winter Song','Acoustic · Cozy','assets/images/album-art/album_09.jpg','Acoustic','Calm')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_09.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Winter Song</div><div style="font-size:11px;color:#9C9CAB;margin-top:2px;">Acoustic · Cozy</div></div>
-              <button onclick="event.stopPropagation();applySongTemplate('Winter Song','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button>
+            <div class="songsall-item" onclick="openSongPlayer('Winter Song','Acoustic · Cozy','assets/images/album-art/album_09.jpg','Acoustic','Calm')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_09.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Winter Song</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">ChillVibes</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">103</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">32</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">10</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Winter Song','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
+            </div>
+          </div>
+          <!-- Page 4 -->
+          <div style="flex-shrink:0;width:320px;">
+            <div class="songsall-item" onclick="openSongPlayer('Foam of the Days','Lo-fi · Asian · Cozy','assets/images/album-art/album_07.jpg','Lo-fi','Cozy')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_07.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Foam of the Days</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">EchoesOfJoy</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">48</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">12</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">0</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Foam of the Days','Lo-fi','Cozy');goTo('song-create')" class="songsall-create">Create</button></div>
+            </div>
+            <div class="songsall-item" onclick="openSongPlayer('Random Access Memories','Dreamy · Synth · Retro','assets/images/album-art/album_10.jpg','Electronic','Retro')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_10.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Random Access Memories</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">SunnyDaze</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">215</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">94</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">53</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Random Access Memories','Electronic','Retro');goTo('song-create')" class="songsall-create">Create</button></div>
+            </div>
+            <div class="songsall-item" onclick="openSongPlayer('Morning Dew','Ambient · Nature','assets/images/album-art/album_04.jpg','Ambient','Calm')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_04.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Morning Dew</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">MelodyMaker</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">187</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">86</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">26</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Morning Dew','Ambient','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
+            </div>
+          </div>
+          <!-- Page 5 -->
+          <div style="flex-shrink:0;width:320px;">
+            <div class="songsall-item" onclick="openSongPlayer('Ocean &amp; Silence','Ambient · Peaceful','assets/images/album-art/album_09.jpg','Ambient','Calm')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_09.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Ocean &amp; Silence</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">RhythmRider</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">32</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">16</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">0</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Ocean &amp; Silence','Ambient','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
+            </div>
+            <div class="songsall-item" onclick="openSongPlayer('Whispers of the Past','Lo-fi · Soothing','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_05.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Whispers of the Past</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">SunnyDaze</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">1.2k</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">265</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">68</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Whispers of the Past','Lo-fi','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
+            </div>
+            <div class="songsall-item" onclick="openSongPlayer('Neon City Nights','Electronic · Urban','assets/images/album-art/album_03.jpg','Electronic','Dark')">
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_03.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn">▶</div></div></div>
+              <div class="songsall-info">
+                <div class="songsall-title">Neon City Nights</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+                  <div class="songsall-avatar-ph"><img src="assets/icons/ui/ic_account.svg" width="7" height="7" style="display:block;filter:brightness(0) invert(1);opacity:.7;"></div>
+                  <span class="songsall-username">GrooveMaster</span>
+                </div>
+                <div class="songsall-social">
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_headphones.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">168</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">16</span></div>
+                  <div class="songsall-stat"><img src="assets/icons/ui/ic_share.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span class="songsall-stat-val">8</span></div>
+                </div>
+              </div>
+              <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Neon City Nights','Electronic','Dark');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
           </div>
           </div><!-- /new-songs-track -->
         </div><!-- /new-songs-wrap -->
         <!-- Dots -->
         <div id="new-songs-dots" style="display:flex;gap:5px;justify-content:center;padding:10px 0 8px;">
-          <div onclick="scrollNewSongsTo(0)" style="width:22px;height:4px;border-radius:3px;background:#A855F7;transition:all .3s;cursor:pointer;"></div>
-          <div onclick="scrollNewSongsTo(1)" style="width:8px;height:4px;border-radius:3px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer;"></div>
-          <div onclick="scrollNewSongsTo(2)" style="width:8px;height:4px;border-radius:3px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer;"></div>
+          <div onclick="scrollNewSongsTo(0)" style="width:16px;height:4px;border-radius:3px;background:#fff;transition:all .3s;cursor:pointer;"></div>
+          <div onclick="scrollNewSongsTo(1)" style="width:6px;height:4px;border-radius:3px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer;"></div>
+          <div onclick="scrollNewSongsTo(2)" style="width:6px;height:4px;border-radius:3px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer;"></div>
+          <div onclick="scrollNewSongsTo(3)" style="width:6px;height:4px;border-radius:3px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer;"></div>
+          <div onclick="scrollNewSongsTo(4)" style="width:6px;height:4px;border-radius:3px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer;"></div>
         </div>
 
       </div>
@@ -6075,8 +6278,8 @@ function obGoTo(idx, animated = true) {
 
   const d0 = document.getElementById('ob-dot-0');
   const d1 = document.getElementById('ob-dot-1');
-  if (d0) { d0.style.width = obIdx === 0 ? '22px' : '8px'; d0.style.background = obIdx === 0 ? '#fff' : 'rgba(255,255,255,0.4)'; }
-  if (d1) { d1.style.width = obIdx === 1 ? '22px' : '8px'; d1.style.background = obIdx === 1 ? '#fff' : 'rgba(255,255,255,0.4)'; }
+  if (d0) { d0.style.width = obIdx === 0 ? '16px' : '6px'; d0.style.background = obIdx === 0 ? '#fff' : 'rgba(255,255,255,0.4)'; }
+  if (d1) { d1.style.width = obIdx === 1 ? '16px' : '6px'; d1.style.background = obIdx === 1 ? '#fff' : 'rgba(255,255,255,0.4)'; }
 
   const btn = document.getElementById('ob-cta');
   if (btn) {
@@ -7186,7 +7389,7 @@ function iapSuccess() {
 }
 // ── New Songs drag pager ──────────────────────────────────────────────────
 (function() {
-  const PAGE_W = 320, TOTAL = 3, THRESHOLD = 60;
+  const PAGE_W = 320, TOTAL = 5, THRESHOLD = 60;
   let nsIdx = 0, sx = 0, dragging = false, _nsDid = false;
 
   function getTrack() { return document.getElementById('new-songs-track'); }
@@ -7199,8 +7402,8 @@ function iapSuccess() {
     t.style.transform  = `translateX(${-nsIdx * PAGE_W}px)`;
     const dots = document.querySelectorAll('#new-songs-dots > div');
     dots.forEach((d, i) => {
-      d.style.width      = i === nsIdx ? '22px' : '8px';
-      d.style.background = i === nsIdx ? '#A855F7' : 'rgba(255,255,255,.4)';
+      d.style.width      = i === nsIdx ? '16px' : '6px';
+      d.style.background = i === nsIdx ? '#fff' : 'rgba(255,255,255,.4)';
     });
   }
 
@@ -7253,7 +7456,7 @@ window.addEventListener('load', () => {
       // inline setNsPage equivalent
       t.style.transition = 'transform .52s cubic-bezier(.22,1,.36,1)';
       t.style.transform  = `translateX(${-i * 320}px)`;
-      dots.forEach((dd, ii) => { dd.style.width = ii === i ? '22px' : '8px'; dd.style.background = ii === i ? '#A855F7' : 'rgba(255,255,255,.4)'; });
+      dots.forEach((dd, ii) => { dd.style.width = ii === i ? '16px' : '6px'; dd.style.background = ii === i ? '#fff' : 'rgba(255,255,255,.4)'; });
     };
   });
 });
