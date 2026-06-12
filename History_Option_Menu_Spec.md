@@ -32,7 +32,7 @@ Controlled by `data-status` on the row. `isDone` is derived from status, not the
 
 > **Publish ↔ Delete live sync:** When the Publish toggle is flipped inside the open menu, the Delete row shows/hides immediately without closing and reopening the menu.
 
-> **MV Publish Confirmation dialog:** Tapping the Publish toggle on an MV (unpublished state) opens a modal — "Publish works are public in the app. By publishing, you allow us to share them on social media." — with Cancel and Confirm buttons. Cancel dismisses with no change. Confirm enters the Review state.
+> **MV Publish Confirmation dialog:** Tapping the Publish toggle on an MV (unpublished state) opens a modal — title "Ready to Go Public?", body "Once published, your creation is visible to the community and may be shared on our social channels." — with Cancel and Confirm buttons. Cancel dismisses with no change. Confirm enters the Review state.
 
 > **MV Publish Review state:** Icon = timer, label = "Publish (Review)", toggle ON, Delete hidden. Once review resolves: icon = globe, label = "Publish", "Published success" toast. The menu stays open throughout; all updates happen in place.
 
