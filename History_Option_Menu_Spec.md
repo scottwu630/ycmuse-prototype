@@ -46,7 +46,6 @@ All CTA row buttons use the **secondary style** (white background, dark text/ico
 |---|---|
 | Edit MV | Secondary (white) |
 | Get Proof (MV) | Secondary (white) |
-
 | Create MV (Song) | Primary (gradient) |
 | Get Proof (Song) | Secondary (white) |
 | Create MV (Storyboard) | Primary (gradient) |
@@ -83,7 +82,7 @@ All CTA row buttons use the **secondary style** (white background, dark text/ico
 
 | Tab | Shows |
 |---|---|
-| All | All types |
-| Music Videos | MV + Storyboard |
-| Songs | Song only |
+| All | MV, Song, Storyboard (excludes community items) |
+| Music Videos | MV + Storyboard (excludes community items) |
+| Songs | Song only (excludes community items) |
 | Liked | Any type with `data-liked="true"` (includes community items) |
