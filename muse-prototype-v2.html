@@ -3649,7 +3649,15 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- ── SIMPLE MODE ─────────────────────────────────────────────── -->
           <div id="song-panel-simple">
-            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;margin-bottom:6px;">DESCRIBE YOUR SONG IDEA</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;">
+              <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;">DESCRIBE YOUR SONG</div>
+              <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+                <span style="font-size:11px;font-weight:500;color:#676779;letter-spacing:-0.11px;line-height:16px;">Instrumental</span>
+                <div id="simple-instrumental-toggle" onclick="toggleSimpleInstrumental()" style="width:36px;height:20px;border-radius:10px;background:#3A3A47;cursor:pointer;position:relative;flex-shrink:0;transition:background .2s;">
+                  <div id="simple-instrumental-knob" style="width:16px;height:16px;border-radius:8px;background:#fff;position:absolute;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.4);"></div>
+                </div>
+              </div>
+            </div>
             <div style="background:#151519;border:1px solid rgba(255,255,255,0.15);border-radius:14px;overflow:hidden;">
               <textarea id="song-simple-idea" placeholder="e.g. A bittersweet love song about leaving a city you called home, with a melancholic yet hopeful vibe..." maxlength="2500"
                 oninput="updateSimpleSongCTA(this)"
@@ -3828,7 +3836,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
       </div>
 
       <!-- Player -->
-      <div style="position:absolute;top:362px;left:16px;width:288px;display:flex;flex-direction:column;gap:16px;">
+      <div style="position:absolute;top:360px;left:16px;width:288px;display:flex;flex-direction:column;gap:20px;">
 
         <!-- Title + share -->
         <div style="display:flex;align-items:flex-start;gap:8px;">
@@ -3856,26 +3864,26 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
         </div>
 
         <!-- Control buttons -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 20px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 35px;">
           <div onclick="prevSongResult()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;opacity:0.35;">
-            <img src="assets/icons/ui/ic_skip_back.svg" width="24" height="24" style="display:block;filter:brightness(0) invert(1);">
+            <img src="assets/icons/ui/ic_skip_back.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
           </div>
-          <div onclick="toggleSongResultPlay()" style="width:60px;height:60px;border-radius:30px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(255,255,255,.2);">
+          <div onclick="toggleSongResultPlay()" style="width:56px;height:56px;border-radius:30px;background:#fff;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(255,255,255,.2);">
             <img id="sr-play-ico" src="assets/icons/ui/ic_play.svg" width="32" height="32" style="display:block;filter:brightness(0);">
           </div>
           <div onclick="nextSongResult()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;opacity:0.35;">
-            <img src="assets/icons/ui/ic_skip_forward.svg" width="24" height="24" style="display:block;filter:brightness(0) invert(1);">
+            <img src="assets/icons/ui/ic_skip_forward.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
           </div>
         </div>
       </div>
 
       <!-- CTAs -->
       <div style="position:absolute;bottom:0;left:0;right:0;padding:0 16px calc(40px + var(--safe-bot));display:flex;flex-direction:column;gap:10px;">
-        <button onclick="useAISongInMV()" style="width:100%;height:52px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+        <button onclick="useAISongInMV()" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Use in Music Video
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button onclick="goTo('song-create')" style="width:100%;height:52px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:16px;font-weight:600;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+        <button onclick="goTo('song-create')" style="width:100%;height:46px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);color:#D3D3D9;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Regenerate
         </button>
       </div>
@@ -3910,7 +3918,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
         </div>
 
         <!-- Logged-out empty state -->
-        <div id="hist-loggedout-state" style="display:none;flex-direction:column;align-items:center;text-align:center;padding-top:80px;gap:20px;">
+        <div id="hist-loggedout-state" style="display:none;flex-direction:column;align-items:center;text-align:center;padding-top:140px;gap:20px;">
           <img src="assets/icons/ui/ic_media.svg" width="64" height="64" style="display:block;flex-shrink:0;filter:brightness(0) invert(1);">
           <div style="display:flex;flex-direction:column;gap:4px;padding:0 16px;">
             <div style="font-size:17px;font-weight:700;color:#fff;line-height:22px;letter-spacing:-.17px;">Your Creative Space Awaits</div>
@@ -4032,10 +4040,6 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                 <div class="hist-stat"><img src="assets/icons/ui/ic_share.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>3</span></div>
               </div>
               <div class="hist-status">
-                <div class="hist-badge badge-done">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Done
-                </div>
                 <div class="hist-time">2026-06-06</div>
               </div>
             </div>
@@ -4055,10 +4059,6 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
                 <div class="hist-stat"><img src="assets/icons/ui/ic_share.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>8</span></div>
               </div>
               <div class="hist-status">
-                <div class="hist-badge badge-done">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Done
-                </div>
                 <div class="hist-time">2026-06-05</div>
               </div>
             </div>
@@ -4841,7 +4841,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
 
   <!-- Sign-in Sheet -->
   <div class="overlay" id="signin-overlay" onclick="hideSheet('signin-sheet')"></div>
-  <div class="sheet" id="signin-sheet" style="padding:0 0 calc(var(--safe-bot) + 16px);">
+  <div class="sheet" id="signin-sheet" style="padding:0 0 calc(var(--safe-bot) + 40px);">
     <div class="sheet-handle"></div>
     <!-- Header -->
     <div style="padding:16px 20px 24px;text-align:center;">
@@ -4854,12 +4854,12 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
     <!-- Sign-in buttons -->
     <div style="padding:0 16px;display:flex;flex-direction:column;gap:10px;">
       <!-- Apple -->
-      <button onclick="signInWith('Apple')" style="width:100%;height:52px;border-radius:14px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''">
+      <button onclick="signInWith('Apple')" style="width:100%;height:46px;border-radius:14px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.05 12.536c-.028-2.87 2.346-4.254 2.45-4.318-1.335-1.953-3.41-2.22-4.147-2.248-1.763-.178-3.44 1.04-4.333 1.04-.893 0-2.27-1.014-3.733-.987-1.916.028-3.69 1.11-4.678 2.814-1.99 3.454-.512 8.577 1.434 11.382.953 1.374 2.09 2.916 3.58 2.858 1.44-.058 1.983-.927 3.724-.927 1.74 0 2.23.927 3.74.9 1.55-.028 2.527-1.402 3.47-2.782 1.097-1.594 1.548-3.14 1.576-3.22-.035-.014-3.017-1.157-3.047-4.597-.003-.005-.034-.005-.037-.005zM14.236 4.16c.79-.957 1.323-2.287 1.178-3.61-1.138.047-2.517.757-3.336 1.714-.732.847-1.375 2.202-1.202 3.503 1.27.098 2.568-.644 3.36-1.607z" fill="#000"/></svg>
         <span style="font-size:15px;font-weight:700;color:#000;">Continue with Apple</span>
       </button>
       <!-- Google -->
-      <button onclick="signInWith('Google')" style="width:100%;height:52px;border-radius:14px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''">
+      <button onclick="signInWith('Google')" style="width:100%;height:46px;border-radius:14px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''">
         <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         <span style="font-size:15px;font-weight:700;color:#000;">Continue with Google</span>
       </button>
@@ -5770,7 +5770,11 @@ function openHistMore(btn) {
     }
 
   } else {
-    // MV: Like, Share, Download, Delete (done items)
+    // MV: [Edit MV | Get Proof] CTA row + Like, Share, Download, Delete (done items)
+    addCtaRow([
+      {icon:'ic_edit.svg',      label:'Edit MV',   primary:false, onClick:()=>goTo('mv-edit')},
+      {icon:'ic_certified.svg', label:'Get Proof', primary:false, onClick:()=>goTo('proof')}
+    ]);
     addOpt(_moreIcons.heart(liked), liked ? 'Unlike' : 'Like', null, () => {
       _histMoreRow.dataset.liked = liked ? 'false' : 'true';
       closeHistMore();
@@ -6999,6 +7003,20 @@ function toggleInstrumental() {
   }
 }
 
+var _simpleInstrumentalOn = false;
+function toggleSimpleInstrumental() {
+  _simpleInstrumentalOn = !_simpleInstrumentalOn;
+  var toggle = document.getElementById('simple-instrumental-toggle');
+  var knob   = document.getElementById('simple-instrumental-knob');
+  if (_simpleInstrumentalOn) {
+    toggle.style.background  = '#A855F7';
+    knob.style.transform     = 'translateX(16px)';
+  } else {
+    toggle.style.background  = '#3A3A47';
+    knob.style.transform     = 'translateX(0)';
+  }
+}
+
 function toggleLyricsTooltip(e) {
   e.stopPropagation();
   var tt = document.getElementById('lyrics-tooltip');
@@ -7040,6 +7058,15 @@ function switchSongMode(mode) {
   const ctaCustom = document.getElementById('song-cta-custom');
   if (ctaSimple) ctaSimple.style.display = isSimple ? 'flex' : 'none';
   if (ctaCustom) ctaCustom.style.display = isSimple ? 'none' : 'flex';
+
+  // Reset Simple instrumental toggle when switching tabs
+  if (isSimple && _simpleInstrumentalOn) {
+    _simpleInstrumentalOn = false;
+    var st = document.getElementById('simple-instrumental-toggle');
+    var sk = document.getElementById('simple-instrumental-knob');
+    if (st) st.style.background = '#3A3A47';
+    if (sk) sk.style.transform  = 'translateX(0)';
+  }
 }
 
 const _songIdeaPrompts = [

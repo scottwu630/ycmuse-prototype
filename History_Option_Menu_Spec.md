@@ -16,7 +16,7 @@ Controlled by `data-status` on the row. `isDone` is derived from status, not the
 
 | Type | Status | CTA Row | Options |
 |---|---|---|---|
-| **MV** | Completed | — | Like / Unlike, Share, Download, **Delete** |
+| **MV** | Completed | Edit MV · Get Proof | Like / Unlike, Share, Download, **Delete** |
 | **MV** | Failed | — | Delete |
 | **MV** | Generating | *(button hidden)* | — |
 | **Song** | Completed · Publish OFF | Create MV · Get Proof | Like / Unlike, Share, Publish (toggle), Download, **Delete** |
@@ -31,13 +31,29 @@ Controlled by `data-status` on the row. `isDone` is derived from status, not the
 
 ---
 
+## CTA Button Style
+
+All CTA row buttons use the **secondary style** (white background, dark text/icon) unless noted:
+
+| CTA | Style |
+|---|---|
+| Edit MV | Secondary (white) |
+| Get Proof (MV) | Secondary (white) |
+| Create MV (Song) | Primary (gradient) |
+| Get Proof (Song) | Secondary (white) |
+| Create MV (Storyboard) | Primary (gradient) |
+
+---
+
 ## CTA Actions
 
 | CTA | Destination |
 |---|---|
+| Edit MV | MV Edit screen |
 | Create MV (Song) | MV Style Select screen |
 | Create MV (Storyboard) | Edit Storyboard screen |
-| Get Proof | Proof of Creation screen |
+| Get Proof (MV) | Proof of Creation screen |
+| Get Proof (Song) | Proof of Creation screen |
 
 ---
 
