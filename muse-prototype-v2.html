@@ -3271,8 +3271,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
         </div><!-- /video card -->
 
-        <!-- Bottom action buttons (horizontal scroll) -->
-        <div style="width:320px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+        <!-- Bottom action buttons (draggable horizontal scroll) -->
+        <div id="mvr-action-scroll" style="width:320px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;cursor:grab;user-select:none;">
           <div style="display:flex;gap:8px;padding:0 15px;width:max-content;">
 
             <!-- Download -->
@@ -3288,21 +3288,24 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </button>
 
             <!-- Regenerate -->
-            <button class="mvr-action-btn" style="background:#09090B;color:#fff;">
+            <button class="mvr-action-btn" onclick="goTo('mv-creating')" style="background:#09090B;color:#fff;">
               <img src="assets/icons/ui/ic_video_ai.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
               Regenerate
             </button>
 
-            <!-- Try Again -->
-            <button class="mvr-action-btn" style="background:#09090B;color:#fff;">
-              <img src="assets/icons/ui/ic_skip_back.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
-              Try Again
+            <!-- Publish / Unpublished toggle -->
+            <button id="mvr-publish-btn" class="mvr-action-btn" data-published="false" onclick="mvrPublishAction()" style="background:#09090B;color:#fff;">
+              <img src="assets/icons/ui/ic_publish.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+              <span id="mvr-publish-label">Publish</span>
             </button>
 
           </div>
         </div>
 
       </div><!-- /main content -->
+
+      <!-- MV Result publish/unpublish toast -->
+      <div id="mvr-toast" style="position:absolute;bottom:calc(80px + var(--safe-bot));left:50%;transform:translateX(-50%) translateY(8px);background:rgba(21,21,25,.96);border:1px solid rgba(168,85,247,.35);border-radius:14px;padding:12px 20px;font-size:14px;font-weight:600;color:#fff;white-space:nowrap;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:30;box-shadow:0 4px 24px rgba(168,85,247,.2);"></div>
 
       <!-- Center Play button (absolute on screen) -->
       <div id="mvr-play-btn" onclick="toggleMvResultPlay()" style="position:absolute;top:308px;left:50%;transform:translateX(-50%);background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);border:1px solid rgba(255,255,255,.15);padding:12px;border-radius:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;">
@@ -5061,6 +5064,13 @@ function goTo(id, dir) {
   if (id === 'mv-creating') { startCreating(); showToastProcessing('mv'); }
   if (id === 'song-creating') { startSongCreating(); showToastProcessing('song'); }
   if (id === 'song-result') { buildWaveform(); applySongResultCtx(); }
+  if (id === 'mv-result') {
+    // Reset publish button to initial state on each visit
+    const pb = document.getElementById('mvr-publish-btn');
+    const pl = document.getElementById('mvr-publish-label');
+    if (pb) { pb.dataset.published = 'false'; pb.disabled = false; pb.style.opacity = ''; }
+    if (pl) pl.textContent = 'Publish';
+  }
   if (id === 'home') {
     _songCtx = 'standalone';
     // If onboarding or splash still in history, wipe them out completely
@@ -5919,10 +5929,101 @@ function hideMvPublishDialog() {
   document.getElementById('mv-publish-overlay').classList.remove('show');
   document.getElementById('mv-publish-dialog').classList.remove('show');
   _mvPublishToggleBtn = null;
+  _mvrPublishSource = null;
 }
 
+// ── MV Result page publish helpers ──────────────────────────────────────────
+let _mvrPublishSource = null; // 'result' | null (null = history sheet)
+let _mvrToastTimer = null;
+
+function showMvrToast(msg) {
+  const t = document.getElementById('mvr-toast');
+  if (!t) return;
+  clearTimeout(_mvrToastTimer);
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  _mvrToastTimer = setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(8px)';
+  }, 2200);
+}
+
+function mvrPublishAction() {
+  const btn = document.getElementById('mvr-publish-btn');
+  if (!btn) return;
+  const isPublished = btn.dataset.published === 'true';
+  if (isPublished) {
+    // Unpublish — no confirmation needed
+    btn.dataset.published = 'false';
+    btn.querySelector('img').style.filter = 'brightness(0) invert(1)';
+    document.getElementById('mvr-publish-label').textContent = 'Publish';
+    showMvrToast('Unpublished success');
+    return;
+  }
+  // Open publish confirmation dialog from result page
+  _mvrPublishSource = 'result';
+  document.getElementById('mv-publish-overlay').classList.add('show');
+  document.getElementById('mv-publish-dialog').classList.add('show');
+}
+// ── Drag-scroll for MV Result action button strip ───────────────────────────
+(function() {
+  function initMvrDrag() {
+    const el = document.getElementById('mvr-action-scroll');
+    if (!el) return;
+    let isDragging = false, startX = 0, scrollLeft = 0, hasMoved = false;
+
+    el.addEventListener('mousedown', e => {
+      isDragging = true; hasMoved = false;
+      startX = e.pageX - el.offsetLeft;
+      scrollLeft = el.scrollLeft;
+      el.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      const x = e.pageX - el.offsetLeft;
+      const walk = x - startX;
+      if (Math.abs(walk) > 4) hasMoved = true;
+      el.scrollLeft = scrollLeft - walk;
+    });
+    window.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      el.style.cursor = 'grab';
+    });
+    // Prevent click-through on buttons after a drag
+    el.addEventListener('click', e => {
+      if (hasMoved) e.stopPropagation();
+    }, true);
+  }
+  // Init after DOM ready; also re-init if called again
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMvrDrag);
+  else initMvrDrag();
+})();
+// ─────────────────────────────────────────────────────────────────────────────
+
 function confirmMvPublish() {
+  const source = _mvrPublishSource; // save before hideMvPublishDialog resets it
   hideMvPublishDialog();
+
+  // ── Result page path ──────────────────────────────────────────────────────
+  if (source === 'result') {
+    const btn = document.getElementById('mvr-publish-btn');
+    if (!btn) return;
+    // Enter review: disable button briefly
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.style.opacity = '';
+      btn.dataset.published = 'true';
+      document.getElementById('mvr-publish-label').textContent = 'Unpublished';
+      showMvrToast('Published success');
+    }, 2500);
+    return;
+  }
+
+  // ── History sheet path ────────────────────────────────────────────────────
   if (!_histMoreRow) return;
 
   // Enter "reviewing" state: timer icon + (Review) label
