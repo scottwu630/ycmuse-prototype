@@ -4072,6 +4072,11 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
             </div>
             <div class="hist-info">
               <div class="hist-name">Whispers of the Past</div>
+              <div class="hist-social">
+                <div class="hist-stat"><img src="assets/icons/ui/ic_headphones.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>1.2k</span></div>
+                <div class="hist-stat"><img src="assets/icons/ui/ic_favorite_off.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>265</span></div>
+                <div class="hist-stat"><img src="assets/icons/ui/ic_share.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>68</span></div>
+              </div>
               <div class="hist-status">
                 <div class="hist-time">2026-06-09</div>
               </div>
@@ -5640,13 +5645,14 @@ function filterTab(btn) {
       }
       return;
     }
-    const type = row.dataset.htype || '';
-    const liked = row.dataset.liked === 'true';
+    const type        = row.dataset.htype || '';
+    const liked       = row.dataset.liked === 'true';
+    const isCommunity = row.dataset.source === 'community';
     let visible;
-    if (filter === 'all')         visible = true;
+    if (filter === 'all')         visible = !isCommunity;
     else if (filter === 'liked')  visible = liked;
-    else if (filter === 'mv')     visible = (type === 'mv' || type === 'storyboard');
-    else                          visible = filter === type;
+    else if (filter === 'mv')     visible = !isCommunity && (type === 'mv' || type === 'storyboard');
+    else                          visible = !isCommunity && filter === type;
     row.style.display = visible ? 'flex' : 'none';
   });
 }
