@@ -2652,7 +2652,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- CTA — Figma Button/Pill Primary-PAYG -->
       <div class="cta-footer">
-        <button onclick="requireLogin(()=>showSheet('mv-mode-sheet'))" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create Music Video</button>
+        <button id="mv-room-cta" onclick="requireLogin(()=>showSheet('mv-mode-sheet'))" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create Music Video</button>
       </div>
 
       <!-- Template Sheet -->
@@ -3287,10 +3287,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               Edit MV
             </button>
 
-            <!-- Regenerate -->
-            <button class="mvr-action-btn" onclick="goTo('mv-creating')" style="background:#09090B;color:#fff;">
+            <!-- Recreate -->
+            <button class="mvr-action-btn" onclick="goToMvRoomRecreate()" style="background:#09090B;color:#fff;">
               <img src="assets/icons/ui/ic_video_ai.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
-              Regenerate
+              Recreate
             </button>
 
             <!-- Publish / Unpublished toggle -->
@@ -3476,7 +3476,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div class="emv-cover-desc-row" style="cursor:default;">
               <!-- Text area — tap to open sheet with keyboard -->
               <div class="emv-cover-desc-text" id="emv-cover-desc-preview" onclick="openCoverDescSheet()" style="cursor:pointer;">Create a captivating cover image for "Starlight in Your Eyes" that embodies the essence of a dreamy night sky filled with shimmering stars.</div>
-              <!-- Regenerate button — tap to regen directly, purple gradient -->
+              <!-- Recreate button — tap to regen directly, purple gradient -->
               <div onclick="generateCoverImage()" style="display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border-radius:20px;padding:6px 10px;flex-shrink:0;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
                 <img src="assets/icons/ui/ic_reload.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
                 <img src="assets/icons/ui/ic_credit.svg" width="14" height="14" style="display:block;">
@@ -3887,7 +3887,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <button onclick="goTo('song-create')" style="width:100%;height:46px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);color:#D3D3D9;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-          Regenerate
+          Recreate
         </button>
       </div>
 
@@ -5185,7 +5185,29 @@ function goTo(id, dir) {
 
   // Screen-specific actions
   if (id === 'mv-style') setTimeout(initStyleCarousel, 50);
-  if (id === 'mv-room')  { setTimeout(() => mvrPickStyle(styleIdx, null), 400); updateSongClearBtn(); }
+  if (id === 'mv-room')  {
+    setTimeout(() => mvrPickStyle(styleIdx, null), 400);
+    updateSongClearBtn();
+    // Recreate mode: restore settings and update CTA
+    const cta = document.getElementById('mv-room-cta');
+    if (_mvrRecreate) {
+      // Auto-fill photo slot 1 if empty
+      const slot1 = document.getElementById('pslot-1');
+      if (slot1 && !slot1.dataset.filled) useSample(1);
+      // Auto-fill description if empty
+      const ta = document.getElementById('mvr-describe');
+      if (ta && !ta.value.trim()) {
+        ta.value = 'A cinematic music video with dreamy visuals and emotional storytelling.';
+        const cnt = document.getElementById('desc-cnt');
+        if (cnt) cnt.textContent = ta.value.length + '/2500';
+      }
+      // Scroll to top of mv-room scr-scroll
+      setTimeout(() => {
+        const scroll = document.querySelector('#screen-mv-room .scr-scroll');
+        if (scroll) scroll.scrollTop = 0;
+      }, 420);
+    }
+  }
   if (id === 'mv-edit')  setTimeout(checkMergeEnable, 60);
   if (id === 'onboard') setTimeout(() => obGoTo(0), 50);
   if (id === 'history') {
@@ -5194,8 +5216,8 @@ function goTo(id, dir) {
     const prevId = navStack[navStack.length - 2];
     if (proc && prevId === 'song-creating') proc.style.display = 'flex';
   }
-  if (id === 'mv-thinking') { startThinking(); showToastProcessing('storyboard'); }
-  if (id === 'mv-creating') { startCreating(); showToastProcessing('mv'); }
+  if (id === 'mv-thinking') { _mvrRecreate = false; startThinking(); showToastProcessing('storyboard'); }
+  if (id === 'mv-creating') { _mvrRecreate = false; startCreating(); showToastProcessing('mv'); }
   if (id === 'song-creating') { startSongCreating(); showToastProcessing('song'); }
   if (id === 'song-result') { buildWaveform(); applySongResultCtx(); }
   if (id === 'mv-result') {
@@ -7934,7 +7956,15 @@ function updateSongClearBtn() {
   if (btn) btn.style.display = _mvFromTemplate ? 'none' : 'flex';
 }
 
+let _mvrRecreate = false;
+
+function goToMvRoomRecreate() {
+  _mvrRecreate = true;
+  goTo('mv-room');
+}
+
 function resetMvRoom() {
+  _mvrRecreate = false;
   // Clear song
   clearSong();
 
