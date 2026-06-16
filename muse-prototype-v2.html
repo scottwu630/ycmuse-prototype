@@ -4419,10 +4419,10 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
     </div>
 
     <!-- ══════ CREDITS DETAIL ══════ -->
-    <div id="screen-credits-detail" class="screen" style="background:#09090B;">
+    <div id="screen-credits-detail" class="screen" style="background:#09090B;display:flex;flex-direction:column;">
 
       <!-- NavBar -->
-      <div class="nav nav-blur" style="z-index:10;">
+      <div class="nav nav-blur" style="z-index:10;border-bottom:none;">
         <div class="nav-back" onclick="goBack()">
           <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
         </div>
@@ -4430,32 +4430,35 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
         <div style="min-width:36px;"></div>
       </div>
 
-      <!-- Scrollable -->
-      <div class="scr-scroll" style="padding:calc(var(--safe-top) + var(--nav-h) + 16px) 16px calc(var(--safe-bot) + 40px);">
+      <!-- ── Static header: balance card + tabs ── -->
+      <div style="padding:calc(var(--safe-top) + var(--nav-h) + 12px) 16px 0;flex-shrink:0;">
 
-        <!-- ── Balance Card (fill:#151519, r:12, stroke rgba(255,255,255,.15) 1px, pad:16) ── -->
-        <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:16px;margin-bottom:12px;">
+        <!-- Balance Card -->
+        <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:16px;margin-bottom:16px;">
           <div style="font-size:12px;font-weight:600;color:#f59e0b;letter-spacing:.04em;margin-bottom:8px;">YOUR BALANCE</div>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-            <!-- Balance: coin icon (14px) + 360 (42px w800) + credits (12px w600 white 0.80) -->
             <div style="display:flex;align-items:center;gap:4px;">
               <img src="assets/icons/ui/ic_credit.svg" width="14" height="14" style="display:block;flex-shrink:0;align-self:flex-end;margin-bottom:4px;">
               <span style="font-size:42px;font-weight:800;color:#ffffff;letter-spacing:-.5px;line-height:1;">360</span>
               <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.8);margin-left:4px;align-self:flex-end;padding-bottom:5px;">credits</span>
             </div>
-            <!-- Buy More pill: fill:#f59e0b (gold), r:16, h:27, pad 6/8, text 12px w500 -->
             <button onclick="goTo('credits')" style="height:27px;padding:0 8px;border-radius:16px;background:#f59e0b;border:none;color:#fff;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:opacity .15s;" onmousedown="this.style.opacity='.75'" onmouseup="this.style.opacity=''">Buy More</button>
           </div>
         </div>
 
-        <!-- ── Tab Bar (h:26, r:16, gap:6, font:11px w500, min-width:48px) ── -->
-        <div id="credits-tabs" style="display:flex;gap:6px;margin-bottom:12px;">
+        <!-- Tab Bar -->
+        <div id="credits-tabs" style="display:flex;gap:6px;padding-bottom:4px;">
           <button class="credits-tab active" data-tab="all" onclick="switchCreditsTab('all')" style="height:26px;min-width:48px;padding:0 10px;border-radius:16px;background:#a855f7;border:none;color:#ffffff;font-size:11px;font-weight:500;cursor:pointer;transition:all .18s;">All</button>
           <button class="credits-tab" data-tab="spend" onclick="switchCreditsTab('spend')" style="height:26px;min-width:48px;padding:0 10px;border-radius:16px;background:#212127;border:none;color:rgba(255,255,255,.4);font-size:11px;font-weight:500;cursor:pointer;transition:all .18s;">Spend</button>
           <button class="credits-tab" data-tab="earn" onclick="switchCreditsTab('earn')" style="height:26px;min-width:48px;padding:0 10px;border-radius:16px;background:#212127;border:none;color:rgba(255,255,255,.4);font-size:11px;font-weight:500;cursor:pointer;transition:all .18s;">Earn</button>
         </div>
 
-        <!-- ── History List (no outer card, plain rows, gap:4, each row h:60, pad:8/0/8/0) ── -->
+      </div><!-- /static header -->
+
+      <!-- ── Scrollable: history list only ── -->
+      <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(var(--safe-bot) + 40px);">
+
+        <!-- History List -->
         <div id="credits-history-list" style="display:flex;flex-direction:column;gap:4px;">
 
           <!-- Spend: AI Music Video -->
@@ -4556,7 +4559,7 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
 
         </div><!-- /history list -->
 
-      </div><!-- /scr-scroll -->
+      </div><!-- /scrollable -->
 
     </div><!-- /screen-credits-detail -->
 
