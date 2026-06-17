@@ -4111,8 +4111,21 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
     </div>
 
     <!-- ══════ PROOF OF CREATION ══════ -->
-    <div id="screen-proof" class="screen" style="background:#09090B;">
+    <div id="screen-proof" class="screen" style="background:#09090B;display:flex;flex-direction:column;">
       <style>
+        /* Flex layout: nav fixed at top, scroll fills middle, keyboard docks at bottom */
+        #screen-proof > .nav {
+          position: relative !important;
+          flex-shrink: 0;
+          z-index: 80;
+        }
+        #screen-proof > .scr-scroll {
+          position: relative !important;
+          inset: unset !important;
+          flex: 1;
+          overflow-y: auto;
+          padding-top: 0 !important;
+        }
         /* Certificate shrink when keyboard opens */
         #screen-proof .cert-wrap {
           overflow: hidden;
@@ -4133,11 +4146,10 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
         #screen-proof #proof-owner-input:focus {
           border-color: rgba(168,85,247,.6) !important;
         }
-        /* Simulated iOS keyboard */
+        /* Simulated iOS keyboard — all screen sizes */
         #proof-keyboard {
           display: none;
-          position: absolute;
-          bottom: 0; left: 0; right: 0;
+          flex-shrink: 0;
           background: #1B1B1D;
           border-top: .5px solid rgba(255,255,255,.12);
           z-index: 300;
@@ -4172,11 +4184,11 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
         <div class="nav-title">Proof of Creation</div>
         <div style="width:36px;"></div>
       </div>
-      <div class="scr-scroll" style="padding-top:calc(var(--safe-top) + var(--nav-h));">
+      <div class="scr-scroll">
         <div style="padding:12px 20px 32px;display:flex;flex-direction:column;gap:10px;">
 
           <!-- Certificate card — uses actual image, shrinks on keyboard focus -->
-          <div class="cert-wrap">
+          <div class="cert-wrap" onclick="proofKbdDismiss()">
             <div class="cert-inner" style="width:100%;position:relative;overflow:hidden;box-shadow:0 6px 28px rgba(0,0,0,.4);">
               <!-- Certificate background image (frame template) -->
               <img src="assets/images/certification/img_certificate.jpg" alt="" style="width:100%;display:block;">
@@ -4224,9 +4236,10 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
             <input
               id="proof-owner-input"
               type="text"
+              inputmode="none"
               placeholder="Creator Name"
+              onclick="(function(){var s=document.getElementById('screen-proof'),w=s.querySelector('.cert-wrap'),i=s.querySelector('.cert-inner');var h=i.scrollHeight;w.style.height=h+'px';requestAnimationFrame(function(){s.classList.add('kbd-open');w.style.height=(h*0.48)+'px';});})();"
               onfocus="(function(){var s=document.getElementById('screen-proof'),w=s.querySelector('.cert-wrap'),i=s.querySelector('.cert-inner');var h=i.scrollHeight;w.style.height=h+'px';requestAnimationFrame(function(){s.classList.add('kbd-open');w.style.height=(h*0.48)+'px';});})();"
-              onblur="(function(){var s=document.getElementById('screen-proof'),w=s.querySelector('.cert-wrap');s.classList.remove('kbd-open');w.style.height='';})();"
               style="width:100%;box-sizing:border-box;height:48px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:0 10px;font-size:12px;font-weight:500;font-family:Inter,sans-serif;color:var(--text);outline:none;transition:border-color .2s;caret-color:var(--accent);"
             />
           </div>
@@ -4251,47 +4264,74 @@ Or leave blank — AI will generate them based on your chosen style and mood." s
       </div>
 
       <!-- Simulated iOS Keyboard (shown when kbd-open) -->
-      <div id="proof-keyboard">
+      <div id="proof-keyboard" onmousedown="event.preventDefault();" ontouchstart="event.preventDefault();">
         <!-- Predictive text bar -->
         <div class="kbd-suggest">
-          <div class="kbd-suggest-item">"The"</div>
+          <div class="kbd-suggest-item" onclick="proofKbdInsert('The ')">&#8220;The&#8221;</div>
           <div class="kbd-suggest-divider"></div>
-          <div class="kbd-suggest-item">the</div>
+          <div class="kbd-suggest-item" onclick="proofKbdInsert('the ')">the</div>
           <div class="kbd-suggest-divider"></div>
-          <div class="kbd-suggest-item">to</div>
+          <div class="kbd-suggest-item" onclick="proofKbdInsert('to ')">to</div>
         </div>
         <!-- Row 1: Q W E R T Y U I O P -->
         <div class="kbd-row">
-          <div class="kbd-key">q</div><div class="kbd-key">w</div><div class="kbd-key">e</div>
-          <div class="kbd-key">r</div><div class="kbd-key">t</div><div class="kbd-key">y</div>
-          <div class="kbd-key">u</div><div class="kbd-key">i</div><div class="kbd-key">o</div>
-          <div class="kbd-key">p</div>
+          <div class="kbd-key" onclick="proofKbdInsert('q')">q</div><div class="kbd-key" onclick="proofKbdInsert('w')">w</div><div class="kbd-key" onclick="proofKbdInsert('e')">e</div>
+          <div class="kbd-key" onclick="proofKbdInsert('r')">r</div><div class="kbd-key" onclick="proofKbdInsert('t')">t</div><div class="kbd-key" onclick="proofKbdInsert('y')">y</div>
+          <div class="kbd-key" onclick="proofKbdInsert('u')">u</div><div class="kbd-key" onclick="proofKbdInsert('i')">i</div><div class="kbd-key" onclick="proofKbdInsert('o')">o</div>
+          <div class="kbd-key" onclick="proofKbdInsert('p')">p</div>
         </div>
         <!-- Row 2: A S D F G H J K L -->
         <div class="kbd-row" style="padding-left:12px;padding-right:12px;">
-          <div class="kbd-key">a</div><div class="kbd-key">s</div><div class="kbd-key">d</div>
-          <div class="kbd-key">f</div><div class="kbd-key">g</div><div class="kbd-key">h</div>
-          <div class="kbd-key">j</div><div class="kbd-key">k</div><div class="kbd-key">l</div>
+          <div class="kbd-key" onclick="proofKbdInsert('a')">a</div><div class="kbd-key" onclick="proofKbdInsert('s')">s</div><div class="kbd-key" onclick="proofKbdInsert('d')">d</div>
+          <div class="kbd-key" onclick="proofKbdInsert('f')">f</div><div class="kbd-key" onclick="proofKbdInsert('g')">g</div><div class="kbd-key" onclick="proofKbdInsert('h')">h</div>
+          <div class="kbd-key" onclick="proofKbdInsert('j')">j</div><div class="kbd-key" onclick="proofKbdInsert('k')">k</div><div class="kbd-key" onclick="proofKbdInsert('l')">l</div>
         </div>
         <!-- Row 3: ⇧ Z X C V B N M ⌫ -->
         <div class="kbd-row">
           <div class="kbd-key dark wide">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 4L4 12h4v8h8v-8h4L12 4z" fill="white"/></svg>
           </div>
-          <div class="kbd-key">z</div><div class="kbd-key">x</div><div class="kbd-key">c</div>
-          <div class="kbd-key">v</div><div class="kbd-key">b</div><div class="kbd-key">n</div>
-          <div class="kbd-key">m</div>
-          <div class="kbd-key dark wide">
+          <div class="kbd-key" onclick="proofKbdInsert('z')">z</div><div class="kbd-key" onclick="proofKbdInsert('x')">x</div><div class="kbd-key" onclick="proofKbdInsert('c')">c</div>
+          <div class="kbd-key" onclick="proofKbdInsert('v')">v</div><div class="kbd-key" onclick="proofKbdInsert('b')">b</div><div class="kbd-key" onclick="proofKbdInsert('n')">n</div>
+          <div class="kbd-key" onclick="proofKbdInsert('m')">m</div>
+          <div class="kbd-key dark wide" onclick="proofKbdBackspace()">
             <svg width="18" height="14" viewBox="0 0 22 16" fill="none"><path d="M9 1H20C20.6 1 21 1.4 21 2V14C21 14.6 20.6 15 20 15H9L1 8L9 1Z" stroke="white" stroke-width="1.5"/><path d="M13 6L17 10M17 6L13 10" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
         </div>
         <!-- Row 4: 123 | space | return -->
         <div class="kbd-row">
           <div class="kbd-key dark wide" style="font-size:15px;font-weight:500;">123</div>
-          <div class="kbd-key" style="flex:4;background:#3A3A3C;"></div>
-          <div class="kbd-key return-key wide" style="font-size:15px;">return</div>
+          <div class="kbd-key" style="flex:4;background:#3A3A3C;" onclick="proofKbdInsert(' ')"></div>
+          <div class="kbd-key return-key wide" style="font-size:15px;" onclick="proofKbdDismiss()">return</div>
         </div>
       </div>
+      <script>
+        function proofKbdInsert(ch) {
+          var inp = document.getElementById('proof-owner-input');
+          var start = inp.selectionStart, end = inp.selectionEnd;
+          var val = inp.value;
+          inp.value = val.slice(0, start) + ch + val.slice(end);
+          inp.setSelectionRange(start + ch.length, start + ch.length);
+        }
+        function proofKbdBackspace() {
+          var inp = document.getElementById('proof-owner-input');
+          var start = inp.selectionStart, end = inp.selectionEnd;
+          if (start === end && start > 0) {
+            inp.value = inp.value.slice(0, start - 1) + inp.value.slice(start);
+            inp.setSelectionRange(start - 1, start - 1);
+          } else if (start !== end) {
+            inp.value = inp.value.slice(0, start) + inp.value.slice(end);
+            inp.setSelectionRange(start, start);
+          }
+        }
+        function proofKbdDismiss() {
+          var s = document.getElementById('screen-proof');
+          var w = s.querySelector('.cert-wrap');
+          s.classList.remove('kbd-open');
+          w.style.height = '';
+          document.getElementById('proof-owner-input').blur();
+        }
+      </script>
 
     </div>
 
