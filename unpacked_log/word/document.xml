@@ -1,0 +1,2412 @@
+<?xml version="1.0" encoding="UTF-8"?><w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex" xmlns:cx1="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex" xmlns:cx2="http://schemas.microsoft.com/office/drawing/2015/10/21/chartex" xmlns:cx3="http://schemas.microsoft.com/office/drawing/2016/5/9/chartex" xmlns:cx4="http://schemas.microsoft.com/office/drawing/2016/5/10/chartex" xmlns:cx5="http://schemas.microsoft.com/office/drawing/2016/5/11/chartex" xmlns:cx6="http://schemas.microsoft.com/office/drawing/2016/5/12/chartex" xmlns:cx7="http://schemas.microsoft.com/office/drawing/2016/5/13/chartex" xmlns:cx8="http://schemas.microsoft.com/office/drawing/2016/5/14/chartex" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:aink="http://schemas.microsoft.com/office/drawing/2016/ink" xmlns:am3d="http://schemas.microsoft.com/office/drawing/2017/model3d" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:oel="http://schemas.microsoft.com/office/2019/extlst" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml" xmlns:w16cex="http://schemas.microsoft.com/office/word/2018/wordml/cex" xmlns:w16cid="http://schemas.microsoft.com/office/word/2016/wordml/cid" xmlns:w16="http://schemas.microsoft.com/office/word/2018/wordml" xmlns:w16du="http://schemas.microsoft.com/office/word/2023/wordml/word16du" xmlns:w16sdtdh="http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash" xmlns:w16sdtfl="http://schemas.microsoft.com/office/word/2024/wordml/sdtformatlock" xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14">
+  <w:body>
+    <w:p w14:paraId="535B329A" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+      </w:pPr>
+      <w:r>
+        <w:t>YouCam Muse</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="6CB1153C" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:spacing w:after="60"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:eastAsia="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="6B7280"/>
+          <w:sz w:val="30"/>
+          <w:szCs w:val="30"/>
+        </w:rPr>
+        <w:t>Prototype Update Log</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="60889016" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:spacing w:after="60"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:eastAsia="Arial"/>
+          <w:color w:val="9CA3AF"/>
+          <w:sz w:val="18"/>
+          <w:szCs w:val="18"/>
+        </w:rPr>
+        <w:t>File: muse-prototype-v2.html   ·   Updated: June 17, 2026   ·   Status: In Review</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="720C8E68" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="0076708F">
+      <w:pPr>
+        <w:pBdr>
+          <w:bottom w:val="single" w:sz="6" w:space="0" w:color="E5E7EB"/>
+        </w:pBdr>
+        <w:spacing w:after="240"/>
+      </w:pPr>
+    </w:p>
+    <w:p w14:paraId="BB000099" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:before="320" w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:color w:val="111827"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>Updates — June 17, 2026</w:t>
+      </w:r>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:w="9360" w:type="dxa"/>
+        <w:tblBorders>
+          <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+          <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+          <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+          <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+          <w:insideH w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+          <w:insideV w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+        </w:tblBorders>
+        <w:tblCellMar>
+          <w:top w:w="0" w:type="dxa"/>
+          <w:bottom w:w="0" w:type="dxa"/>
+        </w:tblCellMar>
+        <w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="1960"/>
+        <w:gridCol w:w="7400"/>
+      </w:tblGrid>
+      <w:tr w:rsidR="0076708F" w14:paraId="BB000001" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="1F2937"/>
+            <w:tcMar>
+              <w:top w:w="100" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="100" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="BB000002" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Screen / Area</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="1F2937"/>
+            <w:tcMar>
+              <w:top w:w="100" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="100" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="BB000003" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Description</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="BB0010A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="BB0011" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Credits Detail</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="BB0012" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Credit history screen with balance card and transaction list (All / Spend / Earn tabs). Spend rows show action type, timestamp, and delta in white; Earn rows show delta in gold.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="BB0020A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="BB0021" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Buy Credits (iAP)</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="BB0022" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Four credit packs (100 / $0.99, 300 / $2.49, 600 / $4.49, 1,000 / $6.49); selected pack highlights in amber. Buy Now opens Apple Pay; on success returns to Credits Detail with a toast.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="CC001701" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F9FAFB"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="CC001702" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Proof of Creation</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="FFFFFF"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="CC001703" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t xml:space="preserve">Used </w:t>
+            </w:r>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:i/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>img_certificate.jpg</w:t>
+            </w:r>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t xml:space="preserve"> as certificate background with text content overlaid. Fixed footer link visibility. Added iOS keyboard simulation in keyboard-open state. Updated certificate layout to match Figma (node 479-6937). Set 48 px inner padding on certificate paper.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p w14:paraId="BB000098" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:spacing w:after="160"/>
+      </w:pPr>
+    </w:p>
+    <w:p w14:paraId="AA000099" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:before="320" w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:color w:val="111827"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>Updates — June 11, 2026</w:t>
+      </w:r>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:w="9360" w:type="dxa"/>
+        <w:tblBorders>
+          <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+          <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+          <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+          <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+          <w:insideH w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+          <w:insideV w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+        </w:tblBorders>
+        <w:tblCellMar>
+          <w:top w:w="0" w:type="dxa"/>
+          <w:bottom w:w="0" w:type="dxa"/>
+        </w:tblCellMar>
+        <w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="1960"/>
+        <w:gridCol w:w="7400"/>
+      </w:tblGrid>
+      <w:tr w:rsidR="0076708F" w14:paraId="AA000001" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="1F2937"/>
+            <w:tcMar>
+              <w:top w:w="100" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="100" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="AA000002" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Screen / Area</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="1F2937"/>
+            <w:tcMar>
+              <w:top w:w="100" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="100" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="AA000003" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Description</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="1C0001A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="1C0002" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Explore Home</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="1C0003" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added user avatar and username to New Songs and Top Picks Songs rows alongside social stats.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="1C0010A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="1C0011" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Community Profile</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="1C0012" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added Songs tab with a song list including playback, social stats, and action buttons.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="1C0020A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="1C0021" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Song Player</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="1C0022" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added community user avatar and username display.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="1C0030A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="1C0031" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Video Player</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="1C0032" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added community user avatar and username display.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="1C0040A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="1C0041" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>AI Song Create</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="1C0042" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added Instrumental toggle to both Simple and Custom modes. In Simple mode the description textarea remains editable when the toggle is on.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="1C0050A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="1C0051" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>History</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="1C0052" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added community liked items to the Liked tab. Community items are hidden from All, Songs, and Music Videos tabs and show only Like and Share in the option menu.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="1C0060A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="1C0061" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>History — Option Menu</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="1C0062" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added Edit MV and Get Proof CTA buttons to the MV option menu. Added Publish flow to both MV and Song menus: MV shows a confirmation dialog (&#x201C;Ready to Go Public?&#x201D;) and an in-review state with timer icon before publishing; Song publishes directly. Both show a success toast on completion and restore the Delete option on unpublish.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="1C0070A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="1C0071" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>History — Sign-in State</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="1C0072" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Adjusted empty state position and sign-in sheet button sizes to improve accessibility.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p w14:paraId="AA000098" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:spacing w:after="120"/>
+      </w:pPr>
+    </w:p>
+    <w:p w14:paraId="66C013A1" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:before="320" w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:color w:val="111827"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>Updates — June 8, 2026</w:t>
+      </w:r>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:w="9360" w:type="dxa"/>
+        <w:tblBorders>
+          <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+          <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+          <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+          <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+          <w:insideH w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+          <w:insideV w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+        </w:tblBorders>
+        <w:tblCellMar>
+          <w:left w:w="10" w:type="dxa"/>
+          <w:right w:w="10" w:type="dxa"/>
+        </w:tblCellMar>
+        <w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="1960"/>
+        <w:gridCol w:w="7400"/>
+      </w:tblGrid>
+      <w:tr w:rsidR="0076708F" w14:paraId="5B1D259F" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="1F2937"/>
+            <w:tcMar>
+              <w:top w:w="100" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="100" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="71BDFE3F" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Screen / Area</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="1F2937"/>
+            <w:tcMar>
+              <w:top w:w="100" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="100" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="20CFB345" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Description</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="40E821A8" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="08393083" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Account</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="1506CCB6" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added Upgrade button to Muse Pro list and a divider between Muse Pro and Notifications sections.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="6ADAD836" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="24600512" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Explore Home</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="12AF519E" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Updated trending card 2 to MV type. Redesigned feature cards: removed subtitle text, reduced height to 68px.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="540D7CF5" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="68A58A33" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>New Songs Top Picks Songs</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="31B3A6A9" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added Like and Share action buttons to every song list row.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="3106B870" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="247F9B7F" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>History</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="4E7D1E78" w14:textId="60D04F94" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added Liked filter tab. Added More (…) button to each history row with a context-aware option menu (</w:t>
+            </w:r>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Microsoft JhengHei" w:eastAsia="Microsoft JhengHei" w:hAnsi="Microsoft JhengHei" w:cs="Microsoft JhengHei"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+                <w:lang w:val="en-US"/>
+              </w:rPr>
+              <w:t xml:space="preserve">Create MV, Get Proof, </w:t>
+            </w:r>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial" w:hint="eastAsia"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>L</w:t>
+            </w:r>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>ike, Share, Publish, Download, Delete) that adapts based on item type and status.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="07327FE9" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="607B568F" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>History</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="76B48A81" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Updated timestamp format to yyyy-mm-dd.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="49A538C0" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="3761C9AA" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Edit MV</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="3D824531" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added Cover Image (9:16 ratio with fullscreen viewer), Cover Description section (inline regenerate + input sheet), and Delete this Project button.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="4C4A4E0A" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="627EF052" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Proof of Creation</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="3AD65A13" w14:textId="442E77C7" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added new Proof of Creation screen. Accessible via Get Proof in the History option menu for completed Song and MV items.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p w14:paraId="45FA1703" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:before="320" w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:color w:val="111827"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>Updates — June 5, 2026</w:t>
+      </w:r>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:w="9360" w:type="dxa"/>
+        <w:tblBorders>
+          <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+          <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+          <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+          <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+          <w:insideH w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+          <w:insideV w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+        </w:tblBorders>
+        <w:tblCellMar>
+          <w:left w:w="10" w:type="dxa"/>
+          <w:right w:w="10" w:type="dxa"/>
+        </w:tblCellMar>
+        <w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="1960"/>
+        <w:gridCol w:w="7400"/>
+      </w:tblGrid>
+      <w:tr w:rsidR="0076708F" w14:paraId="56BDF9D5" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="1F2937"/>
+            <w:tcMar>
+              <w:top w:w="100" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="100" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="2651A72E" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Screen / Area</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="1F2937"/>
+            <w:tcMar>
+              <w:top w:w="100" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="100" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="2587686E" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Description</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="0C0C9748" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="51265138" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Explore Home</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="4606C050" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added trending carousel (3 cards, drag interaction, auto-slide). Redesigned feature cards with reduced height and updated layout.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="2D333721" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="5A144CF1" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Explore Home</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="57D8A4B2" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Added New Songs paginated carousel and Top Picks Songs horizontal scroll.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="75143593" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="20D6A723" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>MV Video Player</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="65D69B64" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Drag-based vertical feed with 3 sample MVs, playback controls, and sound toggle.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="555809B7" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="235837F9" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Song Player</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="0A6810C5" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Full-bleed player screen with waveform visualiser, playback controls, Like, Share, and Use in Music Video actions.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="5DB5D2A3" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="2D799B81" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>AI Song Create</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="2D4F7E87" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Two creation modes: Simple (genre + mood + description) and Custom (full lyric editor with section labels).</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="53369BB6" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="235EB000" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>History</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="0292C25A" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Initial history screen with creation list, status badges, and All / Music Videos / Songs filter tabs.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="045EEFB4" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="7100649E" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Account</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="3720E787" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Profile screen with stats, Muse Pro status, settings toggles, and Edit Profile sheet.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="5AD31F37" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="491E6EB5" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>IAP</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="2F89F6F0" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Subscribe screen with plan toggle, feature list, and 7-day free trial CTA.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0076708F" w14:paraId="77E983F3" w14:textId="77777777">
+        <w:tblPrEx>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPrEx>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1960" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:shd w:val="clear" w:color="auto" w:fill="F3F4F6"/>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="120" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="100" w:type="dxa"/>
+            </w:tcMar>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w14:paraId="70616C80" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>New MVs See All</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="7400" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:left w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:bottom w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+              <w:right w:val="single" w:sz="1" w:space="0" w:color="E5E7EB"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:w="120" w:type="dxa"/>
+              <w:left w:w="140" w:type="dxa"/>
+              <w:bottom w:w="120" w:type="dxa"/>
+              <w:right w:w="120" w:type="dxa"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p w14:paraId="648C5D70" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:eastAsia="Arial"/>
+                <w:color w:val="374151"/>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>2-column masonry layout with portrait and landscape card variants.</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p w14:paraId="5478018E" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:before="320" w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:color w:val="111827"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:lastRenderedPageBreak/>
+        <w:t>Out of Scope — Not in This Version</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="3130EF57" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:pStyle w:val="ListParagraph"/>
+        <w:numPr>
+          <w:ilvl w:val="0"/>
+          <w:numId w:val="1"/>
+        </w:numPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:eastAsia="Arial"/>
+          <w:color w:val="6B7280"/>
+          <w:sz w:val="18"/>
+          <w:szCs w:val="18"/>
+        </w:rPr>
+        <w:t>Persistent login state across sessions.</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="3D5AAB35" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:pStyle w:val="ListParagraph"/>
+        <w:numPr>
+          <w:ilvl w:val="0"/>
+          <w:numId w:val="1"/>
+        </w:numPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:eastAsia="Arial"/>
+          <w:color w:val="6B7280"/>
+          <w:sz w:val="18"/>
+          <w:szCs w:val="18"/>
+        </w:rPr>
+        <w:t>Real backend integration — all data and media are placeholder assets.</w:t>
+      </w:r>
+    </w:p>
+    <w:p w14:paraId="5A66D87C" w14:textId="77777777" w:rsidR="0076708F" w:rsidRDefault="00000000">
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:sz="4" w:space="0" w:color="E5E7EB"/>
+        </w:pBdr>
+        <w:spacing w:before="320"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:eastAsia="Arial"/>
+          <w:color w:val="9CA3AF"/>
+          <w:sz w:val="17"/>
+          <w:szCs w:val="17"/>
+        </w:rPr>
+        <w:t>Questions? Contact Scott Wu — scott_wu@perfectcorp.com</w:t>
+      </w:r>
+    </w:p>
+    <w:sectPr w:rsidR="0076708F">
+      <w:headerReference w:type="default" r:id="rId7"/>
+      <w:footerReference w:type="default" r:id="rId8"/>
+      <w:pgSz w:w="12240" w:h="15840"/>
+      <w:pgMar w:top="1080" w:right="1080" w:bottom="1080" w:left="1080" w:header="708" w:footer="708" w:gutter="0"/>
+      <w:cols w:space="720"/>
+      <w:docGrid w:linePitch="360"/>
+    </w:sectPr>
+  </w:body>
+</w:document>
