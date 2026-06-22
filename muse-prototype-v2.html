@@ -3049,12 +3049,12 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <!-- MV SONG -->
           <div style="display:flex;flex-direction:column;gap:6px;">
             <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">MV Song</div>
-            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:8px;height:60px;overflow:hidden;box-sizing:border-box;">
-              <!-- Album art with play icon -->
+            <div onclick="toggleSbSongPlay()" style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:8px;height:60px;overflow:hidden;box-sizing:border-box;cursor:pointer;">
+              <!-- Album art with play/pause icon -->
               <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;">
                 <img src="assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
-                <div style="position:absolute;inset:0;background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;">
-                  <img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+                <div style="position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;">
+                  <img id="sb-song-play-icon" src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
                 </div>
               </div>
               <!-- Song info -->
@@ -3068,61 +3068,95 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <!-- VISUAL STYLE -->
           <div style="display:flex;flex-direction:column;gap:6px;">
             <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Visual Style</div>
-            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:69px;box-sizing:border-box;">
-              <div id="sb-visual-style-text" style="flex:1;font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">Radiant and joyful, with a dreamy yet devoted expression. Her look is glamorous and sophisticated.</div>
-              <div onclick="event.stopPropagation();openSceneEditor('Visual Style','sb-visual-style-text')" style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
-              </div>
+            <div onclick="openSceneEditor('Visual Style','sb-visual-style-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:69px;box-sizing:border-box;cursor:pointer;">
+              <div id="sb-visual-style-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">Radiant and joyful, with a dreamy yet devoted expression. Her look is glamorous and sophisticated.</div>
             </div>
           </div>
 
-          <!-- SYNOPSIS -->
+          <!-- STORY -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Story</div>
+            <div style="background:var(--n14);border-radius:14px;padding:10px;min-height:69px;box-sizing:border-box;">
+              <div id="sb-story-text" style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.5;">Radiant and joyful, with a dreamy yet devoted expression. Her look is glamorous and sophisticated.</div>
+            </div>
+          </div>
+
+          <!-- STORY LINE -->
           <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Synopsis</div>
-
-            <!-- Scene 1 -->
-            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;">
-              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;">
-                <div style="display:flex;align-items:flex-end;justify-content:space-between;">
-                  <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 1</div>
-                  <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:00–00:09</div>
-                </div>
-                <div id="sb-scene-1-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">In a softly lit, elegant dressing room, the woman stands before a grand mirror.</div>
-              </div>
-              <div onclick="openSceneEditor('Scene 1','sb-scene-1-text')" style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
-              </div>
+            <!-- Header with expand/collapse -->
+            <div onclick="toggleStoryLine()" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+              <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Story Line</div>
+              <img id="sb-storyline-chevron" src="assets/icons/ui/ic_chevron-right.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);transform:rotate(-90deg);transition:transform .25s;">
             </div>
 
-            <!-- Scene 2 -->
-            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;">
-              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;">
-                <div style="display:flex;align-items:flex-end;justify-content:space-between;">
-                  <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 2</div>
-                  <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:09–00:12</div>
-                </div>
-                <div id="sb-scene-2-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">Close-up on the vocalist as she begins to sing, her expression serene.</div>
-              </div>
-              <div onclick="openSceneEditor('Scene 2','sb-scene-2-text')" style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
-              </div>
-            </div>
+            <!-- Scenes (collapsible) -->
+            <div id="sb-storyline-content" style="display:flex;flex-direction:column;gap:8px;">
 
-            <!-- Scene 3 -->
-            <div style="display:flex;align-items:center;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;">
-              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;">
-                <div style="display:flex;align-items:flex-end;justify-content:space-between;">
-                  <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 3</div>
-                  <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:12–00:15</div>
+              <!-- Scene 1 -->
+              <div onclick="openSceneEditor('Scene 1','sb-scene-1-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;cursor:pointer;">
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+                    <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 1</div>
+                    <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:00–00:09</div>
+                  </div>
+                  <div id="sb-scene-1-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">In a softly lit, elegant dressing room, the woman stands before a grand mirror.</div>
                 </div>
-                <div id="sb-scene-3-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">The camera follows her hands as she traces the intricate lace patterns on her dress.</div>
               </div>
-              <div onclick="openSceneEditor('Scene 3','sb-scene-3-text')" style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
-              </div>
-            </div>
 
+              <!-- Scene 2 -->
+              <div onclick="openSceneEditor('Scene 2','sb-scene-2-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;cursor:pointer;">
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+                    <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 2</div>
+                    <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:09–00:12</div>
+                  </div>
+                  <div id="sb-scene-2-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">Close-up on the vocalist as she begins to sing, her expression serene.</div>
+                </div>
+              </div>
+
+              <!-- Scene 3 -->
+              <div onclick="openSceneEditor('Scene 3','sb-scene-3-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;cursor:pointer;">
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+                    <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 3</div>
+                    <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:12–00:15</div>
+                  </div>
+                  <div id="sb-scene-3-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">The camera follows her hands as she traces the intricate lace patterns on her dress.</div>
+                </div>
+              </div>
+
+              <!-- Scene 4 -->
+              <div onclick="openSceneEditor('Scene 4','sb-scene-4-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;cursor:pointer;">
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+                    <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 4</div>
+                    <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:16–00:23</div>
+                  </div>
+                  <div id="sb-scene-4-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;">The camera follows her hands as she traces the intricate lace patterns on her dress.</div>
+                </div>
+              </div>
+
+            </div>
           </div>
+
+          <!-- LYRICS -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Lyrics</div>
+            <div style="background:var(--n14);border-radius:14px;padding:10px;max-height:160px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;scrollbar-width:none;-ms-overflow-style:none;">
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:00:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">In the stillness of midnight, as raindrops dance upon the pavement,</span></div>
+                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:05:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">a story unfolds, a tale of love and loss.</span></div>
+                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:10:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">The echoes of the past whisper through the droplets,</span></div>
+                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:15:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">each one carrying a memory, a moment lost in time.</span></div>
+                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:20:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">The rain, a gentle symphony, sets the stage for reflection.</span></div>
+                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:26:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">And in your eyes I see the stars we used to chase,</span></div>
+                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:32:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">a fleeting moment frozen in the grace of time.</span></div>
+                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:38:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">Hold me close beneath the silver light,</span></div>
+                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:44:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">and let the music carry us through the night.</span></div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       <!-- CTA -->
@@ -5336,6 +5370,13 @@ function stopAllMedia() {
     try { v.pause(); } catch(e) {}
   });
 
+  // Reset storyboard song play state
+  if (typeof _sbSongPlaying !== 'undefined' && _sbSongPlaying) {
+    _sbSongPlaying = false;
+    const icon = document.getElementById('sb-song-play-icon');
+    if (icon) icon.src = 'assets/icons/ui/ic_play.svg';
+  }
+
   // Stop the song result simulated progress timer
   if (_srPlaying) {
     _srPlaying = false;
@@ -6747,6 +6788,24 @@ function onSceneEditorInput() {
   const ta  = document.getElementById('scene-editor-ta');
   const ctr = document.getElementById('scene-editor-counter');
   if (ta && ctr) ctr.textContent = ta.value.length + '/2500';
+}
+
+// ── Storyboard: MV Song play/pause toggle ──
+let _sbSongPlaying = false;
+function toggleSbSongPlay() {
+  _sbSongPlaying = !_sbSongPlaying;
+  const icon = document.getElementById('sb-song-play-icon');
+  if (icon) icon.src = _sbSongPlaying ? 'assets/icons/ui/ic_pause.svg' : 'assets/icons/ui/ic_play.svg';
+}
+
+// ── Storyboard: Story Line expand/collapse ──
+let _storyLineOpen = true;
+function toggleStoryLine() {
+  _storyLineOpen = !_storyLineOpen;
+  const content  = document.getElementById('sb-storyline-content');
+  const chevron  = document.getElementById('sb-storyline-chevron');
+  if (content) content.style.display = _storyLineOpen ? 'flex' : 'none';
+  if (chevron) chevron.style.transform = _storyLineOpen ? 'rotate(-90deg)' : 'rotate(90deg)';
 }
 
 function clearSceneEditor() {
