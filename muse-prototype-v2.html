@@ -125,11 +125,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
 /* ── iPhone / mobile: full screen, no frame, scale up to fill screen ── */
 @media(max-width:430px){
-  html,body{background:var(--bg);overflow:hidden;height:100dvh;}
-  .device-wrap{padding:0;background:var(--bg);display:block;overflow:hidden;height:100dvh;min-height:0;}
+  html,body{background:var(--bg);overflow:hidden;height:var(--app-height,100dvh);}
+  .device-wrap{padding:0;background:var(--bg);display:block;overflow:hidden;height:var(--app-height,100dvh);min-height:0;}
   .device{
     width:320px !important;
-    height:calc(100dvh / var(--mob-scale, 1)) !important;
+    height:calc(var(--app-height,100dvh) / var(--mob-scale, 1)) !important;
     border-radius:0 !important;
     box-shadow:none !important;
     border:none !important;
@@ -715,7 +715,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .hist-more-btn{flex-shrink:0;width:24px;height:24px;background:#212127;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:opacity .15s;}
 .hist-more-btn:active{opacity:.6;}
 .hist-row[data-status="proc"] .hist-more-btn{display:none;}
-.hist-create-btn{flex-shrink:0;height:28px;padding:0 12px;background:#212127;border:1px solid rgba(255,255,255,0.15);border-radius:14px;color:#fff;font-size:12px;font-weight:600;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
+.hist-create-btn{flex-shrink:0;height:28px;padding:0 12px;background:#212127;border:none;border-radius:14px;color:#fff;font-size:12px;font-weight:600;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
 .hist-create-btn:active{opacity:.6;}
 #hist-more-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
 #hist-more-overlay.show{opacity:1;pointer-events:all;}
@@ -5331,32 +5331,37 @@ const TAB_SCREENS = ['home','history'];
 let navStack = ['splash'];
 
 // ── Mobile scale: zoom 320px Figma content to fill the actual device screen ──
-(function applyMobileScale() {
+// --app-height is set from window.innerHeight (not 100dvh) to avoid the iOS Safari
+// initial-load gap where 100dvh includes browser chrome before it collapses.
+function applyMobileScale() {
   if (window.innerWidth > 430) return;
+  const root  = document.documentElement;
   const scale = window.innerWidth / 320;
   const device = document.querySelector('.device');
   if (!device) return;
-  device.style.transform = `scale(${scale})`;
+
+  // Use innerHeight as the authoritative height source
+  root.style.setProperty('--app-height', window.innerHeight + 'px');
+
+  device.style.transform       = `scale(${scale})`;
   device.style.transformOrigin = 'top left';
-  device.style.width  = '320px';
-  // Height is driven by CSS: calc(100dvh / var(--mob-scale)) — avoids window.innerHeight vs 100dvh mismatch on iOS Safari
-  document.documentElement.style.setProperty('--mob-scale', scale);
+  device.style.width           = '320px';
+  root.style.setProperty('--mob-scale', scale);
+
   // Correct env(safe-area-inset-*) values for the CSS scale space
-  // env() returns real device pts; divide by scale to get correct CSS px at 320px base
-  const root = document.documentElement;
   const realSafeTop = parseFloat(getComputedStyle(root).getPropertyValue('--safe-top')) || 48;
   const realSafeBot = parseFloat(getComputedStyle(root).getPropertyValue('--safe-bot')) || 20;
   root.style.setProperty('--safe-top', (realSafeTop / scale) + 'px');
   root.style.setProperty('--safe-bot', (realSafeBot / scale) + 'px');
-})();
-window.addEventListener('resize', function() {
-  if (window.innerWidth > 430) return;
-  const scale = window.innerWidth / 320;
-  const device = document.querySelector('.device');
-  if (!device) return;
-  device.style.transform = `scale(${scale})`;
-  document.documentElement.style.setProperty('--mob-scale', scale);
-});
+}
+applyMobileScale();
+
+// Re-apply on resize (orientation change) and on visualViewport resize
+// (iOS fires visualViewport.resize when the address bar shows/hides without a resize event)
+window.addEventListener('resize', applyMobileScale);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', applyMobileScale);
+}
 
 // ── Stop all media when navigating away from any screen ──
 function stopAllMedia() {
