@@ -3,6 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<!-- Set --app-height early to prevent iOS Safari address-bar gap.
+     -webkit-fill-available in CSS handles the initial paint;
+     this JS value corrects it as soon as the engine has a real innerHeight. -->
+<script>
+  (function(){
+    var h = window.innerHeight;
+    document.documentElement.style.setProperty('--app-height', h + 'px');
+    // Re-apply after DOM is parsed in case the initial innerHeight was stale
+    document.addEventListener('DOMContentLoaded', function(){
+      document.documentElement.style.setProperty('--app-height', window.innerHeight + 'px');
+    });
+  })();
+</script>
 <title>YouCam Muse</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -125,11 +138,13 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
 /* ── iPhone / mobile: full screen, no frame, scale up to fill screen ── */
 @media(max-width:430px){
-  html,body{background:var(--bg);overflow:hidden;height:var(--app-height,100dvh);}
-  .device-wrap{padding:0;background:var(--bg);display:block;overflow:hidden;height:var(--app-height,100dvh);min-height:0;}
+  /* -webkit-fill-available is the iOS Safari native "visible viewport" height, */
+  /* excluding browser chrome. var(--app-height) is set from JS window.innerHeight. */
+  html,body{background:var(--bg);overflow:hidden;height:-webkit-fill-available;height:var(--app-height,100svh);}
+  .device-wrap{padding:0;background:var(--bg);display:block;overflow:hidden;height:-webkit-fill-available;height:var(--app-height,100svh);min-height:0;}
   .device{
     width:320px !important;
-    height:calc(var(--app-height,100dvh) / var(--mob-scale, 1)) !important;
+    height:calc(var(--app-height,100svh) / var(--mob-scale, 1)) !important;
     border-radius:0 !important;
     box-shadow:none !important;
     border:none !important;
@@ -5331,8 +5346,10 @@ const TAB_SCREENS = ['home','history'];
 let navStack = ['splash'];
 
 // ── Mobile scale: zoom 320px Figma content to fill the actual device screen ──
-// --app-height is set from window.innerHeight (not 100dvh) to avoid the iOS Safari
+// --app-height uses window.innerHeight (not 100dvh) to avoid the iOS Safari
 // initial-load gap where 100dvh includes browser chrome before it collapses.
+// Safe-area values are read once from env() and cached to avoid double-division on resize.
+let _safeTop = null, _safeBot = null;
 function applyMobileScale() {
   if (window.innerWidth > 430) return;
   const root  = document.documentElement;
@@ -5340,24 +5357,25 @@ function applyMobileScale() {
   const device = document.querySelector('.device');
   if (!device) return;
 
-  // Use innerHeight as the authoritative height source
   root.style.setProperty('--app-height', window.innerHeight + 'px');
-
   device.style.transform       = `scale(${scale})`;
   device.style.transformOrigin = 'top left';
   device.style.width           = '320px';
   root.style.setProperty('--mob-scale', scale);
 
-  // Correct env(safe-area-inset-*) values for the CSS scale space
-  const realSafeTop = parseFloat(getComputedStyle(root).getPropertyValue('--safe-top')) || 48;
-  const realSafeBot = parseFloat(getComputedStyle(root).getPropertyValue('--safe-bot')) || 20;
-  root.style.setProperty('--safe-top', (realSafeTop / scale) + 'px');
-  root.style.setProperty('--safe-bot', (realSafeBot / scale) + 'px');
+  // Read safe-area env() values only once (avoid re-dividing on each resize call)
+  if (_safeTop === null) {
+    _safeTop = parseFloat(getComputedStyle(root).getPropertyValue('--safe-top')) || 48;
+    _safeBot = parseFloat(getComputedStyle(root).getPropertyValue('--safe-bot')) || 20;
+  }
+  root.style.setProperty('--safe-top', (_safeTop / scale) + 'px');
+  root.style.setProperty('--safe-bot', (_safeBot / scale) + 'px');
 }
 applyMobileScale();
-
-// Re-apply on resize (orientation change) and on visualViewport resize
-// (iOS fires visualViewport.resize when the address bar shows/hides without a resize event)
+// Also run after full load — iOS Safari may report a stale innerHeight before load
+window.addEventListener('load', applyMobileScale);
+// Re-run on resize (orientation change) and visualViewport resize
+// (iOS fires visualViewport.resize when the address bar shows/hides without a window resize)
 window.addEventListener('resize', applyMobileScale);
 if (window.visualViewport) {
   window.visualViewport.addEventListener('resize', applyMobileScale);
