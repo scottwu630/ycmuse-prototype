@@ -1780,7 +1780,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Progress bar -->
-          <div id="sp-progress-bar" onclick="seekSpByClick(event,this)" style="position:relative;height:12px;display:flex;align-items:center;cursor:pointer;">
+          <div id="sp-progress-bar" onclick="seekSpByClick(event,this)" style="position:relative;height:12px;display:flex;align-items:center;cursor:pointer;margin-top:10px;">
             <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;background:rgba(255,255,255,.2);border-radius:2px;">
               <div id="sp-progress-fill" style="position:absolute;left:0;top:0;width:0%;height:100%;background:#fff;border-radius:2px;"></div>
             </div>
@@ -1795,7 +1795,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
 
         <!-- Control buttons -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 35px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 35px;margin-bottom:26px;">
           <div onclick="prevSong()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;">
             <img src="assets/icons/ui/ic_skip_back.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
           </div>
@@ -3861,8 +3861,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
       </div>
 
-      <!-- Album Art — large, centered -->
-      <div style="position:absolute;top:118px;left:50%;transform:translateX(-50%);width:220px;height:220px;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.7);flex-shrink:0;">
+      <!-- Album Art — 200×200, top:130px, left:60px per Figma node 50-84 -->
+      <div style="position:absolute;top:130px;left:60px;width:200px;height:200px;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.7);flex-shrink:0;">
         <img src="assets/images/album-art/album_14.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
       </div>
 
@@ -3908,8 +3908,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
       </div>
 
-      <!-- CTAs -->
-      <div style="position:absolute;bottom:0;left:0;right:0;padding:0 16px calc(40px + var(--safe-bot));display:flex;flex-direction:column;gap:10px;">
+      <!-- CTAs — top:551px, left:16px per Figma node 50-84 -->
+      <div style="position:absolute;top:551px;left:16px;width:288px;display:flex;flex-direction:column;gap:10px;">
         <button onclick="useAISongInMV()" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Use in Music Video
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
