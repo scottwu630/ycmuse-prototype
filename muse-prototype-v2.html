@@ -715,7 +715,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .hist-more-btn{flex-shrink:0;width:24px;height:24px;background:#212127;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:opacity .15s;}
 .hist-more-btn:active{opacity:.6;}
 .hist-row[data-status="proc"] .hist-more-btn{display:none;}
-.hist-create-btn{flex-shrink:0;height:auto;padding:5px 6px;background:#212127;border:none;border-radius:14px;color:#fff;font-size:12px;font-weight:600;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
+.hist-create-btn{flex-shrink:0;height:auto;padding:5px 6px;background:#ffffff;border:none;border-radius:16px;color:#09090B;font-size:12px;font-weight:500;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
 .hist-create-btn:active{opacity:.6;}
 #hist-more-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
 #hist-more-overlay.show{opacity:1;pointer-events:all;}
@@ -4055,8 +4055,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 <div class="hist-time">2026-06-06</div>
               </div>
             </div>
-            <button class="hist-create-btn" onclick="event.stopPropagation();histMarkPlayed(this.closest('.hist-row'));goTo('mv-storyboard')">Create</button>
-            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
+            <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
+              <button class="hist-create-btn" onclick="event.stopPropagation();histMarkPlayed(this.closest('.hist-row'));goTo('mv-storyboard')">Create</button>
+              <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
+            </div>
           </div>
 
           <!-- 4. Neon City Nights — Music Video · Done -->
