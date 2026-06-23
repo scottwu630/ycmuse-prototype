@@ -3,19 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<!-- Set --app-height early to prevent iOS Safari address-bar gap.
-     -webkit-fill-available in CSS handles the initial paint;
-     this JS value corrects it as soon as the engine has a real innerHeight. -->
-<script>
-  (function(){
-    var h = window.innerHeight;
-    document.documentElement.style.setProperty('--app-height', h + 'px');
-    // Re-apply after DOM is parsed in case the initial innerHeight was stale
-    document.addEventListener('DOMContentLoaded', function(){
-      document.documentElement.style.setProperty('--app-height', window.innerHeight + 'px');
-    });
-  })();
-</script>
 <title>YouCam Muse</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,13 +125,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
 /* ── iPhone / mobile: full screen, no frame, scale up to fill screen ── */
 @media(max-width:430px){
-  /* -webkit-fill-available is the iOS Safari native "visible viewport" height, */
-  /* excluding browser chrome. var(--app-height) is set from JS window.innerHeight. */
-  html,body{background:var(--bg);overflow:hidden;height:-webkit-fill-available;height:var(--app-height,100svh);}
-  .device-wrap{padding:0;background:var(--bg);display:block;overflow:hidden;height:-webkit-fill-available;height:var(--app-height,100svh);min-height:0;}
+  html,body{background:var(--bg);overflow:hidden;height:100dvh;}
+  .device-wrap{padding:0;background:var(--bg);display:block;overflow:hidden;height:100dvh;min-height:0;}
   .device{
     width:320px !important;
-    height:calc(var(--app-height,100svh) / var(--mob-scale, 1)) !important;
+    height:calc(100dvh / var(--mob-scale, 1)) !important;
     border-radius:0 !important;
     box-shadow:none !important;
     border:none !important;
@@ -717,7 +702,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .hist-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
 .hist-thumb-icon{width:61px;height:61px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
 .hist-info{flex:1;min-width:0;}
-.hist-name{font-size:13px;font-weight:700;color:var(--n100);letter-spacing:-.13px;line-height:18px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.hist-name{font-size:13px;font-weight:700;color:var(--n100);letter-spacing:-.13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .hist-meta{font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.11px;line-height:16px;margin-top:1px;}
 .hist-badge{display:inline-flex;align-items:center;gap:2px;padding:3px 4px;border-radius:14px;font-size:9px;font-weight:700;}
 .hist-status{display:flex;align-items:center;gap:6px;margin-top:3px;}
@@ -730,7 +715,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .hist-more-btn{flex-shrink:0;width:24px;height:24px;background:#212127;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:opacity .15s;}
 .hist-more-btn:active{opacity:.6;}
 .hist-row[data-status="proc"] .hist-more-btn{display:none;}
-.hist-create-btn{flex-shrink:0;height:auto;padding:6px 8px;background:#212127;border:none;border-radius:14px;color:#fff;font-size:12px;font-weight:600;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
+.hist-create-btn{flex-shrink:0;height:auto;padding:5px 6px;background:#212127;border:none;border-radius:14px;color:#fff;font-size:12px;font-weight:600;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
 .hist-create-btn:active{opacity:.6;}
 #hist-more-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
 #hist-more-overlay.show{opacity:1;pointer-events:all;}
@@ -1266,7 +1251,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="home-greet-row">
             <div class="home-greet">YouCam Muse</div>
             <div class="home-icon-row">
-              <div class="ico-btn crown-btn" onclick="goTo('iap')" title="Upgrade">
+              <div class="ico-btn crown-btn" onclick="goToSubscribeOrCredits()" title="Upgrade">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M17.9998 17.0001C19.1044 17.0001 19.9998 17.8956 19.9998 19.0001C19.9998 20.1046 19.1044 21.0001 17.9998 21.0001H5.99983C4.89539 21 3.9999 20.1046 3.99983 19.0001C3.99983 17.8956 4.89535 17.0002 5.99983 17.0001H17.9998Z" fill="#F59E0B"/>
                   <path d="M11.5877 2.72083C11.7746 2.39376 12.2424 2.3832 12.4442 2.7013L16.1453 8.53821C16.3027 8.78618 16.6389 8.84589 16.8719 8.66712L19.741 6.46595C20.1289 6.16842 20.6692 6.54674 20.5223 7.01282L17.9998 15.0001H5.99983L3.44417 6.9054C3.30034 6.44994 3.81549 6.07143 4.20687 6.34485L7.55062 8.68567C7.7916 8.85436 8.1263 8.77989 8.2723 8.52454L11.5877 2.72083Z" fill="#F59E0B"/>
@@ -3105,7 +3090,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
 
             <!-- Scenes (collapsible) -->
-            <div id="sb-storyline-content" style="display:flex;flex-direction:column;gap:8px;overflow:hidden;max-height:600px;transition:max-height .3s cubic-bezier(.25,.46,.45,.94),opacity .3s;opacity:1;">
+            <div id="sb-storyline-content" style="display:flex;flex-direction:column;gap:8px;">
 
               <!-- Scene 1 -->
               <div onclick="openSceneEditor('Scene 1','sb-scene-1-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;cursor:pointer;">
@@ -3155,7 +3140,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- LYRICS -->
-          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
+          <div style="display:flex;flex-direction:column;gap:6px;">
             <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Lyrics</div>
             <div style="background:var(--n14);border-radius:14px;padding:10px;max-height:160px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;scrollbar-width:none;-ms-overflow-style:none;">
               <div style="display:flex;flex-direction:column;gap:6px;">
@@ -3301,7 +3286,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <!-- Progress bar -->
               <div id="mvr-progress-bar" style="flex:1;position:relative;height:12px;display:flex;align-items:center;cursor:pointer;">
                 <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;background:rgba(255,255,255,.3);border-radius:2px;">
-                  <div id="mvr-progress-fill" style="position:absolute;left:0;top:0;width:0%;height:100%;background:#fff;border-radius:2px;"></div>
+                  <div id="mvr-progress-fill" style="position:absolute;left:0;top:0;width:0%;height:100%;background:#A855F7;border-radius:2px;"></div>
                 </div>
                 <div id="mvr-progress-thumb" style="position:absolute;left:0%;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(0,0,0,.4);pointer-events:none;"></div>
               </div>
@@ -3877,12 +3862,12 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
 
       <!-- Album Art — large, centered -->
-      <div style="position:absolute;top:118px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.7);flex-shrink:0;">
+      <div style="position:absolute;top:118px;left:50%;transform:translateX(-50%);width:220px;height:220px;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.7);flex-shrink:0;">
         <img src="assets/images/album-art/album_14.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
       </div>
 
       <!-- Player -->
-      <div style="position:absolute;top:338px;left:16px;width:288px;display:flex;flex-direction:column;gap:16px;">
+      <div style="position:absolute;top:360px;left:16px;width:288px;display:flex;flex-direction:column;gap:20px;">
 
         <!-- Title + share -->
         <div style="display:flex;align-items:flex-start;gap:8px;">
@@ -3899,7 +3884,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div style="display:flex;flex-direction:column;gap:6px;">
           <div id="sr-progress-bar" onclick="seekSongResult(event,this)" style="position:relative;height:12px;display:flex;align-items:center;cursor:pointer;">
             <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;background:rgba(255,255,255,.2);border-radius:2px;pointer-events:none;">
-              <div id="sr-progress-fill" style="position:absolute;left:0;top:0;width:35%;height:100%;background:#fff;border-radius:2px;"></div>
+              <div id="sr-progress-fill" style="position:absolute;left:0;top:0;width:35%;height:100%;background:linear-gradient(to right,#FFB347,#FF4E50);border-radius:2px;"></div>
             </div>
             <div id="sr-progress-thumb" style="position:absolute;left:35%;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(0,0,0,.4);pointer-events:none;"></div>
           </div>
@@ -3924,7 +3909,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
 
       <!-- CTAs -->
-      <div style="position:absolute;bottom:0;left:0;right:0;padding:0 16px calc(24px + var(--safe-bot));display:flex;flex-direction:column;gap:10px;">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:0 16px calc(40px + var(--safe-bot));display:flex;flex-direction:column;gap:10px;">
         <button onclick="useAISongInMV()" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Use in Music Video
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -3945,8 +3930,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <span style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">My Creations</span>
             <!-- Info icon + tooltip -->
             <div style="position:relative;display:flex;align-items:center;" id="creations-info-wrap">
-              <div onclick="toggleCreationsTooltip()" style="width:16px;height:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-                <img src="assets/icons/ui/ic_info.svg" width="16" height="16" style="display:block;opacity:.5;filter:brightness(10);">
+              <div onclick="toggleCreationsTooltip()" style="width:15px;height:15px;border-radius:50%;border:1.5px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+                <span style="font-size:9px;font-weight:700;color:rgba(255,255,255,.5);line-height:1;">i</span>
               </div>
               <!-- Tooltip -->
               <div id="creations-tooltip" style="display:none;position:absolute;top:26px;left:50%;transform:translateX(-50%);width:210px;background:#212127;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 12px;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.5);">
@@ -4442,7 +4427,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Muse Pro</div>
               <div style="font-size:11px;font-weight:500;color:#676779;letter-spacing:-.11px;line-height:16px;">Validity: 2026-08-10</div>
             </div>
-            <div onclick="goTo('iap')" style="background:#fff;border-radius:16px;padding:6px 8px;min-width:48px;width:66px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;">
+            <div onclick="goToSubscribeOrCredits()" style="background:#fff;border-radius:16px;padding:6px 8px;min-width:48px;width:66px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;">
               <span style="font-size:12px;font-weight:500;color:#09090B;text-align:center;white-space:nowrap;">Upgrade</span>
             </div>
           </div>
@@ -4582,108 +4567,118 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     <!-- ══════ IAP SUBSCRIPTION ══════ -->
     <div id="screen-iap" class="screen" style="background:#09090B;">
 
-      <!-- Purple radial glow orb (Figma top:20px left:60px 200×200) -->
-      <div style="position:absolute;top:20px;left:60px;width:200px;height:200px;border-radius:100px;background:radial-gradient(circle,rgba(147,51,234,.45) 0%,rgba(147,51,234,.0) 70%);pointer-events:none;"></div>
+      <!-- BG Glow Purple (radial, matches Figma) -->
+      <div style="position:absolute;left:0;top:0;width:320px;height:320px;pointer-events:none;background:radial-gradient(ellipse 220px 380px at 58px -5px,rgba(147,51,234,.38),transparent);"></div>
 
-      <div class="scr-scroll" style="background:transparent;">
-
-        <!-- NavBar: back only, no title -->
-        <div style="position:sticky;top:0;padding:calc(var(--safe-top) + 8px) 16px 0;display:flex;align-items:center;z-index:10;background:transparent;">
-          <div onclick="goBack()" style="width:28px;height:28px;border-radius:18px;background:rgba(33,33,39,.7);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
-            <img src="assets/icons/ui/ic_arrow_left.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
-          </div>
-          <div style="flex:1;"></div>
-          <!-- transparent spacer keeps layout balanced -->
-          <div style="width:36px;"></div>
-        </div>
-
-        <!-- Hero -->
-        <div style="display:flex;flex-direction:column;align-items:center;padding:20px 20px 0;text-align:center;">
-          <!-- Crown badge: gradient orange→red, rounded-24px, p-20px -->
-          <div style="width:76px;height:76px;border-radius:24px;background:linear-gradient(45deg,#F59E0B 14.6%,#EF4444 85.4%);display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(245,158,11,.45),0 16px 32px rgba(0,0,0,.5);margin-bottom:16px;">
-            <img src="assets/icons/ui/ic_crown.svg" width="36" height="36" style="display:block;filter:brightness(0) invert(1);">
-          </div>
-          <div style="font-size:12px;font-weight:700;color:#F59E0B;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;">YouCam Muse Pro</div>
-          <div style="font-size:26px;font-weight:800;color:#fff;letter-spacing:-.4px;line-height:1.2;margin-bottom:10px;">Unlock Your Full<br><span style="background:linear-gradient(90deg,#F59E0B,#EC4899,#A855F7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Creative Power</span></div>
-          <div style="font-size:12px;color:#9C9CAB;line-height:1.55;max-width:260px;">Get unlimited AI music videos, priority rendering, and exclusive styles.</div>
-        </div>
-
-        <!-- Features card (Figma: #151519, border, rounded-14px, p-14px, gap-16px) -->
-        <div style="margin:22px 16px 0;background:#151519;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px;">
-
-          <!-- Feature row helper: icon box bg:#212127, rounded-8px -->
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:32px;height:32px;border-radius:8px;background:#212127;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <img src="assets/icons/ui/ic_unlimited.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;color:#fff;line-height:1.3;">Unlimited MV & Song Generation</div>
-              <div style="font-size:11px;color:#9C9CAB;margin-top:1px;">Create as many as you want, anytime</div>
-            </div>
-          </div>
-
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:32px;height:32px;border-radius:8px;background:#212127;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <img src="assets/icons/ui/ic_flash.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;color:#fff;line-height:1.3;">Priority AI Rendering</div>
-              <div style="font-size:11px;color:#9C9CAB;margin-top:1px;">Jump the queue — ready in under 60s</div>
-            </div>
-          </div>
-
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:32px;height:32px;border-radius:8px;background:#212127;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <img src="assets/icons/ui/ic_crown.svg" width="18" height="18" style="display:block;">
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;color:#fff;line-height:1.3;">Exclusive Pro Styles & Templates</div>
-              <div style="font-size:11px;color:#9C9CAB;margin-top:1px;">50+ premium cinematic looks</div>
-            </div>
-          </div>
-
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:32px;height:32px;border-radius:8px;background:#212127;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <img src="assets/icons/ui/ic_download.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;color:#fff;line-height:1.3;">4K Export & Watermark-Free</div>
-              <div style="font-size:11px;color:#9C9CAB;margin-top:1px;">Share with full quality, no branding</div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Plan toggle (Figma: #383842 bg, rounded-14px, p-4px) -->
-        <div style="margin:18px 16px 0;">
-          <div style="display:flex;gap:0;background:#383842;border-radius:14px;padding:4px;" id="plan-toggle">
-            <div class="plan-opt active" id="plan-annual" onclick="selectPlan('annual')" style="flex:1;border-radius:11px;padding:10px 8px;text-align:center;cursor:pointer;background:#fff;transition:background .2s;">
-              <div style="font-size:11px;font-weight:700;color:#F59E0B;letter-spacing:.05em;margin-bottom:2px;">Annual · Save 58%</div>
-              <div class="plan-price" style="font-size:17px;font-weight:800;color:#09090B;">$3.99<span style="font-size:12px;font-weight:500;color:#676779;">/mo</span></div>
-              <div style="font-size:11px;color:#676779;margin-top:1px;">Billed $47.99/year</div>
-            </div>
-            <div class="plan-opt" id="plan-monthly" onclick="selectPlan('monthly')" style="flex:1;border-radius:11px;padding:10px 8px;text-align:center;cursor:pointer;transition:background .2s;">
-              <div style="font-size:11px;font-weight:600;color:#9C9CAB;letter-spacing:.05em;margin-bottom:2px;">Monthly</div>
-              <div class="plan-price" style="font-size:17px;font-weight:800;color:#fff;">$9.99<span style="font-size:12px;font-weight:500;color:#9C9CAB;">/mo</span></div>
-              <div style="font-size:11px;color:#9C9CAB;margin-top:1px;">Billed monthly</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CTA (Figma: top:604px, 288px wide, 46px tall, rounded-14px) -->
-        <div style="padding:18px 16px 6px;">
-          <button onclick="showIAPConfirm()" style="width:100%;height:46px;border-radius:14px;border:none;background:linear-gradient(135deg,#F59E0B,#EF4444,#EC4899);color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(245,158,11,.3);letter-spacing:-.1px;transition:transform .15s;" onmousedown="this.style.transform='scale(.97)'" onmouseup="this.style.transform=''">
-            Start Free Trial — 7 Days
+      <!-- NavBar -->
+      <div style="position:absolute;left:0;top:0;width:320px;z-index:10;background:linear-gradient(to bottom,rgba(0,0,0,.5),rgba(0,0,0,0));box-sizing:border-box;padding:calc(var(--safe-top) + 5px) 16px 0;">
+        <div style="position:relative;display:flex;align-items:center;gap:6px;height:38px;">
+          <button onclick="goBack()" style="width:28px;height:28px;border-radius:18px;background:rgba(255,255,255,.15);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;padding:6px;box-sizing:border-box;">
+            <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
           </button>
-          <div style="text-align:center;font-size:11px;color:#9C9CAB;margin-top:8px;">Cancel anytime · No commitment</div>
+          <div style="flex:1;"></div>
+          <button style="position:absolute;right:0;top:5px;height:27px;padding:0 8px;border-radius:14px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:12px;font-weight:500;cursor:pointer;min-width:50px;text-align:center;">Restore</button>
+        </div>
+      </div>
+
+      <!-- Plan Details: credits + features (top:90) -->
+      <div style="position:absolute;left:16px;top:90px;width:288px;display:flex;flex-direction:column;gap:8px;">
+
+        <!-- Credits info row -->
+        <div style="display:flex;align-items:baseline;justify-content:flex-start;gap:4px;margin-bottom:4px;">
+          <img src="assets/icons/ui/ic_credit.svg" width="18" height="18" style="display:block;flex-shrink:0;position:relative;top:2px;">
+          <span id="iap-credits-num" style="font-size:42px;font-weight:800;color:#fff;letter-spacing:-.42px;line-height:50px;white-space:nowrap;">800</span>
+          <span id="iap-credits-label" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:-.12px;transition:opacity .15s;">Weekly Credits</span>
         </div>
 
-        <!-- Legal -->
-        <div style="padding:4px 20px calc(40px + var(--safe-bot));text-align:center;">
-          <div style="font-size:11px;color:#676779;line-height:1.6;">By subscribing you agree to our <span style="color:#A855F7;">Terms of Service</span> and <span style="color:#A855F7;">Privacy Policy</span>. Subscription auto-renews unless cancelled at least 24 hours before end of period.</div>
+        <!-- Feature rows -->
+        <div style="display:flex;flex-direction:column;gap:8px;">
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">
+            </div>
+            <span style="font-size:11px;font-weight:500;color:#fff;letter-spacing:-.11px;line-height:16px;">MV without Watermark</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="assets/icons/ui/ic_download.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">
+            </div>
+            <span style="font-size:11px;font-weight:500;color:#fff;letter-spacing:-.11px;line-height:16px;">Enable Download MV &amp; Song</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="assets/icons/ui/ic_flash.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">
+            </div>
+            <span style="font-size:11px;font-weight:500;color:#fff;letter-spacing:-.11px;line-height:16px;">Priority AI Generation</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="assets/icons/ui/ic_lock_open.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">
+            </div>
+            <span style="font-size:11px;font-weight:500;color:#fff;letter-spacing:-.11px;line-height:16px;">Early Access</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="assets/icons/ui/ic_handshake.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">
+            </div>
+            <span style="font-size:11px;font-weight:500;color:#fff;letter-spacing:-.11px;line-height:16px;">Commercial License</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="assets/icons/ui/ic_sparkles.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">
+            </div>
+            <span style="font-size:11px;font-weight:500;color:#fff;letter-spacing:-.11px;line-height:16px;">Premium Tools</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Plan Options (top:371) -->
+      <div style="position:absolute;left:16px;top:371px;width:288px;display:flex;flex-direction:column;gap:12px;">
+
+        <!-- Weekly — MOST POPULAR badge (pre-selected) -->
+        <div id="iap-plan-weekly" onclick="selectIAPPlan('weekly')" style="position:relative;background:linear-gradient(to right,#420d6b,#151519);border:1px solid #a855f7;border-radius:12px;padding:12px;height:50px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box;transition:border-color .2s,background .2s;">
+          <div style="position:absolute;top:-6px;left:190px;background:rgba(255,138,2,.6);border:1px solid rgba(245,158,11,.25);border-radius:14px;padding:2px 6px;display:flex;align-items:center;backdrop-filter:blur(2px);">
+            <span style="font-size:9px;font-weight:700;color:#fff;white-space:nowrap;line-height:11px;">MOST POPULAR</span>
+          </div>
+          <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Weekly</span>
+          <span style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">$9.99</span>
+        </div>
+
+        <!-- Super Weekly — BEST VALUE badge, purple gradient on select -->
+        <div id="iap-plan-super" onclick="selectIAPPlan('super')" style="position:relative;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box;transition:border-color .2s,background .2s;">
+          <div style="position:absolute;top:-6px;left:207px;background:rgba(145,50,255,.6);border:1px solid rgba(168,85,247,.35);border-radius:20px;padding:2px 6px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);">
+            <span style="font-size:9px;font-weight:700;color:#fff;white-space:nowrap;line-height:11px;">BEST VALUE</span>
+          </div>
+          <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Monthly</span>
+          <span style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">$29.99</span>
+        </div>
+
+        <!-- Yearly -->
+        <div id="iap-plan-yearly" onclick="selectIAPPlan('yearly')" style="position:relative;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;height:50px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box;overflow:hidden;transition:border-color .2s,background .2s;">
+          <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Yearly</span>
+          <span style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">$69.99</span>
         </div>
 
       </div>
+
+      <!-- Footer CTA (absolute bottom) -->
+      <div style="position:absolute;left:0;bottom:0;width:320px;background:linear-gradient(to bottom,rgba(0,0,0,0),#070707);padding:10px 16px 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;align-items:center;">
+        <p style="font-size:11px;font-weight:500;color:#9c9cab;text-align:center;letter-spacing:-.11px;line-height:16px;width:100%;margin:0;">Automatically renew and cancel at any time</p>
+        <button onclick="showIAPConfirm()" style="width:288px;height:46px;border-radius:14px;border:none;background:linear-gradient(to right,#ffb347,#ff4e50 50%,#d63af9);color:#fff;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0;transition:transform .15s;" onmousedown="this.style.transform='scale(.97)'" onmouseup="this.style.transform=''">Subscribe</button>
+        <div style="display:flex;align-items:center;gap:12px;font-size:11px;font-weight:500;color:#9c9cab;width:288px;justify-content:center;white-space:nowrap;letter-spacing:-.11px;line-height:16px;">
+          <span>Terms of Use</span>
+          <span>|</span>
+          <span>Privacy Policy</span>
+        </div>
+      </div>
+
     </div>
 
     <!-- ══════ CREDITS DETAIL ══════ -->
@@ -4870,17 +4865,20 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     <!-- ══════ BUY CREDITS (Credit iAP) ══════ -->
     <div id="screen-credits" class="screen" style="background:#09090B;display:flex;flex-direction:column;">
 
+      <!-- BG Glow Gold -->
+      <div style="position:absolute;left:0;top:0;width:320px;height:320px;pointer-events:none;z-index:1;background:radial-gradient(ellipse 200px 360px at 66px -21px,rgba(245,158,11,.25),transparent);"></div>
+
       <!-- NavBar -->
-      <div class="nav nav-blur" style="z-index:10;flex-shrink:0;border-bottom:none;">
-        <div class="nav-back" onclick="goBack()">
+      <div class="nav" style="z-index:10;flex-shrink:0;background:transparent;border-bottom:none;">
+        <div class="nav-back" onclick="goBack()" style="background:rgba(255,255,255,.15);">
           <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
         </div>
         <div class="nav-title">Buy Credits</div>
-        <div style="min-width:36px;"></div>
+        <button style="height:27px;padding:0 8px;border-radius:14px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:12px;font-weight:500;cursor:pointer;min-width:50px;text-align:center;flex-shrink:0;">Recover</button>
       </div>
 
       <!-- ── Static header: balance + section title ── -->
-      <div style="padding:calc(var(--safe-top) + var(--nav-h) + 16px) 16px 12px;flex-shrink:0;">
+      <div style="padding:calc(var(--safe-top) + var(--nav-h) + 16px) 16px 8px;flex-shrink:0;">
 
         <!-- Balance (no background, no CTA) -->
         <div style="margin-bottom:14px;">
@@ -4898,7 +4896,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
 
       <!-- ── Scrollable: pack cards only ── -->
-      <div id="credit-packs-scroll" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 16px calc(var(--safe-bot) + 8px);">
+      <div id="credit-packs-scroll" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(var(--safe-bot) + 8px);">
 
         <!-- Pack cards (h:63, gap:12) -->
         <div id="credit-packs" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
@@ -4914,8 +4912,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Pack 2 — 300 credits (POPULAR) -->
-          <div class="credit-pack-card selected" data-pack="2" data-credits="300" data-price="$2.49" onclick="selectCreditPack(2)"
-            style="height:63px;box-sizing:border-box;background:linear-gradient(to right,rgb(66,37,3),rgb(21,21,25));border:1px solid rgba(245,158,11,1);border-radius:12px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:opacity .18s;position:relative;overflow:visible;">
+          <div class="credit-pack-card" data-pack="2" data-credits="300" data-price="$2.49" onclick="selectCreditPack(2)"
+            style="height:63px;box-sizing:border-box;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:opacity .18s;position:relative;overflow:visible;">
             <!-- POPULAR badge: top layer, backdrop-blur, 5px above card top -->
             <div style="position:absolute;top:-5px;right:10px;z-index:10;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);background:rgba(255,138,2,0.60);border:1px solid rgba(245,158,11,0.25);border-radius:14px;padding:2px 6px;font-size:9px;font-weight:700;color:#ffffff;letter-spacing:.04em;">POPULAR</div>
             <div>
@@ -4948,7 +4946,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
 
         <!-- Legal note -->
-        <div style="font-size:11px;font-weight:500;color:#50505E;text-align:center;line-height:1.6;padding:0 8px;">Credits are non-refundable and expire after 12 months. Prices may vary by region.</div>
+        <div style="font-size:11px;font-weight:500;color:#9c9cab;text-align:center;line-height:1.6;padding:0 8px;letter-spacing:-.11px;">Credits are non-refundable and expire after 12 months. Prices may vary by region.</div>
 
       </div><!-- /credit-packs-scroll -->
 
@@ -4957,7 +4955,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <button id="credits-buy-btn" onclick="buyCreditPack()" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(90deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);border:none;color:#ffffff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.75'" onmouseup="this.style.opacity=''">
           <span id="credits-btn-label">Buy Now</span>
         </button>
-        <div style="text-align:center;font-size:11px;font-weight:500;color:#9c9cab;margin-top:8px;">Cancel anytime · No commitment</div>
+        <div style="display:flex;align-items:center;gap:12px;justify-content:center;font-size:11px;font-weight:500;color:#9c9cab;margin-top:8px;letter-spacing:-.11px;white-space:nowrap;">
+          <span>Terms of Use</span>
+          <span>|</span>
+          <span>Privacy Policy</span>
+        </div>
       </div>
 
     </div><!-- /screen-credits -->
@@ -5191,13 +5193,24 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
   </div>
 
   <!-- Purchase Success Toast (Figma 646:17408 — Popup/Toast) -->
-  <div id="purchase-success-toast" style="position:absolute;left:10px;right:10px;bottom:60px;z-index:95;border-radius:14px;background:rgba(9,9,11,0.80);border:1px solid rgba(145,50,255,0.60);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:10px;display:flex;align-items:center;gap:8px;transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .42s cubic-bezier(.22,1,.36,1),opacity .3s ease;will-change:transform,opacity;box-sizing:border-box;">
+  <div id="purchase-success-toast" style="position:absolute;left:10px;right:10px;bottom:calc(var(--tab-h) + 10px);z-index:105;border-radius:14px;background:rgba(9,9,11,0.80);border:1px solid rgba(145,50,255,0.60);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:10px;display:flex;align-items:center;gap:8px;transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .42s cubic-bezier(.22,1,.36,1),opacity .3s ease;will-change:transform,opacity;box-sizing:border-box;">
     <div style="flex-shrink:0;width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);display:flex;align-items:center;justify-content:center;">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
     <div style="flex:1;min-width:0;">
       <div style="font-size:13px;font-weight:700;color:#ffffff;line-height:18px;">Purchase Successful!</div>
       <div id="purchase-toast-sub" style="font-size:11px;font-weight:500;color:#9c9cab;line-height:16px;">Credits added to your balance</div>
+    </div>
+  </div>
+
+  <!-- Subscribe Success Toast -->
+  <div id="subscribe-success-toast" style="position:absolute;left:10px;right:10px;bottom:calc(var(--tab-h) + 10px);z-index:105;border-radius:14px;background:rgba(9,9,11,0.80);border:1px solid rgba(168,85,247,0.60);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:10px;display:flex;align-items:center;gap:8px;transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .42s cubic-bezier(.22,1,.36,1),opacity .3s ease;will-change:transform,opacity;box-sizing:border-box;">
+    <div style="flex-shrink:0;width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#ffb347 0%,#ff4e50 50%,#d63af9 100%);display:flex;align-items:center;justify-content:center;">
+      <img src="assets/icons/ui/ic_crown.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+    </div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:13px;font-weight:700;color:#ffffff;line-height:18px;">Subscription Active!</div>
+      <div id="subscribe-toast-sub" style="font-size:11px;font-weight:500;color:#9c9cab;line-height:16px;">Enjoy unlimited access to all features</div>
     </div>
   </div>
 
@@ -5346,40 +5359,32 @@ const TAB_SCREENS = ['home','history'];
 let navStack = ['splash'];
 
 // ── Mobile scale: zoom 320px Figma content to fill the actual device screen ──
-// --app-height uses window.innerHeight (not 100dvh) to avoid the iOS Safari
-// initial-load gap where 100dvh includes browser chrome before it collapses.
-// Safe-area values are read once from env() and cached to avoid double-division on resize.
-let _safeTop = null, _safeBot = null;
-function applyMobileScale() {
+(function applyMobileScale() {
   if (window.innerWidth > 430) return;
-  const root  = document.documentElement;
   const scale = window.innerWidth / 320;
   const device = document.querySelector('.device');
   if (!device) return;
-
-  root.style.setProperty('--app-height', window.innerHeight + 'px');
-  device.style.transform       = `scale(${scale})`;
+  device.style.transform = `scale(${scale})`;
   device.style.transformOrigin = 'top left';
-  device.style.width           = '320px';
-  root.style.setProperty('--mob-scale', scale);
-
-  // Read safe-area env() values only once (avoid re-dividing on each resize call)
-  if (_safeTop === null) {
-    _safeTop = parseFloat(getComputedStyle(root).getPropertyValue('--safe-top')) || 48;
-    _safeBot = parseFloat(getComputedStyle(root).getPropertyValue('--safe-bot')) || 20;
-  }
-  root.style.setProperty('--safe-top', (_safeTop / scale) + 'px');
-  root.style.setProperty('--safe-bot', (_safeBot / scale) + 'px');
-}
-applyMobileScale();
-// Also run after full load — iOS Safari may report a stale innerHeight before load
-window.addEventListener('load', applyMobileScale);
-// Re-run on resize (orientation change) and visualViewport resize
-// (iOS fires visualViewport.resize when the address bar shows/hides without a window resize)
-window.addEventListener('resize', applyMobileScale);
-if (window.visualViewport) {
-  window.visualViewport.addEventListener('resize', applyMobileScale);
-}
+  device.style.width  = '320px';
+  // Height is driven by CSS: calc(100dvh / var(--mob-scale)) — avoids window.innerHeight vs 100dvh mismatch on iOS Safari
+  document.documentElement.style.setProperty('--mob-scale', scale);
+  // Correct env(safe-area-inset-*) values for the CSS scale space
+  // env() returns real device pts; divide by scale to get correct CSS px at 320px base
+  const root = document.documentElement;
+  const realSafeTop = parseFloat(getComputedStyle(root).getPropertyValue('--safe-top')) || 48;
+  const realSafeBot = parseFloat(getComputedStyle(root).getPropertyValue('--safe-bot')) || 20;
+  root.style.setProperty('--safe-top', (realSafeTop / scale) + 'px');
+  root.style.setProperty('--safe-bot', (realSafeBot / scale) + 'px');
+})();
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 430) return;
+  const scale = window.innerWidth / 320;
+  const device = document.querySelector('.device');
+  if (!device) return;
+  device.style.transform = `scale(${scale})`;
+  document.documentElement.style.setProperty('--mob-scale', scale);
+});
 
 // ── Stop all media when navigating away from any screen ──
 function stopAllMedia() {
@@ -5460,6 +5465,8 @@ function goTo(id, dir) {
     cur.style.transform = '';
     // Screen-specific init
     if (id === 'mv-result') initMvResultController();
+    if (id === 'iap') selectIAPPlan('weekly');
+    if (id === 'credits') selectCreditPack(_selectedPack);
   }, 380);
 
   if (!isBack) navStack.push(id);
@@ -6827,10 +6834,7 @@ function toggleStoryLine() {
   _storyLineOpen = !_storyLineOpen;
   const content  = document.getElementById('sb-storyline-content');
   const chevron  = document.getElementById('sb-storyline-chevron');
-  if (content) {
-    content.style.maxHeight  = _storyLineOpen ? '600px' : '0px';
-    content.style.opacity    = _storyLineOpen ? '1' : '0';
-  }
+  if (content) content.style.display = _storyLineOpen ? 'flex' : 'none';
   if (chevron) chevron.style.transform = _storyLineOpen ? 'rotate(-90deg)' : 'rotate(90deg)';
 }
 
@@ -6907,18 +6911,11 @@ function selectCreditPack(packNum) {
   cards.forEach(card => {
     const packId = parseInt(card.dataset.pack);
     const isSelected = packId === packNum;
-    if (isSelected && packId === 2) {
-      // Pack 2 selected: gradient + amber border
+    if (isSelected) {
       card.style.background = 'linear-gradient(to right,rgb(66,37,3),rgb(21,21,25))';
       card.style.borderColor = 'rgba(245,158,11,1)';
       card.style.opacity = '1';
-    } else if (isSelected) {
-      card.classList.add('selected');
-      card.style.borderColor = '#f59e0b';
-      card.style.background = 'rgba(245,158,11,.08)';
-      card.style.opacity = '1';
     } else {
-      // All unselected packs (including Pack 2) revert to gray style
       card.classList.remove('selected');
       card.style.borderColor = 'rgba(255,255,255,.15)';
       card.style.background = '#151519';
@@ -7033,24 +7030,179 @@ function dismissPurchaseToast() {
 }
 
 // ── IAP Confirm sheet ──
+let _iapSelected = 'weekly';
+let _iapCurrentVal = 800;
+let _iapAnimFrame  = null;
+const _iapValues = { weekly: 800, super: 4000, yearly: 8000 };
+const _iapLabels = { weekly: 'Weekly Credits', super: 'Monthly Credits', yearly: 'Yearly Credits' };
+
+function _fmtCredits(n) {
+  if (n >= 1000) return Math.floor(n / 1000) + ',' + String(n % 1000).padStart(3, '0');
+  return String(n);
+}
+
+// IAP state is reset to 'weekly' every time screen-iap is opened (via goTo 'iap')
+function selectIAPPlan(plan) {
+  _iapSelected = plan;
+  const weekly  = document.getElementById('iap-plan-weekly');
+  const superEl = document.getElementById('iap-plan-super');
+  const yearly  = document.getElementById('iap-plan-yearly');
+  const sel   = 'linear-gradient(to right,#420d6b,#151519)';
+  const unsel = '#151519';
+  if (weekly)  { weekly.style.borderColor  = plan === 'weekly' ? '#a855f7' : 'rgba(255,255,255,.15)'; weekly.style.background  = plan === 'weekly'  ? sel : unsel; }
+  if (superEl) { superEl.style.borderColor = plan === 'super'  ? '#a855f7' : 'rgba(255,255,255,.15)'; superEl.style.background = plan === 'super'   ? sel : unsel; }
+  if (yearly)  { yearly.style.borderColor  = plan === 'yearly' ? '#a855f7' : 'rgba(255,255,255,.15)'; yearly.style.background  = plan === 'yearly'  ? sel : unsel; }
+
+  // Rolling number animation
+  const num   = document.getElementById('iap-credits-num');
+  const label = document.getElementById('iap-credits-label');
+  const target = _iapValues[plan];
+
+  if (num) {
+    if (_iapAnimFrame) { cancelAnimationFrame(_iapAnimFrame); _iapAnimFrame = null; }
+    const from     = _iapCurrentVal;
+    const to       = target;
+    _iapCurrentVal = to;
+    if (from === to) {
+      num.textContent = _fmtCredits(to);
+      // No number change — just update label immediately
+      if (label) { label.textContent = _iapLabels[plan]; label.style.transition = 'none'; label.style.opacity = '1'; }
+    } else {
+      const duration  = 480;
+      const startTime = performance.now();
+      // Hide label while numbers roll
+      if (label) { label.style.transition = 'none'; label.style.opacity = '0'; }
+      function tick(now) {
+        const t    = Math.min((now - startTime) / duration, 1);
+        const ease = 1 - Math.pow(1 - t, 3); // ease-out cubic
+        num.textContent = _fmtCredits(Math.round(from + (to - from) * ease));
+        if (t < 1) {
+          _iapAnimFrame = requestAnimationFrame(tick);
+        } else {
+          num.textContent = _fmtCredits(to);
+          _iapAnimFrame = null;
+          // Fade in label only after number animation finishes
+          if (label) {
+            label.textContent = _iapLabels[plan];
+            label.style.transition = 'opacity .25s';
+            label.style.opacity = '1';
+          }
+        }
+      }
+      _iapAnimFrame = requestAnimationFrame(tick);
+    }
+  }
+}
+
+const _iapPlanNames  = { weekly: 'Weekly Plan',  super: 'Monthly Plan',  yearly: 'Yearly Plan'  };
+const _iapPrices     = { weekly: '$9.99',         super: '$29.99',        yearly: '$69.99'       };
+let _isSubscribed = false;
+
+function goToSubscribeOrCredits() {
+  requireLogin(() => goTo(_isSubscribed ? 'credits' : 'iap'));
+}
+
 function showIAPConfirm() {
-  // Simulate iOS IAP native dialog
+  const planName = _iapPlanNames[_iapSelected] || 'Weekly Plan';
+  const price    = _iapPrices[_iapSelected]    || '$9.99';
+  const credits  = _iapValues[_iapSelected]    || 800;
+
   const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:300;display:flex;align-items:flex-end;';
-  const sheet = document.createElement('div');
-  sheet.style.cssText = 'background:#1c1c1e;border-radius:20px 20px 0 0;padding:0 0 calc(32px + var(--safe-bot));width:100%;animation:slideUp .35s cubic-bezier(.25,.46,.45,.94);';
-  sheet.innerHTML = `
-    <div style="width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:14px auto 0;"></div>
-    <div style="padding:20px 24px 0;text-align:center;">
-      <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;">Confirm Subscription</div>
-      <div style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:22px;">YouCam Muse Pro — Annual Plan<br>7-day free trial, then $47.99/year</div>
-      <button onclick="iapSuccess()" style="width:100%;height:52px;border-radius:14px;background:linear-gradient(135deg,#F59E0B,#EF4444);border:none;color:#fff;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:10px;">Confirm &amp; Subscribe</button>
-      <button onclick="this.closest('.iap-overlay').remove()" style="width:100%;height:52px;border-radius:14px;background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.7);font-size:16px;cursor:pointer;">Cancel</button>
-    </div>`;
+  overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:300;display:flex;align-items:flex-end;';
   overlay.className = 'iap-overlay';
+
+  const sheet = document.createElement('div');
+  sheet.style.cssText = 'background:#1c1c1e;border-radius:22px 22px 0 0;width:100%;padding-bottom:calc(28px + var(--safe-bot));animation:slideUp .38s cubic-bezier(.25,.46,.45,.94);overflow:hidden;';
+  sheet.innerHTML = `
+    <div style="width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:12px auto 0;"></div>
+
+    <!-- Apple Pay logo -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:5px;padding:18px 24px 16px;">
+      <svg width="18" height="22" viewBox="0 0 18 22" fill="none">
+        <path d="M14.98 11.37c-.03-2.97 2.43-4.41 2.54-4.48-1.39-2.03-3.55-2.31-4.31-2.34-1.83-.19-3.58 1.08-4.51 1.08-.94 0-2.38-1.06-3.92-1.03C2.73 4.63 1 5.73.14 7.42c-1.74 3-.45 7.43 1.25 9.86.83 1.19 1.82 2.53 3.12 2.48 1.25-.05 1.73-.81 3.24-.81 1.51 0 1.94.81 3.27.79 1.35-.02 2.2-1.21 3.02-2.41.96-1.38 1.35-2.72 1.37-2.79-.03-.01-2.6-1-2.63-3.97zM12.27 3.08C12.95 2.25 13.42 1.1 13.28 0c-.96.04-2.14.64-2.83 1.46-.62.71-1.17 1.87-1.02 2.96 1.07.08 2.16-.54 2.84-1.34z" fill="#fff"/>
+      </svg>
+      <span style="font-size:22px;font-weight:500;color:#fff;letter-spacing:-.3px;font-family:-apple-system,sans-serif;">Pay</span>
+    </div>
+
+    <!-- Divider -->
+    <div style="height:1px;background:rgba(255,255,255,.1);"></div>
+
+    <!-- Merchant + item info -->
+    <div style="padding:16px 24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#fff;">YouCam Muse</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:1px;">${planName} · ${credits.toLocaleString()} Credits</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;">
+          <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><rect x="1" y="5" width="10" height="8" rx="2" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/><path d="M3.5 5V3.5a2.5 2.5 0 0 1 5 0V5" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span style="font-size:12px;color:rgba(255,255,255,.4);">perfectcorp.com</span>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div style="height:1px;background:rgba(255,255,255,.08);margin-bottom:12px;"></div>
+
+      <!-- Total row -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <span style="font-size:15px;font-weight:600;color:#fff;">Total</span>
+        <span style="font-size:15px;font-weight:700;color:#fff;">${price}</span>
+      </div>
+
+      <!-- Face ID button -->
+      <button onclick="iapSubscribeSuccess()" style="width:100%;height:54px;border-radius:14px;background:#000;border:1.5px solid rgba(255,255,255,.15);color:#fff;font-size:16px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;font-family:-apple-system,sans-serif;">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <rect x="1" y="1" width="20" height="20" rx="5" stroke="rgba(255,255,255,0.6)" stroke-width="1.4"/>
+          <path d="M7 7.5C7 7.5 7 6 8.5 6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M15 7.5C15 7.5 15 6 13.5 6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M11 8.5V11.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+          <ellipse cx="8.5" cy="9.5" rx=".8" ry=".8" fill="#fff"/>
+          <ellipse cx="13.5" cy="9.5" rx=".8" ry=".8" fill="#fff"/>
+          <path d="M8 13.5c0 0 .8 2 3 2s3-2 3-2" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <span>Pay with Face ID</span>
+      </button>
+
+      <!-- Cancel -->
+      <button onclick="this.closest('.iap-overlay').remove()" style="width:100%;height:44px;background:none;border:none;color:rgba(255,255,255,.5);font-size:15px;cursor:pointer;font-family:-apple-system,sans-serif;">Cancel</button>
+    </div>`;
+
   overlay.appendChild(sheet);
-  overlay.onclick = (e) => { if(e.target === overlay) overlay.remove(); };
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
   document.querySelector('.device').appendChild(overlay);
+}
+
+let _subscribeToastTimer = null;
+
+function iapSubscribeSuccess() {
+  const overlay = document.querySelector('.iap-overlay');
+  if (overlay) overlay.remove();
+  _isSubscribed = true;
+
+  // Update toast body with plan name
+  const sub = document.getElementById('subscribe-toast-sub');
+  if (sub) sub.textContent = (_iapPlanNames[_iapSelected] || 'Plan') + ' · Enjoy all premium features';
+
+  goBack();
+
+  // Show toast after screen transition settles
+  setTimeout(() => {
+    const toast = document.getElementById('subscribe-success-toast');
+    if (!toast) return;
+    toast.style.pointerEvents = 'auto';
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+    clearTimeout(_subscribeToastTimer);
+    _subscribeToastTimer = setTimeout(dismissSubscribeToast, 3500);
+  }, 420);
+}
+
+function dismissSubscribeToast() {
+  const toast = document.getElementById('subscribe-success-toast');
+  if (!toast) return;
+  toast.style.transform = 'translateY(20px)';
+  toast.style.opacity = '0';
+  toast.style.pointerEvents = 'none';
 }
 
 // ── Onboarding slider — drag to navigate ──
