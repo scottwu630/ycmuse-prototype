@@ -2579,18 +2579,21 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <textarea id="mvr-describe" oninput="updateDescCount(this)" placeholder="Describe your video to help AI create a more compelling story." style="width:100%;min-height:100px;padding:12px 14px 6px;background:transparent;border:none;color:#fff;font-size:14px;font-family:inherit;resize:none;outline:none;line-height:1.55;scrollbar-width:none;-ms-overflow-style:none;"></textarea>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 10px;">
               <div style="display:flex;gap:4px;align-items:center;">
-                <button class="insp-btn" onclick="showSheet('insp-sheet')" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
+                <button id="mvr-templates-btn" class="insp-btn" onclick="showSheet('insp-sheet')" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
                   <img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.8;flex-shrink:0;">
                   Templates
                 </button>
-                <button class="insp-btn" onclick="generateVideoIdea()" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
+                <button id="mvr-idea-btn" class="insp-btn" onclick="generateVideoIdea()" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
                   <img src="assets/icons/ui/ic_lightbulb.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
                   Idea
                 </button>
               </div>
-              <div style="display:flex;align-items:center;gap:8px;">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <button id="mvr-enhance-btn" onclick="event.stopPropagation();enhancePrompt('mvr')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                  <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                </button>
                 <span id="desc-cnt" style="font-size:12px;color:#9C9CAB;">0/2500</span>
-                <div id="desc-clear-btn" onclick="clearDescribe()" style="display:none;width:20px;height:20px;border-radius:18px;background:#212127;border:none;display:none;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+                <div id="desc-clear-btn" onclick="clearDescribe()" style="display:none;width:20px;height:20px;border-radius:18px;background:#212127;border:none;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
                   <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </div>
               </div>
@@ -3446,8 +3449,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <textarea id="sb-desc-ta" oninput="updateSbCount(this)"
                 style="flex:1;min-height:83px;padding:10px 10px 4px;background:transparent;border:none;color:#fff;font-size:12px;font-weight:500;font-family:inherit;line-height:1.5;resize:none;outline:none;">In a softly lit, elegant dressing room, the woman stands before a grand mirror. She gently adjusts the strap of her shimmering white gown, her eyes filled with a quiet, dreamy anticipation.</textarea>
               <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px;padding:4px 10px 10px;">
+                <button id="sb-desc-enhance-btn" onclick="event.stopPropagation();enhancePrompt('sb-desc')" style="display:flex;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                  <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                </button>
                 <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);" id="sb-desc-cnt">165/2500</span>
-                <div onclick="document.getElementById('sb-desc-ta').value='';updateSbCount(document.getElementById('sb-desc-ta'))"
+                <div id="sb-desc-clear-btn" onclick="document.getElementById('sb-desc-ta').value='';updateSbCount(document.getElementById('sb-desc-ta'))"
                   style="width:20px;height:20px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
                   <img src="assets/icons/ui/ic_close.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">
                 </div>
@@ -4992,7 +4998,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </div>
           <div id="scene-editor-label" style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">Visual Style</div>
-          <div onclick="confirmSceneEdit()" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;box-shadow:0 4px 14px rgba(168,85,247,.4);">
+          <div id="scene-editor-confirm-btn" onclick="confirmSceneEdit()" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;box-shadow:0 4px 14px rgba(168,85,247,.4);">
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
         </div>
@@ -5000,8 +5006,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div id="scene-editor-box">
           <textarea id="scene-editor-ta" maxlength="2500" placeholder="Describe this scene…" oninput="onSceneEditorInput()"></textarea>
           <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding-top:4px;">
+            <button id="scene-editor-enhance-btn" onclick="event.stopPropagation();enhancePrompt('scene')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+              <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+            </button>
             <div id="scene-editor-counter">0/2500</div>
-            <div onclick="clearSceneEditor()" style="font-size:16px;color:rgba(255,255,255,.35);cursor:pointer;line-height:1;padding:0 2px;">×</div>
+            <div id="scene-editor-clear-btn" onclick="clearSceneEditor()" style="font-size:16px;color:rgba(255,255,255,.35);cursor:pointer;line-height:1;padding:0 2px;">×</div>
           </div>
         </div>
       </div>
@@ -5264,7 +5273,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <img src="assets/icons/ui/ic_close.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
         </div>
         <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">Cover Description</div>
-        <div onclick="generateCoverImage()" style="display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border-radius:20px;padding:6px 10px;flex-shrink:0;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
+        <div id="emv-cover-gen-btn" onclick="generateCoverImage()" style="display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border-radius:20px;padding:6px 10px;flex-shrink:0;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
           <img src="assets/icons/ui/ic_reload.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
           <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
           <span style="font-size:13px;font-weight:700;color:#fff;">10</span>
@@ -5275,9 +5284,12 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div style="position:relative;">
           <textarea id="emv-cover-textarea" oninput="onCoverDescInput(this)" maxlength="2500" style="padding-bottom:32px;color:#fff;-webkit-text-fill-color:#fff;">Create a captivating cover image for "Starlight in Your Eyes" that embodies the essence of a dreamy night sky filled with shimmering stars.</textarea>
           <!-- Count + clear — pinned bottom-right inside the textarea box -->
-          <div style="position:absolute;bottom:10px;right:12px;display:flex;align-items:center;gap:8px;pointer-events:none;">
+          <div style="position:absolute;bottom:10px;right:12px;display:flex;align-items:center;gap:6px;pointer-events:none;">
+            <button id="emv-cover-enhance-btn" onclick="event.stopPropagation();enhancePrompt('cover')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;pointer-events:all;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+              <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+            </button>
             <span id="emv-cover-charcount" style="font-size:12px;font-weight:500;color:#676779;">150/2500</span>
-            <span onclick="event.stopPropagation();document.getElementById('emv-cover-textarea').value='';onCoverDescInput(document.getElementById('emv-cover-textarea'));" style="font-size:13px;color:#676779;cursor:pointer;pointer-events:all;line-height:1;">✕</span>
+            <span id="emv-cover-clear-btn" onclick="event.stopPropagation();document.getElementById('emv-cover-textarea').value='';onCoverDescInput(document.getElementById('emv-cover-textarea'));" style="font-size:13px;color:#676779;cursor:pointer;pointer-events:all;line-height:1;">✕</span>
           </div>
         </div>
       </div>
@@ -6030,6 +6042,8 @@ function updateSbCount(ta) {
   _sbDirty = true;
   const rBtn = document.getElementById('sb-recreate-btn');
   if (rBtn) { rBtn.disabled = false; rBtn.style.opacity = '1'; }
+  const enh = document.getElementById('sb-desc-enhance-btn');
+  if (enh) enh.style.display = ta.value.length > 0 ? 'flex' : 'none';
 }
 
 // ── Scene Detail player controls ──
@@ -6164,10 +6178,14 @@ function openCoverDescSheet() {
   const sheet   = document.getElementById('emv-cover-sheet');
   overlay.style.display = 'block';
   requestAnimationFrame(() => { overlay.classList.add('show'); sheet.classList.add('open'); });
-  // Auto-focus textarea after sheet finishes sliding up
+  // Auto-focus textarea after sheet finishes sliding up; sync enhance button
   setTimeout(() => {
     const ta = document.getElementById('emv-cover-textarea');
-    if (ta) ta.focus();
+    if (ta) {
+      ta.focus();
+      const enh = document.getElementById('emv-cover-enhance-btn');
+      if (enh) enh.style.display = ta.value.length > 0 ? 'flex' : 'none';
+    }
   }, 380);
 }
 function closeCoverDescSheet() {
@@ -6184,6 +6202,8 @@ function onCoverDescInput(ta) {
   // sync preview text
   const preview = document.getElementById('emv-cover-desc-preview');
   if (preview) preview.textContent = ta.value || '';
+  const enh = document.getElementById('emv-cover-enhance-btn');
+  if (enh) enh.style.display = len > 0 ? 'flex' : 'none';
 }
 function generateCoverImage() {
   closeCoverDescSheet();
@@ -6851,6 +6871,8 @@ function openSceneEditor(label, targetId) {
   ta.value = txt;
   ctr.textContent = txt.length + '/2500';
   wrap.classList.add('show');
+  const seEnh = document.getElementById('scene-editor-enhance-btn');
+  if (seEnh) seEnh.style.display = txt.length > 0 ? 'flex' : 'none';
 
   // Focus fires keyboard on real device; slight delay to let overlay animate in
   setTimeout(() => { ta.focus(); ta.setSelectionRange(txt.length, txt.length); }, 120);
@@ -6876,6 +6898,8 @@ function onSceneEditorInput() {
   const ta  = document.getElementById('scene-editor-ta');
   const ctr = document.getElementById('scene-editor-counter');
   if (ta && ctr) ctr.textContent = ta.value.length + '/2500';
+  const enh = document.getElementById('scene-editor-enhance-btn');
+  if (enh) enh.style.display = (ta && ta.value.length > 0) ? 'flex' : 'none';
 }
 
 // ── Storyboard: MV Song play/pause toggle ──
@@ -6904,6 +6928,8 @@ function clearSceneEditor() {
   const ctr = document.getElementById('scene-editor-counter');
   if (ta) { ta.value = ''; ta.focus(); }
   if (ctr) ctr.textContent = '0/2500';
+  const enh = document.getElementById('scene-editor-enhance-btn');
+  if (enh) enh.style.display = 'none';
 }
 
 // ── Simulated keyboard helpers ──
@@ -7376,8 +7402,11 @@ function pickSong(el) {
 function updateDescCount(ta) {
   const el = document.getElementById('desc-cnt');
   if (el) el.textContent = `${ta.value.length}/2500`;
+  const hasText = ta.value.length > 0;
   const btn = document.getElementById('desc-clear-btn');
-  if (btn) btn.style.display = ta.value.length > 0 ? 'flex' : 'none';
+  if (btn) btn.style.display = hasText ? 'flex' : 'none';
+  const enh = document.getElementById('mvr-enhance-btn');
+  if (enh) enh.style.display = hasText ? 'flex' : 'none';
 }
 function clearDescribe() {
   const ta = document.getElementById('mvr-describe');
@@ -8200,89 +8229,177 @@ function updateSimpleSongCTA(ta) {
 }
 
 function enhancePrompt(type) {
+  const isMvr    = type === 'mvr';
   const isSimple = type === 'simple';
-  const taId    = isSimple ? 'song-simple-idea' : 'song-lyrics';
-  const btnId   = isSimple ? 'simple-enhance-btn' : 'lyrics-enhance-btn';
-  const ideaId  = isSimple ? 'simple-idea-btn'   : 'lyrics-idea-btn';
-  const clearId = isSimple ? 'song-simple-clear'  : 'lyrics-clear-btn';
-  const ctaId   = isSimple ? 'song-cta-simple'    : 'song-cta-custom';
+  const isSbDesc = type === 'sb-desc';
+  const isScene  = type === 'scene';
+  const isCover  = type === 'cover';
+
+  const taId = isMvr    ? 'mvr-describe'
+             : isSimple ? 'song-simple-idea'
+             : isSbDesc ? 'sb-desc-ta'
+             : isScene  ? 'scene-editor-ta'
+             : isCover  ? 'emv-cover-textarea'
+             :            'song-lyrics';
+
+  const btnId = isMvr    ? 'mvr-enhance-btn'
+              : isSimple ? 'simple-enhance-btn'
+              : isSbDesc ? 'sb-desc-enhance-btn'
+              : isScene  ? 'scene-editor-enhance-btn'
+              : isCover  ? 'emv-cover-enhance-btn'
+              :            'lyrics-enhance-btn';
+
+  const clearId = isMvr    ? 'desc-clear-btn'
+                : isSimple ? 'song-simple-clear'
+                : isSbDesc ? 'sb-desc-clear-btn'
+                : isScene  ? 'scene-editor-clear-btn'
+                : isCover  ? 'emv-cover-clear-btn'
+                :            'lyrics-clear-btn';
+
+  const ctaId = isMvr    ? 'mv-room-cta'
+              : isSimple ? 'song-cta-simple'
+              : isSbDesc ? 'sb-recreate-btn'
+              : isScene  ? 'scene-editor-confirm-btn'
+              : isCover  ? 'emv-cover-gen-btn'
+              :            'song-cta-custom';
+
+  // Idea/Lyrics buttons only exist for the original 3 types
+  const ideaId = (isSbDesc || isScene || isCover) ? null
+               : isMvr    ? 'mvr-idea-btn'
+               : isSimple ? 'simple-idea-btn'
+               :            'lyrics-idea-btn';
 
   const ta       = document.getElementById(taId);
   const btn      = document.getElementById(btnId);
-  const ideaBtn  = document.getElementById(ideaId);
+  const ideaBtn  = ideaId ? document.getElementById(ideaId) : null;
   const clearBtn = document.getElementById(clearId);
   const cta      = document.getElementById(ctaId);
-  const lyricsBtn = !isSimple ? document.getElementById('lyrics-gen-btn') : null;
+  const lyricsBtn    = (!isSimple && !isMvr && !isSbDesc && !isScene && !isCover) ? document.getElementById('lyrics-gen-btn') : null;
+  const templatesBtn = isMvr ? document.getElementById('mvr-templates-btn') : null;
 
   if (!ta || !ta.value.trim()) return;
 
   // ── Enter enhancing state ──────────────────────────────────────────
-  // Textarea: fade + lock
   ta.style.opacity = '0.3';
   ta.style.pointerEvents = 'none';
 
-  // Idea / Lyrics buttons: fade + lock
-  [ideaBtn, lyricsBtn].forEach(b => { if (b) { b.style.opacity = '0.3'; b.style.pointerEvents = 'none'; } });
+  [ideaBtn, lyricsBtn, templatesBtn].forEach(b => { if (b) { b.style.opacity = '0.3'; b.style.pointerEvents = 'none'; } });
 
-  // Clear button: fade + lock
   if (clearBtn) { clearBtn.style.opacity = '0.3'; clearBtn.style.pointerEvents = 'none'; }
 
   // CTA → disabled appearance
   if (cta) {
-    cta.disabled = true;
-    cta.style.background = '#383842';
-    cta.style.boxShadow = 'none';
-    cta.style.cursor = 'default';
     cta.style.pointerEvents = 'none';
-    Array.from(cta.children).forEach(c => c.style.opacity = '0.3');
+    if (isSbDesc) {
+      // <button> element — use disabled + grey
+      cta.disabled = true;
+      cta.style.background = '#383842';
+      cta.style.boxShadow = 'none';
+      cta.style.cursor = 'default';
+      cta.style.opacity = '0.4';
+    } else if (isScene || isCover) {
+      // <div> element — just fade
+      cta.style.opacity = '0.3';
+    } else if (isMvr) {
+      cta.disabled = true;
+      cta.style.background = '#383842';
+      cta.style.boxShadow = 'none';
+      cta.style.cursor = 'default';
+      cta.style.opacity = '0.4';
+    } else {
+      cta.disabled = true;
+      cta.style.background = '#383842';
+      cta.style.boxShadow = 'none';
+      cta.style.cursor = 'default';
+      cta.style.pointerEvents = 'none';
+      Array.from(cta.children).forEach(c => c.style.opacity = '0.3');
+    }
   }
 
-  // Enhance button → purple, spinning refresh icon
+  // Enhance button → purple, spinning counterclockwise refresh icon
   if (btn) {
     btn.style.background = '#A855F7';
     btn.style.pointerEvents = 'none';
     const img = btn.querySelector('img');
     if (img) {
       img.src = 'assets/icons/ui/ic_refresh.svg';
-      img.style.filter = 'brightness(0) invert(1)'; // white icon
+      img.style.filter = 'brightness(0) invert(1)';
       img.style.animation = 'spin 0.8s linear infinite reverse';
     }
   }
 
-  // ── Restore after 1.4s with enhanced text ─────────────────────────
-  const enhanced = [
+  // ── Enhanced text samples per context ─────────────────────────────
+  const enhancedMvr = [
+    `A cinematic journey through fragmented memories — golden-hour close-ups give way to wide sweeping shots of empty streets at dusk. Slow-motion moments punctuate the narrative: a hand reaching out, a door closing, light refracting through rain-streaked glass. The visual language is intimate yet expansive, echoing the emotional core of the music.`,
+    `An editorial-style visual narrative where the artist moves through shifting environments — a candlelit room, a rooftop at night, a sun-drenched coastline. Each scene transition mirrors a lyrical turn, building tension through texture and contrast until a release of saturated color in the final act.`,
+    `A dreamlike sequence that blends reality and abstraction: handheld footage of intimate moments intercut with stylized wide-angle compositions. Cool blue tones in the verses warm into amber and gold as the chorus hits, with practical light sources — candles, neon signs, headlights — anchoring every frame.`
+  ];
+  const enhancedSong = [
     `A cinematic, emotionally charged piece that weaves together raw vulnerability and soaring hope. Each verse peels back another layer, building toward a chorus that feels like finally exhaling after holding your breath for years.`,
     `An intimate yet anthemic song about the space between who we were and who we're becoming. Rich with sensory detail — rain on windows, city lights through glass, the specific ache of a memory you can't quite shake.`,
     `A sweeping, bittersweet ballad tracing the invisible thread that connects two people across distance and time. Lush instrumentation gives way to a stripped-back bridge that lands with quiet devastation before the final chorus lifts everything into catharsis.`
   ];
+  const enhancedSbDesc = [
+    `In a softly diffused light, she stands at the edge of a vast open field at dusk. Her silhouette is framed against a sky that bleeds from gold into deep violet, eyes half-closed as the wind catches the hem of her dress — a quiet moment suspended between longing and release.`,
+    `A rain-slicked street at night. She walks alone through pools of reflected neon, unhurried, wrapped in thought. The camera follows at a distance, close enough to sense the weight she carries, far enough to let her keep it.`,
+    `She sits at a window seat, morning light filtering through gauze curtains, tracing patterns across her face. A half-drunk cup of tea rests beside her. The scene holds still — just breath, light, and the particular silence of someone deciding something.`
+  ];
+  const enhancedScene = [
+    `Effortlessly radiant, with a warm and open expression that draws you in. Her look is polished yet approachable — elegant without effort, as if the light simply finds her wherever she stands.`,
+    `Quietly commanding, with a gaze that holds a story. Her presence is composed and cinematic — every detail considered, nothing overdone. The kind of beauty that photographs in any light.`,
+    `Luminous and expressive, with an energy that shifts between dreamy softness and sharp intent. Her style is distinctive and self-assured, carrying the mood of the scene without trying to.`
+  ];
+  const enhancedCover = [
+    `A breathtaking cover that captures the essence of the song — a lone figure bathed in golden twilight, standing at the crossroads of memory and hope. Soft bokeh, warm film grain, and a color grade that feels like nostalgia made visible.`,
+    `An evocative, editorial-quality cover image: the subject mid-motion against a dramatic sky, colors saturated just beyond reality. The composition draws the eye inward, the mood aching and cinematic in equal measure.`,
+    `A striking visual that distills the song's emotional core — intimate framing, dusk-lit atmosphere, textures that feel both timeless and urgent. The image should feel like the first frame of a film you already know you'll love.`
+  ];
+
+  const enhanced = isMvr    ? enhancedMvr
+                 : (isSimple || type === 'lyrics') ? enhancedSong
+                 : isSbDesc ? enhancedSbDesc
+                 : isScene  ? enhancedScene
+                 :            enhancedCover;
 
   setTimeout(() => {
-    // Update text
     ta.value = enhanced[Math.floor(Math.random() * enhanced.length)];
 
-    // Restore textarea
     ta.style.opacity = '';
     ta.style.pointerEvents = '';
 
-    // Restore Idea / Lyrics buttons
-    [ideaBtn, lyricsBtn].forEach(b => { if (b) { b.style.opacity = ''; b.style.pointerEvents = ''; } });
+    [ideaBtn, lyricsBtn, templatesBtn].forEach(b => { if (b) { b.style.opacity = ''; b.style.pointerEvents = ''; } });
 
-    // Restore clear button
     if (clearBtn) { clearBtn.style.opacity = ''; clearBtn.style.pointerEvents = ''; }
 
     // Restore CTA
     if (cta) {
-      cta.disabled = false;
       cta.style.pointerEvents = '';
-      Array.from(cta.children).forEach(c => c.style.opacity = '');
-      if (!isSimple) {
-        cta.style.background = 'linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9)';
+      if (isSbDesc) {
+        cta.disabled = false;
+        cta.style.opacity = '1';
+        cta.style.background = 'linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA)';
         cta.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
         cta.style.cursor = 'pointer';
+      } else if (isScene || isCover) {
+        cta.style.opacity = '';
+      } else if (isMvr) {
+        cta.disabled = false;
+        cta.style.opacity = '';
+        cta.style.background = 'linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA)';
+        cta.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+        cta.style.cursor = 'pointer';
+      } else {
+        cta.disabled = false;
+        Array.from(cta.children).forEach(c => c.style.opacity = '');
+        if (!isSimple) {
+          cta.style.background = 'linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9)';
+          cta.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+          cta.style.cursor = 'pointer';
+        }
       }
     }
 
-    // Restore enhance button → white, static edit icon
+    // Restore enhance button
     if (btn) {
       btn.style.background = '#ffffff';
       btn.style.pointerEvents = '';
@@ -8294,9 +8411,13 @@ function enhancePrompt(type) {
       }
     }
 
-    // Sync count / CTA state
-    if (isSimple) updateSimpleSongCTA(ta);
-    else          updateLyricsClear(ta);
+    // Sync count display
+    if (isMvr)         updateDescCount(ta);
+    else if (isSimple) updateSimpleSongCTA(ta);
+    else if (!isSbDesc && !isScene && !isCover) updateLyricsClear(ta);
+    else if (isSbDesc) updateSbCount(ta);
+    else if (isScene)  onSceneEditorInput();
+    else               onCoverDescInput(ta);
 
     showToast('Prompt enhanced');
   }, 1400);
