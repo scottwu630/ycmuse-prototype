@@ -3695,11 +3695,14 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 oninput="updateSimpleSongCTA(this)"
                 style="width:100%;min-height:84px;padding:10px 10px 6px;background:transparent;border:none;color:#fff;font-size:12px;font-family:inherit;resize:none;outline:none;line-height:1.6;box-sizing:border-box;scrollbar-width:none;-ms-overflow-style:none;"></textarea>
               <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px 10px;">
-                <button class="insp-btn" onclick="event.stopPropagation();generateSongIdea()" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
+                <button id="simple-idea-btn" class="insp-btn" onclick="event.stopPropagation();generateSongIdea()" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
                   <img src="assets/icons/ui/ic_lightbulb.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
                   Idea
                 </button>
                 <div style="display:flex;align-items:center;gap:6px;">
+                  <button id="simple-enhance-btn" onclick="event.stopPropagation();enhancePrompt('simple')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                    <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                  </button>
                   <span id="song-simple-cnt" style="font-size:12px;color:rgba(255,255,255,.4);">0/2500</span>
                   <div id="song-simple-clear" onclick="event.stopPropagation();document.getElementById('song-simple-idea').value='';updateSimpleSongCTA(document.getElementById('song-simple-idea'))" style="display:none;width:20px;height:20px;border-radius:10px;background:#383842;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
                     <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#9C9CAB" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -3741,7 +3744,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <!-- Toolbar (hidden when instrumental is ON) -->
               <div id="lyrics-toolbar" style="display:flex;align-items:center;justify-content:space-between;padding:4px 10px 10px;">
                 <div style="display:flex;align-items:center;gap:4px;">
-                  <button class="insp-btn" onclick="event.stopPropagation();generateLyricsIdea()" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
+                  <button id="lyrics-idea-btn" class="insp-btn" onclick="event.stopPropagation();generateLyricsIdea()" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
                     <img src="assets/icons/ui/ic_lightbulb.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
                     Idea
                   </button>
@@ -3751,6 +3754,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                   </button>
                 </div>
                 <div style="display:flex;align-items:center;gap:6px;">
+                  <button id="lyrics-enhance-btn" onclick="event.stopPropagation();enhancePrompt('lyrics')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                    <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                  </button>
                   <span id="lyrics-cnt" style="font-size:12px;color:#9C9CAB;">0/2500</span>
                   <div id="lyrics-clear-btn" onclick="document.getElementById('song-lyrics').value='';updateLyricsClear(document.getElementById('song-lyrics'))" style="display:none;width:20px;height:20px;border-radius:10px;background:#383842;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
                     <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#9C9CAB" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -8157,18 +8163,23 @@ function generateFullLyrics() {
 function updateLyricsClear(ta) {
   const cnt = document.getElementById('lyrics-cnt');
   if (cnt) cnt.textContent = ta.value.length + '/2500';
+  const hasText = ta.value.length > 0;
   const btn = document.getElementById('lyrics-clear-btn');
-  if (btn) btn.style.display = ta.value.length > 0 ? 'flex' : 'none';
+  if (btn) btn.style.display = hasText ? 'flex' : 'none';
+  const enh = document.getElementById('lyrics-enhance-btn');
+  if (enh) enh.style.display = hasText ? 'flex' : 'none';
 }
 
 function updateSimpleSongCTA(ta) {
   const cnt = document.getElementById('song-simple-cnt');
   if (cnt) cnt.textContent = ta.value.length + '/2500';
+  const hasText = ta.value.trim().length > 0;
   const clearBtn = document.getElementById('song-simple-clear');
-  if (clearBtn) clearBtn.style.display = ta.value.length > 0 ? 'flex' : 'none';
+  if (clearBtn) clearBtn.style.display = hasText ? 'flex' : 'none';
+  const enh = document.getElementById('simple-enhance-btn');
+  if (enh) enh.style.display = hasText ? 'flex' : 'none';
   const btn = document.getElementById('song-cta-simple');
   if (!btn) return;
-  const hasText = ta.value.trim().length > 0;
   if (hasText) {
     btn.disabled = false;
     btn.style.background = 'linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9)';
@@ -8186,6 +8197,109 @@ function updateSimpleSongCTA(ta) {
     btn.querySelector('div').style.opacity = '.3';
     btn.onclick = null;
   }
+}
+
+function enhancePrompt(type) {
+  const isSimple = type === 'simple';
+  const taId    = isSimple ? 'song-simple-idea' : 'song-lyrics';
+  const btnId   = isSimple ? 'simple-enhance-btn' : 'lyrics-enhance-btn';
+  const ideaId  = isSimple ? 'simple-idea-btn'   : 'lyrics-idea-btn';
+  const clearId = isSimple ? 'song-simple-clear'  : 'lyrics-clear-btn';
+  const ctaId   = isSimple ? 'song-cta-simple'    : 'song-cta-custom';
+
+  const ta       = document.getElementById(taId);
+  const btn      = document.getElementById(btnId);
+  const ideaBtn  = document.getElementById(ideaId);
+  const clearBtn = document.getElementById(clearId);
+  const cta      = document.getElementById(ctaId);
+  const lyricsBtn = !isSimple ? document.getElementById('lyrics-gen-btn') : null;
+
+  if (!ta || !ta.value.trim()) return;
+
+  // ── Enter enhancing state ──────────────────────────────────────────
+  // Textarea: fade + lock
+  ta.style.opacity = '0.3';
+  ta.style.pointerEvents = 'none';
+
+  // Idea / Lyrics buttons: fade + lock
+  [ideaBtn, lyricsBtn].forEach(b => { if (b) { b.style.opacity = '0.3'; b.style.pointerEvents = 'none'; } });
+
+  // Clear button: fade + lock
+  if (clearBtn) { clearBtn.style.opacity = '0.3'; clearBtn.style.pointerEvents = 'none'; }
+
+  // CTA → disabled appearance
+  if (cta) {
+    cta.disabled = true;
+    cta.style.background = '#383842';
+    cta.style.boxShadow = 'none';
+    cta.style.cursor = 'default';
+    cta.style.pointerEvents = 'none';
+    Array.from(cta.children).forEach(c => c.style.opacity = '0.3');
+  }
+
+  // Enhance button → purple, spinning refresh icon
+  if (btn) {
+    btn.style.background = '#A855F7';
+    btn.style.pointerEvents = 'none';
+    const img = btn.querySelector('img');
+    if (img) {
+      img.src = 'assets/icons/ui/ic_refresh.svg';
+      img.style.filter = 'brightness(0) invert(1)'; // white icon
+      img.style.animation = 'spin 0.8s linear infinite reverse';
+    }
+  }
+
+  // ── Restore after 1.4s with enhanced text ─────────────────────────
+  const enhanced = [
+    `A cinematic, emotionally charged piece that weaves together raw vulnerability and soaring hope. Each verse peels back another layer, building toward a chorus that feels like finally exhaling after holding your breath for years.`,
+    `An intimate yet anthemic song about the space between who we were and who we're becoming. Rich with sensory detail — rain on windows, city lights through glass, the specific ache of a memory you can't quite shake.`,
+    `A sweeping, bittersweet ballad tracing the invisible thread that connects two people across distance and time. Lush instrumentation gives way to a stripped-back bridge that lands with quiet devastation before the final chorus lifts everything into catharsis.`
+  ];
+
+  setTimeout(() => {
+    // Update text
+    ta.value = enhanced[Math.floor(Math.random() * enhanced.length)];
+
+    // Restore textarea
+    ta.style.opacity = '';
+    ta.style.pointerEvents = '';
+
+    // Restore Idea / Lyrics buttons
+    [ideaBtn, lyricsBtn].forEach(b => { if (b) { b.style.opacity = ''; b.style.pointerEvents = ''; } });
+
+    // Restore clear button
+    if (clearBtn) { clearBtn.style.opacity = ''; clearBtn.style.pointerEvents = ''; }
+
+    // Restore CTA
+    if (cta) {
+      cta.disabled = false;
+      cta.style.pointerEvents = '';
+      Array.from(cta.children).forEach(c => c.style.opacity = '');
+      if (!isSimple) {
+        cta.style.background = 'linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9)';
+        cta.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+        cta.style.cursor = 'pointer';
+      }
+    }
+
+    // Restore enhance button → white, static edit icon
+    if (btn) {
+      btn.style.background = '#ffffff';
+      btn.style.pointerEvents = '';
+      const img = btn.querySelector('img');
+      if (img) {
+        img.src = 'assets/icons/ui/ic_edit_ai.svg';
+        img.style.filter = 'brightness(0)';
+        img.style.animation = '';
+      }
+    }
+
+    // Sync count / CTA state
+    if (isSimple) updateSimpleSongCTA(ta);
+    else          updateLyricsClear(ta);
+
+    showToast('Prompt enhanced');
+  }, 1400);
 }
 
 function pickChip(el) {
