@@ -1037,18 +1037,6 @@
               </w:rPr>
               <w:t>Redesigned input sheet to match Figma: drag handle, X/confirm header, textarea with char counter and clear. Slide-up transition.</w:t>
             </w:r>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             <w:r>
               <w:rPr>
                 <w:rFonts w:eastAsia="Times New Roman"/>
@@ -1140,10 +1128,6 @@
               </w:rPr>
               <w:t>Song row is tappable. Play/pause icon toggles; resets on navigation.</w:t>
             </w:r>
-            
-            
-            
-            
             <w:r>
               <w:rPr>
                 <w:rFonts w:eastAsia="Times New Roman"/>
@@ -1235,10 +1219,6 @@
               </w:rPr>
               <w:t>Added read-only Story section below Visual Style. Darker bg, no border, muted text.</w:t>
             </w:r>
-            
-            
-            
-            
             <w:r>
               <w:rPr>
                 <w:rFonts w:eastAsia="Times New Roman"/>
@@ -1421,18 +1401,6 @@
               </w:rPr>
               <w:t>Added read-only Lyrics section at bottom. Scrollable; each line prefixed with timecode.</w:t>
             </w:r>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             <w:r>
               <w:rPr>
                 <w:rFonts w:eastAsia="Times New Roman"/>
@@ -1525,18 +1493,6 @@
               </w:rPr>
               <w:t>Removed Default Quality. Added Settings item (ic_settings.svg). Standardised icon bg colours.</w:t>
             </w:r>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             <w:r>
               <w:rPr>
                 <w:rFonts w:eastAsia="Times New Roman"/>
@@ -1628,30 +1584,6 @@
               </w:rPr>
               <w:t>New screen with back + centred title. Items: Terms of Use, Privacy Policy, Unsubscribe, Delete Account, Sign Out. No divider before Sign Out.</w:t>
             </w:r>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             <w:r>
               <w:rPr>
                 <w:rFonts w:eastAsia="Times New Roman"/>
