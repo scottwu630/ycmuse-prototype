@@ -578,8 +578,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 @keyframes cpulse{0%,100%{transform:scale(1);opacity:.8;}50%{transform:scale(1.12);opacity:1;}}
 .think-ttl{font-size:23px;font-weight:700;color:var(--text);text-align:center;margin-bottom:9px;letter-spacing:-.3px;}
 .think-sub{font-size:14px;color:var(--text-2);text-align:center;line-height:1.55;margin-bottom:36px;}
-.think-bar-wrap{width:190px;height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;margin-bottom:10px;}
-.think-bar{height:100%;background:var(--mv-grad);border-radius:2px;width:0%;animation:tbar 5s ease-in-out forwards;}
+.think-bar-wrap{width:192px;height:3px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;margin-bottom:10px;}
+.think-bar{height:100%;background:linear-gradient(1deg,#FF6BCE,#A855F7);border-radius:2px;width:0%;animation:tbar 5s ease-in-out forwards;}
 .think-bar.run{animation:tbar 5s ease-in-out forwards;}
 @keyframes tbar{0%{width:0%;}30%{width:35%;}65%{width:70%;}88%{width:90%;}100%{width:95%;}}
 .think-step{font-size:12px;color:var(--text-3);text-align:center;}
@@ -611,9 +611,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .cv-stat{font-size:13px;color:rgba(255,255,255,.55);}
 .creating-ttl{font-size:23px;font-weight:700;color:var(--text);text-align:center;margin-bottom:7px;}
 .creating-sub{font-size:14px;color:var(--text-2);text-align:center;margin-bottom:28px;line-height:1.5;}
-.creating-info{background:var(--card);border-radius:14px;padding:14px 22px;text-align:center;border:1px solid var(--border);}
-.ci-lbl{font-size:11px;color:var(--text-3);margin-bottom:3px;}
-.ci-val{font-size:15px;font-weight:600;color:var(--text);}
+.creating-info{display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center;}
+.ci-lbl{font-size:11px;font-weight:500;color:#676779;letter-spacing:-.11px;line-height:16px;}
+.ci-val{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;}
 
 /* ════════════════════════════
    SCREEN: MV RESULT
@@ -1264,12 +1264,12 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
         </div>
 
-        <!-- Trending Carousel — 16:9, 288×162px cards -->
+        <!-- Trending Carousel — 272×153px cards -->
         <div style="margin-top:12px;margin-bottom:10px;overflow:hidden;position:relative;">
-          <div id="trend-track" style="display:flex;gap:10px;transition:transform .48s cubic-bezier(.4,0,.2,1);will-change:transform;">
+          <div id="trend-track" style="display:flex;gap:8px;transition:transform .48s cubic-bezier(.4,0,.2,1);will-change:transform;">
 
             <!-- Card 1: Trending MV — Adventurous Echoes -->
-            <div style="min-width:288px;height:162px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
+            <div style="min-width:272px;height:153px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
               onclick="openMvPreview('Adventurous Echoes','assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','Wide-open landscapes and soaring cinematic shots — earthy tones, golden light.','Fan fav | 2-3 min')">
               <img src="assets/videos/sample-mvs/mv_12_Splash.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
               <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
@@ -1287,7 +1287,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
 
             <!-- Card 2: Trending MV — Thrilling Harmonies -->
-            <div style="min-width:288px;height:162px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
+            <div style="min-width:272px;height:153px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
               onclick="openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Hybrid | 3-4 min')">
               <img src="assets/videos/sample-mvs/mv_13_Urban Fashion.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
               <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
@@ -1305,7 +1305,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
 
             <!-- Card 3: Trending MV — Epic Journeys -->
-            <div style="min-width:288px;height:162px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
+            <div style="min-width:272px;height:153px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
               onclick="openMvPreview('Epic Journeys','assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','A cinematic road trip — vintage car, golden light, open highway.','Storytelling | 3-4 min')">
               <img src="assets/videos/sample-mvs/mv_14_Vintage Car.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
               <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
@@ -2499,8 +2499,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
         <div class="nav-title">AI MV</div>
         <div style="min-width:36px;display:flex;justify-content:flex-end;">
-          <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 10px;display:flex;align-items:center;gap:4px;cursor:pointer;">
-            <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
+          <div id="mv-room-credit-btn" onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 6px;display:flex;align-items:center;gap:4px;cursor:pointer;display:none;">
+            <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
             <span style="font-size:13px;font-weight:700;color:#f59e0b;">390</span>
           </div>
         </div>
@@ -3004,10 +3004,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
         <div class="creating-ttl">Crafting Your Storyboard</div>
         <div class="creating-sub">AI is analyzing your audio and description<br>to build the perfect cinematic sequence.</div>
-        <div class="think-bar-wrap" style="width:100%;margin-bottom:20px;"><div class="think-bar" id="think-bar"></div></div>
+        <div class="think-bar-wrap" style="width:100%;margin-bottom:10px;"><div class="think-bar" id="think-bar"></div></div>
         <div class="creating-info">
           <div class="ci-lbl">Estimated time remaining</div>
-          <div class="ci-val">~1 minute</div>
+          <div class="ci-val">~1 minutes</div>
         </div>
         <div style="height:24px;"></div>
         <button onclick="goTo('history')" style="background:transparent;border:1.5px solid rgba(255,255,255,.15);border-radius:14px;color:rgba(255,255,255,.55);font-size:15px;font-weight:500;padding:0 32px;height:46px;cursor:pointer;transition:border-color .2s;">View Later</button>
@@ -3023,8 +3023,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
         <div class="nav-title">Edit Storyboard</div>
         <div style="min-width:36px;display:flex;justify-content:flex-end;">
-          <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 10px;display:flex;align-items:center;gap:4px;cursor:pointer;">
-            <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
+          <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 6px;display:flex;align-items:center;gap:4px;cursor:pointer;">
+            <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
             <span style="font-size:13px;font-weight:700;color:#f59e0b;">390</span>
           </div>
         </div>
@@ -3188,7 +3188,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
         <div class="creating-ttl">Creating Your Music Video</div>
         <div class="creating-sub">Your cinematic MV is being rendered.<br>We'll notify you when it's ready.</div>
-        <div class="think-bar-wrap" style="width:100%;margin-bottom:20px;"><div class="think-bar" id="cv-bar"></div></div>
+        <div class="think-bar-wrap" style="width:100%;margin-bottom:10px;"><div class="think-bar" id="cv-bar"></div></div>
         <div class="creating-info">
           <div class="ci-lbl">Estimated time remaining</div>
           <div class="ci-val" id="ci-val">~2 minutes</div>
@@ -3361,7 +3361,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div class="nav-back" onclick="goBack()"><img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
         <div class="nav-title">Storyboard</div>
         <div style="min-width:36px;display:flex;justify-content:flex-end;">
-          <div style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 10px;display:flex;align-items:center;gap:4px;">
+          <div style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 6px;display:flex;align-items:center;gap:4px;">
             <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
             <span style="font-size:13px;font-weight:700;color:#f59e0b;">390</span>
           </div>
@@ -3474,7 +3474,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div class="nav-back" onclick="goBack()"><img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
         <div class="nav-title">Edit MV</div>
         <div style="min-width:36px;display:flex;justify-content:flex-end;">
-          <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 10px;display:flex;align-items:center;gap:4px;cursor:pointer;">
+          <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 6px;display:flex;align-items:center;gap:4px;cursor:pointer;">
             <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
             <span style="font-size:13px;font-weight:700;color:#f59e0b;">390</span>
           </div>
@@ -3635,11 +3635,13 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
       </div>
       <div class="cta-footer">
-        <button id="merge-mv-btn" disabled style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;opacity:.38;box-shadow:0 8px 12px rgba(168,85,247,.32);" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=this.disabled?'.38':'1'" onclick="mergeAndProcess()">
-          Merge MV
-          <span style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
-            <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
-            20
+        <button id="merge-mv-btn" disabled style="width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:17px;font-weight:700;cursor:default;display:flex;align-items:center;justify-content:center;gap:6px;" onmousedown="if(!this.disabled)this.style.opacity='.7'" onmouseup="if(!this.disabled)this.style.opacity='1'" onclick="mergeAndProcess()">
+          <span id="merge-mv-content" style="display:flex;align-items:center;gap:6px;opacity:0.3;">
+            Merge MV
+            <span style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
+              <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
+              20
+            </span>
           </span>
         </button>
       </div>
@@ -3654,8 +3656,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
         <div class="nav-title">AI Song</div>
         <div style="min-width:36px;display:flex;justify-content:flex-end;">
-          <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 10px;display:flex;align-items:center;gap:4px;cursor:pointer;">
-            <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
+          <div id="song-create-credit-btn" onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 6px;align-items:center;gap:4px;cursor:pointer;display:none;">
+            <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
             <span style="font-size:13px;font-weight:700;color:#f59e0b;">390</span>
           </div>
         </div>
@@ -5469,6 +5471,8 @@ function goTo(id, dir) {
     if (id === 'mv-result') initMvResultController();
     if (id === 'iap') selectIAPPlan('weekly');
     if (id === 'credits') selectCreditPack(_selectedPack);
+    if (id === 'mv-room') { const b = document.getElementById('mv-room-credit-btn'); if (b) b.style.display = _isLoggedIn ? 'flex' : 'none'; }
+    if (id === 'song-create') { const b = document.getElementById('song-create-credit-btn'); if (b) b.style.display = _isLoggedIn ? 'flex' : 'none'; }
   }, 380);
 
   if (!isBack) navStack.push(id);
@@ -5811,7 +5815,7 @@ function startThinking() {
     if (step) step.textContent = label;
     i++;
     if (i < thinkSteps.length) thinkTimer = setTimeout(nextStep, 1000);
-    else setTimeout(() => { if (document.getElementById('screen-mv-thinking')?.classList.contains('active')) { showToastDone('storyboard'); goTo('mv-storyboard'); } }, 1200);
+    else setTimeout(() => { if (document.getElementById('screen-mv-thinking')?.classList.contains('active')) { showToastDone('storyboard'); navStack = navStack.filter(s => s !== 'mv-thinking'); goTo('mv-storyboard'); } }, 1200);
   }
   nextStep();
 }
@@ -5836,7 +5840,7 @@ function startCreating() {
     const rem = Math.max(0, Math.round((100 - p) / 25));
     if (cival) cival.textContent = rem > 0 ? `~${rem} minute${rem > 1 ? 's' : ''}` : 'Almost done...';
     if (p < 100) cvTimer = setTimeout(tick, 400);
-    else setTimeout(() => { if (document.getElementById('screen-mv-creating')?.classList.contains('active')) { showToastDone('mv'); goTo('mv-result'); } }, 800);
+    else setTimeout(() => { if (document.getElementById('screen-mv-creating')?.classList.contains('active')) { showToastDone('mv'); navStack = navStack.filter(s => s !== 'mv-creating'); goTo('mv-result'); } }, 800);
   }
   tick();
 }
@@ -5910,8 +5914,19 @@ function setEmvDirty() {
 function checkMergeEnable() {
   const btn = document.getElementById('merge-mv-btn');
   if (!btn) return;
+  const content = document.getElementById('merge-mv-content');
   btn.disabled = !_emvDirty;
-  btn.style.opacity = _emvDirty ? '1' : '.38';
+  if (_emvDirty) {
+    btn.style.background = 'linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA)';
+    btn.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+    btn.style.cursor = 'pointer';
+    if (content) content.style.opacity = '1';
+  } else {
+    btn.style.background = '#383842';
+    btn.style.boxShadow = 'none';
+    btn.style.cursor = 'default';
+    if (content) content.style.opacity = '0.3';
+  }
 }
 
 function mergeAndProcess() {
@@ -6653,14 +6668,19 @@ function saveProfile() {
   hideSheet('edit-profile-sheet');
 }
 
-// ── Trending Carousel — drag to navigate ──────────────────────────────────
+// ── Trending Carousel — infinite loop ──────────────────────────────────────
+// DOM order after init: [clone-card3] [card1] [card2] [card3] [clone-card1]
+// domIdx 0 = clone-last, 1..REAL = real cards, REAL+1 = clone-first
 (function() {
-  const CARD_W = 288, GAP = 10, LEFT_PAD = 16, TOTAL = 3, INTERVAL = 4000;
+  const CARD_W = 272, GAP = 8, LEFT_PAD = 24, REAL = 3, INTERVAL = 4000;
+  const STEP = CARD_W + GAP; // 280px per card slot
   const THRESHOLD = 60;
-  let trendIdx = 0, trendTimer = null;
+  let domIdx = 1; // start centered on card-1 (DOM index 1)
+  let trendTimer = null;
   let sx = 0, dragging = false, _trendDidSwipe = false;
 
-  function baseX(idx) { return LEFT_PAD - idx * (CARD_W + GAP); }
+  // translateX so card at domIdx is centered
+  function baseX(i) { return LEFT_PAD - i * STEP; }
 
   function setTrackX(x, animated) {
     const t = document.getElementById('trend-track');
@@ -6669,54 +6689,74 @@ function saveProfile() {
     t.style.transform  = `translateX(${x}px)`;
   }
 
-  function goToIdx(idx, animated) {
-    trendIdx = Math.max(0, Math.min(TOTAL - 1, idx));
-    setTrackX(baseX(trendIdx), animated);
+  function goToDom(idx, animated) {
+    domIdx = idx;
+    setTrackX(baseX(idx), animated);
+  }
+
+  // After animating to a clone, silently snap to the real equivalent
+  function afterSnap() {
+    if (domIdx >= REAL + 1) goToDom(1, false);        // clone-first → card-1
+    else if (domIdx <= 0)   goToDom(REAL, false);     // clone-last  → card-3
+  }
+
+  function next() {
+    goToDom(domIdx + 1, true);
+    setTimeout(afterSnap, 390);
+  }
+
+  function prev() {
+    goToDom(domIdx - 1, true);
+    setTimeout(afterSnap, 390);
   }
 
   function startAuto() {
     clearInterval(trendTimer);
-    trendTimer = setInterval(() => goToIdx((trendIdx + 1) % TOTAL, true), INTERVAL);
+    trendTimer = setInterval(next, INTERVAL);
   }
 
   function onStart(clientX) {
     sx = clientX; dragging = true; _trendDidSwipe = false;
     clearInterval(trendTimer);
-    setTrackX(baseX(trendIdx), false);
+    setTrackX(baseX(domIdx), false); // freeze at current position
   }
 
   function onMove(clientX) {
     if (!dragging) return;
     const dx = clientX - sx;
-    if (Math.abs(dx) > 8) _trendDidSwipe = true; // mark as swipe once moved enough
-    const atStart = trendIdx === 0;
-    const atEnd   = trendIdx === TOTAL - 1;
-    let delta = dx;
-    if (dx > 0 && atStart) delta = dx / 3;
-    if (dx < 0 && atEnd)   delta = dx / 3;
-    setTrackX(baseX(trendIdx) + delta, false);
+    if (Math.abs(dx) > 8) _trendDidSwipe = true;
+    setTrackX(baseX(domIdx) + dx, false); // follow finger freely — no rubber band
   }
 
   function onEnd(clientX) {
     if (!dragging) return;
     dragging = false;
     const dx = clientX - sx;
-    if (dx < -THRESHOLD && trendIdx < TOTAL - 1)      goToIdx(trendIdx + 1, true);
-    else if (dx > THRESHOLD && trendIdx > 0)           goToIdx(trendIdx - 1, true);
-    else                                               goToIdx(trendIdx, true);
+    if (dx < -THRESHOLD)      next();
+    else if (dx > THRESHOLD)  prev();
+    else                      goToDom(domIdx, true); // snap back
     startAuto();
   }
 
   window.addEventListener('load', () => {
-    goToIdx(0, false);
+    const track = document.getElementById('trend-track');
+    if (!track) return;
+
+    // Inject clones: prepend clone of last card, append clone of first card
+    const origCards = Array.from(track.children);
+    const cloneLast  = origCards[REAL - 1].cloneNode(true);
+    const cloneFirst = origCards[0].cloneNode(true);
+    track.insertBefore(cloneLast, track.firstChild);
+    track.appendChild(cloneFirst);
+
+    goToDom(1, false); // card-1 centered; clone-last peek left, card-2 peek right
     startAuto();
 
-    const wrap = document.getElementById('trend-track')?.parentElement;
+    const wrap = track.parentElement;
     if (!wrap) return;
     wrap.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true });
     wrap.addEventListener('touchmove',  e => onMove(e.touches[0].clientX),  { passive: true });
     wrap.addEventListener('touchend',   e => onEnd(e.changedTouches[0].clientX), { passive: true });
-    // Block click after a swipe gesture
     wrap.addEventListener('click', e => {
       if (_trendDidSwipe) { e.stopPropagation(); _trendDidSwipe = false; }
     }, true);
@@ -6729,6 +6769,15 @@ function saveProfile() {
     if (document.hidden) clearInterval(trendTimer); else startAuto();
   });
 })();
+
+// ── Create-room credit button visibility ──
+function syncCreateRoomCreditBtns() {
+  var show = _isLoggedIn ? 'flex' : 'none';
+  var b1 = document.getElementById('mv-room-credit-btn');
+  var b2 = document.getElementById('song-create-credit-btn');
+  if (b1) b1.style.display = show;
+  if (b2) b2.style.display = show;
+}
 
 // ── History login-state sync ──
 function syncHistoryLoginState() {
@@ -6769,6 +6818,7 @@ function confirmSignOut() {
   hideSignOutDialog();
   _isLoggedIn = false;
   syncHistoryLoginState();
+  syncCreateRoomCreditBtns();
   // Show banner again after sign-out, restore cards margin
   const banner = document.getElementById('home-banner-ad');
   if (banner) banner.style.display = '';
@@ -7874,6 +7924,7 @@ function signInWith(provider) {
     if (cards) cards.style.marginBottom = '16px';
     _isLoggedIn = true;
     syncHistoryLoginState();
+    syncCreateRoomCreditBtns();
     // Run any pending gated action
     const action = _pendingAction;
     _pendingAction = null;
