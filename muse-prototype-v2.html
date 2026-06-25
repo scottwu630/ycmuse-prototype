@@ -690,7 +690,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .player-play:active{transform:scale(.92);}
 .song-result-btns{display:flex;flex-direction:column;gap:11px;padding:0 16px calc(40px + var(--safe-bot));}
 @keyframes disc-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.disc-spinning{animation:disc-spin 6s linear infinite;}
+.disc-spinning{animation:disc-spin 20s linear infinite;}
 /* Lyrics sheet */
 #lyrics-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:50;opacity:0;pointer-events:none;transition:opacity .3s;}
 #lyrics-overlay.show{opacity:1;pointer-events:all;}
@@ -1781,7 +1781,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div style="position:absolute;inset:0;background:rgba(0,0,0,.3);pointer-events:none;"></div>
 
       <!-- Album Art: 200×200, top:130px, left:60px -->
-      <img id="sp-art" src="" style="position:absolute;top:130px;left:60px;width:200px;height:200px;border-radius:18px;object-fit:cover;box-shadow:0 16px 48px rgba(0,0,0,.55);">
+      <img id="sp-art" src="" style="position:absolute;top:130px;left:60px;width:200px;height:200px;border-radius:50%;object-fit:cover;box-shadow:0 16px 48px rgba(0,0,0,.55);">
 
       <!-- Controller: top:360px -->
       <div style="position:absolute;top:360px;left:16px;width:288px;display:flex;flex-direction:column;gap:20px;z-index:5;">
@@ -4132,6 +4132,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="mv" data-liked="true" onclick="histMarkPlayed(this);goTo('mv-result')">
             <div class="hist-thumb">
               <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg">
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Cinematic Night</div>
@@ -4171,6 +4172,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="song" data-liked="true" onclick="histMarkPlayed(this);goTo('song-result')">
             <div class="hist-thumb">
               <img src="assets/images/album-art/album_01.jpg">
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Golden Hour</div>
@@ -4194,6 +4196,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="storyboard" onclick="histMarkPlayed(this);goTo('mv-storyboard')">
             <div class="hist-thumb">
               <img src="assets/images/storyboard/storyboard_01.jpg">
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_script.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Starlight in Your Eyes</div>
@@ -4216,6 +4219,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="mv" onclick="histMarkPlayed(this);goTo('mv-result')">
             <div class="hist-thumb">
               <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg">
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Neon City Nights</div>
@@ -4235,6 +4239,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="song" onclick="histMarkPlayed(this);goTo('song-result')">
             <div class="hist-thumb">
               <img src="assets/images/album-art/album_08.jpg">
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Midnight Drive</div>
@@ -4254,6 +4259,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="song" data-source="community" data-liked="true" onclick="openSongPlayer('Whispers of the Past','Lo-fi · Soothing','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
             <div class="hist-thumb">
               <img src="assets/images/album-art/album_05.jpg">
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Whispers of the Past</div>
@@ -9392,12 +9398,15 @@ function openSongPlayer(title, tags, art, genre, mood) {
 function _spSetPlayState(playing) {
   const mainIco = document.getElementById('sp-play-ico');
   const lyrIco  = document.getElementById('sp-lyr-play-ico');
+  const disc    = document.getElementById('sp-art');
   if (playing) {
     if (mainIco) { mainIco.src = 'assets/icons/ui/ic_pause.svg'; mainIco.style.paddingLeft = '0'; }
     if (lyrIco)  { lyrIco.src  = 'assets/icons/ui/ic_pause.svg'; lyrIco.style.filter = 'brightness(0)'; }
+    if (disc)    disc.classList.add('disc-spinning');
   } else {
     if (mainIco) { mainIco.src = 'assets/icons/ui/ic_play.svg'; mainIco.style.paddingLeft = '0'; }
     if (lyrIco)  { lyrIco.src  = 'assets/icons/ui/ic_play.svg'; lyrIco.style.filter = 'brightness(0)'; }
+    if (disc)    disc.classList.remove('disc-spinning');
   }
 }
 function startSpPlayback() {
