@@ -689,6 +689,38 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .player-play{width:62px;height:62px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;box-shadow:0 8px 24px rgba(255,255,255,.18);transition:transform .15s;}
 .player-play:active{transform:scale(.92);}
 .song-result-btns{display:flex;flex-direction:column;gap:11px;padding:0 16px calc(40px + var(--safe-bot));}
+@keyframes disc-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.disc-spinning{animation:disc-spin 6s linear infinite;}
+/* Lyrics sheet */
+#lyrics-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:50;opacity:0;pointer-events:none;transition:opacity .3s;}
+#lyrics-overlay.show{opacity:1;pointer-events:all;}
+#lyrics-sheet{position:absolute;bottom:0;left:0;right:0;height:600px;background:#151519;border-radius:26px 26px 0 0;z-index:51;transform:translateY(100%);transition:transform .38s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column;overflow:hidden;}
+#lyrics-sheet.open{transform:translateY(0);}
+/* Song Player Lyrics sheet (separate IDs so they coexist in DOM) */
+#sp-lyrics-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:50;opacity:0;pointer-events:none;transition:opacity .3s;}
+#sp-lyrics-overlay.show{opacity:1;pointer-events:all;}
+#sp-lyrics-sheet{position:absolute;bottom:0;left:0;right:0;height:600px;background:#151519;border-radius:26px 26px 0 0;z-index:51;transform:translateY(100%);transition:transform .38s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column;overflow:hidden;}
+#sp-lyrics-sheet.open{transform:translateY(0);}
+.lyr-handle{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);margin:12px auto 0;flex-shrink:0;}
+.lyr-header{display:flex;align-items:center;gap:10px;padding:8px 20px;flex-shrink:0;}
+.lyr-close-btn{width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:opacity .15s;}
+.lyr-close-btn:active{opacity:.6;}
+.lyr-mini-player{display:flex;align-items:center;gap:8px;padding:10px 20px;flex-shrink:0;}
+.lyr-mini-art{width:44px;height:44px;border-radius:10px;object-fit:cover;flex-shrink:0;}
+.lyr-mini-info{flex:1;min-width:0;}
+.lyr-mini-title{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lyr-mini-time{font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;line-height:16px;}
+.lyr-mini-time span.lyr-now{color:#fff;}
+.lyr-play-btn{width:36px;height:36px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:opacity .15s;}
+.lyr-play-btn:active{opacity:.7;}
+.lyr-divider{height:1px;background:rgba(255,255,255,.15);margin:0 20px;flex-shrink:0;}
+.lyr-scroll{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;position:relative;padding:0 20px;scrollbar-width:none;-ms-overflow-style:none;box-sizing:border-box;}
+.lyr-scroll::-webkit-scrollbar{display:none;}
+.lyr-list{display:flex;flex-direction:column;gap:0;padding:0 0 80px;}
+.lyr-line{font-size:17px;font-weight:700;color:#fff;line-height:22px;padding:6px 0;opacity:.35;transition:opacity .4s,transform .4s;}
+.lyr-line.active{opacity:1;}
+.lyr-fade-top{position:absolute;top:0;left:0;right:0;height:70px;background:linear-gradient(to bottom,rgba(21,21,25,.85),rgba(21,21,25,0));pointer-events:none;z-index:2;opacity:0;transition:opacity .4s;}
+.lyr-fade-bot{position:absolute;bottom:0;left:0;right:0;height:70px;background:linear-gradient(to top,rgba(21,21,25,.85),rgba(21,21,25,0));pointer-events:none;z-index:2;}
 
 /* ════════════════════════════
    SCREEN: HISTORY
@@ -1767,7 +1799,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 <span style="font-size:12px;font-weight:500;color:#B7B7C2;line-height:normal;white-space:nowrap;">MelodyMaker123</span>
               </div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:2px;flex-shrink:0;">
               <!-- Like -->
               <div onclick="toggleSpLike()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;">
                 <img id="sp-like-ico" src="assets/icons/ui/ic_favorite_off.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
@@ -1775,6 +1807,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <!-- Share -->
               <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="white" stroke-width="2"/><circle cx="6" cy="12" r="3" stroke="white" stroke-width="2"/><circle cx="18" cy="19" r="3" stroke="white" stroke-width="2"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="white" stroke-width="2"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="white" stroke-width="2"/></svg>
+              </div>
+              <!-- Lyrics -->
+              <div onclick="openSpLyricsSheet()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.6'" onmouseup="this.style.opacity=''">
+                <img src="assets/icons/ui/ic_singing_mic.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
               </div>
             </div>
           </div>
@@ -1820,6 +1856,45 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
         <div style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;line-height:22px;">Now Playing</div>
         <div style="width:28px;height:28px;opacity:0;flex-shrink:0;"></div>
+      </div>
+
+      <!-- ── SP Lyrics overlay dim ── -->
+      <div id="sp-lyrics-overlay" onclick="closeSpLyricsSheet()"></div>
+
+      <!-- ── SP Lyrics bottom sheet ── -->
+      <div id="sp-lyrics-sheet">
+        <div class="lyr-handle"></div>
+
+        <!-- Header -->
+        <div class="lyr-header">
+          <div class="lyr-close-btn" onclick="closeSpLyricsSheet()">
+            <img src="assets/icons/ui/ic_close.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+          </div>
+          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;line-height:18px;">Lyrics</div>
+          <div style="width:28px;height:28px;opacity:0;flex-shrink:0;"></div>
+        </div>
+
+        <!-- Mini song player -->
+        <div class="lyr-mini-player">
+          <img id="sp-lyr-mini-art" src="" class="lyr-mini-art">
+          <div class="lyr-mini-info">
+            <div class="lyr-mini-title" id="sp-lyr-mini-title">Golden Hour</div>
+            <div class="lyr-mini-time"><span class="lyr-now" id="sp-lyr-timecode">0:00</span><span id="sp-lyr-duration"> / 2:05</span></div>
+          </div>
+          <div class="lyr-play-btn" onclick="lyricsSpPlayBtn()">
+            <img id="sp-lyr-play-ico" src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;filter:brightness(0);">
+          </div>
+        </div>
+        <div class="lyr-divider"></div>
+
+        <!-- Lyrics scroll area -->
+        <div style="flex:1;overflow:hidden;position:relative;min-height:0;">
+          <div class="lyr-scroll" id="sp-lyr-scroll-area">
+            <div class="lyr-list" id="sp-lyr-list"></div>
+          </div>
+          <div class="lyr-fade-top"></div>
+          <div class="lyr-fade-bot"></div>
+        </div>
       </div>
 
     </div>
@@ -3890,13 +3965,13 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
       </div>
 
-      <!-- Album Art — 200×200, top:130px, left:60px per Figma node 50-84 -->
-      <div style="position:absolute;top:130px;left:60px;width:200px;height:200px;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.7);flex-shrink:0;">
-        <img src="assets/images/album-art/album_14.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <!-- Album Art — circle disc, 200×200, top:130px, left:60px -->
+      <div style="position:absolute;top:130px;left:60px;width:200px;height:200px;border-radius:50%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.7);" id="sr-album-disc">
+        <img id="sr-album-img" src="assets/images/album-art/album_14.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
       </div>
 
       <!-- Player -->
-      <div style="position:absolute;top:360px;left:16px;width:288px;display:flex;flex-direction:column;gap:20px;">
+      <div style="position:absolute;top:360px;left:16px;width:288px;display:flex;flex-direction:column;gap:16px;">
 
         <!-- Title + share -->
         <div style="display:flex;align-items:flex-start;gap:8px;">
@@ -3904,8 +3979,15 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div id="sr-title" style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Golden Hour</div>
             <div id="sr-genre" style="font-size:14px;font-weight:500;color:rgba(255,255,255,.5);letter-spacing:-.14px;line-height:20px;margin-top:2px;">R&amp;B · Warm</div>
           </div>
-          <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;flex-shrink:0;margin-top:2px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="white" stroke-width="2"/><circle cx="6" cy="12" r="3" stroke="white" stroke-width="2"/><circle cx="18" cy="19" r="3" stroke="white" stroke-width="2"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="white" stroke-width="2"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="white" stroke-width="2"/></svg>
+          <div style="display:flex;align-items:center;gap:2px;flex-shrink:0;margin-top:2px;">
+            <!-- Share -->
+            <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="white" stroke-width="2"/><circle cx="6" cy="12" r="3" stroke="white" stroke-width="2"/><circle cx="18" cy="19" r="3" stroke="white" stroke-width="2"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="white" stroke-width="2"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="white" stroke-width="2"/></svg>
+            </div>
+            <!-- Lyrics -->
+            <div onclick="openLyricsSheet()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.6'" onmouseup="this.style.opacity=''">
+              <img src="assets/icons/ui/ic_singing_mic.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+            </div>
           </div>
         </div>
 
@@ -3946,6 +4028,46 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <button onclick="goTo('song-create')" style="width:100%;height:46px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);color:#D3D3D9;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Recreate
         </button>
+      </div>
+
+      <!-- ── Lyrics overlay dim ── -->
+      <div id="lyrics-overlay" onclick="closeLyricsSheet()"></div>
+
+      <!-- ── Lyrics bottom sheet ── -->
+      <div id="lyrics-sheet">
+        <div class="lyr-handle"></div>
+
+        <!-- Header -->
+        <div class="lyr-header">
+          <div class="lyr-close-btn" onclick="closeLyricsSheet()">
+            <img src="assets/icons/ui/ic_close.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+          </div>
+          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;line-height:18px;">Lyrics</div>
+          <div style="width:28px;height:28px;opacity:0;flex-shrink:0;"></div>
+        </div>
+
+        <!-- Mini song player -->
+        <div class="lyr-mini-player">
+          <img id="lyr-mini-art" src="assets/images/album-art/album_14.jpg" class="lyr-mini-art">
+          <div class="lyr-mini-info">
+            <div class="lyr-mini-title" id="lyr-mini-title">Golden Hour</div>
+            <div class="lyr-mini-time"><span class="lyr-now" id="lyr-timecode">0:22</span><span id="lyr-duration"> / 1:02</span></div>
+          </div>
+          <div class="lyr-play-btn" onclick="lyricsPlayBtn()">
+            <img id="lyr-play-ico" src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;filter:brightness(0);">
+          </div>
+        </div>
+
+        <div class="lyr-divider"></div>
+
+        <!-- Lyrics scrollable area + fixed gradients -->
+        <div style="flex:1;overflow:hidden;position:relative;min-height:0;">
+          <div class="lyr-scroll" id="lyr-scroll-area">
+            <div class="lyr-list" id="lyr-list"></div>
+          </div>
+          <div class="lyr-fade-top"></div>
+          <div class="lyr-fade-bot"></div>
+        </div>
       </div>
 
     </div>
@@ -9267,10 +9389,21 @@ function openSongPlayer(title, tags, art, genre, mood) {
   setTimeout(startSpPlayback, 400);
 }
 
+function _spSetPlayState(playing) {
+  const mainIco = document.getElementById('sp-play-ico');
+  const lyrIco  = document.getElementById('sp-lyr-play-ico');
+  if (playing) {
+    if (mainIco) { mainIco.src = 'assets/icons/ui/ic_pause.svg'; mainIco.style.paddingLeft = '0'; }
+    if (lyrIco)  { lyrIco.src  = 'assets/icons/ui/ic_pause.svg'; lyrIco.style.filter = 'brightness(0)'; }
+  } else {
+    if (mainIco) { mainIco.src = 'assets/icons/ui/ic_play.svg'; mainIco.style.paddingLeft = '0'; }
+    if (lyrIco)  { lyrIco.src  = 'assets/icons/ui/ic_play.svg'; lyrIco.style.filter = 'brightness(0)'; }
+  }
+}
 function startSpPlayback() {
   _spPlaying = true;
-  document.getElementById('sp-play-ico').src = 'assets/icons/ui/ic_pause.svg';
-  document.getElementById('sp-play-ico').style.paddingLeft = '0';
+  _spSetPlayState(true);
+  clearInterval(_spTimer);
   _spTimer = setInterval(() => {
     if (!_spPlaying) return;
     _spProgress = Math.min(_spProgress + (100 / _spDuration), 100);
@@ -9278,14 +9411,16 @@ function startSpPlayback() {
     _spUpdateProgress(pct);
     const now = Math.round((_spProgress / 100) * _spDuration);
     document.getElementById('sp-time-now').textContent = fmtTime(now);
-    if (_spProgress >= 100) { clearInterval(_spTimer); _spPlaying = false; document.getElementById('sp-play-ico').src = 'assets/icons/ui/ic_play.svg'; document.getElementById('sp-play-ico').style.paddingLeft = '2px'; }
+    const lyrTc = document.getElementById('sp-lyr-timecode');
+    if (lyrTc) lyrTc.textContent = fmtTime(now);
+    _spLyricsHighlight(now);
+    if (_spProgress >= 100) { clearInterval(_spTimer); _spPlaying = false; _spSetPlayState(false); }
   }, 1000);
 }
 function toggleSpPlay() {
   _spPlaying = !_spPlaying;
-  const ico = document.getElementById('sp-play-ico');
-  if (_spPlaying) { ico.src = 'assets/icons/ui/ic_pause.svg'; ico.style.paddingLeft = '0'; startSpPlayback(); }
-  else            { ico.src = 'assets/icons/ui/ic_play.svg'; ico.style.paddingLeft = '0'; clearInterval(_spTimer); _spTimer = null; }
+  if (_spPlaying) { startSpPlayback(); }
+  else            { clearInterval(_spTimer); _spTimer = null; _spSetPlayState(false); }
 }
 function _spUpdateProgress(pct) {
   const fill  = document.getElementById('sp-progress-fill');
@@ -9333,11 +9468,126 @@ function _spLoadTrack(idx) {
   clearInterval(_spTimer);
   seekSong(0);
   _spPlaying = false;
-  document.getElementById('sp-play-ico').src = 'assets/icons/ui/ic_play.svg';
+  _spSetPlayState(false);
+  // Reset lyric list so it rebuilds for the new track title
+  const lyrList = document.getElementById('sp-lyr-list');
+  if (lyrList) lyrList.innerHTML = '';
+  // Sync mini player art + title if sheet is open
+  const miniArt = document.getElementById('sp-lyr-mini-art');
+  if (miniArt) miniArt.src = track.art;
+  const miniTitle = document.getElementById('sp-lyr-mini-title');
+  if (miniTitle) miniTitle.textContent = track.title;
+  const lyrTc = document.getElementById('sp-lyr-timecode');
+  if (lyrTc) lyrTc.textContent = '0:00';
   setTimeout(startSpPlayback, 300);
 }
 function prevSong() { _spLoadTrack(_spCurrentIdx - 1); }
 function nextSong()  { _spLoadTrack(_spCurrentIdx + 1); }
+
+// ── Song Player Lyrics Sheet ──────────────────────────────────────
+let _spLyricsDragInit = false, _spLyrUserScrolling = false;
+
+function _buildSpLyricsList() {
+  const list = document.getElementById('sp-lyr-list');
+  if (!list || list.childElementCount) return;
+  list.innerHTML = _goldenHourLyrics.map((l, i) =>
+    `<div class="lyr-line${i===0?' active':''}">${l.line}</div>`
+  ).join('');
+}
+
+function _spLyricsHighlight(sec) {
+  const lines = document.querySelectorAll('#sp-lyrics-sheet .lyr-line');
+  if (!lines.length) return;
+  let activeIdx = 0;
+  for (let i = 0; i < _goldenHourLyrics.length; i++) {
+    if (sec >= _goldenHourLyrics[i].t) activeIdx = i;
+  }
+  lines.forEach((el, i) => el.classList.toggle('active', i === activeIdx));
+  const fadeTop = document.querySelector('#sp-lyrics-sheet .lyr-fade-top');
+  if (fadeTop) fadeTop.style.opacity = activeIdx > 0 ? '1' : '0';
+  if (_spLyrUserScrolling) return;
+  const scrollArea = document.getElementById('sp-lyr-scroll-area');
+  const activeLine = lines[activeIdx];
+  if (!scrollArea || !activeLine) return;
+  const areaH = scrollArea.clientHeight;
+  const target = activeLine.offsetTop - areaH / 2 + activeLine.offsetHeight / 2;
+  scrollArea.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+}
+
+function openSpLyricsSheet() {
+  _buildSpLyricsList();
+  _initSpLyricsDrag();
+  // Sync mini player display
+  const titleEl = document.getElementById('sp-title');
+  const lyrTitle = document.getElementById('sp-lyr-mini-title');
+  if (titleEl && lyrTitle) lyrTitle.textContent = titleEl.textContent;
+  const mainImg = document.getElementById('sp-art');
+  const miniArt = document.getElementById('sp-lyr-mini-art');
+  if (mainImg && miniArt) miniArt.src = mainImg.src;
+  const sec = Math.round((_spProgress / 100) * _spDuration);
+  const lyrTc = document.getElementById('sp-lyr-timecode');
+  if (lyrTc) lyrTc.textContent = fmtTime(sec);
+  const lyrDur = document.getElementById('sp-lyr-duration');
+  if (lyrDur) lyrDur.textContent = ' / ' + fmtTime(_spDuration);
+  _spSetPlayState(_spPlaying);
+  document.getElementById('sp-lyrics-overlay').classList.add('show');
+  document.getElementById('sp-lyrics-sheet').classList.add('open');
+  setTimeout(() => {
+    _spLyricsHighlight(sec);
+    if (!_spPlaying) { _spPlaying = true; startSpPlayback(); }
+  }, 420);
+}
+
+function closeSpLyricsSheet() {
+  const sheet = document.getElementById('sp-lyrics-sheet');
+  document.getElementById('sp-lyrics-overlay').classList.remove('show');
+  sheet.classList.remove('open');
+  sheet.style.transform = '';
+}
+
+function lyricsSpPlayBtn() { toggleSpPlay(); }
+
+function _initSpLyricsDrag() {
+  if (_spLyricsDragInit) return;
+  _spLyricsDragInit = true;
+  const sheet = document.getElementById('sp-lyrics-sheet');
+  let startY = 0, dragY = 0, dragging = false;
+  const DRAG_ZONE = 72;
+  function onStart(clientY, sheetTop) {
+    const relY = clientY - sheetTop;
+    if (relY > DRAG_ZONE) return;
+    startY = clientY; dragY = 0; dragging = true;
+    sheet.style.transition = 'none';
+  }
+  function onMove(clientY) {
+    if (!dragging) return;
+    dragY = Math.max(0, clientY - startY);
+    sheet.style.transform = `translateY(${dragY}px)`;
+  }
+  function onEnd() {
+    if (!dragging) return;
+    dragging = false;
+    sheet.style.transition = 'transform .38s cubic-bezier(.25,.46,.45,.94)';
+    if (dragY > 120) { sheet.style.transform = 'translateY(100%)'; setTimeout(closeSpLyricsSheet, 380); }
+    else             { sheet.style.transform = 'translateY(0)'; }
+  }
+  sheet.addEventListener('touchstart', e => {
+    onStart(e.touches[0].clientY, sheet.getBoundingClientRect().top);
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return; e.preventDefault(); onMove(e.touches[0].clientY);
+  }, { passive: false });
+  document.addEventListener('touchend', () => onEnd(), { passive: true });
+  sheet.addEventListener('mousedown', e => {
+    onStart(e.clientY, sheet.getBoundingClientRect().top);
+    const mv = e2 => onMove(e2.clientY);
+    const up = () => { onEnd(); document.removeEventListener('mousemove', mv); document.removeEventListener('mouseup', up); };
+    document.addEventListener('mousemove', mv);
+    document.addEventListener('mouseup', up);
+  });
+}
+// ─────────────────────────────────────────────────────────────────
+
 function toggleSpLike() {
   _spLiked = !_spLiked;
   document.getElementById('sp-like-ico').src = _spLiked ? 'assets/icons/ui/ic_favorite_on.svg' : 'assets/icons/ui/ic_favorite_off.svg';
@@ -9369,37 +9619,249 @@ function createSongFromTemplate() {
 let _srProgress = 35, _srPlaying = false, _srTimer = null;
 const _srDuration = 62; // 1:02
 
+// Golden Hour lyrics with timestamps (seconds)
+const _goldenHourLyrics = [
+  { t: 0,  line: 'Morning light slips through the blinds' },
+  { t: 5,  line: 'Painting shadows on your face' },
+  { t: 9,  line: "I've been counting all the signs" },
+  { t: 13, line: 'That led me to this place' },
+  { t: 18, line: "Every second feels like it's suspended" },
+  { t: 23, line: 'Every breath a little more than I expected' },
+  { t: 29, line: 'This is our golden hour' },
+  { t: 33, line: 'When the world fades into glow' },
+  { t: 37, line: 'I could stay here forever' },
+  { t: 41, line: 'Watching the colors flow' },
+  { t: 44, line: 'Nothing left to prove now' },
+  { t: 47, line: 'Just the way you make me feel' },
+  { t: 51, line: 'In this golden hour' },
+  { t: 55, line: 'Everything is real' },
+  { t: 59, line: 'Golden hour… golden hour…' },
+];
+
+function _srCurrentSec() {
+  return Math.round((_srProgress / 100) * _srDuration);
+}
+
 function _srUpdateProgress(pct) {
   const fill  = document.getElementById('sr-progress-fill');
   const thumb = document.getElementById('sr-progress-thumb');
   if (fill)  fill.style.width = pct + '%';
   if (thumb) thumb.style.left = pct + '%';
-  document.getElementById('sr-time-now').textContent = fmtTime(Math.round((pct / 100) * _srDuration));
+  const nowSec = Math.round((pct / 100) * _srDuration);
+  const nowStr = fmtTime(nowSec);
+  const el = document.getElementById('sr-time-now');
+  if (el) el.textContent = nowStr;
+  // sync lyrics sheet timecode
+  const tc = document.getElementById('lyr-timecode');
+  if (tc) tc.textContent = nowStr;
+  // update active lyric
+  _lyricsHighlight(nowSec);
 }
+
+function _srSetPlayState(playing) {
+  const disc = document.getElementById('sr-album-disc');
+  const mainIco = document.getElementById('sr-play-ico');
+  const lyrIco  = document.getElementById('lyr-play-ico');
+  if (playing) {
+    if (disc) disc.classList.add('disc-spinning');
+    if (mainIco) mainIco.src = 'assets/icons/ui/ic_pause.svg';
+    if (lyrIco)  lyrIco.src  = 'assets/icons/ui/ic_pause.svg';
+    if (lyrIco)  lyrIco.style.filter = 'brightness(0)';
+  } else {
+    if (disc) disc.classList.remove('disc-spinning');
+    if (mainIco) mainIco.src = 'assets/icons/ui/ic_play.svg';
+    if (lyrIco)  lyrIco.src  = 'assets/icons/ui/ic_play.svg';
+    if (lyrIco)  lyrIco.style.filter = 'brightness(0)';
+  }
+}
+
 function toggleSongResultPlay() {
   _srPlaying = !_srPlaying;
-  const ico = document.getElementById('sr-play-ico');
+  _srSetPlayState(_srPlaying);
   if (_srPlaying) {
-    ico.src = 'assets/icons/ui/ic_pause.svg';
     _srTimer = setInterval(() => {
       if (!_srPlaying) return;
       _srProgress = Math.min(_srProgress + (100 / _srDuration), 100);
       _srUpdateProgress(_srProgress);
-      if (_srProgress >= 100) { clearInterval(_srTimer); _srPlaying = false; ico.src = 'assets/icons/ui/ic_play.svg'; }
+      if (_srProgress >= 100) {
+        clearInterval(_srTimer); _srPlaying = false; _srSetPlayState(false);
+      }
     }, 1000);
   } else {
     clearInterval(_srTimer); _srTimer = null;
-    ico.src = 'assets/icons/ui/ic_play.svg';
   }
 }
+
+// Lyrics sheet play button — synced toggle with main player
+function lyricsPlayBtn() {
+  toggleSongResultPlay();
+}
+
 function seekSongResult(e, bar) {
-  // Use offsetX for reliable position within the element (works with CSS transforms)
   const pct = Math.max(0, Math.min(100, (e.offsetX / bar.offsetWidth) * 100));
   _srProgress = pct;
   _srUpdateProgress(_srProgress);
 }
 function prevSongResult() { _srProgress = Math.max(0, _srProgress - 15); _srUpdateProgress(_srProgress); }
 function nextSongResult() { _srProgress = Math.min(100, _srProgress + 15); _srUpdateProgress(_srProgress); }
+
+// ── Lyrics sheet ──
+let _lyricsBuilt = false;
+let _lyricsDragInit = false;
+let _lyrUserScrolling = false;
+
+function _buildLyricsList() {
+  if (_lyricsBuilt) return;
+  _lyricsBuilt = true;
+  const list = document.getElementById('lyr-list');
+  if (!list) return;
+  list.innerHTML = '';
+  _goldenHourLyrics.forEach((item, i) => {
+    const p = document.createElement('p');
+    p.className = 'lyr-line';
+    p.dataset.idx = i;
+    p.textContent = item.line;
+    list.appendChild(p);
+  });
+  // Detect manual scroll to pause auto-scroll briefly
+  const scrollArea = document.getElementById('lyr-scroll-area');
+  if (scrollArea) {
+    let scrollTimer;
+    scrollArea.addEventListener('touchstart', () => { _lyrUserScrolling = true; }, { passive: true });
+    scrollArea.addEventListener('touchend', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => { _lyrUserScrolling = false; }, 2000);
+    }, { passive: true });
+  }
+}
+
+function _lyricsHighlight(sec) {
+  const lines = document.querySelectorAll('.lyr-line');
+  if (!lines.length) return;
+  let activeIdx = 0;
+  for (let i = 0; i < _goldenHourLyrics.length; i++) {
+    if (sec >= _goldenHourLyrics[i].t) activeIdx = i;
+  }
+  lines.forEach((el, i) => el.classList.toggle('active', i === activeIdx));
+
+  // Show top gradient only after the highlight has passed line 0
+  const fadeTop = document.querySelector('#lyrics-sheet .lyr-fade-top');
+  if (fadeTop) fadeTop.style.opacity = activeIdx > 0 ? '1' : '0';
+
+  // Auto-scroll: center active line in the scroll container
+  if (_lyrUserScrolling) return;
+  const scrollArea = document.getElementById('lyr-scroll-area');
+  const activeLine = lines[activeIdx];
+  if (!scrollArea || !activeLine) return;
+  // offsetTop is relative to lyr-list (direct parent), lyr-list is direct child of scrollArea
+  const areaH = scrollArea.clientHeight;
+  const lineTop = activeLine.offsetTop;
+  const lineH = activeLine.offsetHeight;
+  const target = lineTop - areaH / 2 + lineH / 2;
+  scrollArea.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+}
+
+function _initLyricsSheetDrag() {
+  if (_lyricsDragInit) return;
+  _lyricsDragInit = true;
+  const sheet = document.getElementById('lyrics-sheet');
+  let startY = 0, dragY = 0, dragging = false;
+  const DRAG_ZONE = 72; // px from top of sheet to accept drag start
+
+  function onStart(clientY, sheetTop) {
+    const relY = clientY - sheetTop;
+    if (relY > DRAG_ZONE) return; // only handle + header zone
+    startY = clientY; dragY = 0; dragging = true;
+    sheet.style.transition = 'none';
+  }
+  function onMove(clientY) {
+    if (!dragging) return;
+    dragY = Math.max(0, clientY - startY);
+    sheet.style.transform = `translateY(${dragY}px)`;
+  }
+  function onEnd() {
+    if (!dragging) return;
+    dragging = false;
+    sheet.style.transition = 'transform .38s cubic-bezier(.25,.46,.45,.94)';
+    if (dragY > 120) {
+      sheet.style.transform = 'translateY(100%)';
+      setTimeout(closeLyricsSheet, 380);
+    } else {
+      sheet.style.transform = 'translateY(0)';
+    }
+  }
+
+  // Touch — attach to SHEET; use document-level move/end so gesture isn't lost
+  sheet.addEventListener('touchstart', e => {
+    const sheetTop = sheet.getBoundingClientRect().top;
+    onStart(e.touches[0].clientY, sheetTop);
+  }, { passive: true });
+
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    e.preventDefault();
+    onMove(e.touches[0].clientY);
+  }, { passive: false });
+
+  document.addEventListener('touchend', () => onEnd(), { passive: true });
+
+  // Mouse fallback for desktop testing
+  sheet.addEventListener('mousedown', e => {
+    const sheetTop = sheet.getBoundingClientRect().top;
+    onStart(e.clientY, sheetTop);
+    const mv = e2 => onMove(e2.clientY);
+    const up = () => { onEnd(); document.removeEventListener('mousemove', mv); document.removeEventListener('mouseup', up); };
+    document.addEventListener('mousemove', mv);
+    document.addEventListener('mouseup', up);
+  });
+}
+
+function openLyricsSheet() {
+  _buildLyricsList();
+  _initLyricsSheetDrag();
+  const sheet = document.getElementById('lyrics-sheet');
+  // Reset drag transform
+  sheet.style.transition = 'transform .38s cubic-bezier(.25,.46,.45,.94)';
+  sheet.style.transform = '';
+
+  // ── Reset playback to beginning ──
+  if (_srPlaying) { clearInterval(_srTimer); _srTimer = null; _srPlaying = false; }
+  _srProgress = 0;
+  _srUpdateProgress(0);
+
+  // Sync mini player
+  const titleEl = document.getElementById('sr-title');
+  const lyrTitle = document.getElementById('lyr-mini-title');
+  if (titleEl && lyrTitle) lyrTitle.textContent = titleEl.textContent;
+  const mainImg = document.getElementById('sr-album-img');
+  const miniArt = document.getElementById('lyr-mini-art');
+  if (mainImg && miniArt) miniArt.src = mainImg.src;
+  const lyrTc = document.getElementById('lyr-timecode');
+  if (lyrTc) lyrTc.textContent = fmtTime(0);
+  const lyrDur = document.getElementById('lyr-duration');
+  if (lyrDur) lyrDur.textContent = ' / ' + fmtTime(_srDuration);
+  // Play icons reset to play state
+  _srSetPlayState(false);
+
+  // Show overlay + sheet
+  document.getElementById('lyrics-overlay').classList.add('show');
+  document.getElementById('lyrics-sheet').classList.add('open');
+
+  // Scroll to top + highlight line 1 after sheet opens
+  setTimeout(() => {
+    const scrollArea = document.getElementById('lyr-scroll-area');
+    if (scrollArea) scrollArea.scrollTop = 0;
+    _lyricsHighlight(0);
+    if (!_srPlaying) toggleSongResultPlay();
+  }, 420);
+}
+
+function closeLyricsSheet() {
+  const sheet = document.getElementById('lyrics-sheet');
+  document.getElementById('lyrics-overlay').classList.remove('show');
+  sheet.classList.remove('open');
+  sheet.style.transform = '';
+}
 
 function applySongTemplate(title, genre, mood) {
   _songTpl = { title, genre, mood };
