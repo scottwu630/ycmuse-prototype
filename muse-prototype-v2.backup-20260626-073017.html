@@ -127,11 +127,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
 /* ── iPhone / mobile: full screen, no frame, scale up to fill screen ── */
 @media(max-width:430px){
-  html,body{background:var(--bg);overflow:hidden;height:100lvh;}
-  .device-wrap{padding:0;background:var(--bg);display:block;overflow:hidden;height:100lvh;min-height:0;}
+  html,body{background:var(--bg);overflow:hidden;height:100dvh;}
+  .device-wrap{padding:0;background:var(--bg);display:block;overflow:hidden;height:100dvh;min-height:0;}
   .device{
     width:320px !important;
-    height:calc(100lvh / var(--mob-scale, 1)) !important;
+    height:calc(100dvh / var(--mob-scale, 1)) !important;
     border-radius:0 !important;
     box-shadow:none !important;
     border:none !important;
@@ -1196,7 +1196,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     </div>
 
     <!-- ══════ ONBOARDING (unified slider) ══════ -->
-    <div id="screen-onboard" class="screen" style="display:flex;flex-direction:column;">
+    <div id="screen-onboard" class="screen">
       <!-- Sliding content -->
       <div class="ob-slides-wrap">
         <div class="ob-track" id="ob-track">
@@ -5575,11 +5575,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 // ── Navigation ──
 const TAB_SCREENS = ['home','history'];
 let navStack = ['splash'];
-
-// ── Mobile frame height is driven purely by CSS `100lvh` (large viewport unit) ──
-// 100lvh = Safari's maximum height with toolbars retracted, so the frame fills the
-// screen from first paint and never leaves a bottom gap. It also auto-updates on
-// rotation, so no JS height tracking is needed.
 
 // ── Mobile scale: zoom 320px Figma content to fill the actual device screen ──
 (function applyMobileScale() {
@@ -10064,6 +10059,7 @@ function fmtTime(s) {
 }
 
 </script>
+
 
 </body>
 </html>
