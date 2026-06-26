@@ -2222,10 +2222,15 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="flex:1;"></div>
           <div style="width:36px;"></div>
         </div>
-        <div style="padding:calc(var(--safe-top) + var(--nav-h) + 38px) 16px 0;display:flex;flex-direction:column;gap:16px;">
+        <div style="padding:calc(var(--safe-top) + var(--nav-h) + 8px) 16px 0;display:flex;flex-direction:column;gap:16px;">
           <!-- Avatar + Name + Email -->
           <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-            <img src="assets/images/character-photos/samples/Sample_P1.jpg" style="width:76px;height:76px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+            <!-- Other user: real photo -->
+            <img id="cp-avatar-photo" src="assets/images/character-photos/samples/Sample_P1.jpg" style="width:76px;height:76px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+            <!-- Own profile: gradient + icon (hidden by default) -->
+            <div id="cp-avatar-default" style="display:none;width:76px;height:76px;border-radius:50%;background:linear-gradient(45deg,#FF6BCE 14.6%,#A855F7 50%,#4338CA 85.4%);align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="assets/icons/ui/ic_account.svg" width="36" height="36" style="display:block;filter:brightness(0) invert(1);">
+            </div>
             <div style="text-align:center;width:100%;">
               <div id="cp-profile-name" style="font-size:20px;font-weight:700;color:#fff;line-height:26px;letter-spacing:-.2px;">Liam Johnson</div>
               <div id="cp-profile-email" style="font-size:12px;font-weight:500;color:#9C9CAB;line-height:normal;">liam_johnson@mail.com</div>
@@ -2258,7 +2263,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div id="cp-content-mv" style="padding:0 16px 80px;">
 
           <!-- MV 1: Cinematic Night -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2277,7 +2282,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- MV 2: Neon City Nights -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2296,7 +2301,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- MV 3: Starfall Serenade -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2315,7 +2320,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- MV 4: Electric Dreams -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2334,7 +2339,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- MV 5: Urban Whispers -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2353,7 +2358,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- MV 6: Crystal Horizon -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;">
+          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2377,7 +2382,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div id="cp-content-songs" style="display:none;padding:0 16px 80px;">
 
           <!-- Song 1: Golden Hour -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2396,7 +2401,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 2: Midnight Drive -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_06.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2415,7 +2420,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 3: Dusk Ballad -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_08.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2434,7 +2439,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 4: Forest Morning -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_01.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2453,7 +2458,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 5: Velvet Sky -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_02.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2472,7 +2477,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 6: Neon Pulse -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_03.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2491,7 +2496,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 7: Dreaming Loud -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_04.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2510,7 +2515,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 8: Ocean Drift -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;">
+          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_07.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -5768,6 +5773,11 @@ function goBack() {
     if (e) e.textContent = 'liam_johnson@mail.com';
     if (p) p.textContent = '11.4k';
     if (l) l.textContent = '258';
+    // Restore avatar to real photo
+    var photo = document.getElementById('cp-avatar-photo');
+    var def   = document.getElementById('cp-avatar-default');
+    if (photo) photo.style.display = '';
+    if (def)   def.style.display   = 'none';
   }
   navStack.pop();                        // remove current screen
   const prev = navStack[navStack.length - 1];
@@ -9245,8 +9255,22 @@ function openOwnProfile(tab) {
   if (e) e.textContent = 'scott_wu@mail.com';
   if (p) p.textContent = tab === 'mv' ? '1.2k' : '1.2k';
   if (l) l.textContent = tab === 'mv' ? '472' : '258';
+  // Swap avatar to default gradient
+  var photo = document.getElementById('cp-avatar-photo');
+  var def   = document.getElementById('cp-avatar-default');
+  if (photo) photo.style.display = 'none';
+  if (def)   def.style.display   = 'flex';
   goTo('community-profile');
   setTimeout(function() { switchCpTab(tab === 'mv' ? 'mv' : 'songs'); }, 80);
+}
+
+// ── Community profile row tap — navigates based on own vs other ──
+function cpRowTap(type) {
+  if (_cpIsOwnProfile) {
+    goTo(type === 'mv' ? 'mv-result' : 'song-result');
+  } else {
+    goTo(type === 'mv' ? 'mv-preview' : 'song-player');
+  }
 }
 
 // ── Build one option row in the cp-more-options container ──
