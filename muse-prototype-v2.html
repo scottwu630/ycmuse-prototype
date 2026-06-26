@@ -689,7 +689,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .player-play{width:62px;height:62px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;box-shadow:0 8px 24px rgba(255,255,255,.18);transition:transform .15s;}
 .player-play:active{transform:scale(.92);}
 .song-result-btns{display:flex;flex-direction:column;gap:11px;padding:0 16px calc(40px + var(--safe-bot));}
-@keyframes disc-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes disc-spin{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
 .disc-spinning{animation:disc-spin 20s linear infinite;}
 /* Lyrics sheet */
 #lyrics-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:50;opacity:0;pointer-events:none;transition:opacity .3s;}
@@ -713,7 +713,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .lyr-mini-time span.lyr-now{color:#fff;}
 .lyr-play-btn{width:36px;height:36px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:opacity .15s;}
 .lyr-play-btn:active{opacity:.7;}
-.lyr-divider{height:1px;background:rgba(255,255,255,.15);margin:0 20px;flex-shrink:0;}
+.lyr-divider{height:1px;background:rgba(255,255,255,.15);margin:10px 20px;flex-shrink:0;}
 .lyr-scroll{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;position:relative;padding:0 20px;scrollbar-width:none;-ms-overflow-style:none;box-sizing:border-box;}
 .lyr-scroll::-webkit-scrollbar{display:none;}
 .lyr-list{display:flex;flex-direction:column;gap:0;padding:0 0 80px;}
@@ -732,6 +732,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .hist-row:active{opacity:.6;}
 .hist-thumb{width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;position:relative;}
 .hist-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.hist-thumb::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;}
 .hist-thumb-icon{width:61px;height:61px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
 .hist-info{flex:1;min-width:0;}
 .hist-name{font-size:13px;font-weight:700;color:var(--n100);letter-spacing:-.13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -2226,19 +2227,19 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
             <img src="assets/images/character-photos/samples/Sample_P1.jpg" style="width:76px;height:76px;border-radius:50%;object-fit:cover;flex-shrink:0;">
             <div style="text-align:center;width:100%;">
-              <div style="font-size:20px;font-weight:700;color:#fff;line-height:26px;letter-spacing:-.2px;">Liam Johnson</div>
-              <div style="font-size:12px;font-weight:500;color:#9C9CAB;line-height:normal;">liam_johnson@mail.com</div>
+              <div id="cp-profile-name" style="font-size:20px;font-weight:700;color:#fff;line-height:26px;letter-spacing:-.2px;">Liam Johnson</div>
+              <div id="cp-profile-email" style="font-size:12px;font-weight:500;color:#9C9CAB;line-height:normal;">liam_johnson@mail.com</div>
             </div>
           </div>
           <!-- Stats row -->
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="flex:1;text-align:center;padding:8px;overflow:hidden;">
-              <div style="font-size:20px;font-weight:700;color:#fff;line-height:26px;letter-spacing:-.2px;">11.4k</div>
+              <div id="cp-profile-plays" style="font-size:20px;font-weight:700;color:#fff;line-height:26px;letter-spacing:-.2px;">11.4k</div>
               <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.35);line-height:16px;letter-spacing:-.11px;">Plays</div>
             </div>
             <div style="width:1px;height:30px;background:rgba(255,255,255,.15);flex-shrink:0;"></div>
             <div style="flex:1;text-align:center;padding:8px;overflow:hidden;">
-              <div style="font-size:20px;font-weight:700;color:#fff;line-height:26px;letter-spacing:-.2px;">258</div>
+              <div id="cp-profile-likes" style="font-size:20px;font-weight:700;color:#fff;line-height:26px;letter-spacing:-.2px;">258</div>
               <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.35);line-height:16px;letter-spacing:-.11px;">Likes</div>
             </div>
           </div>
@@ -2258,7 +2259,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- MV 1: Cinematic Night -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;">Cinematic Night</div>
               <div style="display:flex;align-items:center;gap:10px;">
@@ -2273,7 +2278,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- MV 2: Neon City Nights -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;">Neon City Nights</div>
               <div style="display:flex;align-items:center;gap:10px;">
@@ -2288,7 +2297,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- MV 3: Starfall Serenade -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;">Starfall Serenade</div>
               <div style="display:flex;align-items:center;gap:10px;">
@@ -2303,7 +2316,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- MV 4: Electric Dreams -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;">Electric Dreams</div>
               <div style="display:flex;align-items:center;gap:10px;">
@@ -2318,7 +2335,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- MV 5: Urban Whispers -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;">Urban Whispers</div>
               <div style="display:flex;align-items:center;gap:10px;">
@@ -2333,7 +2354,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- MV 6: Crystal Horizon -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;">
-            <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;">Crystal Horizon</div>
               <div style="display:flex;align-items:center;gap:10px;">
@@ -2353,7 +2378,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- Song 1: Golden Hour -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/images/album-art/album_05.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Golden Hour</div>
               <div style="display:flex;align-items:center;gap:10px;margin-top:2px;">
@@ -2368,7 +2397,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- Song 2: Midnight Drive -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/images/album-art/album_06.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/images/album-art/album_06.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Midnight Drive</div>
               <div style="display:flex;align-items:center;gap:10px;margin-top:2px;">
@@ -2383,7 +2416,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- Song 3: Dusk Ballad -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/images/album-art/album_08.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/images/album-art/album_08.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dusk Ballad</div>
               <div style="display:flex;align-items:center;gap:10px;margin-top:2px;">
@@ -2398,7 +2435,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- Song 4: Forest Morning -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/images/album-art/album_01.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/images/album-art/album_01.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Forest Morning</div>
               <div style="display:flex;align-items:center;gap:10px;margin-top:2px;">
@@ -2413,7 +2454,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- Song 5: Velvet Sky -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/images/album-art/album_02.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/images/album-art/album_02.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Velvet Sky</div>
               <div style="display:flex;align-items:center;gap:10px;margin-top:2px;">
@@ -2428,7 +2473,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- Song 6: Neon Pulse -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/images/album-art/album_03.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/images/album-art/album_03.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Neon Pulse</div>
               <div style="display:flex;align-items:center;gap:10px;margin-top:2px;">
@@ -2443,7 +2492,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- Song 7: Dreaming Loud -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-            <img src="assets/images/album-art/album_04.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/images/album-art/album_04.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dreaming Loud</div>
               <div style="display:flex;align-items:center;gap:10px;margin-top:2px;">
@@ -2458,7 +2511,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- Song 8: Ocean Drift -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0;">
-            <img src="assets/images/album-art/album_07.jpg" style="width:61px;height:61px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+            <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
+              <img src="assets/images/album-art/album_07.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+            </div>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">
               <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Ocean Drift</div>
               <div style="display:flex;align-items:center;gap:10px;margin-top:2px;">
@@ -2475,28 +2532,15 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
 
       <!-- Options Menu Scrim -->
-      <div id="cp-options-overlay" onclick="closeCpOptionsMenu()" style="position:absolute;inset:0;z-index:50;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:none;"></div>
+      <div id="cp-options-overlay" onclick="closeCpOptionsMenu()" style="position:absolute;inset:0;z-index:50;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:none;opacity:0;pointer-events:none;transition:opacity .3s;"></div>
 
       <!-- Options Bottom Sheet -->
-      <div id="cp-options-sheet" style="position:absolute;left:0;right:0;bottom:0;z-index:51;background:#151519;border-radius:26px 26px 0 0;padding:12px 0 40px;transform:translateY(100%);transition:transform .35s cubic-bezier(.22,1,.36,1);">
+      <div id="cp-options-sheet" style="position:absolute;left:0;right:0;bottom:0;z-index:51;background:#151519;border-radius:26px 26px 0 0;padding:12px 0 40px;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);">
         <!-- Handle -->
         <div style="display:flex;justify-content:center;margin-bottom:10px;">
           <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);"></div>
         </div>
-        <!-- Like option -->
-        <div onclick="cpOptionLike()" style="display:flex;align-items:center;gap:12px;padding:8px 20px;height:40px;cursor:pointer;transition:opacity .15s;" ontouchstart="this.style.opacity='.6'" ontouchend="this.style.opacity='1'">
-          <div style="width:20px;height:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-            <img id="cp-opt-like-icon" src="assets/icons/ui/ic_favorite_off.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
-          </div>
-          <span id="cp-opt-like-label" style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;">Like</span>
-        </div>
-        <!-- Share option -->
-        <div onclick="cpOptionShare()" style="display:flex;align-items:center;gap:12px;padding:8px 20px;height:40px;cursor:pointer;transition:opacity .15s;" ontouchstart="this.style.opacity='.6'" ontouchend="this.style.opacity='1'">
-          <div style="width:20px;height:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-            <img src="assets/icons/ui/ic_share.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
-          </div>
-          <span style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;">Share</span>
-        </div>
+        <div id="cp-more-options"></div>
       </div>
     </div>
 
@@ -4132,7 +4176,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="mv" data-liked="true" onclick="histMarkPlayed(this);goTo('mv-result')">
             <div class="hist-thumb">
               <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg">
-              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Cinematic Night</div>
@@ -4172,7 +4216,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="song" data-liked="true" onclick="histMarkPlayed(this);goTo('song-result')">
             <div class="hist-thumb">
               <img src="assets/images/album-art/album_01.jpg">
-              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Golden Hour</div>
@@ -4196,7 +4240,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="storyboard" onclick="histMarkPlayed(this);goTo('mv-storyboard')">
             <div class="hist-thumb">
               <img src="assets/images/storyboard/storyboard_01.jpg">
-              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_script.svg" width="12" height="12" style="display:block;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_script.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Starlight in Your Eyes</div>
@@ -4219,7 +4263,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="mv" onclick="histMarkPlayed(this);goTo('mv-result')">
             <div class="hist-thumb">
               <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg">
-              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Neon City Nights</div>
@@ -4239,7 +4283,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="song" onclick="histMarkPlayed(this);goTo('song-result')">
             <div class="hist-thumb">
               <img src="assets/images/album-art/album_08.jpg">
-              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Midnight Drive</div>
@@ -4259,7 +4303,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="hist-row" data-htype="song" data-source="community" data-liked="true" onclick="openSongPlayer('Whispers of the Past','Lo-fi · Soothing','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
             <div class="hist-thumb">
               <img src="assets/images/album-art/album_05.jpg">
-              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_song.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Whispers of the Past</div>
@@ -4557,14 +4601,14 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <!-- Divider -->
             <div style="width:1px;height:30px;background:rgba(255,255,255,.15);flex-shrink:0;"></div>
             <!-- MVs -->
-            <div onclick="goToHistory('mv')" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px;cursor:pointer;">
+            <div onclick="openOwnProfile('mv')" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px;cursor:pointer;">
               <div style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">12</div>
               <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.35);letter-spacing:-.11px;line-height:16px;">MVs</div>
             </div>
             <!-- Divider -->
             <div style="width:1px;height:30px;background:rgba(255,255,255,.15);flex-shrink:0;"></div>
             <!-- Songs -->
-            <div onclick="goToHistory('song')" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px;cursor:pointer;">
+            <div onclick="openOwnProfile('songs')" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px;cursor:pointer;">
               <div style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">28</div>
               <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.35);letter-spacing:-.11px;line-height:16px;">Songs</div>
             </div>
@@ -5713,6 +5757,18 @@ function goTo(id, dir) {
 
 function goBack() {
   if (navStack.length <= 1) return;
+  // Reset own-profile flag when leaving community-profile
+  if (navStack[navStack.length - 1] === 'community-profile') {
+    _cpIsOwnProfile = false;
+    var n = document.getElementById('cp-profile-name');
+    var e = document.getElementById('cp-profile-email');
+    var p = document.getElementById('cp-profile-plays');
+    var l = document.getElementById('cp-profile-likes');
+    if (n) n.textContent = 'Liam Johnson';
+    if (e) e.textContent = 'liam_johnson@mail.com';
+    if (p) p.textContent = '11.4k';
+    if (l) l.textContent = '258';
+  }
   navStack.pop();                        // remove current screen
   const prev = navStack[navStack.length - 1];
   goTo(prev, 'back');                    // goTo(back) does NOT push — no extra pop needed
@@ -9176,43 +9232,110 @@ function switchCpTab(tab) {
 }
 
 var _cpOptionsBtn = null;
+var _cpIsOwnProfile = false;
 
-// ic_favorite_on.svg rendered with exact fill #A855F7 as a data URI
-var _purpleHeartSrc = "data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 9.49998C2.00002 8.38718 2.33759 7.30056 2.96813 6.38364C3.59867 5.46672 4.49252 4.76264 5.53161 4.36438C6.5707 3.96612 7.70616 3.89242 8.78801 4.15302C9.86987 4.41362 10.8472 4.99626 11.591 5.82398C11.6434 5.87999 11.7067 5.92465 11.7771 5.95518C11.8474 5.98571 11.9233 6.00146 12 6.00146C12.0767 6.00146 12.1526 5.98571 12.2229 5.95518C12.2933 5.92465 12.3566 5.87999 12.409 5.82398C13.1504 4.99088 14.128 4.40335 15.2116 4.13958C16.2952 3.87581 17.4335 3.94833 18.4749 4.34746C19.5163 4.7466 20.4114 5.45343 21.0411 6.37388C21.6708 7.29433 22.0053 8.38474 22 9.49998C22 11.79 20.5 13.5 19 15L13.508 20.313C13.3217 20.527 13.0919 20.6989 12.834 20.8173C12.5762 20.9357 12.296 20.9978 12.0123 20.9996C11.7285 21.0014 11.4476 20.9428 11.1883 20.8277C10.9289 20.7126 10.697 20.5436 10.508 20.332L5 15C3.5 13.5 2 11.8 2 9.49998Z' fill='%23A855F7'/%3E%3C/svg%3E";
+// ── Open own community profile from Account stats ──
+function openOwnProfile(tab) {
+  _cpIsOwnProfile = true;
+  var n = document.getElementById('cp-profile-name');
+  var e = document.getElementById('cp-profile-email');
+  var p = document.getElementById('cp-profile-plays');
+  var l = document.getElementById('cp-profile-likes');
+  if (n) n.textContent = 'Scott Wu';
+  if (e) e.textContent = 'scott_wu@mail.com';
+  if (p) p.textContent = tab === 'mv' ? '1.2k' : '1.2k';
+  if (l) l.textContent = tab === 'mv' ? '472' : '258';
+  goTo('community-profile');
+  setTimeout(function() { switchCpTab(tab === 'mv' ? 'mv' : 'songs'); }, 80);
+}
+
+// ── Build one option row in the cp-more-options container ──
+function _addCpOpt(container, iconHtml, label, extraHtml, onClick) {
+  var row = document.createElement('div');
+  row.className = 'hist-opt-row';
+  row.innerHTML = '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + iconHtml + '</div>'
+    + '<span class="hist-opt-label">' + label + '</span>'
+    + (extraHtml || '');
+  if (onClick) row.addEventListener('click', onClick);
+  container.appendChild(row);
+}
 
 function openCpOptionsMenu(btn) {
   _cpOptionsBtn = btn;
   var row = btn.parentElement;
-  var liked = row.dataset.liked === 'true';
-  _updateLikeOption(liked);
-  document.getElementById('cp-options-overlay').style.display = 'block';
+  var liked      = row.dataset.liked     === 'true';
+  var isPublished = row.dataset.published === 'true';
+  var container  = document.getElementById('cp-more-options');
+  container.innerHTML = '';
+
+  // Detect current tab: Songs or MV
+  var isSongsTab = document.getElementById('cp-content-songs') &&
+                   document.getElementById('cp-content-songs').style.display !== 'none';
+
+  if (_cpIsOwnProfile) {
+    // ── Own profile: CTA row + Like / Share / Publish / Download ──
+    var ctaRow = document.createElement('div');
+    ctaRow.className = 'hist-cta-row';
+    if (isSongsTab) {
+      ctaRow.innerHTML =
+        '<button class="hist-cta-primary" onclick="closeCpOptionsMenu();goTo(\'mv-style\')">'
+          + '<img src="assets/icons/ui/ic_video_ai.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">Create MV</button>'
+        + '<button class="hist-cta-secondary" onclick="closeCpOptionsMenu();goTo(\'proof\')">'
+          + '<img src="assets/icons/ui/ic_certified.svg" width="16" height="16" style="display:block;filter:brightness(0);">Get Proof</button>';
+    } else {
+      ctaRow.innerHTML =
+        '<button class="hist-cta-secondary" onclick="closeCpOptionsMenu();goTo(\'mv-edit\')">'
+          + '<img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0);">Edit MV</button>'
+        + '<button class="hist-cta-secondary" onclick="closeCpOptionsMenu();goTo(\'proof\')">'
+          + '<img src="assets/icons/ui/ic_certified.svg" width="16" height="16" style="display:block;filter:brightness(0);">Get Proof</button>';
+    }
+    container.appendChild(ctaRow);
+
+    _addCpOpt(container, _moreIcons.heart(liked), liked ? 'Unlike' : 'Like', null, function() {
+      liked = !liked;
+      row.dataset.liked = String(liked);
+      closeCpOptionsMenu();
+    });
+    _addCpOpt(container, _moreIcons.share, 'Share', null, function() { closeCpOptionsMenu(); });
+    _addCpOpt(container, _moreIcons.publish, 'Publish',
+      '<button class="hist-opt-toggle' + (isPublished ? ' on' : '') + '" onclick="event.stopPropagation();this.classList.toggle(\'on\');var pub=this.classList.contains(\'on\');if(_cpOptionsBtn)_cpOptionsBtn.parentElement.dataset.published=String(pub);"></button>',
+      null);
+    _addCpOpt(container, _moreIcons.download, 'Download', null, function() { closeCpOptionsMenu(); });
+
+  } else {
+    // ── Other user's profile: Like + Share only ──
+    _addCpOpt(container, _moreIcons.heart(liked), liked ? 'Unlike' : 'Like', null, function() {
+      liked = !liked;
+      row.dataset.liked = String(liked);
+      closeCpOptionsMenu();
+    });
+    _addCpOpt(container, _moreIcons.share, 'Share', null, function() { closeCpOptionsMenu(); });
+  }
+
+  var overlay = document.getElementById('cp-options-overlay');
+  var sheet   = document.getElementById('cp-options-sheet');
+  overlay.style.display = 'block';
   requestAnimationFrame(function() {
-    document.getElementById('cp-options-sheet').style.transform = 'translateY(0)';
+    overlay.style.opacity = '1';
+    overlay.style.pointerEvents = 'all';
+    sheet.style.transform = 'translateY(0)';
   });
 }
 
 function closeCpOptionsMenu() {
-  document.getElementById('cp-options-sheet').style.transform = 'translateY(100%)';
+  var overlay = document.getElementById('cp-options-overlay');
+  var sheet   = document.getElementById('cp-options-sheet');
+  sheet.style.transform = 'translateY(100%)';
+  overlay.style.opacity = '0';
+  overlay.style.pointerEvents = 'none';
   setTimeout(function() {
-    document.getElementById('cp-options-overlay').style.display = 'none';
+    overlay.style.display = 'none';
   }, 350);
 }
 
-function _updateLikeOption(liked) {
-  var icon = document.getElementById('cp-opt-like-icon');
-  var label = document.getElementById('cp-opt-like-label');
-  if (liked) {
-    icon.src = _purpleHeartSrc;
-    icon.style.filter = 'none';
-    label.textContent = 'Unlike';
-    label.style.color = '#A855F7';
-  } else {
-    icon.src = 'assets/icons/ui/ic_favorite_off.svg';
-    icon.style.filter = 'brightness(0) invert(1)';
-    label.textContent = 'Like';
-    label.style.color = '#fff';
-  }
-}
+// Stubs kept for any residual references
+function cpOptionLike() {}
+function cpOptionShare() {}
 
 function _parseCount(s) {
   s = (s || '').trim();
