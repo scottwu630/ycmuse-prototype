@@ -9223,13 +9223,21 @@ function openMvPreview(style, vid, prompt, meta) {
   goTo('mv-preview');
 }
 
-function openCommunityProfile() {
-  goTo('community-profile');
+function _cpRecalcPadding(cb) {
   requestAnimationFrame(function() {
     var hdr = document.getElementById('cp-header');
     var scr = document.getElementById('cp-scroll');
-    if (hdr && scr) scr.style.paddingTop = hdr.offsetHeight + 'px';
+    if (hdr && scr) {
+      scr.style.paddingTop = hdr.offsetHeight + 'px';
+      scr.scrollTop = 0; // reset AFTER padding applied to cancel browser scroll compensation
+    }
+    if (cb) cb();
   });
+}
+
+function openCommunityProfile() {
+  goTo('community-profile');
+  _cpRecalcPadding();
 }
 
 function switchCpTab(tab) {
@@ -9263,7 +9271,7 @@ function openOwnProfile(tab) {
   if (photo) photo.style.display = 'none';
   if (def)   def.style.display   = 'flex';
   goTo('community-profile');
-  setTimeout(function() { switchCpTab(tab === 'mv' ? 'mv' : 'songs'); }, 80);
+  _cpRecalcPadding(function() { switchCpTab(tab === 'mv' ? 'mv' : 'songs'); });
 }
 
 // ── Community profile row tap — navigates based on own vs other ──
