@@ -888,12 +888,17 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .song-added-play{width:38px;height:38px;border-radius:50%;background:var(--card-3);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text);padding-left:2px;flex-shrink:0;}
 .song-added-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:2px;}
 .song-added-dur{font-size:13px;color:var(--text-2);}
-.sample-song-row{display:flex;align-items:center;gap:12px;padding:13px 20px;cursor:pointer;transition:background .15s;border-bottom:1px solid rgba(255,255,255,.04);}
-.sample-song-row:active,.sample-song-row.sel{background:rgba(168,85,247,.07);}
-.sample-song-art{width:48px;height:48px;border-radius:50%;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
-.sample-song-name{font-size:16px;font-weight:600;color:var(--text);margin-bottom:2px;}
-.sample-song-dur{font-size:13px;color:var(--text-2);}
-.sample-use-btn{padding:7px 18px;border-radius:20px;background:#A855F7;border:none;color:#fff;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0;display:none;}
+.sample-song-row{display:flex;align-items:center;gap:8px;padding:8px 20px;height:60px;box-sizing:border-box;cursor:pointer;transition:background .15s;flex-shrink:0;}
+.sample-song-row:active,.sample-song-row.sel{background:rgba(168,85,247,.12);}
+.ss-art{position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;}
+.ss-art-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.ss-art-overlay{position:absolute;inset:0;background:rgba(0,0,0,.2);}
+.ss-art-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ss-info{flex:1;min-width:0;}
+.sample-song-name{font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sample-song-row.sel .sample-song-name{color:#A855F7;}
+.sample-song-dur{font-size:11px;font-weight:500;color:#9C9CAB;line-height:16px;letter-spacing:-.11px;}
+.sample-use-btn{padding:6px 8px;border-radius:16px;background:#A855F7;border:none;color:#fff;font-size:12px;font-weight:500;cursor:pointer;flex-shrink:0;display:none;white-space:nowrap;}
 .sample-song-row.sel .sample-use-btn{display:block;}
 .trim-song-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;}
 .trim-art{width:40px;height:40px;border-radius:50%;background:var(--card-3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
@@ -2682,24 +2687,30 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
           <!-- Song added state -->
-          <div id="mvr-song-added" style="display:none;background:#212127;border-radius:14px;overflow:hidden;margin-bottom:20px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);">
-              <span id="added-method-lbl" onclick="reopenSongLibrary()" style="font-size:14px;font-weight:700;color:#fff;cursor:pointer;">Import Audio</span>
-              <button id="song-clear-btn" onclick="clearSong()" style="width:26px;height:26px;border-radius:50%;background:#383842;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                <img src="assets/icons/ui/ic_close.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;">
-              </button>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;">
-              <div id="song-play-btn" onclick="toggleSongPlay()" style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;cursor:pointer;flex-shrink:0;">
-                <img id="song-art-thumb" src="assets/images/album-art/album_01.jpg" style="width:44px;height:44px;object-fit:cover;display:block;border-radius:10px;">
-                <div id="song-play-icon" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><polygon points="6,4 20,12 6,20"/></svg>
-                </div>
-                <svg id="song-play-ring" viewBox="0 0 44 44" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none;"><circle cx="22" cy="22" r="18" fill="none" stroke="#A855F7" stroke-width="2.5" stroke-dasharray="72 41" stroke-linecap="round"/></svg>
+          <div id="mvr-song-added" style="display:none;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px;margin-bottom:20px;">
+            <!-- Header row: source label + dismiss -->
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span id="added-method-lbl" onclick="reopenSongLibrary()" style="flex:1;font-size:12px;font-weight:600;color:#fff;letter-spacing:-.12px;cursor:pointer;">Song Library</span>
+              <div id="song-clear-btn" onclick="clearSong()" style="width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </div>
-              <div>
-                <div id="added-song-title" style="font-size:15px;font-weight:600;color:#fff;margin-bottom:2px;">Audio Track</div>
-                <div id="added-song-dur" style="font-size:13px;color:#9C9CAB;">00:00</div>
+            </div>
+            <!-- Divider -->
+            <div style="height:1px;background:rgba(255,255,255,.15);flex-shrink:0;"></div>
+            <!-- Song row -->
+            <div style="display:flex;align-items:center;gap:8px;overflow:hidden;">
+              <div id="song-play-btn" onclick="toggleSongPlay()" style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;cursor:pointer;flex-shrink:0;">
+                <img id="song-art-thumb" src="assets/images/album-art/album_01.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">
+                <div style="position:absolute;inset:0;background:rgba(0,0,0,.2);"></div>
+                <div id="song-play-icon" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                  <img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;">
+                </div>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div id="added-song-title" style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Audio Track</div>
+                <div style="font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;">
+                  <span id="added-song-current" style="color:#fff;display:none;"></span><span id="added-song-total" style="color:#9C9CAB;">00:00</span>
+                </div>
               </div>
             </div>
           </div>
@@ -2813,78 +2824,76 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- Sample Song Sheet -->
       <div class="overlay" id="sampleSong-overlay" onclick="stopPreview();hideSheet('sampleSong-sheet')"></div>
-      <div class="sheet" id="sampleSong-sheet" style="min-height:580px;max-height:580px;display:flex;flex-direction:column;">
-        <div class="sheet-handle"></div>
+      <div class="sheet" id="sampleSong-sheet" style="min-height:557px;max-height:557px;display:flex;flex-direction:column;gap:5px;padding-top:12px;padding-bottom:30px;">
+        <!-- Handle -->
+        <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);margin:0 auto;flex-shrink:0;"></div>
         <!-- Header -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px 12px;flex-shrink:0;">
-          <div onclick="stopPreview();hideSheet('sampleSong-sheet')" style="width:32px;height:32px;border-radius:50%;background:#383842;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#9C9CAB" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <div style="display:flex;align-items:center;gap:10px;padding:4px 20px;flex-shrink:0;">
+          <div onclick="stopPreview();hideSheet('sampleSong-sheet')" style="width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </div>
-          <div style="font-size:17px;font-weight:700;color:#fff;">Choose Song</div>
-          <div style="width:32px;"></div>
+          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;line-height:18px;">Choose Song</div>
+          <div style="width:28px;flex-shrink:0;"></div>
         </div>
-        <!-- Tab Bar — My Songs first -->
-        <div style="display:flex;margin:0 20px 0;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0;">
-          <div id="ss-tab-my" onclick="switchSongTab('my')" style="flex:1;text-align:center;padding:9px 0;font-size:13px;font-weight:700;color:#A855F7;border-bottom:2px solid #A855F7;cursor:pointer;transition:all .2s;">My Songs</div>
-          <div id="ss-tab-sample" onclick="switchSongTab('sample')" style="flex:1;text-align:center;padding:9px 0;font-size:13px;font-weight:600;color:#9C9CAB;border-bottom:2px solid transparent;cursor:pointer;transition:all .2s;">Sample Songs</div>
+        <!-- Tabs — pill style -->
+        <div style="display:flex;gap:6px;padding:0 20px;flex-shrink:0;">
+          <div id="ss-tab-my" onclick="switchSongTab('my')" style="min-width:48px;text-align:center;padding:5px 10px;border-radius:16px;font-size:11px;font-weight:500;background:#212127;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;letter-spacing:-.11px;white-space:nowrap;">My Songs</div>
+          <div id="ss-tab-sample" onclick="switchSongTab('sample')" style="min-width:48px;text-align:center;padding:5px 10px;border-radius:16px;font-size:11px;font-weight:500;background:#A855F7;color:#fff;cursor:pointer;transition:all .2s;letter-spacing:-.11px;white-space:nowrap;">Sample Songs</div>
         </div>
-        <!-- Sample Songs List (hidden by default) -->
-        <div id="ss-panel-sample" style="display:none;overflow-y:auto;">
+        <!-- Sample Songs Panel (shown by default) -->
+        <div id="ss-panel-sample" style="display:flex;flex-direction:column;overflow-y:auto;flex:1;">
           <div id="sample-song-list">
             <div class="sample-song-row" onclick="pickSampleSong(this,'Top Flow - Party','--:--','assets/images/album-art/album_05.jpg','assets/songs/Top%20Flow%20Production%20-%20Party.mp3')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;"><div class="sample-song-name">Top Flow - Party</div><div class="sample-song-dur">--:--</div></div>
+              <div class="ss-art"><img src="assets/images/album-art/album_05.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Top Flow - Party</div><div class="sample-song-dur">--:--</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
             </div>
             <div class="sample-song-row" onclick="pickSampleSong(this,'Party Dance','--:--','assets/images/album-art/album_08.jpg','assets/songs/Party%20Dance.mp3')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_08.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;"><div class="sample-song-name">Party Dance</div><div class="sample-song-dur">--:--</div></div>
+              <div class="ss-art"><img src="assets/images/album-art/album_08.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Party Dance</div><div class="sample-song-dur">--:--</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
             </div>
             <div class="sample-song-row" onclick="pickSampleSong(this,'Forest Morning','01:50','assets/images/album-art/album_01.jpg')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_01.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;"><div class="sample-song-name">Forest Morning</div><div class="sample-song-dur">01:50</div></div>
+              <div class="ss-art"><img src="assets/images/album-art/album_01.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Forest Morning</div><div class="sample-song-dur">01:50</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
             </div>
             <div class="sample-song-row" onclick="pickSampleSong(this,'Golden Hour','02:30','assets/images/album-art/album_03.jpg')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_03.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;"><div class="sample-song-name">Golden Hour</div><div class="sample-song-dur">02:30</div></div>
+              <div class="ss-art"><img src="assets/images/album-art/album_03.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Golden Hour</div><div class="sample-song-dur">02:30</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
             </div>
             <div class="sample-song-row" onclick="pickSampleSong(this,'Neon Pulse','03:25','assets/images/album-art/album_02.jpg')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_02.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;"><div class="sample-song-name">Neon Pulse</div><div class="sample-song-dur">03:25</div></div>
+              <div class="ss-art"><img src="assets/images/album-art/album_02.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Neon Pulse</div><div class="sample-song-dur">03:25</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
             </div>
             <div class="sample-song-row" onclick="pickSampleSong(this,'Ethereal Echoes','02:45','assets/images/album-art/album_06.jpg')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_06.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;"><div class="sample-song-name">Ethereal Echoes</div><div class="sample-song-dur">02:45</div></div>
+              <div class="ss-art"><img src="assets/images/album-art/album_06.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Ethereal Echoes</div><div class="sample-song-dur">02:45</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
             </div>
             <div class="sample-song-row" onclick="pickSampleSong(this,'Elysian Reverie','02:45','assets/images/album-art/album_07.jpg')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_07.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;"><div class="sample-song-name">Elysian Reverie</div><div class="sample-song-dur">02:45</div></div>
+              <div class="ss-art"><img src="assets/images/album-art/album_07.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Elysian Reverie</div><div class="sample-song-dur">02:45</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
             </div>
           </div>
-          <div style="height:16px;"></div>
         </div>
-        <!-- My Songs Panel (shown by default) -->
-        <div id="ss-panel-my" style="display:flex;flex-direction:column;overflow-y:auto;flex:1;">
-          <!-- My Songs list — re-uses same row style; songs created by the user -->
+        <!-- My Songs Panel (hidden by default) -->
+        <div id="ss-panel-my" style="display:none;flex-direction:column;overflow-y:auto;flex:1;">
           <div id="my-song-list">
             <div class="sample-song-row" onclick="pickSampleSong(this,'My Wedding Ballad','03:12','assets/images/album-art/album_04.jpg')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_04.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;"><div class="sample-song-name">My Wedding Ballad</div><div class="sample-song-dur">03:12</div></div>
+              <div class="ss-art"><img src="assets/images/album-art/album_04.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">My Wedding Ballad</div><div class="sample-song-dur">03:12</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
             </div>
             <div class="sample-song-row" onclick="pickSampleSong(this,'Summer Vibes','02:58','assets/images/album-art/album_09.jpg')">
-              <div style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="assets/images/album-art/album_09.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div class="song-play-icon" style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg></div></div></div>
-              <div style="flex:1;"><div class="sample-song-name">Summer Vibes</div><div class="sample-song-dur">02:58</div></div>
+              <div class="ss-art"><img src="assets/images/album-art/album_09.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Summer Vibes</div><div class="sample-song-dur">02:58</div></div>
               <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
             </div>
           </div>
-          <div style="height:16px;"></div>
         </div>
       </div>
 
@@ -6017,20 +6026,19 @@ function charImgDownload() {
 function switchSongTab(tab) {
   const isMy = tab === 'my';
   // Panels
-  document.getElementById('ss-panel-my').style.display     = isMy ? 'flex'  : 'none';
-  document.getElementById('ss-panel-sample').style.display = isMy ? 'none'  : 'block';
-  // Tab styles
+  const panelMy     = document.getElementById('ss-panel-my');
+  const panelSample = document.getElementById('ss-panel-sample');
+  panelMy.style.display     = isMy ? 'flex'  : 'none';
+  panelSample.style.display = isMy ? 'none'  : 'flex';
+  // Tab pills
   const tMy     = document.getElementById('ss-tab-my');
   const tSample = document.getElementById('ss-tab-sample');
-  tMy.style.color           = isMy ? '#A855F7' : '#9C9CAB';
-  tMy.style.fontWeight      = isMy ? '700' : '600';
-  tMy.style.borderBottom    = isMy ? '2px solid #A855F7' : '2px solid transparent';
-  tSample.style.color       = isMy ? '#9C9CAB' : '#A855F7';
-  tSample.style.fontWeight  = isMy ? '600' : '700';
-  tSample.style.borderBottom= isMy ? '2px solid transparent' : '2px solid #A855F7';
+  tMy.style.background = isMy ? '#A855F7' : '#212127';
+  tMy.style.color      = isMy ? '#fff'    : 'rgba(255,255,255,.4)';
+  tSample.style.background = isMy ? '#212127' : '#A855F7';
+  tSample.style.color      = isMy ? 'rgba(255,255,255,.4)' : '#fff';
   // Stop any playing preview when switching tabs
   stopPreview();
-  // Reset all play icons when switching
   document.querySelectorAll('.song-play-icon').forEach(resetPlayIcon);
 }
 
@@ -8022,14 +8030,37 @@ function toggleSongListPlay(artDiv) {
 }
 
 // ── Play / pause ring on added song ──
+var _songTimecodeInterval = null;
+var _songFakeTime = 0;
+function _fmtSongTime(s) {
+  s = Math.floor(s || 0);
+  return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+}
+function _startSongTimecode() {
+  if (_songTimecodeInterval) clearInterval(_songTimecodeInterval);
+  _songTimecodeInterval = setInterval(function() {
+    var cur = document.getElementById('added-song-current');
+    if (!cur) return;
+    if (_addedAudio && !_addedAudio.paused) {
+      // Real audio — use actual currentTime
+      cur.textContent = _fmtSongTime(_addedAudio.currentTime);
+    } else if (!_addedAudio) {
+      // No audio src — simulate ticking for prototype
+      _songFakeTime += 0.5;
+      cur.textContent = _fmtSongTime(_songFakeTime);
+    }
+  }, 500);
+}
+function _stopSongTimecode() {
+  if (_songTimecodeInterval) { clearInterval(_songTimecodeInterval); _songTimecodeInterval = null; }
+}
 function toggleSongPlay() {
   const btn  = document.getElementById('song-play-btn');
   const icon = document.getElementById('song-play-icon');
-  const ring = document.getElementById('song-play-ring');
-  if (!icon || !ring) return;
+  if (!btn || !icon) return;
   const playing = btn.dataset.playing === '1';
   if (!playing) {
-    // ── Create audio fresh within this user gesture (required for iOS Safari) ──
+    // ── Create audio within this user gesture (required for iOS Safari) ──
     if (window._addedAudioSrc) {
       if (!_addedAudio) {
         _addedAudio = new Audio(window._addedAudioSrc);
@@ -8039,26 +8070,38 @@ function toggleSongPlay() {
       _addedAudio.play().catch(() => {});
     }
     btn.dataset.playing = '1';
-    icon.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-    ring.style.opacity = '1';
-    ring.style.animation = 'none'; ring.offsetHeight;
-    ring.style.animation = 'spinRing 1.4s linear infinite';
+    icon.innerHTML = '<img src="assets/icons/ui/ic_pause.svg" width="20" height="20" style="display:block;">';
+    // Show current time and prepend " / " to total
+    var cur2 = document.getElementById('added-song-current');
+    var tot2 = document.getElementById('added-song-total');
+    if (cur2) { cur2.style.display = 'inline'; }
+    if (tot2 && tot2.textContent.indexOf(' / ') !== 0) { tot2.textContent = ' / ' + tot2.textContent; }
+    _startSongTimecode();
   } else {
     // ── Pause ──
     if (_addedAudio) _addedAudio.pause();
     btn.dataset.playing = '0';
-    icon.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><polygon points="6,4 20,12 6,20"/></svg>';
-    ring.style.opacity = '0'; ring.style.animation = 'none';
+    icon.innerHTML = '<img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;">';
+    _stopSongTimecode();
+    // Hide current time, strip " / " prefix from total
+    var cur3 = document.getElementById('added-song-current');
+    var tot3 = document.getElementById('added-song-total');
+    if (cur3) cur3.style.display = 'none';
+    if (tot3) tot3.textContent = tot3.textContent.replace(/^ \/ /, '');
   }
 }
 function resetSongPlay() {
+  _stopSongTimecode();
+  _songFakeTime = 0;
   if (_addedAudio) { _addedAudio.pause(); _addedAudio.currentTime = 0; }
   const btn  = document.getElementById('song-play-btn');
   const icon = document.getElementById('song-play-icon');
-  const ring = document.getElementById('song-play-ring');
+  const cur  = document.getElementById('added-song-current');
   if (btn)  btn.dataset.playing = '0';
-  if (icon) icon.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><polygon points="6,4 20,12 6,20"/></svg>';
-  if (ring) { ring.style.opacity = '0'; ring.style.animation = 'none'; }
+  if (icon) icon.innerHTML = '<img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;">';
+  if (cur)  { cur.textContent = '0:00'; cur.style.display = 'none'; }
+  var tot4 = document.getElementById('added-song-total');
+  if (tot4) tot4.textContent = tot4.textContent.replace(/^ \/ /, '');
 }
 
 // ── Real Audio Engine ──
@@ -8077,8 +8120,8 @@ let _previewAudio = null, _addedAudio = null;
   document.addEventListener('click',      unlockAudio, { capture: true, once: true });
 })();
 
-const PLAY_SVG  = '<svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M1.5 1.2l5 3.3-5 3.3V1.2z" fill="#fff"/></svg>';
-const PAUSE_SVG = '<svg width="8" height="9" viewBox="0 0 8 9" fill="none"><rect x="1" y="1" width="2.2" height="7" rx="1" fill="#fff"/><rect x="4.8" y="1" width="2.2" height="7" rx="1" fill="#fff"/></svg>';
+const PLAY_SVG  = '<img src="assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;">';
+const PAUSE_SVG = '<img src="assets/icons/ui/ic_pause.svg" width="14" height="14" style="display:block;">';
 
 function resetPlayIcon(iconEl) { if (iconEl) iconEl.innerHTML = PLAY_SVG; }
 function setPauseIcon(iconEl)  { if (iconEl) iconEl.innerHTML = PAUSE_SVG; }
@@ -8224,17 +8267,20 @@ function addSongToRoom(method, title, dur, art, audioSrc) {
   const grid = document.getElementById('mvr-song-grid');
   const added = document.getElementById('mvr-song-added');
   if (grid) grid.style.display = 'none';
-  if (added) added.style.display = 'block';
+  if (added) added.style.display = 'flex';
   const m = document.getElementById('added-method-lbl');
   const t = document.getElementById('added-song-title');
-  const d = document.getElementById('added-song-dur');
+  const cur = document.getElementById('added-song-current');
+  const tot = document.getElementById('added-song-total');
   const thumb = document.getElementById('song-art-thumb');
   if (m) m.textContent = method;
   if (t) t.textContent = title;
-  if (d) d.textContent = dur;
+  if (cur) { cur.textContent = '0:00'; cur.style.display = 'none'; }
+  if (tot) tot.textContent = dur || '00:00';
   if (thumb && art) thumb.src = art;
   window._addedAudioSrc = audioSrc || null;
-  stopAddedAudio();   // clear any previous audio object
+  window._addedSongDur = dur || '00:00';
+  stopAddedAudio();
   resetSongPlay();
 }
 
