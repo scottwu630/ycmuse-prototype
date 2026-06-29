@@ -897,11 +897,14 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .sample-song-row.sel .sample-use-btn{display:block;}
 .trim-song-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;}
 .trim-art{width:40px;height:40px;border-radius:50%;background:var(--card-3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.trim-waveform-wrap{position:relative;height:56px;background:var(--card-2);border-radius:10px;overflow:hidden;margin-bottom:10px;}
-.trim-bars{display:flex;align-items:center;gap:1.5px;height:100%;padding:6px 8px;}
-.trim-bar{border-radius:1.5px;background:rgba(168,85,247,.35);flex:1;min-height:3px;}
-.trim-selected{position:absolute;top:0;bottom:0;background:rgba(168,85,247,.18);left:22%;width:53%;}
-.trim-handle-l,.trim-handle-r{position:absolute;top:0;bottom:0;width:4px;background:#A855F7;border-radius:2px;cursor:ew-resize;}
+.trim-waveform-wrap{position:relative;height:50px;background:#212127;border-radius:10px;overflow:hidden;}
+.trim-bars{display:flex;align-items:center;gap:3px;height:100%;padding:0 8px;}
+.trim-bar{border-radius:2px;background:rgba(255,255,255,0.4);width:3px;flex-shrink:0;min-height:3px;}
+.trim-selected{position:absolute;top:0;bottom:0;background:rgba(168,85,247,.28);left:22%;width:53%;}
+.trim-handle-l,.trim-handle-r{position:absolute;top:0;bottom:0;width:12px;background:#A855F7;cursor:ew-resize;display:flex;align-items:center;justify-content:center;}
+.trim-handle-l{border-radius:6px 0 0 6px;}
+.trim-handle-r{border-radius:0 6px 6px 0;}
+.trim-handle-inner{width:2px;height:16px;background:rgba(9,9,11,0.4);border-radius:2px;}
 .trim-handle-l{left:22%;}.trim-handle-r{right:25%;}
 .trim-playhead{position:absolute;top:0;bottom:0;width:2px;background:#A855F7;left:37%;}
 .trim-times{display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);padding:0 2px;margin-bottom:6px;}
@@ -2887,30 +2890,64 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- Trim Audio Sheet -->
       <div class="overlay" id="trim-overlay"></div>
-      <div class="sheet" id="trim-sheet" style="padding-bottom:calc(var(--safe-bot) + 8px);">
+      <div class="sheet" id="trim-sheet" style="padding-bottom:calc(var(--safe-bot) + 40px);">
         <div class="sheet-handle"></div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;">
-          <div onclick="hideSheet('trim-sheet')" style="font-size:22px;cursor:pointer;color:#9C9CAB;">‹</div>
-          <div style="font-size:17px;font-weight:700;color:#fff;">Trim Audio</div>
-          <div onclick="confirmTrim()" style="font-size:16px;font-weight:600;color:#A855F7;cursor:pointer;">✓</div>
-        </div>
-        <div style="padding:0 16px 16px;">
-          <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:4px;">Trim Audio</div>
-          <div style="font-size:14px;color:#9C9CAB;margin-bottom:14px;">Only trim the audio to the parts you like the best.</div>
-          <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:12px;margin-bottom:14px;">
-            <div style="position:relative;width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;">
-              <img id="trim-song-img" src="assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;">
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:7px;color:#fff;padding-left:1px;">▶</div></div>
-            </div>
-            <div><div id="trim-song-name" style="font-size:15px;font-weight:600;color:#fff;">Down the Memory Lane</div><div id="trim-song-dur" style="font-size:13px;color:#9C9CAB;">02:25</div></div>
+        <!-- Header -->
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 20px 10px;">
+          <div onclick="stopTrimAudio();hideSheet('trim-sheet')" style="width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#9C9CAB;margin-bottom:5px;"><span id="trim-start">00:29</span><span id="trim-end">01:03</span></div>
-          <div style="position:relative;height:56px;background:#212127;border-radius:10px;overflow:hidden;margin-bottom:14px;" id="trim-waveform-wrap">
-            <div style="position:absolute;top:0;bottom:0;left:22%;width:53%;background:rgba(168,85,247,.18);"></div>
-            <div style="position:absolute;top:0;bottom:0;left:22%;width:4px;background:#A855F7;border-radius:2px;"></div>
-            <div style="position:absolute;top:0;bottom:0;right:25%;width:4px;background:#A855F7;border-radius:2px;"></div>
-            <div style="position:absolute;top:0;bottom:0;left:37%;width:2px;background:#A855F7;opacity:.8;"></div>
-            <div id="trim-bars-inner" style="display:flex;align-items:center;gap:1.5px;height:100%;padding:6px 8px;"></div>
+          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;">Trim Audio</div>
+          <div onclick="confirmTrim()" style="width:28px;height:28px;border-radius:18px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <!-- Content -->
+        <div style="padding:0 20px;display:flex;flex-direction:column;gap:10px;">
+          <!-- Title + subtitle -->
+          <div>
+            <div style="font-size:17px;font-weight:700;color:#fff;line-height:22px;margin-bottom:2px;">Trim Audio</div>
+            <div style="font-size:12px;font-weight:500;color:#9C9CAB;">Only trim the audio to the parts you like the best.</div>
+          </div>
+          <!-- Song row -->
+          <div style="display:flex;align-items:center;gap:8px;padding:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;height:60px;box-sizing:border-box;">
+            <div onclick="toggleTrimPlay()" style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;cursor:pointer;">
+              <img id="trim-song-img" src="assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,.2);"></div>
+              <div id="trim-play-icon-wrap" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                <img src="assets/icons/ui/ic_play.svg" width="18" height="18" style="display:block;">
+              </div>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div id="trim-song-name" style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Down the Memory Lane</div>
+              <div id="trim-song-dur" style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;">02:25</div>
+            </div>
+          </div>
+          <!-- Trimmer -->
+          <div style="display:flex;flex-direction:column;gap:0px;">
+            <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;">
+              <span id="trim-start">00:29</span>
+              <span id="trim-end">01:03</span>
+            </div>
+            <!-- Outer wrapper: no overflow clip so playhead can extend above/below -->
+            <div style="position:relative;padding:10px 0;">
+              <div class="trim-waveform-wrap" id="trim-waveform-wrap">
+                <!-- bars -->
+                <div id="trim-bars-inner" class="trim-bars"></div>
+                <!-- selection highlight -->
+                <div style="position:absolute;top:0;bottom:0;left:20%;width:51%;background:rgba(168,85,247,.28);pointer-events:none;"></div>
+                <!-- left handle -->
+                <div style="position:absolute;top:0;bottom:0;left:20%;width:12px;background:#A855F7;border-radius:6px 0 0 6px;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:2px;height:16px;background:rgba(9,9,11,0.4);border-radius:2px;"></div>
+                </div>
+                <!-- right handle -->
+                <div style="position:absolute;top:0;bottom:0;left:71%;width:12px;background:#A855F7;border-radius:0 6px 6px 0;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:2px;height:16px;background:rgba(9,9,11,0.4);border-radius:2px;"></div>
+                </div>
+              </div>
+              <!-- Playhead: lives in outer wrapper, extends 14px above and below the waveform -->
+              <div style="position:absolute;top:0;bottom:0;left:calc(20% + 51%/2);width:2px;background:#fff;border-radius:1px;pointer-events:none;transform:translateX(-50%);"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -8131,7 +8168,47 @@ function openTrim(method, title, dur, art, audioSrc) {
   showSheet('trim-sheet');
 }
 
+var _trimAudio = null;
+var _TRIM_PLAY_SVG  = '<img src="assets/icons/ui/ic_play.svg" width="18" height="18" style="display:block;">';
+var _TRIM_PAUSE_SVG = '<img src="assets/icons/ui/ic_pause.svg" width="18" height="18" style="display:block;">';
+function _trimSetIcon(html) {
+  var w = document.getElementById('trim-play-icon-wrap');
+  if (w) w.innerHTML = html;
+}
+function stopTrimAudio() {
+  if (_trimAudio) {
+    _trimAudio.pause();
+    _trimAudio.currentTime = 0;
+    _trimAudio = null;
+  }
+  _trimSetIcon(_TRIM_PLAY_SVG);
+}
+function toggleTrimPlay() {
+  // If real audio src available, play/pause it
+  if (window._pendingAudioSrc) {
+    if (!_trimAudio) {
+      _trimAudio = new Audio(window._pendingAudioSrc);
+      _trimAudio.volume = 0.9;
+      _trimAudio.addEventListener('ended', function() { _trimSetIcon(_TRIM_PLAY_SVG); });
+    }
+    if (_trimAudio.paused) {
+      _trimAudio.play().catch(function() {});
+      _trimSetIcon(_TRIM_PAUSE_SVG);
+    } else {
+      _trimAudio.pause();
+      _trimSetIcon(_TRIM_PLAY_SVG);
+    }
+  } else {
+    // No audio src (prototype mode) — just toggle icon visually
+    var w = document.getElementById('trim-play-icon-wrap');
+    if (!w) return;
+    var img = w.querySelector('img');
+    var isPlay = img && img.src.indexOf('ic_play') !== -1;
+    _trimSetIcon(isPlay ? _TRIM_PAUSE_SVG : _TRIM_PLAY_SVG);
+  }
+}
 function confirmTrim() {
+  stopTrimAudio();
   hideSheet('trim-sheet');
   setTimeout(() => addSongToRoom(window._pendingMethod || 'Import Audio', window._pendingTitle || 'Audio Track', window._pendingDur || '00:00', window._pendingArt, window._pendingAudioSrc), 300);
 }
