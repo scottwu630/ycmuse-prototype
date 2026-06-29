@@ -377,6 +377,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .sheet{position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:26px 26px 0 0;z-index:121;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);padding-bottom:var(--safe-bot);}
 .sheet.show{transform:translateY(0);}
 .sheet-handle{width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:14px auto 0;}
+/* ── TRENDING CARD INFO ANIMATION ── */
+.trend-info{opacity:0;transition:opacity .22s ease;pointer-events:none;}
+.trend-info.active{opacity:1;pointer-events:auto;}
 /* ── POPUP DIALOGS ── */
 .popup-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:inherit;z-index:9000;opacity:0;pointer-events:none;transition:opacity .3s ease-in;}
 .popup-overlay.show{opacity:1;pointer-events:all;transition:opacity .3s ease-out;}
@@ -1322,7 +1325,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 <img src="assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
                 <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending MV</span>
               </div>
-              <div style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
+              <div class="trend-info" style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
                 <div>
                   <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Adventurous Echoes</div>
                   <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Adventure · 2-3 min</div>
@@ -1340,7 +1343,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 <img src="assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
                 <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending MV</span>
               </div>
-              <div style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
+              <div class="trend-info" style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
                 <div>
                   <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Thrilling Harmonies</div>
                   <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Hybrid | 3-4 min</div>
@@ -1358,7 +1361,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 <img src="assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
                 <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending MV</span>
               </div>
-              <div style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
+              <div class="trend-info" style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
                 <div>
                   <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Epic Journeys</div>
                   <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Storytelling · 3-4 min</div>
@@ -7026,9 +7029,37 @@ function saveProfile() {
     t.style.transform  = `translateX(${x}px)`;
   }
 
+  function updateTrendActive(idx, animated) {
+    const track = document.getElementById('trend-track');
+    if (!track) return;
+    track.querySelectorAll('.trend-info').forEach((el, i) => {
+      if (i === idx) {
+        if (!animated) {
+          // Silent snap — must force reflow between transition:none and class add
+          // so the browser commits transition:none before processing the class change
+          el.style.transition = 'none';
+          void el.offsetWidth; // force reflow
+          el.classList.add('active');
+          setTimeout(() => { el.style.transition = ''; }, 50);
+        } else {
+          el.classList.add('active');
+        }
+      } else {
+        el.classList.remove('active');
+      }
+    });
+  }
+
+  function clearTrendActive() {
+    const track = document.getElementById('trend-track');
+    if (!track) return;
+    track.querySelectorAll('.trend-info').forEach(el => el.classList.remove('active'));
+  }
+
   function goToDom(idx, animated) {
     domIdx = idx;
     setTrackX(baseX(idx), animated);
+    updateTrendActive(idx, animated);
   }
 
   // After animating to a clone, silently snap to the real equivalent
@@ -7056,6 +7087,7 @@ function saveProfile() {
     sx = clientX; dragging = true; _trendDidSwipe = false;
     clearInterval(trendTimer);
     setTrackX(baseX(domIdx), false); // freeze at current position
+    clearTrendActive(); // hide info while dragging
   }
 
   function onMove(clientX) {
