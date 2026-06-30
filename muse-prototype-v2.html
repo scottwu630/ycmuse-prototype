@@ -4160,7 +4160,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <!-- Simple mode CTA — disabled until text entered -->
         <button id="song-cta-simple" disabled
           style="display:flex;width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;align-items:center;justify-content:center;gap:6px;transition:all .2s;font-family:inherit;opacity:1;">
-          <span style="opacity:.3;">Generate Song</span>
+          <span style="opacity:.3;">Create Song</span>
           <div style="display:flex;align-items:center;gap:2px;opacity:.3;">
             <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;flex-shrink:0;">
             <span style="font-size:15px;font-weight:700;">10</span>
@@ -4170,7 +4170,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <button id="song-cta-custom" style="display:none;width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;font-family:inherit;"
           onclick="requireLogin(()=>goTo('song-creating'))"
           onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-          <span>Generate Song</span>
+          <span>Create Song</span>
           <div style="display:flex;align-items:center;gap:2px;">
             <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;flex-shrink:0;">
             <span style="font-size:15px;font-weight:700;">10</span>
@@ -5190,6 +5190,42 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div style="font-size:11px;font-weight:500;color:#9c9cab;margin-top:2px;">2026-06-04, 14:08</div>
             </div>
             <div style="font-size:13px;font-weight:700;color:#ffffff;flex-shrink:0;">-20</div>
+          </div>
+
+          <!-- Earn: AI Music Video Refund -->
+          <div class="hist-row hist-earn" style="display:flex;align-items:center;gap:8px;padding:8px 0;">
+            <div style="width:44px;height:44px;border-radius:10px;background:#212127;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="assets/icons/ui/ic_video_ai.svg" width="20" height="20" style="display:block;">
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:13px;font-weight:700;color:#ffffff;line-height:1.3;">Creation Failed Refund</div>
+              <div style="font-size:11px;font-weight:500;color:#9c9cab;margin-top:2px;">2026-06-04, 12:51</div>
+            </div>
+            <div style="font-size:13px;font-weight:700;color:#f59e0b;flex-shrink:0;">+200</div>
+          </div>
+
+          <!-- Earn: AI Song Refund -->
+          <div class="hist-row hist-earn" style="display:flex;align-items:center;gap:8px;padding:8px 0;">
+            <div style="width:44px;height:44px;border-radius:10px;background:#212127;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="assets/icons/ui/ic_song_ai.svg" width="20" height="20" style="display:block;">
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:13px;font-weight:700;color:#ffffff;line-height:1.3;">Creation Failed Refund</div>
+              <div style="font-size:11px;font-weight:500;color:#9c9cab;margin-top:2px;">2026-06-04, 10:33</div>
+            </div>
+            <div style="font-size:13px;font-weight:700;color:#f59e0b;flex-shrink:0;">+10</div>
+          </div>
+
+          <!-- Earn: Storyboard Refund -->
+          <div class="hist-row hist-earn" style="display:flex;align-items:center;gap:8px;padding:8px 0;">
+            <div style="width:44px;height:44px;border-radius:10px;background:#212127;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="assets/icons/ui/ic_script.svg" width="20" height="20" style="display:block;">
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:13px;font-weight:700;color:#ffffff;line-height:1.3;">Creation Failed Refund</div>
+              <div style="font-size:11px;font-weight:500;color:#9c9cab;margin-top:2px;">2026-06-04, 09:47</div>
+            </div>
+            <div style="font-size:13px;font-weight:700;color:#f59e0b;flex-shrink:0;">+20</div>
           </div>
 
           <!-- Earn: Credit Purchase -->
