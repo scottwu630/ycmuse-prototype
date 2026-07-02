@@ -118,15 +118,19 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
   box-shadow:0 0 0 1px rgba(255,255,255,0.13),0 0 0 8px #161616,0 0 0 9px rgba(255,255,255,0.07),0 40px 80px rgba(0,0,0,0.9);}
 
 /* ── Desktop: force safe-top so status bar has visible height ── */
-@media(min-width:431px){
+@media(min-width:481px){
   :root{--safe-top:48px;}
   .scr-scroll{scrollbar-width:none;}
   .scr-scroll::-webkit-scrollbar{display:none;}
   #song-simple-idea::-webkit-scrollbar,#song-lyrics::-webkit-scrollbar,#mvr-describe::-webkit-scrollbar{display:none;}
 }
 
-/* ── iPhone / mobile: full screen, no frame, scale up to fill screen ── */
-@media(max-width:430px){
+/* ── iPhone / mobile: full screen, no frame, scale up to fill screen ──
+   430px covered older Pro Max models; iPhone 17 Pro Max ships a 440px CSS
+   viewport, so the breakpoint is raised to 480px to keep all current-gen
+   large phones (and near-future ones) rendering full-screen instead of
+   falling into the desktop framed view. ── */
+@media(max-width:480px){
   html,body{background:var(--bg);overflow:hidden;height:100lvh;}
   .device-wrap{padding:0;background:var(--bg);display:block;overflow:hidden;height:100lvh;min-height:0;}
   .device{
@@ -147,7 +151,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 /* ── STATUS BAR ── */
 /* Mobile-first: hidden by default; shown only on desktop frame */
 .status-bar{position:absolute;top:0;left:0;right:0;height:var(--safe-top);display:none;align-items:flex-end;padding:0 26px 9px;z-index:150;pointer-events:none;}
-@media(min-width:431px){.status-bar{display:flex;}}
+@media(min-width:481px){.status-bar{display:flex;}}
 .sb-time{font-size:15px;font-weight:600;color:#fff;}
 .sb-icons{margin-left:auto;display:flex;align-items:center;gap:5px;color:#fff;font-size:12px;}
 
@@ -5815,7 +5819,7 @@ let navStack = ['splash'];
 
 // ── Mobile scale: zoom 320px Figma content to fill the actual device screen ──
 (function applyMobileScale() {
-  if (window.innerWidth > 430) return;
+  if (window.innerWidth > 480) return;
   const scale = window.innerWidth / 320;
   const device = document.querySelector('.device');
   if (!device) return;
@@ -5833,7 +5837,7 @@ let navStack = ['splash'];
   root.style.setProperty('--safe-bot', (realSafeBot / scale) + 'px');
 })();
 window.addEventListener('resize', function() {
-  if (window.innerWidth > 430) return;
+  if (window.innerWidth > 480) return;
   const scale = window.innerWidth / 320;
   const device = document.querySelector('.device');
   if (!device) return;
