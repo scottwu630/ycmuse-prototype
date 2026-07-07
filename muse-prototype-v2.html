@@ -4109,7 +4109,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                   </button>
                 </div>
                 <div style="display:flex;align-items:center;gap:6px;">
-                  <button id="lyrics-enhance-btn" onclick="event.stopPropagation();enhancePrompt('lyrics')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                  <button id="lyrics-enhance-btn" onclick="event.stopPropagation();openEnhanceDirectionSheet()" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
                     <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
                   </button>
                   <span id="lyrics-cnt" style="font-size:12px;color:#9C9CAB;">0/2500</span>
@@ -5651,6 +5651,33 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     </div>
   </div>
 
+  <!-- Enhance Direction Sheet — Custom Mode Lyrics/Idea box -->
+  <div class="overlay" id="enhance-direction-overlay" onclick="hideSheet('enhance-direction-sheet')"></div>
+  <div class="sheet" id="enhance-direction-sheet" style="padding-bottom:calc(24px + var(--safe-bot));">
+    <div class="sheet-handle"></div>
+    <div class="sheet-ttl">What would you like to enhance?</div>
+    <!-- Refine Idea -->
+    <div class="sheet-opt" onclick="hideSheet('enhance-direction-sheet');enhancePrompt('lyrics-idea')">
+      <div class="sheet-opt-ico" style="background:linear-gradient(135deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);">
+        <img src="assets/icons/ui/ic_lightbulb.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div class="sheet-opt-lbl">Refine Idea</div>
+        <div class="sheet-opt-sub">Sharpen the mood, tone, and detail</div>
+      </div>
+    </div>
+    <!-- Refine Lyrics -->
+    <div class="sheet-opt" onclick="hideSheet('enhance-direction-sheet');enhancePrompt('lyrics-lyrics')">
+      <div class="sheet-opt-ico" style="background:linear-gradient(135deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);">
+        <img src="assets/icons/ui/ic_singing_mic.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div class="sheet-opt-lbl">Refine Lyrics</div>
+        <div class="sheet-opt-sub">Polish wording, rhythm, and flow</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Purchase Success Toast (Figma 646:17408 — Popup/Toast) -->
   <div id="purchase-success-toast" style="position:absolute;left:10px;right:10px;bottom:calc(var(--tab-h) + 10px);z-index:105;border-radius:14px;background:rgba(9,9,11,0.80);border:1px solid rgba(145,50,255,0.60);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:10px;display:flex;align-items:center;gap:8px;transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .42s cubic-bezier(.22,1,.36,1),opacity .3s ease;will-change:transform,opacity;box-sizing:border-box;">
     <div style="flex-shrink:0;width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);display:flex;align-items:center;justify-content:center;">
@@ -6225,6 +6252,14 @@ function showSheet(id) {
 function hideSheet(id) {
   document.getElementById(id)?.classList.remove('show');
   document.getElementById(id.replace(/-sheet$/, '-overlay'))?.classList.remove('show');
+}
+
+// Custom Mode Lyrics/Idea box — Enhance is ambiguous (engine has separate
+// refine-idea vs refine-lyrics calls), so ask which direction before firing.
+function openEnhanceDirectionSheet() {
+  const ta = document.getElementById('song-lyrics');
+  if (!ta || !ta.value.trim()) return;
+  showSheet('enhance-direction-sheet');
 }
 
 // ── Splash particles ──
@@ -8934,9 +8969,19 @@ function enhancePrompt(type) {
     `An evocative, editorial-quality cover image: the subject mid-motion against a dramatic sky, colors saturated just beyond reality. The composition draws the eye inward, the mood aching and cinematic in equal measure.`,
     `A striking visual that distills the song's emotional core — intimate framing, dusk-lit atmosphere, textures that feel both timeless and urgent. The image should feel like the first frame of a film you already know you'll love.`
   ];
+  // Refine Lyrics — engine call is distinct from Refine Idea (enhancedSong above):
+  // this polishes actual lyric text (wording, rhythm, structure) rather than
+  // expanding a concept, so the sample output keeps verse/chorus line breaks.
+  const enhancedLyrics = [
+    `[Verse]\nHeadlights cutting through the dark\nYour voice still echoes where you left your mark\nI'm holding onto everything we said\nLiving in the words still running through my head\n\n[Chorus]\nAnd if the night forgets my name\nI'll still remember how you stayed\nThrough every mile and every flame\nYou were the one thing that stayed the same`,
+    `[Verse]\nQuiet rooms and fading light\nI keep replaying that last goodnight\nEvery silence has your shape\nEvery memory I can't escape\n\n[Chorus]\nSo play it slow, let it burn\nGive me one more song to learn\nHold me here till the record turns\nThis is the only way home I've earned`,
+    `[Verse]\nCity lights blur into gold\nEvery story that we never told\nI'm still chasing what we used to be\nBefore the world got in between\n\n[Chorus]\nSay you'll wait for me tonight\nUnder every fading light\nWe were never meant to say goodbye\nSo hold this moment till it's right`
+  ];
 
   const enhanced = isMvr    ? enhancedMvr
-                 : (isSimple || type === 'lyrics') ? enhancedSong
+                 : isSimple ? enhancedSong
+                 : type === 'lyrics-lyrics' ? enhancedLyrics
+                 : (type === 'lyrics-idea' || type === 'lyrics') ? enhancedSong
                  : isSbDesc ? enhancedSbDesc
                  : isScene  ? enhancedScene
                  :            enhancedCover;
