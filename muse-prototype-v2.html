@@ -5002,11 +5002,13 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <!-- Plan Details: credits + features (top:90) -->
       <div style="position:absolute;left:16px;top:90px;width:288px;display:flex;flex-direction:column;gap:8px;">
 
-        <!-- Credits info row -->
-        <div style="display:flex;align-items:baseline;justify-content:flex-start;gap:4px;margin-bottom:4px;">
-          <img src="assets/icons/ui/ic_credit@3x.png" width="18" height="18" style="display:block;flex-shrink:0;position:relative;top:2px;">
-          <span id="iap-credits-num" style="font-size:42px;font-weight:800;color:#fff;letter-spacing:-.42px;line-height:50px;white-space:nowrap;">800</span>
-          <span id="iap-credits-label" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:-.12px;transition:opacity .15s;">Weekly Credits</span>
+        <!-- Credits info: label stacked above icon+number (per Figma node 1021:19906) -->
+        <div style="display:flex;flex-direction:column;align-items:flex-start;margin-bottom:4px;">
+          <span id="iap-credits-label" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:-.12px;text-transform:uppercase;transition:opacity .12s ease;">Weekly Credits</span>
+          <div style="display:flex;align-items:baseline;gap:4px;">
+            <img src="assets/icons/ui/ic_credit@3x.png" width="18" height="18" style="display:block;flex-shrink:0;position:relative;top:2px;">
+            <span id="iap-credits-num" style="font-size:42px;font-weight:800;color:#fff;letter-spacing:-.42px;line-height:50px;white-space:nowrap;transition:opacity .12s ease;">200</span>
+          </div>
         </div>
 
         <!-- Feature rows -->
@@ -5061,8 +5063,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div style="position:absolute;left:16px;top:371px;width:288px;display:flex;flex-direction:column;gap:12px;">
 
         <!-- Weekly — MOST POPULAR badge (pre-selected) -->
-        <div id="iap-plan-weekly" onclick="selectIAPPlan('weekly')" style="position:relative;background:linear-gradient(to right,#420d6b,#151519);border:1px solid #a855f7;border-radius:12px;padding:12px;height:50px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box;transition:border-color .2s,background .2s;">
-          <div style="position:absolute;top:-6px;left:190px;background:rgba(255,138,2,.6);border:1px solid rgba(245,158,11,.25);border-radius:14px;padding:2px 6px;display:flex;align-items:center;backdrop-filter:blur(2px);">
+        <div id="iap-plan-weekly" onclick="selectIAPPlan('weekly')" style="position:relative;background:linear-gradient(to right,#420d6b,#151519);border:1.5px solid #a855f7;border-radius:12px;padding:12px;height:50px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box;transition:border-color .2s,background .2s,border-width .2s;">
+          <div style="position:absolute;top:-6px;left:190px;background:rgba(1,179,123,.6);border:1px solid rgba(1,179,123,.4);border-radius:14px;padding:2px 6px;display:flex;align-items:center;backdrop-filter:blur(2px);">
             <span style="font-size:9px;font-weight:700;color:#fff;white-space:nowrap;line-height:11px;">MOST POPULAR</span>
           </div>
           <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Weekly</span>
@@ -5070,16 +5072,16 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
 
         <!-- Super Weekly — BEST VALUE badge, purple gradient on select -->
-        <div id="iap-plan-super" onclick="selectIAPPlan('super')" style="position:relative;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box;transition:border-color .2s,background .2s;">
+        <div id="iap-plan-super" onclick="selectIAPPlan('super')" style="position:relative;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box;transition:border-color .2s,background .2s,border-width .2s;">
           <div style="position:absolute;top:-6px;left:207px;background:rgba(145,50,255,.6);border:1px solid rgba(168,85,247,.35);border-radius:20px;padding:2px 6px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);">
             <span style="font-size:9px;font-weight:700;color:#fff;white-space:nowrap;line-height:11px;">BEST VALUE</span>
           </div>
-          <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Monthly</span>
+          <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Super Weekly</span>
           <span style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">$29.99</span>
         </div>
 
         <!-- Yearly -->
-        <div id="iap-plan-yearly" onclick="selectIAPPlan('yearly')" style="position:relative;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;height:50px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box;overflow:hidden;transition:border-color .2s,background .2s;">
+        <div id="iap-plan-yearly" onclick="selectIAPPlan('yearly')" style="position:relative;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;height:50px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box;overflow:hidden;transition:border-color .2s,background .2s,border-width .2s;">
           <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Yearly</span>
           <span style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">$69.99</span>
         </div>
@@ -7606,10 +7608,10 @@ function dismissPurchaseToast() {
 
 // ── IAP Confirm sheet ──
 let _iapSelected = 'weekly';
-let _iapCurrentVal = 800;
-let _iapAnimFrame  = null;
-const _iapValues = { weekly: 800, super: 4000, yearly: 8000 };
-const _iapLabels = { weekly: 'Weekly Credits', super: 'Monthly Credits', yearly: 'Yearly Credits' };
+let _iapCurrentVal = 200;
+let _iapAnimTimer = null;
+const _iapValues = { weekly: 200, super: 1000, yearly: 2000 };
+const _iapLabels = { weekly: 'Weekly Credits', super: 'Super Weekly Credits', yearly: 'Yearly Credits' };
 
 function _fmtCredits(n) {
   if (n >= 1000) return Math.floor(n / 1000) + ',' + String(n % 1000).padStart(3, '0');
@@ -7624,52 +7626,56 @@ function selectIAPPlan(plan) {
   const yearly  = document.getElementById('iap-plan-yearly');
   const sel   = 'linear-gradient(to right,#420d6b,#151519)';
   const unsel = '#151519';
-  if (weekly)  { weekly.style.borderColor  = plan === 'weekly' ? '#a855f7' : 'rgba(255,255,255,.15)'; weekly.style.background  = plan === 'weekly'  ? sel : unsel; }
-  if (superEl) { superEl.style.borderColor = plan === 'super'  ? '#a855f7' : 'rgba(255,255,255,.15)'; superEl.style.background = plan === 'super'   ? sel : unsel; }
-  if (yearly)  { yearly.style.borderColor  = plan === 'yearly' ? '#a855f7' : 'rgba(255,255,255,.15)'; yearly.style.background  = plan === 'yearly'  ? sel : unsel; }
+  if (weekly)  { weekly.style.borderColor  = plan === 'weekly' ? '#a855f7' : 'rgba(255,255,255,.15)'; weekly.style.borderWidth  = plan === 'weekly'  ? '1.5px' : '1px'; weekly.style.background  = plan === 'weekly'  ? sel : unsel; }
+  if (superEl) { superEl.style.borderColor = plan === 'super'  ? '#a855f7' : 'rgba(255,255,255,.15)'; superEl.style.borderWidth = plan === 'super'   ? '1.5px' : '1px'; superEl.style.background = plan === 'super'   ? sel : unsel; }
+  if (yearly)  { yearly.style.borderColor  = plan === 'yearly' ? '#a855f7' : 'rgba(255,255,255,.15)'; yearly.style.borderWidth  = plan === 'yearly'  ? '1.5px' : '1px'; yearly.style.background  = plan === 'yearly'  ? sel : unsel; }
 
-  // Rolling number animation
+  // Credits number/label — blur-swap: old value shrinks/blurs/fades out,
+  // new value resolves in from blurred to sharp. No counting, no odometer feel.
   const num   = document.getElementById('iap-credits-num');
   const label = document.getElementById('iap-credits-label');
   const target = _iapValues[plan];
 
   if (num) {
-    if (_iapAnimFrame) { cancelAnimationFrame(_iapAnimFrame); _iapAnimFrame = null; }
-    const from     = _iapCurrentVal;
-    const to       = target;
-    _iapCurrentVal = to;
-    if (from === to) {
-      num.textContent = _fmtCredits(to);
-      // No number change — just update label immediately
-      if (label) { label.textContent = _iapLabels[plan]; label.style.transition = 'none'; label.style.opacity = '1'; }
+    if (_iapAnimTimer) { clearTimeout(_iapAnimTimer); _iapAnimTimer = null; }
+    if (_iapCurrentVal === target) {
+      num.textContent = _fmtCredits(target);
+      if (label) label.textContent = _iapLabels[plan];
     } else {
-      const duration  = 480;
-      const startTime = performance.now();
-      // Hide label while numbers roll
-      if (label) { label.style.transition = 'none'; label.style.opacity = '0'; }
-      function tick(now) {
-        const t    = Math.min((now - startTime) / duration, 1);
-        const ease = 1 - Math.pow(1 - t, 3); // ease-out cubic
-        num.textContent = _fmtCredits(Math.round(from + (to - from) * ease));
-        if (t < 1) {
-          _iapAnimFrame = requestAnimationFrame(tick);
-        } else {
-          num.textContent = _fmtCredits(to);
-          _iapAnimFrame = null;
-          // Fade in label only after number animation finishes
-          if (label) {
-            label.textContent = _iapLabels[plan];
-            label.style.transition = 'opacity .25s';
-            label.style.opacity = '1';
-          }
-        }
-      }
-      _iapAnimFrame = requestAnimationFrame(tick);
+      _iapCurrentVal = target;
+
+      // Out: shrink + blur + fade
+      num.style.transition = 'opacity .12s ease, filter .12s ease, transform .12s ease';
+      num.style.opacity = '0';
+      num.style.filter = 'blur(6px)';
+      num.style.transform = 'scale(0.92)';
+      if (label) { label.style.transition = 'opacity .12s ease'; label.style.opacity = '0'; }
+
+      _iapAnimTimer = setTimeout(() => {
+        num.textContent = _fmtCredits(target);
+        if (label) label.textContent = _iapLabels[plan];
+
+        // Prime the "in" state (blurred, slightly enlarged) with no transition, then resolve to sharp
+        num.style.transition = 'none';
+        num.style.opacity = '0';
+        num.style.filter = 'blur(6px)';
+        num.style.transform = 'scale(1.06)';
+
+        requestAnimationFrame(() => {
+          num.style.transition = 'opacity .16s ease, filter .16s ease, transform .16s ease';
+          num.style.opacity = '1';
+          num.style.filter = 'blur(0px)';
+          num.style.transform = 'scale(1)';
+          if (label) { label.style.transition = 'opacity .16s ease'; label.style.opacity = '1'; }
+        });
+
+        _iapAnimTimer = null;
+      }, 120);
     }
   }
 }
 
-const _iapPlanNames  = { weekly: 'Weekly Plan',  super: 'Monthly Plan',  yearly: 'Yearly Plan'  };
+const _iapPlanNames  = { weekly: 'Weekly Plan',  super: 'Super Weekly Plan',  yearly: 'Yearly Plan'  };
 const _iapPrices     = { weekly: '$9.99',         super: '$29.99',        yearly: '$69.99'       };
 let _isSubscribed = false;
 
@@ -7680,7 +7686,7 @@ function goToSubscribeOrCredits() {
 function showIAPConfirm() {
   const planName = _iapPlanNames[_iapSelected] || 'Weekly Plan';
   const price    = _iapPrices[_iapSelected]    || '$9.99';
-  const credits  = _iapValues[_iapSelected]    || 800;
+  const credits  = _iapValues[_iapSelected]    || 200;
 
   const overlay = document.createElement('div');
   overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:300;display:flex;align-items:flex-end;';
