@@ -7695,6 +7695,16 @@ function selectIAPPlan(plan) {
         num.style.opacity = '0';
         num.style.filter = 'blur(6px)';
         num.style.transform = 'scale(1.06)';
+        if (label) { label.style.transition = 'none'; label.style.opacity = '0'; }
+
+        // Force a reflow so the browser commits this "primed" (no-transition)
+        // state before we flip transitions back on in the next frame. Without
+        // this, mobile WebKit can batch the "none" write together with the
+        // rAF callback's style write into a single paint and jump straight to
+        // the end state — no visible cross-fade. Desktop Chrome tends to
+        // paint between the two regardless, which is why this only showed up
+        // on mobile.
+        void num.offsetWidth;
 
         requestAnimationFrame(() => {
           num.style.transition = 'opacity .16s ease, filter .16s ease, transform .16s ease';
