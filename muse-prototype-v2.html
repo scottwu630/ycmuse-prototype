@@ -2720,6 +2720,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                   <span id="added-song-current" style="color:#fff;display:none;"></span><span id="added-song-total" style="color:#9C9CAB;">00:00</span>
                 </div>
               </div>
+              <div id="song-edit-btn" onclick="event.stopPropagation();editImportedAudio()" style="width:16px;height:16px;flex-shrink:0;cursor:pointer;">
+                <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.6;">
+              </div>
             </div>
           </div>
 
@@ -8692,6 +8695,19 @@ function clearSong() {
   _audioSource = null; _sampleSelected = null;
   window._addedAudioSrc = null;
   resetSongPlay();
+}
+
+// Re-open the Audio Trimmer for a song that's already been added to the room,
+// so the user can adjust the trimmed length without re-importing/re-picking it.
+function editImportedAudio() {
+  const method = document.getElementById('added-method-lbl')?.textContent.trim() || 'Import Audio';
+  const title  = document.getElementById('added-song-title')?.textContent.trim() || 'Audio Track';
+  const dur    = window._addedSongDur || document.getElementById('added-song-total')?.textContent.trim() || '00:00';
+  const art    = document.getElementById('song-art-thumb')?.src || null;
+  const audioSrc = window._addedAudioSrc || null;
+  stopAddedAudio();
+  resetSongPlay();
+  openTrim(method, title, dur, art, audioSrc);
 }
 
 function useAISongInMV() {
