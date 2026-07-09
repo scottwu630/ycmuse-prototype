@@ -164,6 +164,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .scr-scroll::-webkit-scrollbar{display:none;}
 #cp-scroll{scrollbar-width:none;}
 #cp-scroll::-webkit-scrollbar{display:none;}
+#credits-detail-scroll::-webkit-scrollbar{display:none;}
 
 /* ── TAB BAR ── */
 .tab-bar{position:absolute;bottom:0;left:0;right:0;height:var(--tab-h);background:rgba(9,9,11,.93);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-top:1px solid rgba(255,255,255,.06);display:none;align-items:flex-start;justify-content:space-evenly;padding-top:11px;z-index:100;overflow:visible;}
@@ -5051,9 +5052,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <img src="assets/icons/ui/ic_sparkles.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">
+              <img src="assets/icons/ui/ic_clock.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">
             </div>
-            <span style="font-size:11px;font-weight:500;color:#fff;letter-spacing:-.11px;line-height:16px;">Premium Tools</span>
+            <span id="iap-feature-expire-text" style="font-size:11px;font-weight:500;color:#fff;letter-spacing:-.11px;line-height:16px;">Credits Expire Weekly</span>
           </div>
 
         </div>
@@ -5139,7 +5140,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div><!-- /static header -->
 
       <!-- ── Scrollable: history list only ── -->
-      <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(var(--safe-bot) + 40px);">
+      <div id="credits-detail-scroll" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(var(--safe-bot) + 40px);scrollbar-width:none;-ms-overflow-style:none;">
 
         <!-- History List -->
         <div id="credits-history-list" style="display:flex;flex-direction:column;gap:4px;">
@@ -5470,7 +5471,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
 
         <!-- Legal note -->
-        <div style="font-size:11px;font-weight:500;color:#9c9cab;text-align:center;line-height:1.6;padding:0 8px;letter-spacing:-.11px;">Credits are non-refundable and expire after 12 months. Prices may vary by region.</div>
+        <div style="font-size:11px;font-weight:500;color:#9c9cab;text-align:center;line-height:1.6;padding:0 8px;letter-spacing:-.11px;">Credits are non-refundable and never expire. Deleting your account will permanently remove any remaining balance. Prices may vary by region.</div>
 
       </div><!-- /credit-packs-scroll -->
 
@@ -7717,6 +7718,7 @@ let _iapCurrentVal = 200;
 let _iapAnimTimer = null;
 const _iapValues = { weekly: 200, super: 1000, yearly: 2000 };
 const _iapLabels = { weekly: 'Weekly Credits', super: 'Super Weekly Credits', yearly: 'Yearly Credits' };
+const _iapExpireText = { weekly: 'Credits Expire Weekly', super: 'Credits Expire Weekly', yearly: 'Credits Expire Yearly' };
 
 function _fmtCredits(n) {
   if (n >= 1000) return Math.floor(n / 1000) + ',' + String(n % 1000).padStart(3, '0');
@@ -7734,6 +7736,10 @@ function selectIAPPlan(plan) {
   if (weekly)  { weekly.style.borderColor  = plan === 'weekly' ? '#a855f7' : 'rgba(255,255,255,.15)'; weekly.style.borderWidth  = plan === 'weekly'  ? '1.5px' : '1px'; weekly.style.background  = plan === 'weekly'  ? sel : unsel; }
   if (superEl) { superEl.style.borderColor = plan === 'super'  ? '#a855f7' : 'rgba(255,255,255,.15)'; superEl.style.borderWidth = plan === 'super'   ? '1.5px' : '1px'; superEl.style.background = plan === 'super'   ? sel : unsel; }
   if (yearly)  { yearly.style.borderColor  = plan === 'yearly' ? '#a855f7' : 'rgba(255,255,255,.15)'; yearly.style.borderWidth  = plan === 'yearly'  ? '1.5px' : '1px'; yearly.style.background  = plan === 'yearly'  ? sel : unsel; }
+
+  // Expiration feature row — reflects the selected plan's credit reset cadence
+  const expireEl = document.getElementById('iap-feature-expire-text');
+  if (expireEl) expireEl.textContent = _iapExpireText[plan] || _iapExpireText.weekly;
 
   // Credits number/label — blur-swap: old value shrinks/blurs/fades out,
   // new value resolves in from blurred to sharp. No counting, no odometer feel.
