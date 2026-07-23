@@ -165,6 +165,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #cp-scroll{scrollbar-width:none;}
 #cp-scroll::-webkit-scrollbar{display:none;}
 #credits-detail-scroll::-webkit-scrollbar{display:none;}
+#img-editor-ta,#vid-editor-ta{scrollbar-width:none;-ms-overflow-style:none;}
+#img-editor-ta::-webkit-scrollbar,#vid-editor-ta::-webkit-scrollbar{display:none;}
+#img-editor-versions-track::-webkit-scrollbar,#vid-editor-versions-track::-webkit-scrollbar{display:none;}
 
 /* ── TAB BAR ── */
 .tab-bar{position:absolute;bottom:0;left:0;right:0;height:var(--tab-h);background:rgba(9,9,11,.93);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-top:1px solid rgba(255,255,255,.06);display:none;align-items:flex-start;justify-content:space-evenly;padding-top:11px;z-index:100;overflow:visible;}
@@ -354,6 +357,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .overlay{position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:120;opacity:0;pointer-events:none;transition:opacity .3s;}
 .overlay.show{opacity:1;pointer-events:all;}
 /* ── Scene text editor ── */
+/* Select AI Model must float above the Image/Video Editor and Scene Text Editor sheets that open it */
+#ai-model-overlay{z-index:520;}
+#ai-model-sheet{z-index:521;}
 #scene-editor-wrap{position:absolute;inset:0;z-index:500;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none;}
 #scene-editor-wrap.show{pointer-events:all;}
 #scene-editor-dim{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s;}
@@ -364,6 +370,34 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #scene-editor-box{background:#2C2C2E;border-radius:14px;padding:12px 12px 8px;margin:0 16px 12px;}
 #scene-editor-ta{width:100%;min-height:88px;max-height:130px;background:transparent;border:none;outline:none;color:#fff;font-size:15px;font-family:-apple-system,'SF Pro Display',system-ui,sans-serif;line-height:1.55;resize:none;overflow-y:auto;display:block;box-sizing:border-box;}
 #scene-editor-counter{font-size:12px;color:rgba(255,255,255,.35);}
+/* ── Image editor (scene / shot image + prompt + regenerate) ── */
+#img-editor-wrap{position:absolute;inset:0;z-index:490;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none;}
+#img-editor-wrap.show{pointer-events:all;}
+#img-editor-dim{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s;}
+#img-editor-wrap.show #img-editor-dim{opacity:1;}
+#img-editor-content{position:relative;z-index:1;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
+#img-editor-wrap.show #img-editor-content{transform:translateY(0);}
+#img-editor-panel{background:#1C1C1E;border-radius:20px 20px 0 0;}
+/* ── Video editor (shot video preview + prompt + regenerate) ── */
+#vid-editor-wrap{position:absolute;inset:0;z-index:490;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none;}
+#vid-editor-wrap.show{pointer-events:all;}
+#vid-editor-dim{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s;}
+#vid-editor-wrap.show #vid-editor-dim{opacity:1;}
+#vid-editor-content{position:relative;z-index:1;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
+#vid-editor-wrap.show #vid-editor-content{transform:translateY(0);}
+#vid-editor-panel{background:#1C1C1E;border-radius:20px 20px 0 0;}
+/* ── Shot thumbnails: processing overlay + drag reorder ── */
+.shot-thumb{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;-webkit-user-drag:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
+.shot-thumb img{-webkit-user-drag:none;}
+.shot-thumb.dragging{transform:scale(1.06);box-shadow:0 10px 22px rgba(0,0,0,.5);border-color:rgba(168,85,247,.7)!important;z-index:5;cursor:grabbing;}
+.shot-thumb.drag-over{border-color:rgba(255,255,255,.5)!important;}
+.shot-num{position:absolute;top:8px;left:8px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:rgba(9,9,11,.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;pointer-events:none;z-index:2;}
+/* ── Editor (Export) screen: Video Shots grid — number badge + duration label ── */
+.emv-shot-dur{position:absolute;bottom:8px;right:8px;padding:2px 6px;border-radius:8px;background:rgba(9,9,11,.65);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);font-size:10px;font-weight:700;color:#fff;letter-spacing:-.1px;pointer-events:none;z-index:2;}
+.shot-proc{position:absolute;inset:0;background:rgba(9,9,11,.72);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+.shot-proc.show{opacity:1;}
+.spinner-sm{width:22px;height:22px;border-radius:50%;border:2.5px solid rgba(255,255,255,.25);border-top-color:#fff;animation:spin-sm .8s linear infinite;}
+@keyframes spin-sm{to{transform:rotate(360deg);}}
 /* iOS-style simulated keyboard */
 #scene-editor-keyboard{background:#D1D5DB;padding:8px 3px 6px;user-select:none;-webkit-user-select:none;}
 .kb-row{display:flex;justify-content:center;gap:5px;margin-bottom:7px;}
@@ -2628,7 +2662,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
         <!-- CTA — Figma Button/Pill Primary -->
         <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 16px calc(40px + var(--safe-bot));">
-          <button onclick="_mvFromTemplate=false;resetMvRoom();updateSongClearBtn();goTo('mv-room')" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Try Now</button>
+          <button onclick="_mvFromTemplate=false;resetMvRoom();updateSongClearBtn();restoreCtaNormal('mv-room');goTo('mv-room')" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Try Now</button>
         </div>
       </div>
     </div>
@@ -2653,33 +2687,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <!-- Scrollable content -->
       <div class="scr-scroll" style="padding:calc(var(--safe-top) + var(--nav-h) + 12px) 0 100px;">
 
-        <!-- SELECT MV STYLE -->
         <div style="padding:0 16px;">
-          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Select MV Type</div>
-          <div id="mvr-mini-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">
-            <div onclick="mvrPickStyle(0,this)" style="border-radius:12px;position:relative;aspect-ratio:3/4;cursor:pointer;border:2px solid #A855F7;background:#1a1a1a;overflow:hidden;min-width:0;">
-              <div style="position:absolute;inset:0;z-index:1;">
-                <video src="assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4" muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85));"></div>
-              </div>
-              <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Singing</div>
-            </div>
-            <div onclick="mvrPickStyle(1,this)" style="border-radius:12px;position:relative;aspect-ratio:3/4;cursor:pointer;border:2px solid transparent;background:#1a1a1a;overflow:hidden;min-width:0;">
-              <div style="position:absolute;inset:0;z-index:1;">
-                <video src="assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4" muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85));"></div>
-              </div>
-              <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Storytelling</div>
-            </div>
-            <div onclick="mvrPickStyle(2,this)" style="border-radius:12px;position:relative;aspect-ratio:3/4;cursor:pointer;border:2px solid transparent;background:#1a1a1a;overflow:hidden;min-width:0;">
-              <div style="position:absolute;inset:0;z-index:1;">
-                <video src="assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4" muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85));"></div>
-              </div>
-              <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Hybrid</div>
-            </div>
-          </div>
-
           <!-- CHOOSE A SONG -->
           <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Choose a Song <span style="color:rgba(255,255,255,.4);font-weight:500;text-transform:none;letter-spacing:0;">(Required)</span></div>
           <div id="mvr-song-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;">
@@ -2726,8 +2734,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- DESCRIBE YOUR VIDEO IDEA -->
-          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Describe Your Video Idea <span style="color:rgba(255,255,255,.4);font-weight:500;text-transform:none;letter-spacing:0;">(Required)</span></div>
+          <!-- MV IDEA -->
+          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">MV Idea <span style="color:rgba(255,255,255,.4);font-weight:500;text-transform:none;letter-spacing:0;">(Optional)</span></div>
           <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;margin-bottom:20px;">
             <textarea id="mvr-describe" oninput="updateDescCount(this)" placeholder="Describe your video to help AI create a more compelling story." style="width:100%;min-height:100px;padding:12px 14px 6px;background:transparent;border:none;color:#fff;font-size:14px;font-family:inherit;resize:none;outline:none;line-height:1.55;scrollbar-width:none;-ms-overflow-style:none;"></textarea>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 10px;">
@@ -2753,55 +2761,27 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- UPLOAD CHARACTER PHOTO -->
-          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Upload Character Photo</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-            <div id="pslot-1" onclick="addCharPhoto(1)" style="background:#151519;border:1px dashed rgba(255,255,255,0.15);border-radius:14px;height:150px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;">
-              <div style="width:36px;height:36px;border-radius:20px;background:#A855F7;display:flex;align-items:center;justify-content:center;">
-                <img src="assets/icons/ui/ic_add.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
-              </div>
-              <div style="font-size:12px;font-weight:500;color:#fff;text-align:center;padding:0 8px;line-height:1.4;">1st face photo<br><span style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.4);">(Optional)</span></div>
+          <!-- SELECT AI MODEL (gate 1 — gates Generating Analysis) -->
+          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Select AI Model</div>
+          <div onclick="openAiModelSheet('analysis')" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:12px 14px;cursor:pointer;">
+            <span id="ai-model-label-analysis" style="font-size:14px;font-weight:700;color:#fff;">Nano Banana 2</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div id="ai-model-credit-analysis" style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">5</div>
+              <span style="font-size:18px;color:rgba(255,255,255,.35);line-height:1;">›</span>
             </div>
-            <div id="pslot-2" onclick="addCharPhoto(2)" style="background:#151519;border:1px dashed rgba(255,255,255,0.15);border-radius:14px;height:150px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;">
-              <div style="width:36px;height:36px;border-radius:20px;background:#212127;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;">
-                <img src="assets/icons/ui/ic_add.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);opacity:.4;">
-              </div>
-              <div style="font-size:12px;font-weight:500;color:#fff;text-align:center;padding:0 8px;line-height:1.4;">2nd face photo<br><span style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.4);">(Optional)</span></div>
-            </div>
-          </div>
-          <div style="font-size:12px;color:#9C9CAB;margin-bottom:8px;">Sample Photos</div>
-          <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:20px;scrollbar-width:none;">
-            <img src="assets/images/character-photos/samples/Sample_P1.jpg" onclick="useSample(1)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
-            <img src="assets/images/character-photos/samples/Sample_P2.jpg" onclick="useSample(2)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
-            <img src="assets/images/character-photos/samples/Sample_P3.jpg" onclick="useSample(3)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
-            <img src="assets/images/character-photos/samples/Sample_P4.jpg" onclick="useSample(4)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
-            <img src="assets/images/character-photos/samples/Sample_P5.jpg" onclick="useSample(5)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
-            <img src="assets/images/character-photos/samples/Sample_P6.jpg" onclick="useSample(6)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
-            <img src="assets/images/character-photos/samples/Sample_P7.jpg" onclick="useSample(7)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
-            <img src="assets/images/character-photos/samples/Sample_P8.jpg" onclick="useSample(8)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
-          </div>
-
-          <!-- SETTINGS -->
-          <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Settings</div>
-          <div id="settings-tags" onclick="showSheet('settings-sheet')" style="display:flex;align-items:center;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:12px 14px;cursor:pointer;margin-bottom:8px;gap:8px;">
-            <!-- Tags wrap area -->
-            <div style="flex:1;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
-              <span id="stag-ratio" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">9:16</span>
-              <span id="stag-res" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">SD</span>
-              <span id="stag-title" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Title</span>
-              <span id="stag-author" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Author</span>
-              <span id="stag-subtitle" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Subtitle</span>
-              <span id="stag-watermark" style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:rgba(255,255,255,.35);">Watermark</span>
-            </div>
-            <!-- Chevron always centered -->
-            <span style="flex-shrink:0;font-size:18px;color:rgba(255,255,255,.35);line-height:1;">›</span>
           </div>
         </div>
       </div>
 
       <!-- CTA — Figma Button/Pill Primary-PAYG -->
       <div class="cta-footer">
-        <button id="mv-room-cta" onclick="requireLogin(()=>showSheet('mv-mode-sheet'))" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create Music Video <img src="assets/icons/ui/ic_arrow_right.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);"></button>
+        <button id="mv-room-cta" disabled onclick="requireLogin(()=>startGeneration('analysis'))" style="width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;box-shadow:none;opacity:.5;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit;" onmousedown="if(!this.disabled)this.style.opacity='.8'" onmouseup="if(!this.disabled)this.style.opacity='1'">
+          <span>Analyze</span>
+          <span id="mv-room-cta-credits" style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
+            <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
+            5
+          </span>
+        </button>
       </div>
 
       <!-- Template Sheet -->
@@ -3165,64 +3145,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
       </div>
 
-      <!-- ══════ FACE PICKER ══════ -->
-      <div id="fp-overlay" onclick="closeFacePicker()"></div>
-      <div id="fp-sheet">
-        <div style="width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:14px auto 0;"></div>
-
-        <!-- Header -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px 10px;">
-          <div onclick="closeFacePicker()" style="width:32px;height:32px;border-radius:50%;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </div>
-          <div style="text-align:center;">
-            <div style="font-size:17px;font-weight:700;color:#fff;">Select a Face</div>
-            <div id="fp-subtitle" style="font-size:12px;color:#9C9CAB;margin-top:2px;">Analyzing photo…</div>
-          </div>
-          <div style="width:32px;flex-shrink:0;"></div>
-        </div>
-
-        <!-- Group photo with face detection boxes -->
-        <div class="fp-photo-wrap">
-          <img src="assets/images/character-photos/samples/Sample_P9_multi.png" alt="Group photo">
-          <!-- Scan line (starts running when sheet opens) -->
-          <div id="fp-scan" class="fp-scan-line"></div>
-          <!-- Face detection boxes (revealed after scan) — square, selectable -->
-          <div id="fp-b1" class="fp-box" onclick="selectFace(1)" style="top:4%;left:5%;width:21%;opacity:0;"></div>
-          <div id="fp-b2" class="fp-box" onclick="selectFace(2)" style="top:2%;left:24%;width:21%;opacity:0;"></div>
-          <div id="fp-b3" class="fp-box" onclick="selectFace(3)" style="top:2%;left:44%;width:21%;opacity:0;"></div>
-          <div id="fp-b4" class="fp-box" onclick="selectFace(4)" style="top:4%;left:65%;width:21%;opacity:0;"></div>
-        </div>
-
-        <!-- Face option circles -->
-        <div style="padding:0 16px 8px;">
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;text-align:center;margin-bottom:10px;">Choose one face</div>
-        </div>
-        <div class="fp-faces-row">
-          <div id="fp-f1" class="fp-face" onclick="selectFace(1)">
-            <div class="fp-circle fp-c1"></div>
-            <div class="fp-face-lbl">Face 1</div>
-          </div>
-          <div id="fp-f2" class="fp-face" onclick="selectFace(2)">
-            <div class="fp-circle fp-c2"></div>
-            <div class="fp-face-lbl">Face 2</div>
-          </div>
-          <div id="fp-f3" class="fp-face" onclick="selectFace(3)">
-            <div class="fp-circle fp-c3"></div>
-            <div class="fp-face-lbl">Face 3</div>
-          </div>
-          <div id="fp-f4" class="fp-face" onclick="selectFace(4)">
-            <div class="fp-circle fp-c4"></div>
-            <div class="fp-face-lbl">Face 4</div>
-          </div>
-        </div>
-
-        <!-- CTA -->
-        <div style="padding:0 16px;">
-          <button id="fp-btn" onclick="confirmFaceSelection()" class="btn btn-primary disabled" disabled style="opacity:.35;cursor:not-allowed;">Use This Face</button>
-        </div>
-      </div>
-
       <!-- How Would You Like to Create — as a bottom sheet -->
       <div class="overlay" id="mv-mode-overlay" onclick="hideSheet('mv-mode-sheet')"></div>
       <div class="sheet" id="mv-mode-sheet" style="padding-bottom:calc(var(--safe-bot) + 40px);">
@@ -3327,42 +3249,14 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
     </div>
 
-    <!-- ══════ AI THINKING (Storyboard) ══════ -->
-    <div id="screen-mv-thinking" class="screen" style="background:radial-gradient(ellipse at 50% 28%,#0d1a38 0%,var(--bg) 70%);">
-      <div class="creating-body">
-        <div class="creating-visual">
-          <div class="cv-bg" style="animation:cvbg-sb 5s ease-in-out infinite;"></div>
-          <div class="cv-overlay">
-            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs><linearGradient id="sb-think-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF6BCE"/><stop offset="50%" stop-color="#A855F7"/><stop offset="100%" stop-color="#4338CA"/></linearGradient></defs>
-              <path d="M15 11C15.5523 11 16 11.4477 16 12C16 12.5523 15.5523 13 15 13H10C9.44772 13 9 12.5523 9 12C9 11.4477 9.44772 11 10 11H15Z" fill="url(#sb-think-grad)"/>
-              <path d="M15 7C15.5523 7 16 7.44772 16 8C16 8.55228 15.5523 9 15 9H10C9.44772 9 9 8.55228 9 8C9 7.44772 9.44772 7 10 7H15Z" fill="url(#sb-think-grad)"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M17 2C17.7956 2 18.5585 2.3163 19.1211 2.87891C19.6837 3.44152 20 4.20435 20 5V16H21C21.5304 16 22.039 16.2109 22.4141 16.5859C22.7891 16.961 23 17.4696 23 18V19C23 19.7957 22.6837 20.5585 22.1211 21.1211C21.5585 21.6837 20.7957 22 20 22H8C7.20435 22 6.44152 21.6837 5.87891 21.1211C5.3163 20.5585 5 19.7957 5 19V9H3C2.46957 9 1.96101 8.78913 1.58594 8.41406C1.21086 8.03899 1 7.53043 1 7V5C1 4.20435 1.3163 3.44152 1.87891 2.87891C2.41681 2.341 3.13786 2.03131 3.89551 2.00488C3.92984 2.00132 3.96473 2 4 2H17ZM6.82422 4C6.93709 4.31856 7 4.65556 7 5V19C7 19.2652 7.10543 19.5195 7.29297 19.707C7.48051 19.8946 7.73478 20 8 20C8.26522 20 8.51949 19.8946 8.70703 19.707C8.89457 19.5195 9 19.2652 9 19V18C9 17.4696 9.21086 16.961 9.58594 16.5859C9.96101 16.2109 10.4696 16 11 16H18V5C18 4.73478 17.8946 4.48051 17.707 4.29297C17.5195 4.10543 17.2652 4 17 4H6.82422ZM11 19C11 19.3444 10.937 19.6814 10.8242 20H20C20.2652 20 20.5195 19.8946 20.707 19.707C20.8946 19.5195 21 19.2652 21 19V18H11V19ZM4 4C3.73478 4 3.4805 4.10543 3.29297 4.29297C3.10543 4.4805 3 4.73478 3 5V7H5V5C5 4.73478 4.89457 4.4805 4.70703 4.29297C4.5195 4.10543 4.26522 4 4 4Z" fill="url(#sb-think-grad)"/>
-            </svg>
-            <div class="cv-pct" id="think-pct">0%</div>
-            <div class="cv-stat" id="think-step">Analyzing audio...</div>
-          </div>
-        </div>
-        <div class="creating-ttl">Crafting Your Storyboard</div>
-        <div class="creating-sub">AI is analyzing your audio and description<br>to build the perfect cinematic sequence.</div>
-        <div class="think-bar-wrap" style="width:100%;margin-bottom:10px;"><div class="think-bar" id="think-bar"></div></div>
-        <div class="creating-info">
-          <div class="ci-lbl">Estimated time remaining</div>
-          <div class="ci-val">~1 minutes</div>
-        </div>
-        <div style="height:24px;"></div>
-        <button onclick="goTo('history')" style="background:transparent;border:1.5px solid rgba(255,255,255,.15);border-radius:14px;color:rgba(255,255,255,.55);font-size:15px;font-weight:500;padding:0 32px;height:46px;cursor:pointer;transition:border-color .2s;">View Later</button>
-      </div>
-    </div>
-
-    <!-- ══════ STORYBOARD / EDIT SCRIPT ══════ -->
-    <div id="screen-mv-storyboard" class="screen">
+    <!-- ══════ (ANALYSIS) VIEW ANALYSIS SUMMARY ══════ -->
+    <div id="screen-mv-analysis" class="screen">
       <!-- Nav -->
       <div class="nav nav-blur">
         <div class="nav-back" onclick="goBack()">
           <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
         </div>
-        <div class="nav-title">Edit Storyboard</div>
+        <div class="nav-title">Scene Setup</div>
         <div style="min-width:36px;display:flex;justify-content:flex-end;">
           <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 6px;display:flex;align-items:center;gap:4px;cursor:pointer;">
             <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
@@ -3370,19 +3264,19 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
         </div>
       </div>
-      <!-- Scrollable content -->
+
       <div class="scr-scroll" style="padding:calc(var(--safe-top) + var(--nav-h) + 12px) 0 100px;">
         <div style="padding:0 16px;display:flex;flex-direction:column;gap:20px;">
 
-          <!-- CHARACTER IMAGE -->
-          <div style="display:flex;flex-direction:column;gap:5px;align-items:center;">
-            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;width:100%;">Character Image</div>
-            <!-- Portrait card — clickable, opens full image view -->
-            <div onclick="openCharImage()" style="position:relative;width:124px;height:219px;border-radius:14px;overflow:hidden;cursor:pointer;background:linear-gradient(60deg,#2d1a08,#5a3a18);flex-shrink:0;">
-              <img src="assets/images/storyboard/storyboard_01.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
-              <!-- Expand button -->
-              <div onclick="openCharImage()" style="position:absolute;bottom:8px;right:8px;width:28px;height:28px;border-radius:18px;background:rgba(9,9,11,0.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
-                <img src="assets/icons/ui/ic_expand.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+          <!-- ANALYSIS SUMMARY -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;">Analysis Summary</div>
+            <div style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;">
+              <div id="ana-summary-text" style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">Your song has a dreamy, romantic mood at a mid-tempo pace (~92 BPM), with an emotional arc that builds from a quiet, intimate opening to a euphoric chorus. We recommend a soft, cinematic visual style with warm lighting.</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Dreamy & Romantic</span>
+                <span style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">92 BPM</span>
+                <span style="background:#383842;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:600;color:#fff;">Slow Build → Peak</span>
               </div>
             </div>
           </div>
@@ -3402,6 +3296,168 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div style="flex:1;min-width:0;">
                 <div style="font-size:13px;font-weight:700;color:var(--n100);letter-spacing:-.13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Down the Memory Lane</div>
                 <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;margin-top:2px;">02:25</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SELECT STYLE -->
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Select Style</div>
+            <div id="mvr-mini-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+              <div onclick="mvrPickStyle(0,this)" style="border-radius:12px;position:relative;aspect-ratio:3/4;cursor:pointer;border:2px solid #A855F7;background:#1a1a1a;overflow:hidden;min-width:0;">
+                <div style="position:absolute;inset:0;z-index:1;">
+                  <video src="assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4" muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+                  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85));"></div>
+                </div>
+                <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Singing</div>
+              </div>
+              <div onclick="mvrPickStyle(1,this)" style="border-radius:12px;position:relative;aspect-ratio:3/4;cursor:pointer;border:2px solid transparent;background:#1a1a1a;overflow:hidden;min-width:0;">
+                <div style="position:absolute;inset:0;z-index:1;">
+                  <video src="assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4" muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+                  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85));"></div>
+                </div>
+                <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Storytelling</div>
+              </div>
+              <div onclick="mvrPickStyle(2,this)" style="border-radius:12px;position:relative;aspect-ratio:3/4;cursor:pointer;border:2px solid transparent;background:#1a1a1a;overflow:hidden;min-width:0;">
+                <div style="position:absolute;inset:0;z-index:1;">
+                  <video src="assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4" muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+                  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85));"></div>
+                </div>
+                <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Hybrid</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SELECT CHARACTERS -->
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Select Characters</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+              <div id="pslot-1" onclick="addCharPhoto(1)" style="background:#151519;border:1px dashed rgba(255,255,255,0.15);border-radius:14px;height:150px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;">
+                <div style="width:36px;height:36px;border-radius:20px;background:#A855F7;display:flex;align-items:center;justify-content:center;">
+                  <img src="assets/icons/ui/ic_add.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+                </div>
+                <div style="font-size:12px;font-weight:500;color:#fff;text-align:center;padding:0 8px;line-height:1.4;">1st face photo<br><span style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.4);">(Optional)</span></div>
+              </div>
+              <div id="pslot-2" onclick="addCharPhoto(2)" style="background:#151519;border:1px dashed rgba(255,255,255,0.15);border-radius:14px;height:150px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;">
+                <div style="width:36px;height:36px;border-radius:20px;background:#212127;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;">
+                  <img src="assets/icons/ui/ic_add.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);opacity:.4;">
+                </div>
+                <div style="font-size:12px;font-weight:500;color:#fff;text-align:center;padding:0 8px;line-height:1.4;">2nd face photo<br><span style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.4);">(Optional)</span></div>
+              </div>
+            </div>
+            <div style="font-size:12px;color:#9C9CAB;margin-bottom:8px;">Sample Photos</div>
+            <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;">
+              <img src="assets/images/character-photos/samples/Sample_P1.jpg" onclick="useSample(1)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
+              <img src="assets/images/character-photos/samples/Sample_P2.jpg" onclick="useSample(2)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
+              <img src="assets/images/character-photos/samples/Sample_P3.jpg" onclick="useSample(3)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
+              <img src="assets/images/character-photos/samples/Sample_P4.jpg" onclick="useSample(4)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
+              <img src="assets/images/character-photos/samples/Sample_P5.jpg" onclick="useSample(5)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
+              <img src="assets/images/character-photos/samples/Sample_P6.jpg" onclick="useSample(6)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
+              <img src="assets/images/character-photos/samples/Sample_P7.jpg" onclick="useSample(7)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
+              <img src="assets/images/character-photos/samples/Sample_P8.jpg" onclick="useSample(8)" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;" onmousedown="this.style.borderColor='#A855F7'" onmouseup="this.style.borderColor='transparent'">
+            </div>
+          </div>
+
+          <!-- SELECT ASPECT RATIO -->
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Select Aspect Ratio</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;" id="ana-aspect-grp">
+              <div class="seg-opt sel" onclick="pickSeg('ana-aspect-grp',this,'ana-tag-ratio','9:16')" style="border-radius:12px;border:1.5px solid #A855F7;background:rgba(168,85,247,.2);display:flex;align-items:center;justify-content:center;gap:4px;padding:12px;font-size:13px;font-weight:700;color:#A855F7;cursor:pointer;">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3.5" y="0.75" width="11" height="16.5" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                9:16
+              </div>
+              <div class="seg-opt" onclick="pickSeg('ana-aspect-grp',this,'ana-tag-ratio','16:9')" style="border-radius:12px;border:1.5px solid rgba(255,255,255,.15);background:#212127;display:flex;align-items:center;justify-content:center;gap:4px;padding:12px;font-size:13px;font-weight:700;color:rgba(255,255,255,.8);cursor:pointer;">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="0.75" y="3.5" width="16.5" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>
+                16:9
+              </div>
+            </div>
+            <span id="ana-tag-ratio" style="display:none;">9:16</span>
+          </div>
+
+          <!-- SELECT AI MODEL (gate 2 — gates Generating Scenes) -->
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Select AI Model</div>
+            <div onclick="openAiModelSheet('scenes')" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:12px 14px;cursor:pointer;">
+              <span id="ai-model-label-scenes" style="font-size:14px;font-weight:700;color:#fff;">Nano Banana 2 · 1K</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div id="ai-model-credit-scenes" style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">10</div>
+                <span style="font-size:18px;color:rgba(255,255,255,.35);line-height:1;">›</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-footer">
+        <button id="mv-analysis-cta" onclick="startGeneration('scenes')" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+          <span>Generate Scenes</span>
+          <span id="mv-analysis-cta-credits" style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
+            <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
+            10
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════ AI THINKING (Storyboard) ══════ -->
+    <div id="screen-mv-thinking" class="screen" style="background:radial-gradient(ellipse at 50% 28%,#0d1a38 0%,var(--bg) 70%);">
+      <div class="creating-body">
+        <div class="creating-visual">
+          <div class="cv-bg" style="animation:cvbg-sb 5s ease-in-out infinite;"></div>
+          <div class="cv-overlay">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="sb-think-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF6BCE"/><stop offset="50%" stop-color="#A855F7"/><stop offset="100%" stop-color="#4338CA"/></linearGradient></defs>
+              <path d="M15 11C15.5523 11 16 11.4477 16 12C16 12.5523 15.5523 13 15 13H10C9.44772 13 9 12.5523 9 12C9 11.4477 9.44772 11 10 11H15Z" fill="url(#sb-think-grad)"/>
+              <path d="M15 7C15.5523 7 16 7.44772 16 8C16 8.55228 15.5523 9 15 9H10C9.44772 9 9 8.55228 9 8C9 7.44772 9.44772 7 10 7H15Z" fill="url(#sb-think-grad)"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M17 2C17.7956 2 18.5585 2.3163 19.1211 2.87891C19.6837 3.44152 20 4.20435 20 5V16H21C21.5304 16 22.039 16.2109 22.4141 16.5859C22.7891 16.961 23 17.4696 23 18V19C23 19.7957 22.6837 20.5585 22.1211 21.1211C21.5585 21.6837 20.7957 22 20 22H8C7.20435 22 6.44152 21.6837 5.87891 21.1211C5.3163 20.5585 5 19.7957 5 19V9H3C2.46957 9 1.96101 8.78913 1.58594 8.41406C1.21086 8.03899 1 7.53043 1 7V5C1 4.20435 1.3163 3.44152 1.87891 2.87891C2.41681 2.341 3.13786 2.03131 3.89551 2.00488C3.92984 2.00132 3.96473 2 4 2H17ZM6.82422 4C6.93709 4.31856 7 4.65556 7 5V19C7 19.2652 7.10543 19.5195 7.29297 19.707C7.48051 19.8946 7.73478 20 8 20C8.26522 20 8.51949 19.8946 8.70703 19.707C8.89457 19.5195 9 19.2652 9 19V18C9 17.4696 9.21086 16.961 9.58594 16.5859C9.96101 16.2109 10.4696 16 11 16H18V5C18 4.73478 17.8946 4.48051 17.707 4.29297C17.5195 4.10543 17.2652 4 17 4H6.82422ZM11 19C11 19.3444 10.937 19.6814 10.8242 20H20C20.2652 20 20.5195 19.8946 20.707 19.707C20.8946 19.5195 21 19.2652 21 19V18H11V19ZM4 4C3.73478 4 3.4805 4.10543 3.29297 4.29297C3.10543 4.4805 3 4.73478 3 5V7H5V5C5 4.73478 4.89457 4.4805 4.70703 4.29297C4.5195 4.10543 4.26522 4 4 4Z" fill="url(#sb-think-grad)"/>
+            </svg>
+            <div class="cv-pct" id="think-pct">0%</div>
+            <div class="cv-stat" id="think-step">Analyzing audio...</div>
+          </div>
+        </div>
+        <div class="creating-ttl" id="think-ttl">Crafting Your Storyboard</div>
+        <div class="creating-sub" id="think-sub">AI is analyzing your audio and description<br>to build the perfect cinematic sequence.</div>
+        <div class="think-bar-wrap" style="width:100%;margin-bottom:10px;"><div class="think-bar" id="think-bar"></div></div>
+        <div class="creating-info">
+          <div class="ci-lbl">Estimated time remaining</div>
+          <div class="ci-val">~1 minutes</div>
+        </div>
+        <div style="height:24px;"></div>
+        <button onclick="goTo('history')" style="background:transparent;border:1.5px solid rgba(255,255,255,.15);border-radius:14px;color:rgba(255,255,255,.55);font-size:15px;font-weight:500;padding:0 32px;height:46px;cursor:pointer;transition:border-color .2s;">View Later</button>
+      </div>
+    </div>
+
+    <!-- ══════ STORYBOARD / EDIT SCRIPT ══════ -->
+    <div id="screen-mv-storyboard" class="screen">
+      <!-- Nav -->
+      <div class="nav nav-blur">
+        <div class="nav-back" onclick="goBack()">
+          <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+        </div>
+        <div class="nav-title">Storyboard</div>
+        <div style="min-width:36px;display:flex;justify-content:flex-end;">
+          <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 6px;display:flex;align-items:center;gap:4px;cursor:pointer;">
+            <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
+            <span style="font-size:13px;font-weight:700;color:#f59e0b;">390</span>
+          </div>
+        </div>
+      </div>
+      <!-- Scrollable content -->
+      <div class="scr-scroll" style="padding:calc(var(--safe-top) + var(--nav-h) + 12px) 0 100px;">
+        <div style="padding:0 16px;display:flex;flex-direction:column;gap:20px;">
+
+          <!-- CHARACTER IMAGE -->
+          <div style="display:flex;flex-direction:column;gap:5px;align-items:center;">
+            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;width:100%;">Character Image</div>
+            <!-- Portrait card — clickable, opens full image view -->
+            <div onclick="sbOpenCharImage()" style="position:relative;width:124px;height:219px;border-radius:14px;overflow:hidden;cursor:pointer;background:linear-gradient(60deg,#2d1a08,#5a3a18);flex-shrink:0;">
+              <img src="assets/images/storyboard/storyboard_01.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div id="char-img-proc" class="shot-proc"><div class="spinner-sm"></div></div>
+              <!-- Expand button -->
+              <div onclick="event.stopPropagation();sbOpenCharImage()" style="position:absolute;bottom:8px;right:8px;width:28px;height:28px;border-radius:18px;background:rgba(9,9,11,0.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
+                <img src="assets/icons/ui/ic_expand.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
               </div>
             </div>
           </div>
@@ -3429,65 +3485,78 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="display:flex;flex-direction:column;gap:8px;">
             <!-- Header with expand/collapse -->
             <div onclick="toggleStoryLine()" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
-              <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Story Line</div>
+              <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Scene</div>
               <img id="sb-storyline-chevron" src="assets/icons/ui/ic_chevron-right.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);transform:rotate(-90deg);transition:transform .25s;">
             </div>
 
             <!-- Scenes (collapsible) -->
-            <div id="sb-storyline-content" style="display:flex;flex-direction:column;gap:8px;max-height:600px;overflow:hidden;transition:max-height .5s ease-in-out,opacity .5s ease-in-out;opacity:1;">
+            <div id="sb-storyline-content" style="display:flex;flex-direction:column;gap:8px;max-height:3000px;overflow:hidden;transition:max-height .5s ease-in-out,opacity .5s ease-in-out;opacity:1;">
 
               <!-- Scene 1 -->
-              <div onclick="openSceneEditor('Scene 1','sb-scene-1-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;cursor:pointer;">
+              <div onclick="sbOpenSceneEditor(1,'assets/images/scene/scene_1.jpg',document.getElementById('sb-scene-1-text').textContent,'Edit Scene 1')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;box-sizing:border-box;cursor:pointer;">
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                  <div style="display:flex;align-items:flex-end;justify-content:space-between;">
-                    <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 1</div>
-                    <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:00–00:09</div>
+                  <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 1</div>
+                  <!-- Scene image — no characters yet, edit prompt / regenerate before shots combine characters in -->
+                  <div style="position:relative;border-radius:10px;overflow:hidden;height:120px;background:#1a1a1a;flex-shrink:0;">
+                    <img id="sb-scene-1-img" src="assets/images/scene/scene_1.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+                    <div id="sb-scene-proc-1" class="shot-proc"><div class="spinner-sm"></div></div>
+                    <div onclick="event.stopPropagation();sbOpenSceneEditor(1,'assets/images/scene/scene_1.jpg',document.getElementById('sb-scene-1-text').textContent,'Edit Scene 1')" style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;border-radius:16px;background:rgba(9,9,11,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                      <img src="assets/icons/ui/ic_edit.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                    </div>
                   </div>
                   <div style="display:flex;align-items:center;gap:8px;">
                     <div id="sb-scene-1-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;flex:1;min-width:0;">In a softly lit, elegant dressing room, the woman stands before a grand mirror.</div>
-                    <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;flex-shrink:0;filter:invert(66%) sepia(5%) saturate(400%) hue-rotate(210deg) brightness(92%) contrast(90%);">
                   </div>
                 </div>
               </div>
 
               <!-- Scene 2 -->
-              <div onclick="openSceneEditor('Scene 2','sb-scene-2-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;cursor:pointer;">
+              <div onclick="sbOpenSceneEditor(2,'assets/images/scene/scene_2.jpg',document.getElementById('sb-scene-2-text').textContent,'Edit Scene 2')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;box-sizing:border-box;cursor:pointer;">
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                  <div style="display:flex;align-items:flex-end;justify-content:space-between;">
-                    <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 2</div>
-                    <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:09–00:12</div>
+                  <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 2</div>
+                  <div style="position:relative;border-radius:10px;overflow:hidden;height:120px;background:#1a1a1a;flex-shrink:0;">
+                    <img id="sb-scene-2-img" src="assets/images/scene/scene_2.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+                    <div id="sb-scene-proc-2" class="shot-proc"><div class="spinner-sm"></div></div>
+                    <div onclick="event.stopPropagation();sbOpenSceneEditor(2,'assets/images/scene/scene_2.jpg',document.getElementById('sb-scene-2-text').textContent,'Edit Scene 2')" style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;border-radius:16px;background:rgba(9,9,11,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                      <img src="assets/icons/ui/ic_edit.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                    </div>
                   </div>
                   <div style="display:flex;align-items:center;gap:8px;">
                     <div id="sb-scene-2-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;flex:1;min-width:0;">Close-up on the vocalist as she begins to sing, her expression serene.</div>
-                    <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;flex-shrink:0;filter:invert(66%) sepia(5%) saturate(400%) hue-rotate(210deg) brightness(92%) contrast(90%);">
                   </div>
                 </div>
               </div>
 
               <!-- Scene 3 -->
-              <div onclick="openSceneEditor('Scene 3','sb-scene-3-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;cursor:pointer;">
+              <div onclick="sbOpenSceneEditor(3,'assets/images/scene/scene_3.jpg',document.getElementById('sb-scene-3-text').textContent,'Edit Scene 3')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;box-sizing:border-box;cursor:pointer;">
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                  <div style="display:flex;align-items:flex-end;justify-content:space-between;">
-                    <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 3</div>
-                    <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:12–00:15</div>
+                  <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 3</div>
+                  <div style="position:relative;border-radius:10px;overflow:hidden;height:120px;background:#1a1a1a;flex-shrink:0;">
+                    <img id="sb-scene-3-img" src="assets/images/scene/scene_3.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+                    <div id="sb-scene-proc-3" class="shot-proc"><div class="spinner-sm"></div></div>
+                    <div onclick="event.stopPropagation();sbOpenSceneEditor(3,'assets/images/scene/scene_3.jpg',document.getElementById('sb-scene-3-text').textContent,'Edit Scene 3')" style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;border-radius:16px;background:rgba(9,9,11,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                      <img src="assets/icons/ui/ic_edit.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                    </div>
                   </div>
                   <div style="display:flex;align-items:center;gap:8px;">
                     <div id="sb-scene-3-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;flex:1;min-width:0;">The camera follows her hands as she traces the intricate lace patterns on her dress.</div>
-                    <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;flex-shrink:0;filter:invert(66%) sepia(5%) saturate(400%) hue-rotate(210deg) brightness(92%) contrast(90%);">
                   </div>
                 </div>
               </div>
 
               <!-- Scene 4 -->
-              <div onclick="openSceneEditor('Scene 4','sb-scene-4-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:76px;box-sizing:border-box;cursor:pointer;">
+              <div onclick="sbOpenSceneEditor(4,'assets/images/scene/scene_4.jpg',document.getElementById('sb-scene-4-text').textContent,'Edit Scene 4')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;box-sizing:border-box;cursor:pointer;">
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                  <div style="display:flex;align-items:flex-end;justify-content:space-between;">
-                    <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 4</div>
-                    <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;">00:16–00:23</div>
+                  <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">Scene 4</div>
+                  <div style="position:relative;border-radius:10px;overflow:hidden;height:120px;background:#1a1a1a;flex-shrink:0;">
+                    <img id="sb-scene-4-img" src="assets/images/scene/scene_4.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+                    <div id="sb-scene-proc-4" class="shot-proc"><div class="spinner-sm"></div></div>
+                    <div onclick="event.stopPropagation();sbOpenSceneEditor(4,'assets/images/scene/scene_4.jpg',document.getElementById('sb-scene-4-text').textContent,'Edit Scene 4')" style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;border-radius:16px;background:rgba(9,9,11,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                      <img src="assets/icons/ui/ic_edit.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                    </div>
                   </div>
                   <div style="display:flex;align-items:center;gap:8px;">
                     <div id="sb-scene-4-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;flex:1;min-width:0;">The camera follows her hands as she traces the intricate lace patterns on her dress.</div>
-                    <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;flex-shrink:0;filter:invert(66%) sepia(5%) saturate(400%) hue-rotate(210deg) brightness(92%) contrast(90%);">
                   </div>
                 </div>
               </div>
@@ -3495,7 +3564,56 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- LYRICS -->
+          <!-- SHOTS — hidden until Generate Shots is tapped. Characters combined in; drag to reorder, tap to edit -->
+          <div id="storyboard-shots-section" style="display:none;flex-direction:column;gap:6px;">
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Shots</div>
+            </div>
+            <div id="shots-track" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+              <div class="shot-thumb" data-shot-idx="1" onclick="openShotEditor(1,'assets/videos/storyboard-clips/clip_1.jpg','Wide establishing shot of the dressing room, warm golden light spilling across the mirror.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">1</div>
+                <div id="shot-proc-1" class="shot-proc"><div class="spinner-sm"></div></div>
+              </div>
+              <div class="shot-thumb" data-shot-idx="2" onclick="openShotEditor(2,'assets/videos/storyboard-clips/clip_2.jpg','Medium shot - she adjusts the strap of her gown, eyes soft with anticipation.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">2</div>
+                <div id="shot-proc-2" class="shot-proc"><div class="spinner-sm"></div></div>
+              </div>
+              <div class="shot-thumb" data-shot-idx="3" onclick="openShotEditor(3,'assets/videos/storyboard-clips/clip_3.jpg','Close-up on her eyes catching the light as she begins to sing.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">3</div>
+                <div id="shot-proc-3" class="shot-proc"><div class="spinner-sm"></div></div>
+              </div>
+              <div class="shot-thumb" data-shot-idx="4" onclick="openShotEditor(4,'assets/videos/storyboard-clips/clip_4.jpg','Tracking shot following her hand along the lace patterns of her dress.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">4</div>
+                <div id="shot-proc-4" class="shot-proc"><div class="spinner-sm"></div></div>
+              </div>
+              <div class="shot-thumb" data-shot-idx="5" onclick="openShotEditor(5,'assets/videos/storyboard-clips/clip_5.jpg','Two-shot as the partners embrace, silhouetted in golden light.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">5</div>
+                <div id="shot-proc-5" class="shot-proc"><div class="spinner-sm"></div></div>
+              </div>
+              <div class="shot-thumb" data-shot-idx="6" onclick="openShotEditor(6,'assets/videos/storyboard-clips/clip_6.jpg','Slow push-in as the chorus swells, light flaring across the lens.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">6</div>
+                <div id="shot-proc-6" class="shot-proc"><div class="spinner-sm"></div></div>
+              </div>
+              <div class="shot-thumb" data-shot-idx="7" onclick="openShotEditor(7,'assets/videos/storyboard-clips/clip_7.jpg','Wide cinematic pull-back revealing the full stage.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">7</div>
+                <div id="shot-proc-7" class="shot-proc"><div class="spinner-sm"></div></div>
+              </div>
+              <div class="shot-thumb" data-shot-idx="8" onclick="openShotEditor(8,'assets/videos/storyboard-clips/clip_8.jpg','Final close-up: joy, longing, and resolution in one quiet moment.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">8</div>
+                <div id="shot-proc-8" class="shot-proc"><div class="spinner-sm"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LYRICS — reference text, kept after Shots since Shots continue directly from Scenes -->
           <div style="display:flex;flex-direction:column;gap:6px;padding-bottom:10px;">
             <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Lyrics</div>
             <div style="background:var(--n14);border-radius:14px;padding:10px;max-height:160px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;scrollbar-width:none;-ms-overflow-style:none;">
@@ -3513,15 +3631,155 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
+          <!-- SELECT AI MODEL — gate flips from 'shots' to 'videos' once shots finish generating -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Select AI Model</div>
+            <div id="mv-storyboard-model-row" onclick="openAiModelSheet(_storyboardModelGate)" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:12px 14px;cursor:pointer;">
+              <span id="ai-model-label-shots" style="font-size:14px;font-weight:700;color:#fff;">Nano Banana 2 · 1K</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div id="ai-model-credit-shots" style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">15</div>
+                <span style="font-size:18px;color:rgba(255,255,255,.35);line-height:1;">›</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       <!-- CTA -->
       <div class="cta-footer">
-        <button onclick="requireLogin(()=>goTo('mv-creating'))" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-          Create MV
+        <button id="mv-storyboard-cta" onclick="requireLogin(()=>generateShotsInline())" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+          <span id="mv-storyboard-cta-label">Generate Shots</span>
+          <span id="mv-storyboard-cta-credits" style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
+            <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
+            15
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════ (STORYBOARD) VIEW SHOT RESULTS ══════ -->
+    <div id="screen-shot-results" class="screen">
+      <div class="nav nav-blur">
+        <div class="nav-back" onclick="goBack()"><img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
+        <div class="nav-title">Editor</div>
+        <div style="min-width:36px;display:flex;justify-content:flex-end;">
+          <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 6px;display:flex;align-items:center;gap:4px;cursor:pointer;">
+            <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
+            <span style="font-size:13px;font-weight:700;color:#f59e0b;">390</span>
+          </div>
+        </div>
+      </div>
+      <div class="scr-scroll" style="padding:calc(var(--safe-top) + var(--nav-h) + 14px) 16px calc(90px + var(--safe-bot));">
+        <div style="display:flex;flex-direction:column;gap:20px;">
+
+          <!-- SHOT TIMELINE -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">SHOTS</div>
+              <div style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;line-height:16px;">Each scene breaks into a few shots — select one to edit</div>
+            </div>
+            <div id="shot-cuts" style="display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;">
+              <div onclick="shotPickClip(this,0,'assets/videos/storyboard-clips/clip_1.jpg','Wide establishing shot of the dressing room, warm golden light spilling across the mirror.')"
+                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid #A855F7;">
+                <img src="assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div onclick="shotPickClip(this,1,'assets/videos/storyboard-clips/clip_2.jpg','Medium shot — she adjusts the strap of her gown, eyes soft with anticipation.')"
+                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div onclick="shotPickClip(this,2,'assets/videos/storyboard-clips/clip_3.jpg','Close-up on her eyes catching the light as she begins to sing.')"
+                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div onclick="shotPickClip(this,3,'assets/videos/storyboard-clips/clip_4.jpg','Tracking shot following her hand along the lace patterns of her dress.')"
+                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div onclick="shotPickClip(this,4,'assets/videos/storyboard-clips/clip_5.jpg','Two-shot as the partners embrace, silhouetted in golden light.')"
+                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div onclick="shotPickClip(this,5,'assets/videos/storyboard-clips/clip_6.jpg','Slow push-in as the chorus swells, light flaring across the lens.')"
+                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div onclick="shotPickClip(this,6,'assets/videos/storyboard-clips/clip_7.jpg','Wide cinematic pull-back revealing the full stage.')"
+                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div onclick="shotPickClip(this,7,'assets/videos/storyboard-clips/clip_8.jpg','Final close-up — joy, longing, and resolution in one quiet moment.')"
+                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
+                <img src="assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              </div>
+            </div>
+          </div>
+
+          <!-- PREVIEW -->
+          <div id="shot-preview-wrap" style="border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;position:relative;height:180px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),#212127;">
+            <img id="shot-preview-img" src="assets/videos/storyboard-clips/clip_1.jpg"
+              style="position:absolute;top:0;left:50%;transform:translateX(-50%);height:100%;width:auto;object-fit:cover;pointer-events:none;">
+            <div style="position:relative;z-index:2;background:linear-gradient(to top,rgba(0,0,0,.5),transparent);padding:8px 10px;">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <div id="shot-ctrl-play-btn" onclick="shotTogglePlay()" style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+                  <img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+                </div>
+                <span style="font-size:10px;color:#9C9CAB;width:28px;text-align:right;flex-shrink:0;">00:02</span>
+                <div style="flex:1;position:relative;height:12px;display:flex;align-items:center;">
+                  <div style="width:100%;height:3px;background:rgba(255,255,255,.2);border-radius:2px;position:relative;overflow:visible;">
+                    <div id="shot-progress-fill" style="width:32%;height:100%;background:linear-gradient(to right,#A855F7,#FF6BCE);border-radius:2px;position:relative;">
+                      <div style="position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 4px rgba(0,0,0,.4);"></div>
+                    </div>
+                  </div>
+                </div>
+                <span style="font-size:10px;color:#9C9CAB;width:28px;flex-shrink:0;">00:03</span>
+                <div onclick="shotToggleMute(this)" style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+                  <img src="assets/icons/ui/ic_speaker_on.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDIT SHOT (short description) -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">EDIT SHOT</div>
+            <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;min-height:131px;display:flex;flex-direction:column;">
+              <textarea id="shot-desc-ta" oninput="updateShotCount(this)"
+                style="flex:1;min-height:83px;padding:10px 10px 4px;background:transparent;border:none;color:#fff;font-size:12px;font-weight:500;font-family:inherit;line-height:1.5;resize:none;outline:none;">Wide establishing shot of the dressing room, warm golden light spilling across the mirror.</textarea>
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px;padding:4px 10px 10px;">
+                <button id="shot-desc-enhance-btn" onclick="event.stopPropagation();enhancePrompt('shot-desc')" style="display:flex;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                  <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                </button>
+                <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);" id="shot-desc-cnt">92/2500</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- REGENERATE -->
+          <div onclick="regenerateShots(this)" style="display:flex;align-items:center;justify-content:center;gap:8px;height:46px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
+            <img src="assets/icons/ui/ic_reload.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.8;">
+            <span style="font-size:14px;font-weight:600;color:#fff;letter-spacing:-.14px;">Regenerate This Shot</span>
+          </div>
+
+          <!-- SELECT AI MODEL (gate 4 — gates Generating Videos) -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">SELECT AI MODEL</div>
+            <div onclick="openAiModelSheet('videos')" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:12px 14px;cursor:pointer;">
+              <span id="ai-model-label-videos" style="font-size:14px;font-weight:700;color:#fff;">Seedance 1.0 Lite · SD</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div id="ai-model-credit-videos" style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">40</div>
+                <span style="font-size:18px;color:rgba(255,255,255,.35);line-height:1;">›</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="cta-footer">
+        <button onclick="requireLogin(()=>startGeneration('videos'))" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+          Generate Videos
           <span style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
             <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
-            200
+            40
           </span>
         </button>
       </div>
@@ -3665,7 +3923,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </button>
 
             <!-- Edit MV -->
-            <button class="mvr-action-btn" onclick="goTo('mv-edit')" style="background:#09090B;color:#fff;">
+            <button class="mvr-action-btn" onclick="editMvFromEntry()" style="background:#09090B;color:#fff;">
               <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;">
               Edit MV
             </button>
@@ -3831,7 +4089,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     <div id="screen-mv-edit" class="screen">
       <div class="nav nav-blur">
         <div class="nav-back" onclick="goBack()"><img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
-        <div class="nav-title">Edit MV</div>
+        <div class="nav-title">Editor</div>
         <div style="min-width:36px;display:flex;justify-content:flex-end;">
           <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 6px;display:flex;align-items:center;gap:4px;cursor:pointer;">
             <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
@@ -3845,7 +4103,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <!-- COVER IMAGE -->
           <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
             <div id="emv-cover-wrap">
-              <img id="emv-cover-img" src="assets/images/storyboard/storyboard_01.jpg" alt="Cover">
+              <img id="emv-cover-img" src="assets/images/mv-cover/mv_cover_01.jpg" alt="Cover">
               <div id="emv-cover-generating">
                 <span class="emv-cover-gen-label">✦ Generating...</span>
               </div>
@@ -3871,84 +4129,57 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- STORYBOARD -->
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="display:flex;flex-direction:column;gap:2px;">
-              <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">STORYBOARD</div>
-              <div style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;line-height:16px;">Select to edit storyboard</div>
-            </div>
-            <div id="emv-cuts-scroll" style="display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;">
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid #A855F7;">
-                <img src="assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">1</span>
-                </div>
+          <!-- VIDEO SHOTS — final per-shot videos, editable before render -->
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">VIDEO SHOTS</div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+              <div class="shot-thumb" data-shot-idx="1" onclick="emvOpenVideoShot(1,'assets/videos/storyboard-clips/clip_1.jpg','Wide establishing shot of the dressing room, warm golden light spilling across the mirror.','Edit Video 1')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
+                <img src="assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">1</div>
+                <div class="emv-shot-dur">0:04</div>
+                <div id="emv-shot-proc-1" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">2</span>
-                </div>
+              <div class="shot-thumb" data-shot-idx="2" onclick="emvOpenVideoShot(2,'assets/videos/storyboard-clips/clip_2.jpg','Medium shot - she adjusts the strap of her gown, eyes soft with anticipation.','Edit Video 2')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
+                <img src="assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">2</div>
+                <div class="emv-shot-dur">0:05</div>
+                <div id="emv-shot-proc-2" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">3</span>
-                </div>
+              <div class="shot-thumb" data-shot-idx="3" onclick="emvOpenVideoShot(3,'assets/videos/storyboard-clips/clip_3.jpg','Close-up on her eyes catching the light as she begins to sing.','Edit Video 3')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
+                <img src="assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">3</div>
+                <div class="emv-shot-dur">0:04</div>
+                <div id="emv-shot-proc-3" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">4</span>
-                </div>
+              <div class="shot-thumb" data-shot-idx="4" onclick="emvOpenVideoShot(4,'assets/videos/storyboard-clips/clip_4.jpg','Tracking shot following her hand along the lace patterns of her dress.','Edit Video 4')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
+                <img src="assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">4</div>
+                <div class="emv-shot-dur">0:06</div>
+                <div id="emv-shot-proc-4" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">5</span>
-                </div>
+              <div class="shot-thumb" data-shot-idx="5" onclick="emvOpenVideoShot(5,'assets/videos/storyboard-clips/clip_5.jpg','Two-shot as the partners embrace, silhouetted in golden light.','Edit Video 5')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
+                <img src="assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">5</div>
+                <div class="emv-shot-dur">0:05</div>
+                <div id="emv-shot-proc-5" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">6</span>
-                </div>
+              <div class="shot-thumb" data-shot-idx="6" onclick="emvOpenVideoShot(6,'assets/videos/storyboard-clips/clip_6.jpg','Slow push-in as the chorus swells, light flaring across the lens.','Edit Video 6')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
+                <img src="assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">6</div>
+                <div class="emv-shot-dur">0:04</div>
+                <div id="emv-shot-proc-6" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">7</span>
-                </div>
+              <div class="shot-thumb" data-shot-idx="7" onclick="emvOpenVideoShot(7,'assets/videos/storyboard-clips/clip_7.jpg','Wide cinematic pull-back revealing the full stage.','Edit Video 7')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
+                <img src="assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">7</div>
+                <div class="emv-shot-dur">0:07</div>
+                <div id="emv-shot-proc-7" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">8</span>
-                </div>
-              </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_9.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">9</span>
-                </div>
-              </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_10.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">10</span>
-                </div>
-              </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_11.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">11</span>
-                </div>
-              </div>
-              <div onclick="emvPickCut(this);goTo('sb-detail')" style="flex-shrink:0;width:89px;height:89px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_12.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:flex-end;">
-                  <span style="font-size:12px;font-weight:700;color:#fff;line-height:15px;letter-spacing:-.12px;text-shadow:0 1px 3px rgba(0,0,0,.45);">12</span>
-                </div>
+              <div class="shot-thumb" data-shot-idx="8" onclick="emvOpenVideoShot(8,'assets/videos/storyboard-clips/clip_8.jpg','Final close-up: joy, longing, and resolution in one quiet moment.','Edit Video 8')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
+                <img src="assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <div class="shot-num">8</div>
+                <div class="emv-shot-dur">0:05</div>
+                <div id="emv-shot-proc-8" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
             </div>
           </div>
@@ -3985,18 +4216,12 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div class="toggle off" id="emv-tog-wm" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
           </div>
 
-          <!-- DELETE PROJECT -->
-          <div onclick="showDeleteProjectDialog()" style="display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:opacity .15s;margin-top:4px;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
-            <img src="assets/icons/ui/ic_delete.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);opacity:.7;">
-            <span style="font-size:14px;font-weight:600;color:#fff;letter-spacing:-.14px;">Delete this Project</span>
-          </div>
-
         </div>
       </div>
       <div class="cta-footer">
         <button id="merge-mv-btn" disabled style="width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:17px;font-weight:700;cursor:default;display:flex;align-items:center;justify-content:center;gap:6px;" onmousedown="if(!this.disabled)this.style.opacity='.7'" onmouseup="if(!this.disabled)this.style.opacity='1'" onclick="mergeAndProcess()">
           <span id="merge-mv-content" style="display:flex;align-items:center;gap:6px;opacity:0.3;">
-            Merge MV
+            Render Video
             <span style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
               <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
               20
@@ -5638,6 +5863,229 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     </div>
   </div>
 
+  <!-- ══════ SELECT AI MODEL (shared across Analysis / Scene / Shot / Video gates) ══════ -->
+  <div class="overlay" id="ai-model-overlay" onclick="hideSheet('ai-model-sheet')"></div>
+  <div class="sheet" id="ai-model-sheet" style="max-height:80vh;display:flex;flex-direction:column;padding-bottom:calc(var(--safe-bot) + 16px);">
+    <div class="sheet-handle"></div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 20px 4px;">
+      <div onclick="hideSheet('ai-model-sheet')" style="width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+      <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;">Select AI Model</div>
+      <div style="width:28px;flex-shrink:0;"></div>
+    </div>
+    <div id="ai-model-subtitle" style="padding:0 20px 12px;font-size:12px;font-weight:500;color:#9C9CAB;text-align:center;line-height:1.5;">Choose the model used to generate this step.</div>
+    <div id="ai-model-list" style="overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:0 20px 8px;"></div>
+  </div>
+
+  <!-- ══════ IMAGE EDITOR — scene / shot image + prompt + regenerate (global scope) ══════ -->
+  <div id="img-editor-wrap">
+    <div id="img-editor-dim" onclick="closeImageEditor()"></div>
+    <div id="img-editor-content">
+      <div id="img-editor-panel">
+        <div style="display:flex;justify-content:center;padding:10px 0 6px;">
+          <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.25);"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:4px 16px 12px;">
+          <div onclick="closeImageEditor()" style="width:28px;height:28px;border-radius:14px;background:#3A3A3C;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div id="img-editor-label" style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">Edit Scene</div>
+          <div id="img-editor-done-btn" onclick="closeImageEditor()" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;opacity:0;pointer-events:none;transition:opacity .25s ease;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <!-- Image preview -->
+        <div style="padding:0 16px 12px;">
+          <div id="img-editor-preview-wrap" style="position:relative;border-radius:14px;overflow:hidden;width:100%;aspect-ratio:16/9;background:#1a1a1a;">
+            <img id="img-editor-preview" src="" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+        </div>
+        <!-- Versions — every regenerate appends a version here; tap one to pick it -->
+        <div style="padding:0 16px 12px;">
+          <div id="img-editor-versions-track" style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;"></div>
+        </div>
+        <!-- Prompt -->
+        <div style="padding:0 16px;">
+          <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;">
+            <textarea id="img-editor-ta" maxlength="2500" placeholder="Describe this image…" oninput="onImgEditorInput()" style="width:100%;min-height:90px;padding:12px 12px 4px;background:transparent;border:none;color:#fff;font-size:13px;font-family:inherit;resize:none;outline:none;line-height:1.5;"></textarea>
+            <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:4px 10px 10px;">
+              <button id="img-editor-enhance-btn" onclick="event.stopPropagation();enhancePrompt('img-editor')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+              </button>
+              <span id="img-editor-counter" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);">0/2500</span>
+            </div>
+          </div>
+        </div>
+        <!-- Select AI Model -->
+        <div style="padding:10px 16px 0;">
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Select AI Model</div>
+          <div id="img-editor-model-row" onclick="openAiModelSheet(_imgEditorGate)" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px 14px;cursor:pointer;">
+            <span id="img-editor-model-label" style="font-size:13px;font-weight:700;color:#fff;">Nano Banana 2 · 1K</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div id="img-editor-model-credit" style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">5</div>
+              <span style="font-size:16px;color:rgba(255,255,255,.35);line-height:1;">›</span>
+            </div>
+          </div>
+        </div>
+        <!-- Regenerate CTA — disabled until the prompt or AI model changes -->
+        <div style="padding:14px 16px calc(16px + var(--safe-bot));">
+          <button id="img-editor-regen-btn" disabled onclick="regenerateImageEditor()" style="width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:none;opacity:.45;transition:opacity .15s;" onmousedown="if(!this.disabled)this.style.opacity='.8'" onmouseup="if(!this.disabled)this.style.opacity='1'">
+            Regenerate
+            <span id="img-editor-regen-credit" style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:13px;font-weight:700;">
+              <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
+              20
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ VIDEO EDITOR — shot video preview + prompt + regenerate (global scope). Opens once a shot has become a video (after Generate Video). ══════ -->
+  <div id="vid-editor-wrap">
+    <div id="vid-editor-dim" onclick="closeVideoEditor()"></div>
+    <div id="vid-editor-content">
+      <div id="vid-editor-panel">
+        <div style="display:flex;justify-content:center;padding:10px 0 6px;">
+          <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.25);"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:4px 16px 12px;">
+          <div onclick="closeVideoEditor()" style="width:28px;height:28px;border-radius:14px;background:#3A3A3C;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div id="vid-editor-label" style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">Edit Video</div>
+          <div id="vid-editor-done-btn" onclick="closeVideoEditor()" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;opacity:0;pointer-events:none;transition:opacity .25s ease;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <!-- Video preview — full control bar: play/pause, time, scrubber, duration, mute, fullscreen -->
+        <div style="padding:0 16px 12px;">
+          <div id="vid-editor-preview-wrap" style="position:relative;border-radius:14px;overflow:hidden;width:100%;aspect-ratio:16/9;background:#1a1a1a;display:flex;flex-direction:column;justify-content:flex-end;">
+            <img id="vid-editor-preview" src="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">
+            <div style="position:relative;z-index:2;background:linear-gradient(to top,rgba(0,0,0,.5),transparent);padding:8px 10px;">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <div id="vid-editor-ctrl-play-btn" onclick="vidEditorTogglePlay()" style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+                  <img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+                </div>
+                <span id="vid-editor-time-now" style="font-size:10px;color:#9C9CAB;width:28px;text-align:right;flex-shrink:0;">00:00</span>
+                <div id="vid-editor-progress-bar" onclick="vidEditorSeek(event,this)" style="flex:1;position:relative;height:12px;display:flex;align-items:center;cursor:pointer;">
+                  <div style="width:100%;height:3px;background:rgba(255,255,255,.2);border-radius:2px;position:relative;overflow:visible;">
+                    <div id="vid-editor-progress-fill" style="width:0%;height:100%;background:linear-gradient(to right,#A855F7,#FF6BCE);border-radius:2px;position:relative;">
+                      <div style="position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 4px rgba(0,0,0,.4);"></div>
+                    </div>
+                  </div>
+                </div>
+                <span id="vid-editor-time-total" style="font-size:10px;color:#9C9CAB;width:28px;flex-shrink:0;">00:16</span>
+                <div onclick="vidEditorToggleMute(this)" style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+                  <img id="vid-editor-mute-icon" src="assets/icons/ui/ic_speaker_on.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
+                </div>
+                <div onclick="vidEditorFullscreen()" style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+                  <img src="assets/icons/ui/ic_expand.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Versions — every regenerate appends a version here; tap one to pick it -->
+        <div style="padding:0 16px 12px;">
+          <div id="vid-editor-versions-track" style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;"></div>
+        </div>
+        <!-- Prompt -->
+        <div style="padding:0 16px;">
+          <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;">
+            <textarea id="vid-editor-ta" maxlength="2500" placeholder="Describe this video…" oninput="onVidEditorInput()" style="width:100%;min-height:90px;padding:12px 12px 4px;background:transparent;border:none;color:#fff;font-size:13px;font-family:inherit;resize:none;outline:none;line-height:1.5;"></textarea>
+            <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:4px 10px 10px;">
+              <button id="vid-editor-enhance-btn" onclick="event.stopPropagation();enhancePrompt('vid-editor')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+              </button>
+              <span id="vid-editor-counter" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);">0/2500</span>
+            </div>
+          </div>
+        </div>
+        <!-- Select AI Model -->
+        <div style="padding:10px 16px 0;">
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Select AI Model</div>
+          <div id="vid-editor-model-row" onclick="openAiModelSheet('videos')" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px 14px;cursor:pointer;">
+            <span id="vid-editor-model-label" style="font-size:13px;font-weight:700;color:#fff;">Seedance 1.0 Lite · SD</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div id="vid-editor-model-credit" style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">40</div>
+              <span style="font-size:16px;color:rgba(255,255,255,.35);line-height:1;">›</span>
+            </div>
+          </div>
+        </div>
+        <!-- Regenerate CTA — disabled until the prompt or AI model changes -->
+        <div style="padding:14px 16px calc(16px + var(--safe-bot));">
+          <button id="vid-editor-regen-btn" disabled onclick="regenerateVideoEditor()" style="width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:none;opacity:.45;transition:opacity .15s;" onmousedown="if(!this.disabled)this.style.opacity='.8'" onmouseup="if(!this.disabled)this.style.opacity='1'">
+            Regenerate
+            <span id="vid-editor-regen-credit" style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:13px;font-weight:700;">
+              <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
+              40
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ FACE PICKER (global scope — usable from any screen, e.g. Select Characters on Scene Setup) ══════ -->
+  <div id="fp-overlay" onclick="closeFacePicker()"></div>
+  <div id="fp-sheet">
+    <div style="width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:14px auto 0;"></div>
+
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px 10px;">
+      <div onclick="closeFacePicker()" style="width:32px;height:32px;border-radius:50%;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:17px;font-weight:700;color:#fff;">Select a Face</div>
+        <div id="fp-subtitle" style="font-size:12px;color:#9C9CAB;margin-top:2px;">Analyzing photo…</div>
+      </div>
+      <div style="width:32px;flex-shrink:0;"></div>
+    </div>
+
+    <!-- Group photo with face detection boxes -->
+    <div class="fp-photo-wrap">
+      <img src="assets/images/character-photos/samples/Sample_P9_multi.png" alt="Group photo">
+      <!-- Scan line (starts running when sheet opens) -->
+      <div id="fp-scan" class="fp-scan-line"></div>
+      <!-- Face detection boxes (revealed after scan) — square, selectable -->
+      <div id="fp-b1" class="fp-box" onclick="selectFace(1)" style="top:4%;left:5%;width:21%;opacity:0;"></div>
+      <div id="fp-b2" class="fp-box" onclick="selectFace(2)" style="top:2%;left:24%;width:21%;opacity:0;"></div>
+      <div id="fp-b3" class="fp-box" onclick="selectFace(3)" style="top:2%;left:44%;width:21%;opacity:0;"></div>
+      <div id="fp-b4" class="fp-box" onclick="selectFace(4)" style="top:4%;left:65%;width:21%;opacity:0;"></div>
+    </div>
+
+    <!-- Face option circles -->
+    <div style="padding:0 16px 8px;">
+      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;text-align:center;margin-bottom:10px;">Choose one face</div>
+    </div>
+    <div class="fp-faces-row">
+      <div id="fp-f1" class="fp-face" onclick="selectFace(1)">
+        <div class="fp-circle fp-c1"></div>
+        <div class="fp-face-lbl">Face 1</div>
+      </div>
+      <div id="fp-f2" class="fp-face" onclick="selectFace(2)">
+        <div class="fp-circle fp-c2"></div>
+        <div class="fp-face-lbl">Face 2</div>
+      </div>
+      <div id="fp-f3" class="fp-face" onclick="selectFace(3)">
+        <div class="fp-circle fp-c3"></div>
+        <div class="fp-face-lbl">Face 3</div>
+      </div>
+      <div id="fp-f4" class="fp-face" onclick="selectFace(4)">
+        <div class="fp-circle fp-c4"></div>
+        <div class="fp-face-lbl">Face 4</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div style="padding:0 16px;">
+      <button id="fp-btn" onclick="confirmFaceSelection()" class="btn btn-primary disabled" disabled style="opacity:.35;cursor:not-allowed;">Use This Face</button>
+    </div>
+  </div>
+
   <!-- Delete Confirmation Dialog -->
   <div id="hist-delete-overlay" class="popup-overlay" onclick="hideHistDeleteDialog()"></div>
   <div id="hist-delete-dialog" class="popup-dialog">
@@ -5996,6 +6444,14 @@ function stopAllMedia() {
     const spIcon = document.getElementById('sp-play-ico');
     if (spIcon) { spIcon.src = 'assets/icons/ui/ic_play.svg'; spIcon.style.paddingLeft = '2px'; }
   }
+
+  // Stop the Video Editor's simulated playback timer
+  if (typeof _vidEditorPlaying !== 'undefined' && _vidEditorPlaying) {
+    _vidEditorPlaying = false;
+    clearInterval(_vidEditorProgressTimer); _vidEditorProgressTimer = null;
+    const btn = document.getElementById('vid-editor-ctrl-play-btn');
+    if (btn) { const img = btn.querySelector('img'); if (img) img.src = 'assets/icons/ui/ic_play.svg'; }
+  }
 }
 
 function goTo(id, dir) {
@@ -6057,10 +6513,25 @@ function goTo(id, dir) {
   if (leaving === 'screen-song-creating') clearTimeout(songTimer);
 
   // Screen-specific actions
+  if (isBack && CTA_BACK_CONFIG[id]) setCtaNext(id);
   if (id === 'mv-style') setTimeout(initStyleCarousel, 50);
+  if (id === 'mv-analysis') { setTimeout(() => mvrPickStyle(styleIdx, null), 400); }
+  if (id === 'mv-storyboard') {
+    if (_freshFromSceneGen) {
+      // Just finished the real Generate Scenes processing — Character Image
+      // is already done, but the Scene images below get their own staggered
+      // generating pass instead of making the user wait for them upfront.
+      _freshFromSceneGen = false;
+      _genStage = null;
+      startStoryboardScenesGenerating();
+    } else if (_genStage === 'scenes') {
+      // Passing through via the Next-state CTA shortcut — nothing changed.
+      _genStage = null;
+    }
+  }
   if (id === 'mv-room')  {
-    setTimeout(() => mvrPickStyle(styleIdx, null), 400);
     updateSongClearBtn();
+    updateMvRoomCta();
     // Recreate mode: restore settings and update CTA
     const cta = document.getElementById('mv-room-cta');
     if (_mvrRecreate) {
@@ -6081,7 +6552,22 @@ function goTo(id, dir) {
       }, 420);
     }
   }
-  if (id === 'mv-edit')  setTimeout(checkMergeEnable, 60);
+  if (id === 'mv-edit')  {
+    if (_freshFromVideoGen) {
+      // Just finished the real Generate Videos processing — the cover has its
+      // own state already; the Video Shots below need their own staggered
+      // generating pass, and Render Video only turns on once all 8 finish.
+      _freshFromVideoGen = false;
+      _genStage = null;
+      startEditorVideoShotsGenerating();
+    } else if (_genStage === 'videos') {
+      // Passing through via the Next-state CTA shortcut — nothing was actually
+      // regenerated, so there's nothing to wait on.
+      _genStage = null;
+      _emvDirty = true;
+    }
+    setTimeout(checkMergeEnable, 60);
+  }
   if (id === 'onboard') setTimeout(() => obGoTo(0), 50);
   if (id === 'history') {
     // Show processing item if coming from song-creating
@@ -6089,7 +6575,7 @@ function goTo(id, dir) {
     const prevId = navStack[navStack.length - 2];
     if (proc && prevId === 'song-creating') proc.style.display = 'flex';
   }
-  if (id === 'mv-thinking') { _mvrRecreate = false; startThinking(); showToastProcessing('storyboard'); }
+  if (id === 'mv-thinking') { _mvrRecreate = false; startThinking(_genStage); showToastProcessing('storyboard'); }
   if (id === 'mv-creating') { _mvrRecreate = false; startCreating(); showToastProcessing('mv'); }
   if (id === 'song-creating') { startSongCreating(); showToastProcessing('song'); }
   if (id === 'song-result') { buildWaveform(); applySongResultCtx(); }
@@ -6384,24 +6870,395 @@ function setAudio(type) {
   if (row) row.textContent = labels[type] || '';
 }
 
-// ── Thinking animation ──
-const thinkSteps = ['Analyzing audio...','Detecting rhythm & mood...','Generating scene concepts...','Composing visual narrative...','Finalizing storyboard...'];
+// ── Thinking animation — 4 generation gates: analysis / scenes / shots / videos ──
+// Each gate is chosen via startGeneration(stage), which stashes the stage and
+// routes through the shared screen-mv-thinking loader before landing on the
+// gate's result screen.
+const GEN_STAGES = {
+  analysis: {
+    title: 'Analyzing Your Song',
+    sub:   'AI is listening to your audio and idea<br>to understand mood, tempo, and story.',
+    steps: ['Analyzing audio...', 'Reading lyrics...', 'Understanding mood...', 'Building analysis...', 'Finalizing analysis...'],
+    next:  'mv-analysis'
+  },
+  scenes: {
+    title: 'Crafting Your Storyboard',
+    sub:   'AI is analyzing your audio and description<br>to build the perfect cinematic sequence.',
+    // Kept short — the scene images finish generating progressively on the
+    // Storyboard page itself (see startStoryboardScenesGenerating()), so this
+    // screen doesn't need to hold the user until every scene is fully ready.
+    steps: ['Structuring scenes...', 'Aligning to the beat...', 'Finalizing scenes...'],
+    next:  'mv-storyboard'
+  },
+  shots: {
+    title: 'Breaking Scenes into Shots',
+    sub:   'AI is turning each scene into<br>camera-ready shots.',
+    steps: ['Framing shots...', 'Choosing camera angles...', 'Sequencing cuts...', 'Finalizing shots...'],
+    next:  'mv-storyboard'
+  },
+  videos: {
+    title: 'Generating Your Videos',
+    sub:   'AI is rendering each shot<br>into motion.',
+    steps: ['Animating shots...', 'Rendering motion...', 'Syncing to the beat...', 'Finalizing videos...'],
+    next:  'mv-edit'
+  }
+};
+// ── Back-navigation CTA: when the user goes BACK to a screen they already
+// completed, show a neutral white "Next" button instead of the normal
+// colored action — until they change something, at which point it reverts. ──
+const CTA_BACK_CONFIG = {
+  'mv-room':       'mv-room-cta',
+  'mv-analysis':   'mv-analysis-cta',
+  'mv-storyboard': 'mv-storyboard-cta',
+  'mv-edit':       'merge-mv-btn'
+};
+// While a CTA is showing the neutral "Next" state, tapping it goes straight to
+// the next step — no re-processing screen, since nothing actually changed —
+// regardless of what the button's normal-state action currently is.
+const CTA_NEXT_STAGE = {
+  'mv-room':       'analysis',
+  'mv-analysis':   'scenes',
+  'mv-storyboard': 'videos'
+};
+function handleNextCta(screenId) {
+  if (screenId === 'mv-edit') {
+    // Nothing on the Editor changed — the MV itself doesn't need re-rendering,
+    // so skip straight to the already-created result.
+    requireLogin(() => goTo('mv-result'));
+    return;
+  }
+  const stage = CTA_NEXT_STAGE[screenId];
+  const cfg = stage && GEN_STAGES[stage];
+  if (!cfg) return;
+  requireLogin(() => {
+    _genStage = stage; // keep downstream goTo hooks (e.g. mv-edit's Render Video gate) working as usual
+    goTo(cfg.next);
+    // Chain the neutral "Next" state forward — e.g. when re-visiting an
+    // already-completed MV via Edit MV, every step should keep showing "Next"
+    // for as long as the user hasn't actually changed anything on that step.
+    if (CTA_BACK_CONFIG[cfg.next]) setCtaNext(cfg.next);
+  });
+}
+function setCtaNext(screenId) {
+  const btnId = CTA_BACK_CONFIG[screenId];
+  const btn = btnId && document.getElementById(btnId);
+  if (!btn) return;
+  if (btn.dataset.origHtml === undefined) btn.dataset.origHtml = btn.innerHTML;
+  if (btn.dataset.origBg === undefined) btn.dataset.origBg = btn.style.background || '';
+  if (btn.dataset.origOnclick === undefined) btn.dataset.origOnclick = btn.getAttribute('onclick') || '';
+  btn.innerHTML = 'Next';
+  btn.style.background = '#fff';
+  btn.style.color = '#09090B';
+  btn.style.boxShadow = 'none';
+  btn.disabled = false;
+  btn.setAttribute('onclick', `handleNextCta('${screenId}')`);
+  btn.dataset.nextState = '1';
+}
+function restoreCtaNormal(screenId) {
+  const btnId = CTA_BACK_CONFIG[screenId];
+  const btn = btnId && document.getElementById(btnId);
+  if (!btn || btn.dataset.nextState !== '1') return;
+  btn.innerHTML = btn.dataset.origHtml;
+  if (btn.dataset.origOnclick) btn.setAttribute('onclick', btn.dataset.origOnclick);
+  btn.dataset.nextState = '0';
+  if (screenId === 'mv-edit') {
+    // Render Video has its own dirty-gated enable/disable styling — let it decide the look
+    setEmvDirty();
+  } else {
+    btn.style.background = btn.dataset.origBg;
+    btn.style.color = '#fff';
+    btn.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+  }
+}
+// Entering the MV room to edit an already-completed MV (from History or the
+// MV Result page) should start the CTA in the neutral "Next" state right away
+// — the user hasn't changed anything yet, so nothing should regenerate until
+// they do.
+function editMvFromEntry() {
+  goTo('mv-room');
+  setCtaNext('mv-room');
+}
+function initCtaBackNextWatchers() {
+  Object.keys(CTA_BACK_CONFIG).forEach(screenId => {
+    const scr = document.getElementById('screen-' + screenId);
+    const btnId = CTA_BACK_CONFIG[screenId];
+    if (!scr) return;
+    const clear = () => restoreCtaNormal(screenId);
+    scr.addEventListener('input', clear, true);
+    scr.addEventListener('click', (e) => {
+      if (e.target.closest('#' + btnId)) return; // tapping the CTA itself isn't "modifying"
+      if (e.target.closest('.nav-back')) return; // navigating away again isn't either
+      clear();
+    }, true);
+  });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCtaBackNextWatchers);
+else initCtaBackNextWatchers();
+
+let _genStage = 'analysis';
+// True only for the single goTo('mv-edit') call that follows a REAL Generate
+// Videos processing pass (set right before that goTo — see startThinking's
+// completion callback). Distinguishes "just finished generating" from the
+// Next-state CTA shortcut, which also sets _genStage='videos' but skips
+// processing entirely since nothing changed.
+let _freshFromVideoGen = false;
+// Same idea as _freshFromVideoGen, but for the single goTo('mv-storyboard')
+// call that follows a REAL Generate Scenes processing pass.
+let _freshFromSceneGen = false;
+function startGeneration(stage) {
+  _genStage = stage;
+  // Only the very first step (Analyze Song) and the final render (Rendering
+  // Video, handled separately via mergeAndProcess -> mv-creating) show the
+  // full-page processing interstitial. Generate Scenes and Generate Video
+  // skip it and jump straight to the destination screen, which shows its own
+  // inline "generating" state instead (staggered per-scene/per-shot overlays).
+  if (stage === 'scenes' || stage === 'videos') {
+    const cfg = GEN_STAGES[stage];
+    if (!cfg) return;
+    if (stage === 'videos') _freshFromVideoGen = true;
+    if (stage === 'scenes') _freshFromSceneGen = true;
+    goTo(cfg.next);
+    return;
+  }
+  goTo('mv-thinking');
+}
+
+// ── Storyboard: Character Image + Scene images — staggered "generating" pass.
+// Runs once, right after a real Generate Scenes pass (see startGeneration()).
+// The Character Image resolves alongside Scene 1 — long enough to still be
+// visible once the screen-slide transition (380ms) finishes, unlike a very
+// short flash that would clear before the user can actually see it. ──
+let _charImgGenDone = true; // default ready (normal/back-nav visits)
+function sbOpenCharImage() {
+  if (!_charImgGenDone) return; // not ready yet
+  openCharImage();
+}
+const _sbSceneGenDone = { 1: true, 2: true, 3: true, 4: true }; // defaults ready (normal/back-nav visits)
+function sbOpenSceneEditor(idx, imgSrc, desc, label) {
+  if (!_sbSceneGenDone[idx]) return; // not ready yet
+  openImageEditor('scene', idx, imgSrc, desc, label);
+}
+// Slower, more deliberate cadence so the reveal reads like a real generation
+// pass rather than an instant flash — base delay before the first item
+// resolves, plus a per-item stagger on top of that.
+const SB_SCENE_GEN_BASE_MS    = 700;
+const SB_SCENE_GEN_STAGGER_MS = 750;
+function startStoryboardScenesGenerating() {
+  _charImgGenDone = false;
+  const charProc = document.getElementById('char-img-proc');
+  if (charProc) charProc.classList.add('show');
+  setTimeout(() => {
+    _charImgGenDone = true;
+    if (charProc) charProc.classList.remove('show');
+  }, SB_SCENE_GEN_BASE_MS + 1 * SB_SCENE_GEN_STAGGER_MS);
+  for (let i = 1; i <= 4; i++) {
+    _sbSceneGenDone[i] = false;
+    const proc = document.getElementById('sb-scene-proc-' + i);
+    if (proc) proc.classList.add('show');
+  }
+  for (let i = 1; i <= 4; i++) {
+    setTimeout(() => {
+      _sbSceneGenDone[i] = true;
+      const proc = document.getElementById('sb-scene-proc-' + i);
+      if (proc) proc.classList.remove('show');
+    }, SB_SCENE_GEN_BASE_MS + i * SB_SCENE_GEN_STAGGER_MS);
+  }
+}
+
+// ── Generate Shots — inline: dummy thumbnails reveal with a processing
+// overlay staggered per-thumbnail, no full-screen loader / no navigation.
+// Once all 8 shots finish, the Select AI Model row + CTA flip to 'videos'. ──
+let _shotsGenerated = false;
+let _storyboardModelGate = 'shots';
+// Slower, more deliberate cadence — see SB_SCENE_GEN_* above for the same idea.
+const SB_SHOT_GEN_BASE_MS    = 600;
+const SB_SHOT_GEN_STAGGER_MS = 600;
+function generateShotsInline() {
+  if (_shotsGenerated) return;
+  const sec = document.getElementById('storyboard-shots-section');
+  if (!sec) return;
+  sec.style.display = 'flex';
+  for (let i = 1; i <= 8; i++) {
+    const proc = document.getElementById('shot-proc-' + i);
+    if (proc) proc.classList.add('show');
+  }
+  setTimeout(() => { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+  for (let i = 1; i <= 8; i++) {
+    setTimeout(() => {
+      const proc = document.getElementById('shot-proc-' + i);
+      if (proc) proc.classList.remove('show');
+      if (i === 8) { _shotsGenerated = true; finishShotsGeneration(); }
+    }, SB_SHOT_GEN_BASE_MS + i * SB_SHOT_GEN_STAGGER_MS);
+  }
+  initShotDragReorder();
+}
+
+// Tapping a shot thumbnail on the Storyboard page always opens the Image Editor
+// — the Storyboard is where shot IMAGES are composed. Editing the final shot
+// VIDEOS happens later, from the Video Shots grid on the Editor screen, which
+// calls openVideoEditor directly.
+function openShotEditor(idx, imgSrc, desc) {
+  openImageEditor('shot', idx, imgSrc, desc, 'Edit Shot ' + idx);
+}
+function _renderStoryboardModelRow() {
+  const gate = _storyboardModelGate;
+  const sel = _aiModelSelected[gate];
+  const m = _aiModelFind(gate, sel.modelId);
+  if (!m) return;
+  const r = m.resolutions.find(x => x.res === sel.res) || m.resolutions[0];
+  const nameEl = document.getElementById('ai-model-label-shots');
+  const creditEl = document.getElementById('ai-model-credit-shots');
+  if (nameEl) nameEl.textContent = `${m.name} · ${r.res}`;
+  if (creditEl) creditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">${r.credits}`;
+}
+function finishShotsGeneration() {
+  _storyboardModelGate = 'videos';
+  _renderStoryboardModelRow();
+  const label = document.getElementById('mv-storyboard-cta-label');
+  const creditsWrap = document.getElementById('mv-storyboard-cta-credits');
+  const btn = document.getElementById('mv-storyboard-cta');
+  if (label) label.textContent = 'Generate Video';
+  if (btn) btn.setAttribute('onclick', "requireLogin(()=>startGeneration('videos'))");
+  const sel = _aiModelSelected.videos;
+  const m = _aiModelFind('videos', sel.modelId);
+  const r = m && m.resolutions.find(x => x.res === sel.res);
+  if (creditsWrap && r) creditsWrap.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">${r.credits}`;
+  // Refresh the Back→Next cache so a later Back visit restores to THIS state, not the stale "Generate Shots" one
+  if (btn) {
+    btn.dataset.origHtml = btn.innerHTML;
+    btn.dataset.origBg = btn.style.background || btn.dataset.origBg || '';
+    btn.dataset.origOnclick = btn.getAttribute('onclick') || '';
+    btn.dataset.nextState = '0';
+  }
+}
+
+// Refresh each thumbnail's position-number badge (1-8) to match current DOM order.
+function _renumberShotThumbs() {
+  const track = document.getElementById('shots-track');
+  if (!track) return;
+  Array.from(track.querySelectorAll('.shot-thumb')).forEach((t, i) => {
+    const badge = t.querySelector('.shot-num');
+    if (badge) badge.textContent = String(i + 1);
+  });
+}
+
+// ── Shot drag-to-reorder ──
+// The thumbnails live in a static 2-column grid (no native scroll), so there's
+// nothing for a long-press-drag to fight — the earlier horizontal-scrolling
+// strip made the browser's native pan gesture race our custom drag, which is
+// what made dragging feel broken and left stray pointer capture state around
+// (the likely cause of an unrelated sheet popping open afterward).
+function initShotDragReorder() {
+  const track = document.getElementById('shots-track');
+  if (!track || track.dataset.dragInit) return;
+  track.dataset.dragInit = '1';
+  // Activate drag on the first small movement after pressing a thumbnail — no
+  // long-press delay. A long-press was originally needed to disambiguate from
+  // the horizontal-scrolling strip's native pan gesture, but the grid layout
+  // doesn't scroll at all, so there's nothing left to disambiguate against.
+  // Requiring a hold before drag could activate is exactly why a natural
+  // "press and immediately drag" motion never triggered it.
+  const MOVE_START_PX = 6;
+  let downThumb = null;
+  let dragEl = null;
+  let activePointerId = null;
+  let startX = 0, startY = 0;
+  let suppressClick = false;
+
+  track.addEventListener('pointerdown', (e) => {
+    const thumb = e.target.closest('.shot-thumb');
+    if (!thumb) return;
+    // Defensive: if a previous drag never cleaned up its capture, clear it now.
+    if (dragEl) endDrag();
+    downThumb = thumb;
+    activePointerId = e.pointerId;
+    startX = e.clientX; startY = e.clientY;
+  });
+  track.addEventListener('pointermove', (e) => {
+    if (!dragEl) {
+      if (!downThumb) return;
+      if (Math.abs(e.clientX - startX) < MOVE_START_PX && Math.abs(e.clientY - startY) < MOVE_START_PX) return;
+      // Movement threshold crossed — activate drag now.
+      dragEl = downThumb;
+      dragEl.classList.add('dragging');
+      try { dragEl.setPointerCapture(activePointerId); } catch (err) {}
+      track.style.touchAction = 'none';
+    }
+    e.preventDefault();
+    // 2D nearest-slot reorder — find whichever OTHER thumb's center is closest
+    // to the pointer, then place dragEl right before/after it in DOM order
+    // (grid-auto-flow renders cells in DOM order, so this is all that's needed).
+    const px = e.clientX, py = e.clientY;
+    const thumbs = Array.from(track.querySelectorAll('.shot-thumb'));
+    let nearest = null, nearestDist = Infinity;
+    for (const t of thumbs) {
+      if (t === dragEl) continue;
+      const r = t.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const dist = (px - cx) ** 2 + (py - cy) ** 2;
+      if (dist < nearestDist) { nearestDist = dist; nearest = t; }
+    }
+    if (!nearest) return;
+    const nearestIdx = thumbs.indexOf(nearest);
+    const dragIdx = thumbs.indexOf(dragEl);
+    if (nearestIdx < dragIdx) {
+      track.insertBefore(dragEl, nearest);
+    } else {
+      track.insertBefore(dragEl, nearest.nextElementSibling);
+    }
+  });
+  function endDrag() {
+    if (dragEl) {
+      dragEl.classList.remove('dragging');
+      // Release capture explicitly — leaving it held is what let a later click
+      // land on a completely unrelated element (e.g. the Visual Style card).
+      if (activePointerId !== null) {
+        try { dragEl.releasePointerCapture(activePointerId); } catch (err) {}
+      }
+      suppressClick = true;
+      dragEl = null;
+      _renumberShotThumbs();
+    }
+    downThumb = null;
+    activePointerId = null;
+    track.style.touchAction = '';
+  }
+  // Only pointerup/pointercancel end a drag — NOT pointerleave — since a
+  // static grid has no competing scroll gesture to worry about, and pointerleave
+  // fires based on the pointer's physical position even while captured, which
+  // would cancel the drag on any tiny wobble near a thumbnail's edge.
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+  // Failsafe in case the pointer is released outside the track entirely.
+  window.addEventListener('pointerup', () => { if (downThumb) endDrag(); });
+  window.addEventListener('pointercancel', () => { if (downThumb) endDrag(); });
+  track.addEventListener('click', (e) => {
+    if (suppressClick) { suppressClick = false; e.stopPropagation(); e.preventDefault(); }
+  }, true);
+  track.addEventListener('dragstart', (e) => e.preventDefault());
+}
+
 let thinkTimer;
-function startThinking() {
+function startThinking(stage) {
+  const cfg = GEN_STAGES[stage] || GEN_STAGES.scenes;
   clearTimeout(thinkTimer);
-  const pct  = document.getElementById('think-pct');
-  const step = document.getElementById('think-step');
-  const bar  = document.getElementById('think-bar');
+  const pct   = document.getElementById('think-pct');
+  const step  = document.getElementById('think-step');
+  const bar   = document.getElementById('think-bar');
+  const ttl   = document.getElementById('think-ttl');
+  const sub   = document.getElementById('think-sub');
+  if (ttl) ttl.textContent = cfg.title;
+  if (sub) sub.innerHTML   = cfg.sub;
   const pcts = [0, 20, 45, 70, 90, 100];
   if (bar) { bar.style.animation = 'none'; bar.style.width = '0%'; bar.offsetHeight; bar.style.animation = 'tbar 5s ease-in-out forwards'; }
   let i = 0;
   function nextStep() {
-    const label = thinkSteps[i] || thinkSteps[thinkSteps.length - 1];
+    const label = cfg.steps[i] || cfg.steps[cfg.steps.length - 1];
     if (pct)  pct.textContent  = (pcts[i] || 0) + '%';
     if (step) step.textContent = label;
     i++;
-    if (i < thinkSteps.length) thinkTimer = setTimeout(nextStep, 1000);
-    else setTimeout(() => { if (document.getElementById('screen-mv-thinking')?.classList.contains('active')) { showToastDone('storyboard'); navStack = navStack.filter(s => s !== 'mv-thinking'); goTo('mv-storyboard'); } }, 1200);
+    if (i < cfg.steps.length) thinkTimer = setTimeout(nextStep, 1000);
+    else setTimeout(() => { if (document.getElementById('screen-mv-thinking')?.classList.contains('active')) { showToastDone('storyboard'); navStack = navStack.filter(s => s !== 'mv-thinking'); if (stage === 'videos') _freshFromVideoGen = true; if (stage === 'scenes') _freshFromSceneGen = true; goTo(cfg.next); } }, 1200);
   }
   nextStep();
 }
@@ -6497,9 +7354,56 @@ function setEmvDirty() {
   checkMergeEnable();
 }
 
+// ── Editor (Export) screen: Cover Image + Video Shots — staggered "generating"
+// pass, mirroring Storyboard's Generate Scenes reveal. Runs once, right after
+// a real Generate Video pass (see startGeneration()). The Cover Image finishes
+// first, then the 8 Video Shots reveal staggered; Render Video only turns on
+// once every shot has finished. ──
+function emvOpenVideoShot(idx, imgSrc, desc, label) {
+  const thumb = document.querySelector(`#screen-mv-edit .shot-thumb[data-shot-idx="${idx}"]`);
+  if (thumb && thumb.dataset.generating === '1') return; // not ready yet
+  openVideoEditor(idx, imgSrc, desc, label);
+}
+// Videos take noticeably longer to render than stills, so this cadence is the
+// slowest of the three staggered "generating" passes in the prototype.
+const EMV_SHOT_GEN_BASE_MS    = 900;
+const EMV_SHOT_GEN_STAGGER_MS = 900;
+function startEditorVideoShotsGenerating() {
+  // Cover Image — resolves alongside Video Shot 1, long enough to still be
+  // visible once the screen-slide transition (380ms) finishes.
+  const coverGen   = document.getElementById('emv-cover-generating');
+  const coverImg   = document.getElementById('emv-cover-img');
+  const coverFsBtn = document.getElementById('emv-cover-fullscreen-btn');
+  if (coverGen)   coverGen.classList.add('active');
+  if (coverImg)   coverImg.classList.add('hidden');
+  if (coverFsBtn) coverFsBtn.style.display = 'none';
+  setTimeout(() => {
+    if (coverGen)   coverGen.classList.remove('active');
+    if (coverImg)   coverImg.classList.remove('hidden');
+    if (coverFsBtn) coverFsBtn.style.display = 'flex';
+  }, EMV_SHOT_GEN_BASE_MS + 1 * EMV_SHOT_GEN_STAGGER_MS);
+
+  for (let i = 1; i <= 8; i++) {
+    const thumb = document.querySelector(`#screen-mv-edit .shot-thumb[data-shot-idx="${i}"]`);
+    const proc  = document.getElementById('emv-shot-proc-' + i);
+    if (thumb) thumb.dataset.generating = '1';
+    if (proc)  proc.classList.add('show');
+  }
+  for (let i = 1; i <= 8; i++) {
+    setTimeout(() => {
+      const thumb = document.querySelector(`#screen-mv-edit .shot-thumb[data-shot-idx="${i}"]`);
+      const proc  = document.getElementById('emv-shot-proc-' + i);
+      if (thumb) thumb.dataset.generating = '0';
+      if (proc)  proc.classList.remove('show');
+      if (i === 8) { _emvDirty = true; checkMergeEnable(); }
+    }, EMV_SHOT_GEN_BASE_MS + i * EMV_SHOT_GEN_STAGGER_MS);
+  }
+}
+
 function checkMergeEnable() {
   const btn = document.getElementById('merge-mv-btn');
   if (!btn) return;
+  if (btn.dataset.nextState === '1') return; // showing the neutral "Next" state — leave it alone
   const content = document.getElementById('merge-mv-content');
   btn.disabled = !_emvDirty;
   if (_emvDirty) {
@@ -6643,6 +7547,51 @@ function sbTogglePlay() {
 function sbToggleMute(el) {
   _sbMuted = !_sbMuted;
   el.querySelector('img').src = _sbMuted
+    ? 'assets/icons/ui/ic_speaker_off.svg'
+    : 'assets/icons/ui/ic_speaker_on.svg';
+}
+
+// ── (Storyboard) View Shot Results — same interaction pattern as Scene Detail above ──
+function shotPickClip(el, idx, imgSrc, desc) {
+  document.querySelectorAll('#shot-cuts > div').forEach(c => c.style.borderColor = 'transparent');
+  el.style.borderColor = '#A855F7';
+  const previewImg = document.getElementById('shot-preview-img');
+  if (previewImg && imgSrc) previewImg.src = imgSrc;
+  const ta = document.getElementById('shot-desc-ta');
+  if (ta) { ta.value = desc; updateShotCount(ta); }
+}
+function updateShotCount(ta) {
+  const el = document.getElementById('shot-desc-cnt');
+  if (el) el.textContent = `${ta.value.length}/2500`;
+  const enh = document.getElementById('shot-desc-enhance-btn');
+  if (enh) enh.style.display = ta.value.length > 0 ? 'flex' : 'none';
+}
+let _shotPlaying = false;
+let _shotMuted = false;
+let _shotProgressTimer = null;
+function shotTogglePlay() {
+  _shotPlaying = !_shotPlaying;
+  const btn = document.getElementById('shot-ctrl-play-btn');
+  if (btn) {
+    btn.querySelector('img').src = _shotPlaying
+      ? 'assets/icons/ui/ic_pause.svg'
+      : 'assets/icons/ui/ic_play.svg';
+  }
+  if (_shotPlaying) {
+    _shotProgressTimer = setInterval(() => {
+      const fill = document.getElementById('shot-progress-fill');
+      if (!fill) return;
+      const pct = parseFloat(fill.style.width) || 32;
+      const next = pct >= 98 ? 0 : pct + 0.8;
+      fill.style.width = next + '%';
+    }, 100);
+  } else {
+    clearInterval(_shotProgressTimer);
+  }
+}
+function shotToggleMute(el) {
+  _shotMuted = !_shotMuted;
+  el.querySelector('img').src = _shotMuted
     ? 'assets/icons/ui/ic_speaker_off.svg'
     : 'assets/icons/ui/ic_speaker_on.svg';
 }
@@ -6899,7 +7848,7 @@ function openHistMore(btn) {
     const isMvPublished = _histMoreRow.dataset.published === 'true';
     const isMvReviewing = _histMoreRow.dataset.reviewing === 'true';
     addCtaRow([
-      {icon:'ic_edit.svg',      label:'Edit MV',   primary:false, onClick:()=>goTo('mv-edit')},
+      {icon:'ic_edit.svg',      label:'Edit MV',   primary:false, onClick:()=>editMvFromEntry()},
       {icon:'ic_certified.svg', label:'Get Proof', primary:false, onClick:()=>goTo('proof')}
     ]);
     addOpt(_moreIcons.heart(liked), liked ? 'Unlike' : 'Like', null, () => {
@@ -7454,6 +8403,322 @@ function confirmSignOut() {
 // ── Scene Text Editor ──
 let _sceneEditorTargetId = null;
 
+// Generic enable/disable styling for a dirty-gated Regenerate CTA — shared by
+// the Image Editor and Video Editor. Disabled until the user changes something
+// (prompt or AI model) since the last regenerate, so credits aren't burned
+// regenerating the exact same result twice.
+function _setRegenBtnEnabled(btnId, enabled) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  btn.disabled     = !enabled;
+  btn.style.background = enabled ? 'linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA)' : '#383842';
+  btn.style.boxShadow  = enabled ? '0 8px 12px rgba(168,85,247,.32)' : 'none';
+  btn.style.cursor     = enabled ? 'pointer' : 'default';
+  btn.style.opacity    = enabled ? '1' : '.45';
+}
+
+// Each Regenerate produces a new "version" (mocked here as the same base image
+// with a distinct filter, since there's no real generation backend) so the user
+// can compare results side by side and confirm which one to carry forward.
+const _editorVersionFilters = ['none', 'hue-rotate(15deg) saturate(1.1)', 'hue-rotate(-18deg) brightness(1.06)', 'sepia(.18) contrast(1.06)', 'hue-rotate(32deg) saturate(.92)'];
+function _renderEditorVersions(prefix, versions, selectedIdx, selectFn) {
+  const track = document.getElementById(`${prefix}-editor-versions-track`);
+  if (!track) return;
+  track.innerHTML = versions.map((v, i) => `
+    <div onclick="event.stopPropagation();${selectFn}(${i})" style="flex-shrink:0;width:52px;height:52px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2px solid ${i === selectedIdx ? '#A855F7' : 'rgba(255,255,255,.15)'};">
+      <img src="${v.src}" style="width:100%;height:100%;object-fit:cover;display:block;filter:${v.filter};">
+      <div style="position:absolute;bottom:2px;left:2px;font-size:8px;font-weight:700;color:#fff;background:rgba(9,9,11,.6);border-radius:6px;padding:1px 4px;">${i + 1}</div>
+      ${i === selectedIdx ? `<div style="position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:7px;background:#A855F7;display:flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>` : ''}
+    </div>
+  `).join('');
+}
+
+// ══════ IMAGE EDITOR — shared by Scene images (Storyboard) and Shot images (Storyboard, before Generate Video) ══════
+let _imgEditorCtx = null; // { kind: 'scene'|'shot', idx }
+let _imgEditorGate = 'scenes';
+let _imgEditorDirty = false;
+let _imgEditorVersions = []; // [{ src, filter }] — index 0 is the original
+let _imgEditorSelectedVersion = 0;
+function _renderImgEditorVersions() {
+  _renderEditorVersions('img', _imgEditorVersions, _imgEditorSelectedVersion, 'selectImgEditorVersion');
+}
+function selectImgEditorVersion(i) {
+  if (!_imgEditorVersions[i]) return;
+  _imgEditorSelectedVersion = i;
+  const prev = document.getElementById('img-editor-preview');
+  if (prev) prev.style.filter = _imgEditorVersions[i].filter;
+  _renderImgEditorVersions();
+}
+function openImageEditor(kind, idx, imgSrc, desc, label) {
+  _imgEditorCtx = { kind, idx };
+  _imgEditorGate = kind === 'scene' ? 'scenes' : _storyboardModelGate;
+  const lbl  = document.getElementById('img-editor-label');
+  const prev = document.getElementById('img-editor-preview');
+  const ta   = document.getElementById('img-editor-ta');
+  const ctr  = document.getElementById('img-editor-counter');
+  if (lbl) lbl.textContent = label;
+  if (prev) { prev.src = imgSrc; prev.style.filter = 'none'; }
+  if (ta) ta.value = desc || '';
+  if (ctr) ctr.textContent = (desc || '').length + '/2500';
+  const enhBtn = document.getElementById('img-editor-enhance-btn');
+  if (enhBtn) enhBtn.style.display = (desc || '').length > 0 ? 'flex' : 'none';
+  const doneBtn = document.getElementById('img-editor-done-btn');
+  if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+  _imgEditorDirty = false;
+  _imgEditorVersions = [{ src: imgSrc, filter: 'none' }];
+  _imgEditorSelectedVersion = 0;
+  _renderImgEditorVersions();
+  _setRegenBtnEnabled('img-editor-regen-btn', false);
+  _renderImgEditorModelRow();
+  const wrap = document.getElementById('img-editor-wrap');
+  if (wrap) wrap.classList.add('show');
+}
+function _renderImgEditorModelRow() {
+  const gate = _imgEditorGate;
+  const sel = _aiModelSelected[gate];
+  const m = _aiModelFind(gate, sel.modelId);
+  if (!m) return;
+  const r = m.resolutions.find(x => x.res === sel.res) || m.resolutions[0];
+  const nameEl        = document.getElementById('img-editor-model-label');
+  const creditEl       = document.getElementById('img-editor-model-credit');
+  const regenCreditEl  = document.getElementById('img-editor-regen-credit');
+  if (nameEl) nameEl.textContent = `${m.name} · ${r.res}`;
+  if (creditEl) creditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">${r.credits}`;
+  if (regenCreditEl) regenCreditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">${r.credits}`;
+}
+function closeImageEditor() {
+  const wrap = document.getElementById('img-editor-wrap');
+  if (wrap) wrap.classList.remove('show');
+  // Persist the currently-selected version's look onto the real underlying element(s).
+  // A shot can appear in more than one place (Storyboard's Shots grid AND the
+  // Editor's Video Shots grid) — update every occurrence so they stay in sync.
+  if (_imgEditorCtx && _imgEditorVersions[_imgEditorSelectedVersion]) {
+    const filter = _imgEditorVersions[_imgEditorSelectedVersion].filter;
+    if (_imgEditorCtx.kind === 'scene') {
+      const target = document.getElementById(`sb-scene-${_imgEditorCtx.idx}-img`);
+      if (target) target.style.filter = filter;
+    } else {
+      document.querySelectorAll(`.shot-thumb[data-shot-idx="${_imgEditorCtx.idx}"] img`).forEach(img => { img.style.filter = filter; });
+    }
+  }
+}
+function onImgEditorInput() {
+  const ta  = document.getElementById('img-editor-ta');
+  const ctr = document.getElementById('img-editor-counter');
+  if (!ta) return;
+  if (ctr) ctr.textContent = ta.value.length + '/2500';
+  const enhBtn = document.getElementById('img-editor-enhance-btn');
+  if (enhBtn) enhBtn.style.display = ta.value.length > 0 ? 'flex' : 'none';
+  // Keep the underlying Storyboard scene description in sync live
+  if (_imgEditorCtx && _imgEditorCtx.kind === 'scene') {
+    const src = document.getElementById(`sb-scene-${_imgEditorCtx.idx}-text`);
+    if (src) src.textContent = ta.value;
+  }
+  _imgEditorDirty = true;
+  const prevWrap = document.getElementById('img-editor-preview-wrap');
+  if (!prevWrap || prevWrap.dataset.busy !== '1') _setRegenBtnEnabled('img-editor-regen-btn', true);
+}
+function regenerateImageEditor() {
+  requireLogin(() => {
+    const prevWrap = document.getElementById('img-editor-preview-wrap');
+    if (!prevWrap || prevWrap.dataset.busy === '1' || !_imgEditorDirty) return;
+    prevWrap.dataset.busy = '1';
+    _setRegenBtnEnabled('img-editor-regen-btn', false);
+    const doneBtn = document.getElementById('img-editor-done-btn');
+    if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;';
+    overlay.innerHTML = '<div class="spinner-sm"></div>';
+    prevWrap.appendChild(overlay);
+    setTimeout(() => {
+      overlay.remove();
+      prevWrap.dataset.busy = '0';
+      _imgEditorDirty = false; // regenerated — needs a NEW change before regenerating again
+      // Add the newly "generated" version to the thumbnail history, right next to
+      // the 1st result, and select it
+      const baseSrc = _imgEditorVersions[0] ? _imgEditorVersions[0].src : document.getElementById('img-editor-preview').src;
+      const nextFilter = _editorVersionFilters[_imgEditorVersions.length % _editorVersionFilters.length];
+      _imgEditorVersions.splice(1, 0, { src: baseSrc, filter: nextFilter });
+      _imgEditorSelectedVersion = 1;
+      const prev = document.getElementById('img-editor-preview');
+      if (prev) prev.style.filter = nextFilter;
+      _renderImgEditorVersions();
+      // Reveal the Done button so the user can confirm the regenerated image and close
+      if (doneBtn) { doneBtn.style.opacity = '1'; doneBtn.style.pointerEvents = 'auto'; }
+    }, 1200);
+  });
+}
+
+// ══════ VIDEO EDITOR — shot video preview + prompt + regenerate. Opens once a
+// shot has become a video (after Generate Video runs) instead of the Image Editor. ══════
+let _vidEditorCtx = null; // { idx }
+let _vidEditorDirty = false;
+// ── Preview player: play/pause, scrubber, mute, fullscreen — same control
+// pattern as the original Storyboard shot-preview player. ──
+let _vidEditorPlaying = false;
+let _vidEditorMuted = false;
+let _vidEditorProgressTimer = null;
+let _vidEditorDuration = 16; // seconds — simulated clip length
+function _formatEditorTime(sec) {
+  sec = Math.max(0, Math.round(sec));
+  const m = Math.floor(sec / 60), s = sec % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+function _resetVidEditorPlayer() {
+  clearInterval(_vidEditorProgressTimer); _vidEditorProgressTimer = null;
+  _vidEditorPlaying = false;
+  _vidEditorMuted = false;
+  const btn = document.getElementById('vid-editor-ctrl-play-btn');
+  if (btn) { const img = btn.querySelector('img'); if (img) img.src = 'assets/icons/ui/ic_play.svg'; }
+  const muteIcon = document.getElementById('vid-editor-mute-icon');
+  if (muteIcon) muteIcon.src = 'assets/icons/ui/ic_speaker_on.svg';
+  const fill = document.getElementById('vid-editor-progress-fill');
+  if (fill) fill.style.width = '0%';
+  const nowEl = document.getElementById('vid-editor-time-now');
+  if (nowEl) nowEl.textContent = '00:00';
+  const totalEl = document.getElementById('vid-editor-time-total');
+  if (totalEl) totalEl.textContent = _formatEditorTime(_vidEditorDuration);
+}
+function vidEditorTogglePlay() {
+  _vidEditorPlaying = !_vidEditorPlaying;
+  const btn = document.getElementById('vid-editor-ctrl-play-btn');
+  if (btn) {
+    const img = btn.querySelector('img');
+    if (img) img.src = _vidEditorPlaying ? 'assets/icons/ui/ic_pause.svg' : 'assets/icons/ui/ic_play.svg';
+  }
+  clearInterval(_vidEditorProgressTimer);
+  if (_vidEditorPlaying) {
+    _vidEditorProgressTimer = setInterval(() => {
+      const fill  = document.getElementById('vid-editor-progress-fill');
+      const nowEl = document.getElementById('vid-editor-time-now');
+      if (!fill) return;
+      const pct = parseFloat(fill.style.width) || 0;
+      const next = pct >= 100 ? 0 : pct + (100 / _vidEditorDuration / 10);
+      fill.style.width = next + '%';
+      if (nowEl) nowEl.textContent = _formatEditorTime((next / 100) * _vidEditorDuration);
+    }, 100);
+  }
+}
+function vidEditorToggleMute() {
+  _vidEditorMuted = !_vidEditorMuted;
+  const icon = document.getElementById('vid-editor-mute-icon');
+  if (icon) icon.src = _vidEditorMuted ? 'assets/icons/ui/ic_speaker_off.svg' : 'assets/icons/ui/ic_speaker_on.svg';
+}
+function vidEditorSeek(e, bar) {
+  const rect = bar.getBoundingClientRect();
+  const pct = rect.width ? Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width)) : 0;
+  const fill  = document.getElementById('vid-editor-progress-fill');
+  const nowEl = document.getElementById('vid-editor-time-now');
+  if (fill) fill.style.width = (pct * 100) + '%';
+  if (nowEl) nowEl.textContent = _formatEditorTime(pct * _vidEditorDuration);
+}
+function vidEditorFullscreen() {
+  const prevImg = document.getElementById('vid-editor-preview');
+  const lbImg   = document.querySelector('#char-img-lightbox img');
+  if (lbImg && prevImg) lbImg.src = prevImg.src;
+  openCharImage();
+}
+let _vidEditorVersions = []; // [{ src, filter }] — index 0 is the original
+let _vidEditorSelectedVersion = 0;
+function _renderVidEditorVersions() {
+  _renderEditorVersions('vid', _vidEditorVersions, _vidEditorSelectedVersion, 'selectVidEditorVersion');
+}
+function selectVidEditorVersion(i) {
+  if (!_vidEditorVersions[i]) return;
+  _vidEditorSelectedVersion = i;
+  const prev = document.getElementById('vid-editor-preview');
+  if (prev) prev.style.filter = _vidEditorVersions[i].filter;
+  _renderVidEditorVersions();
+}
+function openVideoEditor(idx, vidSrc, desc, label) {
+  _vidEditorCtx = { idx };
+  const lbl  = document.getElementById('vid-editor-label');
+  const prev = document.getElementById('vid-editor-preview');
+  const ta   = document.getElementById('vid-editor-ta');
+  const ctr  = document.getElementById('vid-editor-counter');
+  if (lbl) lbl.textContent = label;
+  if (prev) { prev.src = vidSrc; prev.style.filter = 'none'; }
+  if (ta) ta.value = desc || '';
+  if (ctr) ctr.textContent = (desc || '').length + '/2500';
+  const enhBtn = document.getElementById('vid-editor-enhance-btn');
+  if (enhBtn) enhBtn.style.display = (desc || '').length > 0 ? 'flex' : 'none';
+  const doneBtn = document.getElementById('vid-editor-done-btn');
+  if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+  _vidEditorDirty = false;
+  _vidEditorVersions = [{ src: vidSrc, filter: 'none' }];
+  _vidEditorSelectedVersion = 0;
+  _renderVidEditorVersions();
+  _resetVidEditorPlayer();
+  _setRegenBtnEnabled('vid-editor-regen-btn', false);
+  _renderVidEditorModelRow();
+  const wrap = document.getElementById('vid-editor-wrap');
+  if (wrap) wrap.classList.add('show');
+}
+function _renderVidEditorModelRow() {
+  const sel = _aiModelSelected.videos;
+  const m = _aiModelFind('videos', sel.modelId);
+  if (!m) return;
+  const r = m.resolutions.find(x => x.res === sel.res) || m.resolutions[0];
+  const nameEl        = document.getElementById('vid-editor-model-label');
+  const creditEl       = document.getElementById('vid-editor-model-credit');
+  const regenCreditEl  = document.getElementById('vid-editor-regen-credit');
+  if (nameEl) nameEl.textContent = `${m.name} · ${r.res}`;
+  if (creditEl) creditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">${r.credits}`;
+  if (regenCreditEl) regenCreditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">${r.credits}`;
+}
+function closeVideoEditor() {
+  const wrap = document.getElementById('vid-editor-wrap');
+  if (wrap) wrap.classList.remove('show');
+  clearInterval(_vidEditorProgressTimer); _vidEditorProgressTimer = null;
+  _vidEditorPlaying = false;
+  // Persist the currently-selected version's look onto every occurrence of this
+  // shot thumbnail (Storyboard's Shots grid AND the Editor's Video Shots grid).
+  if (_vidEditorCtx && _vidEditorVersions[_vidEditorSelectedVersion]) {
+    const filter = _vidEditorVersions[_vidEditorSelectedVersion].filter;
+    document.querySelectorAll(`.shot-thumb[data-shot-idx="${_vidEditorCtx.idx}"] img`).forEach(img => { img.style.filter = filter; });
+  }
+}
+function onVidEditorInput() {
+  const ta  = document.getElementById('vid-editor-ta');
+  const ctr = document.getElementById('vid-editor-counter');
+  if (!ta) return;
+  if (ctr) ctr.textContent = ta.value.length + '/2500';
+  const enhBtn = document.getElementById('vid-editor-enhance-btn');
+  if (enhBtn) enhBtn.style.display = ta.value.length > 0 ? 'flex' : 'none';
+  _vidEditorDirty = true;
+  const prevWrap = document.getElementById('vid-editor-preview-wrap');
+  if (!prevWrap || prevWrap.dataset.busy !== '1') _setRegenBtnEnabled('vid-editor-regen-btn', true);
+}
+function regenerateVideoEditor() {
+  requireLogin(() => {
+    const prevWrap = document.getElementById('vid-editor-preview-wrap');
+    if (!prevWrap || prevWrap.dataset.busy === '1' || !_vidEditorDirty) return;
+    prevWrap.dataset.busy = '1';
+    _setRegenBtnEnabled('vid-editor-regen-btn', false);
+    const doneBtn = document.getElementById('vid-editor-done-btn');
+    if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;';
+    overlay.innerHTML = '<div class="spinner-sm"></div>';
+    prevWrap.appendChild(overlay);
+    setTimeout(() => {
+      overlay.remove();
+      prevWrap.dataset.busy = '0';
+      _vidEditorDirty = false; // regenerated — needs a NEW change before regenerating again
+      // Add the newly "generated" version to the thumbnail history, right next to
+      // the 1st result, and select it
+      const baseSrc = _vidEditorVersions[0] ? _vidEditorVersions[0].src : document.getElementById('vid-editor-preview').src;
+      const nextFilter = _editorVersionFilters[_vidEditorVersions.length % _editorVersionFilters.length];
+      _vidEditorVersions.splice(1, 0, { src: baseSrc, filter: nextFilter });
+      _vidEditorSelectedVersion = 1;
+      const prev = document.getElementById('vid-editor-preview');
+      if (prev) prev.style.filter = nextFilter;
+      _renderVidEditorVersions();
+      if (doneBtn) { doneBtn.style.opacity = '1'; doneBtn.style.pointerEvents = 'auto'; }
+    }, 1200);
+  });
+}
+
 function openSceneEditor(label, targetId) {
   _sceneEditorTargetId = targetId;
   const target = document.getElementById(targetId);
@@ -7514,11 +8779,44 @@ function toggleStoryLine() {
   const content = document.getElementById('sb-storyline-content');
   const chevron = document.getElementById('sb-storyline-chevron');
   if (content) {
-    content.style.maxHeight = _storyLineOpen ? '600px' : '0px';
+    // Use scrollHeight so the panel always fits its content (scene cards now include images)
+    content.style.maxHeight = _storyLineOpen ? (content.scrollHeight + 40) + 'px' : '0px';
     content.style.opacity   = _storyLineOpen ? '1' : '0';
   }
   if (chevron) chevron.style.transform = _storyLineOpen ? 'rotate(-90deg)' : 'rotate(90deg)';
 }
+
+// Generic "Regenerate All" feedback — briefly disables the row and swaps its
+// label to a busy state, used by the Scene / Shot / Video Shot result screens.
+function regenerateStep(el, busyLabel, doneLabel) {
+  if (!el || el.dataset.busy === '1') return;
+  el.dataset.busy = '1';
+  const lbl = el.querySelector('span');
+  const original = lbl ? lbl.textContent : '';
+  if (lbl) lbl.textContent = busyLabel;
+  el.style.opacity = '.55';
+  el.style.pointerEvents = 'none';
+  setTimeout(() => {
+    if (lbl) lbl.textContent = doneLabel || original;
+    el.style.opacity = '';
+    el.style.pointerEvents = '';
+    el.dataset.busy = '0';
+    setTimeout(() => { if (lbl) lbl.textContent = original; }, 1400);
+  }, 1200);
+}
+// Per-scene image regenerate — swaps the reload icon for a spinner briefly.
+function regenerateSceneImage(el) {
+  requireLogin(() => {
+    if (!el || el.dataset.busy === '1') return;
+    el.dataset.busy = '1';
+    const original = el.innerHTML;
+    el.innerHTML = '<div class="spinner-sm"></div>';
+    setTimeout(() => { el.innerHTML = original; el.dataset.busy = '0'; }, 1000);
+  });
+}
+function regenerateScenes(el) { requireLogin(() => regenerateStep(el, 'Regenerating...', 'Scenes Updated')); }
+function regenerateShots(el)  { requireLogin(() => regenerateStep(el, 'Regenerating...', 'Shots Updated')); }
+function regenerateVideoShots(el) { requireLogin(() => regenerateStep(el, 'Regenerating...', 'Videos Updated')); }
 
 function clearSceneEditor() {
   const ta  = document.getElementById('scene-editor-ta');
@@ -8290,6 +9588,178 @@ function pickSeg(grpId, el, tagId, label) {
   const tag = document.getElementById(tagId);
   if (tag) tag.textContent = label;
 }
+
+// ══════ SELECT AI MODEL — shared component across all 4 generation gates ══════
+// Gate keys match what each model choice generates next: analysis | scenes | shots | videos
+// Each gate maps to one of 3 UI types, which decides what info/options the sheet
+// shows: 'song' (analysis — analyzing audio/lyrics, no resolution concept at all),
+// 'image' (scenes/shots — 1K/2K resolution), 'video' (videos — SD/HD quality).
+const AI_MODEL_TYPE = { analysis: 'song', scenes: 'image', shots: 'image', videos: 'video' };
+// Each model offers one or more output tiers, each with its own credit cost.
+// 'song' models only ever have a single tier (nothing to pick, so it's hidden).
+const AI_MODELS = {
+  analysis: [
+    { id: 'fast', name: 'Nano Banana 2',  desc: 'Quick lyrical & mood analysis',      resolutions: [{ res: 'std', credits: 5  }] },
+    { id: 'pro',  name: 'Nano Banana Pro', desc: 'Deeper structure & scene reasoning', resolutions: [{ res: 'std', credits: 15 }] }
+  ],
+  scenes: [
+    { id: 'fast', name: 'Nano Banana 2',   desc: 'Quickest turnaround, good for previews', resolutions: [{ res: '1K', credits: 10 }, { res: '2K', credits: 18 }] },
+    { id: 'std',  name: 'GPT Image 2.0',   desc: 'Balanced quality and speed',             resolutions: [{ res: '1K', credits: 20 }, { res: '2K', credits: 34 }] },
+    { id: 'pro',  name: 'Nano Banana Pro', desc: 'Sharper detail and pacing',              resolutions: [{ res: '1K', credits: 35 }, { res: '2K', credits: 58 }] }
+  ],
+  shots: [
+    { id: 'fast', name: 'Nano Banana 2',   desc: 'Quickest turnaround, good for previews', resolutions: [{ res: '1K', credits: 15 }, { res: '2K', credits: 26 }] },
+    { id: 'std',  name: 'Seedream 5.0',    desc: 'Balanced quality and speed',             resolutions: [{ res: '1K', credits: 30 }, { res: '2K', credits: 50 }] },
+    { id: 'pro',  name: 'Nano Banana Pro', desc: 'Sharper detail and camera motion',       resolutions: [{ res: '1K', credits: 50 }, { res: '2K', credits: 84 }] }
+  ],
+  videos: [
+    { id: 'std',   name: 'Seedance 1.0 Lite', desc: 'Balanced quality and speed',       resolutions: [{ res: 'SD', full: 'Standard', credits: 40  }, { res: 'HD', full: 'High', credits: 68  }] },
+    { id: 'pro',   name: 'Seedance 1.0 Pro',  desc: 'Sharper detail and motion',        resolutions: [{ res: 'SD', full: 'Standard', credits: 70  }, { res: 'HD', full: 'High', credits: 118 }] },
+    { id: 'ultra', name: 'Seedance 2.0',      desc: 'Best-in-class cinematic fidelity', resolutions: [{ res: 'SD', full: 'Standard', credits: 120 }, { res: 'HD', full: 'High', credits: 200 }] }
+  ]
+};
+const AI_MODEL_SUBTITLE = {
+  analysis: 'Choose the model used to analyze your audio and idea.',
+  scenes:   'Choose the model used to generate your scenes.',
+  shots:    'Choose the model used to generate your shots.',
+  videos:   'Choose the model used to generate your videos.'
+};
+// Currently selected { modelId, res } per gate (defaults to the cheapest model,
+// and to the first/lowest tier for image and video types)
+const _aiModelSelected = {
+  analysis: { modelId: 'fast', res: 'std' },
+  scenes:   { modelId: 'fast', res: '1K' },
+  shots:    { modelId: 'fast', res: '1K' },
+  videos:   { modelId: 'std',  res: 'SD' }
+};
+let _aiModelGate = null;
+let _aiModelOpenRow = null; // which model row is expanded (accordion, one at a time)
+
+function _aiModelCreditPill(credits) {
+  return `<div style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;flex-shrink:0;white-space:nowrap;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">${credits}</div>`;
+}
+function _aiModelFind(gate, modelId) {
+  return (AI_MODELS[gate] || []).find(m => m.id === modelId);
+}
+
+function _renderAiModelRow(gate) {
+  const sel = _aiModelSelected[gate];
+  const m = _aiModelFind(gate, sel.modelId);
+  if (!m) return;
+  const r = m.resolutions.find(x => x.res === sel.res) || m.resolutions[0];
+  const nameEl = document.getElementById(`ai-model-label-${gate}`);
+  const creditEl = document.getElementById(`ai-model-credit-${gate}`);
+  const isSong = AI_MODEL_TYPE[gate] === 'song';
+  if (nameEl) nameEl.textContent = isSong ? m.name : `${m.name} · ${r.res}`;
+  if (creditEl) creditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">${r.credits}`;
+}
+
+function _aiModelRenderList() {
+  const gate = _aiModelGate;
+  const models = AI_MODELS[gate] || [];
+  const sel = _aiModelSelected[gate];
+  const list = document.getElementById('ai-model-list');
+  if (!list) return;
+  const isSong = AI_MODEL_TYPE[gate] === 'song';
+  list.innerHTML = models.map(m => {
+    const isSelModel = m.id === sel.modelId;
+    const isOpen = !isSong && _aiModelOpenRow === m.id;
+    const activeRes = isSelModel ? sel.res : m.resolutions[0].res;
+    const activeR = m.resolutions.find(r => r.res === activeRes) || m.resolutions[0];
+    const resChips = isSong ? '' : m.resolutions.map(r => {
+      const on = isSelModel && r.res === sel.res;
+      const label = r.full ? `${r.res} · ${r.full}` : r.res;
+      return `<div onclick="event.stopPropagation();chooseAiModelRes('${m.id}','${r.res}')" style="flex:1;text-align:center;padding:8px 6px;border-radius:10px;border:1.5px solid ${on ? '#A855F7' : 'rgba(255,255,255,.15)'};background:${on ? 'rgba(168,85,247,.18)' : '#151519'};cursor:pointer;">
+          <div style="font-size:12px;font-weight:700;color:${on ? '#A855F7' : '#fff'};">${label}</div>
+          <div style="font-size:10px;font-weight:600;color:${on ? '#A855F7' : '#9C9CAB'};margin-top:2px;">${r.credits} credits</div>
+        </div>`;
+    }).join('');
+    // 'song' models have nothing to expand — the row itself picks the model
+    // directly, using its one (hidden) tier, with a check/radio indicator
+    // instead of the resolution pill + expand chevron.
+    const rowOnclick = isSong ? `chooseAiModelRes('${m.id}','${m.resolutions[0].res}')` : `toggleAiModelRow('${m.id}')`;
+    const trailingControl = isSong
+      ? (isSelModel
+          ? `<div style="width:20px;height:20px;border-radius:10px;background:#A855F7;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`
+          : `<div style="width:20px;height:20px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);flex-shrink:0;"></div>`)
+      : `<img src="assets/icons/ui/ic_chevron-right.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);opacity:.45;flex-shrink:0;transform:rotate(${isOpen ? '-90' : '90'}deg);transition:transform .2s;">`;
+    return `<div class="ai-model-opt" style="border-radius:14px;border:1.5px solid ${isSelModel ? '#A855F7' : 'rgba(255,255,255,.15)'};background:${isSelModel ? 'rgba(168,85,247,.1)' : '#212127'};overflow:hidden;transition:border-color .15s,background .15s;">
+      <div onclick="${rowOnclick}" style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14px;font-weight:700;color:#fff;letter-spacing:-.14px;">${m.name}</div>
+          <div style="font-size:11px;font-weight:500;color:#9C9CAB;margin-top:2px;line-height:1.4;">${m.desc}</div>
+        </div>
+        ${isSong ? '' : `<div style="display:flex;align-items:center;background:rgba(255,255,255,.06);border-radius:20px;padding:4px 8px;flex-shrink:0;">
+          <span style="font-size:11px;font-weight:700;color:#fff;">${activeR.res}</span>
+        </div>`}
+        ${_aiModelCreditPill(activeR.credits)}
+        ${trailingControl}
+      </div>
+      ${isOpen ? `<div style="display:flex;gap:8px;padding:0 14px 12px;">${resChips}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function openAiModelSheet(gate) {
+  _aiModelGate = gate;
+  _aiModelOpenRow = _aiModelSelected[gate].modelId; // expand the currently selected model by default
+  const sub = document.getElementById('ai-model-subtitle');
+  if (sub) sub.textContent = AI_MODEL_SUBTITLE[gate] || 'Choose the model used to generate this step.';
+  _aiModelRenderList();
+  showSheet('ai-model-sheet');
+}
+
+function toggleAiModelRow(modelId) {
+  _aiModelOpenRow = _aiModelOpenRow === modelId ? null : modelId;
+  _aiModelRenderList();
+}
+
+// Keeps every bottom CTA's credit pill in sync with whichever AI model/tier is
+// currently selected for its gate — called on every model change, not just once.
+function _refreshCtaCredits(gate) {
+  const sel = _aiModelSelected[gate];
+  if (!sel) return;
+  const m = _aiModelFind(gate, sel.modelId);
+  if (!m) return;
+  const r = m.resolutions.find(x => x.res === sel.res) || m.resolutions[0];
+  const creditHtml = `<img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">${r.credits}`;
+  if (gate === 'analysis') {
+    const el = document.getElementById('mv-room-cta-credits');
+    if (el) el.innerHTML = creditHtml;
+  } else if (gate === 'scenes') {
+    const el = document.getElementById('mv-analysis-cta-credits');
+    if (el) el.innerHTML = creditHtml;
+  } else if ((gate === 'shots' || gate === 'videos') && typeof _storyboardModelGate !== 'undefined' && gate === _storyboardModelGate) {
+    const el = document.getElementById('mv-storyboard-cta-credits');
+    if (el) el.innerHTML = creditHtml;
+  }
+}
+
+function chooseAiModelRes(modelId, res) {
+  const gate = _aiModelGate;
+  if (!gate) return;
+  _aiModelSelected[gate] = { modelId, res };
+  _renderAiModelRow(gate);
+  _refreshCtaCredits(gate);
+  if (typeof _storyboardModelGate !== 'undefined' && gate === _storyboardModelGate) _renderStoryboardModelRow();
+  // If the Image Editor or Video Editor is open on this same gate, refresh its
+  // row too and count the model change as a "new change" that re-enables Regenerate.
+  const imgWrap = document.getElementById('img-editor-wrap');
+  if (imgWrap && imgWrap.classList.contains('show') && gate === _imgEditorGate) {
+    _renderImgEditorModelRow();
+    _imgEditorDirty = true;
+    _setRegenBtnEnabled('img-editor-regen-btn', true);
+  }
+  const vidWrap = document.getElementById('vid-editor-wrap');
+  if (vidWrap && vidWrap.classList.contains('show') && gate === 'videos') {
+    _renderVidEditorModelRow();
+    _vidEditorDirty = true;
+    _setRegenBtnEnabled('vid-editor-regen-btn', true);
+  }
+  _aiModelRenderList();
+  setTimeout(() => hideSheet('ai-model-sheet'), 220);
+}
+
 function togSett(togId, tagId, label) {
   const tog = document.getElementById(togId);
   const tag = document.getElementById(tagId);
@@ -8475,7 +9945,9 @@ let _audioSource = null, _sampleSelected = null;
 function startAudio(source) {
   _audioSource = source;
   if (source === 'sample') {
-    showSheet('sampleSong-sheet');
+    // Song Library shows the user's own saved songs alongside samples —
+    // require sign-in first so that library is actually theirs to see.
+    requireLogin(() => showSheet('sampleSong-sheet'));
   } else if (source === 'link') {
     showSheet('pasteLink-sheet');
   } else {
@@ -8622,6 +10094,28 @@ function addSongToRoom(method, title, dur, art, audioSrc) {
   window._addedSongDur = dur || '00:00';
   stopAddedAudio();
   resetSongPlay();
+  updateMvRoomCta();
+}
+
+// Disable the AI MV page's CTA until a song has been chosen; re-enable once one is.
+function updateMvRoomCta() {
+  const btn = document.getElementById('mv-room-cta');
+  if (!btn) return;
+  const added = document.getElementById('mvr-song-added');
+  const hasSong = !!added && added.style.display !== 'none';
+  btn.disabled = !hasSong;
+  if (btn.dataset.nextState === '1') return; // showing the neutral white "Next" state — leave it alone
+  if (hasSong) {
+    btn.style.background = 'linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA)';
+    btn.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+    btn.style.cursor = 'pointer';
+    btn.style.opacity = '1';
+  } else {
+    btn.style.background = '#383842';
+    btn.style.boxShadow = 'none';
+    btn.style.cursor = 'default';
+    btn.style.opacity = '.5';
+  }
 }
 
 let _signinSource = 'account'; // 'account' | 'banner'
@@ -8682,8 +10176,10 @@ function signInWith(provider) {
 function reopenSongLibrary() {
   const lbl = document.getElementById('added-method-lbl');
   if (!lbl || lbl.textContent.trim() !== 'Song Library') return;
-  clearSong();
-  setTimeout(() => showSheet('sampleSong-sheet'), 150);
+  requireLogin(() => {
+    clearSong();
+    setTimeout(() => showSheet('sampleSong-sheet'), 150);
+  });
 }
 
 function clearSong() {
@@ -8695,6 +10191,7 @@ function clearSong() {
   _audioSource = null; _sampleSelected = null;
   window._addedAudioSrc = null;
   resetSongPlay();
+  updateMvRoomCta();
 }
 
 // Re-open the Audio Trimmer for a song that's already been added to the room,
@@ -8718,6 +10215,7 @@ function useAISongInMV() {
   _mvFromTemplate = false;
   resetMvRoom();
   updateSongClearBtn();
+  restoreCtaNormal('mv-room'); // fresh room, not an Edit-MV re-entry — clear any stale "Next" state
   goTo('mv-room');
   setTimeout(() => openTrim('AI Song', title, dur), 420);
 }
@@ -8951,12 +10449,16 @@ function enhancePrompt(type) {
   const isSbDesc = type === 'sb-desc';
   const isScene  = type === 'scene';
   const isCover  = type === 'cover';
+  const isImgEditor = type === 'img-editor';
+  const isVidEditor = type === 'vid-editor';
 
   const taId = isMvr    ? 'mvr-describe'
              : isSimple ? 'song-simple-idea'
              : isSbDesc ? 'sb-desc-ta'
              : isScene  ? 'scene-editor-ta'
              : isCover  ? 'emv-cover-textarea'
+             : isImgEditor ? 'img-editor-ta'
+             : isVidEditor ? 'vid-editor-ta'
              :            'song-lyrics';
 
   const btnId = isMvr    ? 'mvr-enhance-btn'
@@ -8964,6 +10466,8 @@ function enhancePrompt(type) {
               : isSbDesc ? 'sb-desc-enhance-btn'
               : isScene  ? 'scene-editor-enhance-btn'
               : isCover  ? 'emv-cover-enhance-btn'
+              : isImgEditor ? 'img-editor-enhance-btn'
+              : isVidEditor ? 'vid-editor-enhance-btn'
               :            'lyrics-enhance-btn';
 
   const clearId = isMvr    ? 'desc-clear-btn'
@@ -8971,6 +10475,8 @@ function enhancePrompt(type) {
                 : isSbDesc ? 'sb-desc-clear-btn'
                 : isScene  ? 'scene-editor-clear-btn'
                 : isCover  ? 'emv-cover-clear-btn'
+                : isImgEditor ? 'img-editor-clear-btn'
+                : isVidEditor ? 'vid-editor-clear-btn'
                 :            'lyrics-clear-btn';
 
   const ctaId = isMvr    ? 'mv-room-cta'
@@ -8978,10 +10484,12 @@ function enhancePrompt(type) {
               : isSbDesc ? 'sb-recreate-btn'
               : isScene  ? 'scene-editor-confirm-btn'
               : isCover  ? 'emv-cover-gen-btn'
+              : isImgEditor ? 'img-editor-regen-btn'
+              : isVidEditor ? 'vid-editor-regen-btn'
               :            'song-cta-custom';
 
   // Idea/Lyrics buttons only exist for the original 3 types
-  const ideaId = (isSbDesc || isScene || isCover) ? null
+  const ideaId = (isSbDesc || isScene || isCover || isImgEditor || isVidEditor) ? null
                : isMvr    ? 'mvr-idea-btn'
                : isSimple ? 'simple-idea-btn'
                :            'lyrics-idea-btn';
@@ -8991,7 +10499,7 @@ function enhancePrompt(type) {
   const ideaBtn  = ideaId ? document.getElementById(ideaId) : null;
   const clearBtn = document.getElementById(clearId);
   const cta      = document.getElementById(ctaId);
-  const lyricsBtn    = (!isSimple && !isMvr && !isSbDesc && !isScene && !isCover) ? document.getElementById('lyrics-gen-btn') : null;
+  const lyricsBtn    = (!isSimple && !isMvr && !isSbDesc && !isScene && !isCover && !isImgEditor && !isVidEditor) ? document.getElementById('lyrics-gen-btn') : null;
   const templatesBtn = isMvr ? document.getElementById('mvr-templates-btn') : null;
 
   if (!ta || !ta.value.trim()) return;
@@ -9016,6 +10524,10 @@ function enhancePrompt(type) {
       cta.style.opacity = '0.4';
     } else if (isScene || isCover) {
       // <div> element — just fade
+      cta.style.opacity = '0.3';
+    } else if (isImgEditor || isVidEditor) {
+      // Regenerate button — already dirty-gated; just fade it during enhancing,
+      // onImgEditorInput()/onVidEditorInput() will restore correct enabled state after.
       cta.style.opacity = '0.3';
     } else if (isMvr) {
       cta.disabled = true;
@@ -9086,6 +10598,7 @@ function enhancePrompt(type) {
                  : (type === 'lyrics-idea' || type === 'lyrics') ? enhancedSong
                  : isSbDesc ? enhancedSbDesc
                  : isScene  ? enhancedScene
+                 : (isImgEditor || isVidEditor) ? enhancedSbDesc
                  :            enhancedCover;
 
   setTimeout(() => {
@@ -9109,6 +10622,8 @@ function enhancePrompt(type) {
         cta.style.cursor = 'pointer';
       } else if (isScene || isCover) {
         cta.style.opacity = '';
+      } else if (isImgEditor || isVidEditor) {
+        cta.style.opacity = ''; // onImgEditorInput()/onVidEditorInput() below sets the correct enabled look
       } else if (isMvr) {
         cta.disabled = false;
         cta.style.opacity = '';
@@ -9141,10 +10656,12 @@ function enhancePrompt(type) {
     // Sync count display
     if (isMvr)         updateDescCount(ta);
     else if (isSimple) updateSimpleSongCTA(ta);
-    else if (!isSbDesc && !isScene && !isCover) updateLyricsClear(ta);
     else if (isSbDesc) updateSbCount(ta);
     else if (isScene)  onSceneEditorInput();
-    else               onCoverDescInput(ta);
+    else if (isCover)  onCoverDescInput(ta);
+    else if (isImgEditor) onImgEditorInput();
+    else if (isVidEditor) onVidEditorInput();
+    else               updateLyricsClear(ta);
 
     showToast('Prompt enhanced');
   }, 1400);
@@ -9495,6 +11012,7 @@ let _mvrRecreate = false;
 
 function goToMvRoomRecreate() {
   _mvrRecreate = true;
+  restoreCtaNormal('mv-room'); // fresh recreate, not an Edit-MV re-entry — clear any stale "Next" state
   goTo('mv-room');
 }
 
@@ -10033,6 +11551,7 @@ function createMvFromTemplate() {
   // Entered from template — lock the song selection (hide clear button)
   _mvFromTemplate = true;
   updateSongClearBtn();
+  restoreCtaNormal('mv-room'); // fresh template-based room, not an Edit-MV re-entry
 
   goTo('mv-room');
 }
