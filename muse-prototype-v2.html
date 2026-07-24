@@ -440,10 +440,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .h-scroll::-webkit-scrollbar{display:none;}
 .cta-footer{position:absolute;bottom:0;left:0;right:0;padding:16px 16px calc(40px + var(--safe-bot));background:linear-gradient(to top,rgba(7,7,7,1) 65%,rgba(7,7,7,0) 100%);z-index:10;}
 /* On real phones (not the desktop framed preview), the floating CTA button
-   had too much empty gradient space below it — trim 20px off the base
+   had too much empty gradient space below it — trim 30px off the base
    bottom padding instead. */
 @media(max-width:480px){
-  .cta-footer{padding-bottom:calc(20px + var(--safe-bot));}
+  .cta-footer{padding-bottom:calc(30px + var(--safe-bot));}
 }
 .input-lbl{font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
 .input-card{background:var(--card);border:1px solid var(--border);border-radius:16px;cursor:pointer;transition:border-color .2s;}
