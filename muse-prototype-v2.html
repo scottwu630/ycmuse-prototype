@@ -439,6 +439,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .h-scroll{display:flex;gap:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;}
 .h-scroll::-webkit-scrollbar{display:none;}
 .cta-footer{position:absolute;bottom:0;left:0;right:0;padding:16px 16px calc(40px + var(--safe-bot));background:linear-gradient(to top,rgba(7,7,7,1) 65%,rgba(7,7,7,0) 100%);z-index:10;}
+/* On real phones (not the desktop framed preview), give the floating CTA
+   button noticeably more clearance from the bottom edge / home indicator. */
+@media(max-width:480px){
+  .cta-footer{padding-bottom:calc(64px + var(--safe-bot));}
+}
 .input-lbl{font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
 .input-card{background:var(--card);border:1px solid var(--border);border-radius:16px;cursor:pointer;transition:border-color .2s;}
 .input-row{display:flex;align-items:center;padding:15px 16px;gap:12px;}
@@ -888,6 +893,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #emv-cover-generating.active{opacity:1;}
 #emv-cover-img.hidden{opacity:0;}
 .emv-cover-gen-label{font-size:13px;font-weight:600;color:#fff;letter-spacing:-.13px;}
+/* Character image generating — same treatment as Cover image (dark purple gradient, centered label) */
+#char-img-generating{position:absolute;inset:0;background:linear-gradient(160deg,#6D28D9,#A855F7);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;}
+#char-img-generating.active{opacity:1;}
 /* Cover description row */
 .emv-cover-desc-row{display:flex;align-items:center;gap:10px;background:#151519;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px 12px;cursor:pointer;transition:opacity .15s;}
 .emv-cover-desc-row:active{opacity:.7;}
@@ -3454,7 +3462,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <!-- Portrait card — clickable, opens full image view -->
             <div onclick="sbOpenCharImage()" style="position:relative;width:124px;height:219px;border-radius:14px;overflow:hidden;cursor:pointer;background:linear-gradient(60deg,#2d1a08,#5a3a18);flex-shrink:0;">
               <img src="assets/images/storyboard/storyboard_01.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
-              <div id="char-img-proc" class="shot-proc"><div class="spinner-sm"></div></div>
+              <div id="char-img-generating"><span class="emv-cover-gen-label">✦ Generating...</span></div>
               <!-- Expand button -->
               <div onclick="event.stopPropagation();sbOpenCharImage()" style="position:absolute;bottom:8px;right:8px;width:28px;height:28px;border-radius:18px;background:rgba(9,9,11,0.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
                 <img src="assets/icons/ui/ic_expand.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
@@ -3613,20 +3621,28 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- LYRICS — reference text, kept after Shots since Shots continue directly from Scenes -->
-          <div style="display:flex;flex-direction:column;gap:6px;padding-bottom:10px;">
-            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Lyrics</div>
-            <div style="background:var(--n14);border-radius:14px;padding:10px;max-height:160px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;scrollbar-width:none;-ms-overflow-style:none;">
-              <div style="display:flex;flex-direction:column;gap:6px;">
-                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:00:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">In the stillness of midnight, as raindrops dance upon the pavement,</span></div>
-                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:05:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">a story unfolds, a tale of love and loss.</span></div>
-                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:10:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">The echoes of the past whisper through the droplets,</span></div>
-                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:15:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">each one carrying a memory, a moment lost in time.</span></div>
-                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:20:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">The rain, a gentle symphony, sets the stage for reflection.</span></div>
-                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:26:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">And in your eyes I see the stars we used to chase,</span></div>
-                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:32:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">a fleeting moment frozen in the grace of time.</span></div>
-                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:38:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">Hold me close beneath the silver light,</span></div>
-                <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:44:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">and let the music carry us through the night.</span></div>
+          <!-- LYRICS — reference text, collapsed by default (same expand/collapse pattern as Scene) -->
+          <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:10px;">
+            <!-- Header with expand/collapse -->
+            <div onclick="toggleLyrics()" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+              <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Lyrics</div>
+              <img id="sb-lyrics-chevron" src="assets/icons/ui/ic_chevron-right.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);transform:rotate(90deg);transition:transform .25s;">
+            </div>
+
+            <!-- Lyrics text (collapsible) -->
+            <div id="sb-lyrics-content" style="max-height:0px;overflow:hidden;transition:max-height .5s ease-in-out,opacity .5s ease-in-out;opacity:0;">
+              <div style="background:var(--n14);border-radius:14px;padding:10px;max-height:160px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;scrollbar-width:none;-ms-overflow-style:none;">
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:00:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">In the stillness of midnight, as raindrops dance upon the pavement,</span></div>
+                  <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:05:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">a story unfolds, a tale of love and loss.</span></div>
+                  <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:10:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">The echoes of the past whisper through the droplets,</span></div>
+                  <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:15:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">each one carrying a memory, a moment lost in time.</span></div>
+                  <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:20:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">The rain, a gentle symphony, sets the stage for reflection.</span></div>
+                  <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:26:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">And in your eyes I see the stars we used to chase,</span></div>
+                  <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:32:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">a fleeting moment frozen in the grace of time.</span></div>
+                  <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:38:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">Hold me close beneath the silver light,</span></div>
+                  <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.1px;white-space:nowrap;line-height:1.6;flex-shrink:0;">[00:44:00]</span><span style="font-size:12px;font-weight:500;color:var(--n89);line-height:1.6;">and let the music carry us through the night.</span></div>
+                </div>
               </div>
             </div>
           </div>
@@ -7045,11 +7061,11 @@ const SB_SCENE_GEN_BASE_MS    = 700;
 const SB_SCENE_GEN_STAGGER_MS = 750;
 function startStoryboardScenesGenerating() {
   _charImgGenDone = false;
-  const charProc = document.getElementById('char-img-proc');
-  if (charProc) charProc.classList.add('show');
+  const charGen = document.getElementById('char-img-generating');
+  if (charGen) charGen.classList.add('active');
   setTimeout(() => {
     _charImgGenDone = true;
-    if (charProc) charProc.classList.remove('show');
+    if (charGen) charGen.classList.remove('active');
   }, SB_SCENE_GEN_BASE_MS + 1 * SB_SCENE_GEN_STAGGER_MS);
   for (let i = 1; i <= 4; i++) {
     _sbSceneGenDone[i] = false;
@@ -8784,6 +8800,20 @@ function toggleStoryLine() {
     content.style.opacity   = _storyLineOpen ? '1' : '0';
   }
   if (chevron) chevron.style.transform = _storyLineOpen ? 'rotate(-90deg)' : 'rotate(90deg)';
+}
+
+// ── Storyboard: Lyrics expand/collapse — same pattern as Story Line above,
+// but collapsed by default since it's just reference text, not actionable. ──
+let _lyricsOpen = false;
+function toggleLyrics() {
+  _lyricsOpen = !_lyricsOpen;
+  const content = document.getElementById('sb-lyrics-content');
+  const chevron = document.getElementById('sb-lyrics-chevron');
+  if (content) {
+    content.style.maxHeight = _lyricsOpen ? (content.scrollHeight + 40) + 'px' : '0px';
+    content.style.opacity   = _lyricsOpen ? '1' : '0';
+  }
+  if (chevron) chevron.style.transform = _lyricsOpen ? 'rotate(-90deg)' : 'rotate(90deg)';
 }
 
 // Generic "Regenerate All" feedback — briefly disables the row and swaps its
