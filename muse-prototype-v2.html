@@ -3663,7 +3663,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
       </div>
       <!-- CTA -->
-      <div class="cta-footer">
+      <div class="cta-footer" id="mv-storyboard-cta-footer">
         <button id="mv-storyboard-cta" onclick="requireLogin(()=>generateShotsInline())" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           <span id="mv-storyboard-cta-label">Generate Shots</span>
           <span id="mv-storyboard-cta-credits" style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
@@ -3834,7 +3834,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- Blurred background image -->
       <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
-        <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="position:absolute;left:-41px;top:-23px;width:402px;height:739px;object-fit:cover;filter:blur(10px);opacity:.4;">
+        <img src="assets/images/mv-cover/mv_cover_01.jpg" style="position:absolute;left:-41px;top:-23px;width:402px;height:739px;object-fit:cover;filter:blur(10px);opacity:.4;">
       </div>
 
       <!-- ── MAIN CONTENT (vertically centred, pushed 33px down) ── -->
@@ -3846,7 +3846,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <!-- Cover image / video -->
           <video id="mv-result-video" src="assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4"
             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" playsinline loop></video>
-          <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg"
+          <img src="assets/images/mv-cover/mv_cover_01.jpg"
             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           <!-- Tap whole video to play/pause (below share buttons area) -->
           <div onclick="toggleMvResultPlay()" style="position:absolute;inset:0;right:54px;cursor:pointer;z-index:1;"></div>
@@ -7058,8 +7058,8 @@ function sbOpenSceneEditor(idx, imgSrc, desc, label) {
 // Slower, more deliberate cadence so the reveal reads like a real generation
 // pass rather than an instant flash — base delay before the first item
 // resolves, plus a per-item stagger on top of that.
-const SB_SCENE_GEN_BASE_MS    = 700;
-const SB_SCENE_GEN_STAGGER_MS = 750;
+const SB_SCENE_GEN_BASE_MS    = 1000;
+const SB_SCENE_GEN_STAGGER_MS = 1000;
 function startStoryboardScenesGenerating() {
   _charImgGenDone = false;
   const charGen = document.getElementById('char-img-generating');
@@ -7094,6 +7094,10 @@ function generateShotsInline() {
   if (_shotsGenerated) return;
   const sec = document.getElementById('storyboard-shots-section');
   if (!sec) return;
+  // Hide the bottom CTA while shots are generating — it comes back once every
+  // shot has finished (see finishShotsGeneration()).
+  const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
+  if (ctaFooter) ctaFooter.style.display = 'none';
   sec.style.display = 'flex';
   for (let i = 1; i <= 8; i++) {
     const proc = document.getElementById('shot-proc-' + i);
@@ -7134,6 +7138,9 @@ function finishShotsGeneration() {
   const label = document.getElementById('mv-storyboard-cta-label');
   const creditsWrap = document.getElementById('mv-storyboard-cta-credits');
   const btn = document.getElementById('mv-storyboard-cta');
+  // All 8 shots finished generating — bring the CTA back.
+  const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
+  if (ctaFooter) ctaFooter.style.display = '';
   if (label) label.textContent = 'Generate Video';
   if (btn) btn.setAttribute('onclick', "requireLogin(()=>startGeneration('videos'))");
   const sel = _aiModelSelected.videos;
