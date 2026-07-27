@@ -375,9 +375,21 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #img-editor-wrap.show{pointer-events:all;}
 #img-editor-dim{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s;}
 #img-editor-wrap.show #img-editor-dim{opacity:1;}
-#img-editor-content{position:relative;z-index:1;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
+/* NOTE on max-height: `vh` measures the real browser viewport, not the
+   320x693 .device frame's own box — on desktop the frame is a fixed-size
+   box centered in a much taller window, and even on mobile (.device
+   transform:scale()'d to fill the real screen) `vh` still resolves against
+   the untransformed real viewport, not the pre-scale ~693px-equivalent
+   layout space .device actually lays out in. Either way, `88vh` computes to
+   a number bigger than the frame can actually show, so content silently
+   overflowed past the bottom of the sheet instead of scrolling. Fixed by
+   giving #img-editor-content a definite height (100% of #img-editor-wrap,
+   which correctly equals the .device frame's height via position:absolute;
+   inset:0), so #img-editor-panel's max-height:88% now resolves against a
+   real, correctly-scoped ancestor instead of the wrong viewport. */
+#img-editor-content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
 #img-editor-wrap.show #img-editor-content{transform:translateY(0);}
-#img-editor-panel{background:#1C1C1E;border-radius:20px 20px 0 0;display:flex;flex-direction:column;max-height:88vh;}
+#img-editor-panel{background:#1C1C1E;border-radius:20px 20px 0 0;display:flex;flex-direction:column;max-height:88%;}
 #img-editor-scroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
 #img-editor-scroll::-webkit-scrollbar{display:none;}
 #ref-picker-overlay{z-index:530;}
@@ -396,6 +408,16 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .shot-thumb.dragging{transform:scale(1.06);box-shadow:0 10px 22px rgba(0,0,0,.5);border-color:rgba(168,85,247,.7)!important;z-index:5;cursor:grabbing;}
 .shot-thumb.drag-over{border-color:rgba(255,255,255,.5)!important;}
 .shot-num{position:absolute;top:8px;left:8px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:rgba(9,9,11,.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;pointer-events:none;z-index:2;}
+/* Drag handle (Storyboard SHOTS only, per Figma 1449-32427) — purely a visual
+   affordance; the whole thumbnail is already press-draggable (see
+   initShotDragReorder above), so this icon doesn't need its own listeners. */
+.shot-drag-handle{position:absolute;top:8px;right:8px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.5));pointer-events:none;z-index:2;}
+/* Lip Sync toggle icon (Storyboard SHOTS only) — mirrors the Shot Editor's
+   Lip Sync row (see toggleShotLipSync / toggleImgEditorLipSync). Off = dark
+   translucent circle + white mic-off icon; On = solid white circle + dark
+   singing-mic icon, per Figma 1449-32427. */
+.shot-lipsync-btn{position:absolute;bottom:8px;right:8px;width:28px;height:28px;border-radius:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3;background:rgba(9,9,11,.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);transition:background .15s;}
+.shot-lipsync-btn.on{background:#fff;}
 /* ── Editor (Export) screen: Video Shots grid — number badge + duration label ── */
 .emv-shot-dur{position:absolute;bottom:8px;right:8px;padding:2px 6px;border-radius:8px;background:rgba(9,9,11,.65);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);font-size:10px;font-weight:700;color:#fff;letter-spacing:-.1px;pointer-events:none;z-index:2;}
 .shot-proc{position:absolute;inset:0;background:rgba(9,9,11,.72);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease;}
@@ -3554,43 +3576,59 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
             <div id="shots-track" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
               <div class="shot-thumb" data-shot-idx="1" onclick="openShotEditor(1,'assets/videos/storyboard-clips/clip_1.jpg','Wide establishing shot of the dressing room, warm golden light spilling across the mirror.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">1</div>
+                <div class="shot-drag-handle"><img src="assets/icons/ui/ic_grip.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);"></div>
+                <div class="shot-lipsync-btn" id="shot-lipsync-1" onclick="event.stopPropagation();toggleShotLipSync(1)"></div>
                 <div id="shot-proc-1" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="2" onclick="openShotEditor(2,'assets/videos/storyboard-clips/clip_2.jpg','Medium shot - she adjusts the strap of her gown, eyes soft with anticipation.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">2</div>
+                <div class="shot-drag-handle"><img src="assets/icons/ui/ic_grip.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);"></div>
+                <div class="shot-lipsync-btn" id="shot-lipsync-2" onclick="event.stopPropagation();toggleShotLipSync(2)"></div>
                 <div id="shot-proc-2" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="3" onclick="openShotEditor(3,'assets/videos/storyboard-clips/clip_3.jpg','Close-up on her eyes catching the light as she begins to sing.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">3</div>
+                <div class="shot-drag-handle"><img src="assets/icons/ui/ic_grip.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);"></div>
+                <div class="shot-lipsync-btn" id="shot-lipsync-3" onclick="event.stopPropagation();toggleShotLipSync(3)"></div>
                 <div id="shot-proc-3" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="4" onclick="openShotEditor(4,'assets/videos/storyboard-clips/clip_4.jpg','Tracking shot following her hand along the lace patterns of her dress.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">4</div>
+                <div class="shot-drag-handle"><img src="assets/icons/ui/ic_grip.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);"></div>
+                <div class="shot-lipsync-btn" id="shot-lipsync-4" onclick="event.stopPropagation();toggleShotLipSync(4)"></div>
                 <div id="shot-proc-4" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="5" onclick="openShotEditor(5,'assets/videos/storyboard-clips/clip_5.jpg','Two-shot as the partners embrace, silhouetted in golden light.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">5</div>
+                <div class="shot-drag-handle"><img src="assets/icons/ui/ic_grip.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);"></div>
+                <div class="shot-lipsync-btn" id="shot-lipsync-5" onclick="event.stopPropagation();toggleShotLipSync(5)"></div>
                 <div id="shot-proc-5" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="6" onclick="openShotEditor(6,'assets/videos/storyboard-clips/clip_6.jpg','Slow push-in as the chorus swells, light flaring across the lens.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">6</div>
+                <div class="shot-drag-handle"><img src="assets/icons/ui/ic_grip.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);"></div>
+                <div class="shot-lipsync-btn" id="shot-lipsync-6" onclick="event.stopPropagation();toggleShotLipSync(6)"></div>
                 <div id="shot-proc-6" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="7" onclick="openShotEditor(7,'assets/videos/storyboard-clips/clip_7.jpg','Wide cinematic pull-back revealing the full stage.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">7</div>
+                <div class="shot-drag-handle"><img src="assets/icons/ui/ic_grip.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);"></div>
+                <div class="shot-lipsync-btn" id="shot-lipsync-7" onclick="event.stopPropagation();toggleShotLipSync(7)"></div>
                 <div id="shot-proc-7" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="8" onclick="openShotEditor(8,'assets/videos/storyboard-clips/clip_8.jpg','Final close-up: joy, longing, and resolution in one quiet moment.')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">8</div>
+                <div class="shot-drag-handle"><img src="assets/icons/ui/ic_grip.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);"></div>
+                <div class="shot-lipsync-btn" id="shot-lipsync-8" onclick="event.stopPropagation();toggleShotLipSync(8)"></div>
                 <div id="shot-proc-8" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
             </div>
@@ -4094,49 +4132,49 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">VIDEO SHOTS</div>
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
               <div class="shot-thumb" data-shot-idx="1" onclick="emvOpenVideoShot(1,'assets/videos/storyboard-clips/clip_1.jpg','Wide establishing shot of the dressing room, warm golden light spilling across the mirror.','Edit Video 1')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
-                <img src="assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">1</div>
                 <div class="emv-shot-dur">0:04</div>
                 <div id="emv-shot-proc-1" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="2" onclick="emvOpenVideoShot(2,'assets/videos/storyboard-clips/clip_2.jpg','Medium shot - she adjusts the strap of her gown, eyes soft with anticipation.','Edit Video 2')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
-                <img src="assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">2</div>
                 <div class="emv-shot-dur">0:05</div>
                 <div id="emv-shot-proc-2" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="3" onclick="emvOpenVideoShot(3,'assets/videos/storyboard-clips/clip_3.jpg','Close-up on her eyes catching the light as she begins to sing.','Edit Video 3')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
-                <img src="assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">3</div>
                 <div class="emv-shot-dur">0:04</div>
                 <div id="emv-shot-proc-3" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="4" onclick="emvOpenVideoShot(4,'assets/videos/storyboard-clips/clip_4.jpg','Tracking shot following her hand along the lace patterns of her dress.','Edit Video 4')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
-                <img src="assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">4</div>
                 <div class="emv-shot-dur">0:06</div>
                 <div id="emv-shot-proc-4" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="5" onclick="emvOpenVideoShot(5,'assets/videos/storyboard-clips/clip_5.jpg','Two-shot as the partners embrace, silhouetted in golden light.','Edit Video 5')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
-                <img src="assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">5</div>
                 <div class="emv-shot-dur">0:05</div>
                 <div id="emv-shot-proc-5" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="6" onclick="emvOpenVideoShot(6,'assets/videos/storyboard-clips/clip_6.jpg','Slow push-in as the chorus swells, light flaring across the lens.','Edit Video 6')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
-                <img src="assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">6</div>
                 <div class="emv-shot-dur">0:04</div>
                 <div id="emv-shot-proc-6" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="7" onclick="emvOpenVideoShot(7,'assets/videos/storyboard-clips/clip_7.jpg','Wide cinematic pull-back revealing the full stage.','Edit Video 7')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
-                <img src="assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">7</div>
                 <div class="emv-shot-dur">0:07</div>
                 <div id="emv-shot-proc-7" class="shot-proc"><div class="spinner-sm"></div></div>
               </div>
               <div class="shot-thumb" data-shot-idx="8" onclick="emvOpenVideoShot(8,'assets/videos/storyboard-clips/clip_8.jpg','Final close-up: joy, longing, and resolution in one quiet moment.','Edit Video 8')" style="aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;">
-                <img src="assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+                <img class="shot-photo-img" src="assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
                 <div class="shot-num">8</div>
                 <div class="emv-shot-dur">0:05</div>
                 <div id="emv-shot-proc-8" class="shot-proc"><div class="spinner-sm"></div></div>
@@ -5912,6 +5950,17 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="padding:12px 16px 4px;">
             <div id="img-editor-refs" style="display:none;gap:10px;"></div>
           </div>
+          <!-- Lip Sync — Shot editor only ('shot' kind): whether this shot's
+               character mouths along with the song's lyrics. Hidden for
+               Scene / Visual Style / Cover kinds, which have no character to
+               sync. Per Figma 1460-35034. -->
+          <div id="img-editor-lipsync-row" style="display:none;padding:8px 16px 4px;align-items:center;justify-content:space-between;gap:8px;">
+            <div style="display:flex;flex-direction:column;gap:2px;min-width:0;">
+              <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Lip Sync to Lyrics</div>
+              <div id="img-editor-lipsync-state" style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;">On</div>
+            </div>
+            <div class="toggle off" id="img-editor-lipsync-toggle" onclick="toggleImgEditorLipSync()"><div class="toggle-knob"></div></div>
+          </div>
         </div>
         <!-- Fixed footer: Select AI Model + Regenerate CTA. Never scrolls. -->
         <div style="flex-shrink:0;">
@@ -7219,6 +7268,39 @@ function finishShotsGeneration() {
     btn.dataset.nextState = '0';
   }
 }
+
+// ── Lip Sync — per-shot toggle deciding whether that shot's character mouths
+// along with the song's lyrics. Default state mirrors the Figma mock (shots
+// 2 & 6 start "On"). Kept in sync between each Storyboard thumbnail's icon
+// button (bottom-right — see markup in the SHOTS grid above) and the Shot
+// Editor's toggle row (kind='shot' only — see _renderImgEditorLipSyncRow /
+// toggleImgEditorLipSync near openImageEditor()). Per Figma 1449-32427 /
+// 1460-35034.
+let _shotLipSync = { 1: false, 2: true, 3: false, 4: false, 5: false, 6: true, 7: false, 8: false };
+function _renderShotLipSyncIcon(idx) {
+  const btn = document.getElementById('shot-lipsync-' + idx);
+  if (!btn) return;
+  const on = !!_shotLipSync[idx];
+  btn.classList.toggle('on', on);
+  // Asset SVGs are white-filled — invert to dark (filter:brightness(0)) on the
+  // "on" state's white circle background for contrast; leave white as-is on
+  // the dark "off" state's background.
+  btn.innerHTML = on
+    ? '<img src="assets/icons/ui/ic_mic.svg" width="16" height="16" style="display:block;filter:brightness(0);">'
+    : '<img src="assets/icons/ui/ic_mic_off.svg" width="16" height="16" style="display:block;">';
+}
+function _renderAllShotLipSyncIcons() {
+  for (let i = 1; i <= 8; i++) _renderShotLipSyncIcon(i);
+}
+function toggleShotLipSync(idx) {
+  _shotLipSync[idx] = !_shotLipSync[idx];
+  _renderShotLipSyncIcon(idx);
+  // Keep the Shot Editor's toggle row in sync if it's currently open on this shot.
+  if (_imgEditorCtx && _imgEditorCtx.kind === 'shot' && _imgEditorCtx.idx === idx) {
+    _renderImgEditorLipSyncRow();
+  }
+}
+_renderAllShotLipSyncIcons();
 
 // Refresh each thumbnail's position-number badge (1-8) to match current DOM order.
 function _renumberShotThumbs() {
@@ -8602,8 +8684,38 @@ function openImageEditor(kind, idx, imgSrc, desc, label) {
   _renderImgEditorModelRow();
   _initImgEditorRefs(kind, idx);
   _renderImgEditorRefs();
+  _renderImgEditorLipSyncRow();
   const wrap = document.getElementById('img-editor-wrap');
   if (wrap) wrap.classList.add('show');
+}
+// Lip Sync row — shown only for kind='shot' (see openImageEditor above).
+// State is shared with each Storyboard thumbnail's Lip Sync icon via the
+// per-shot _shotLipSync map (see toggleShotLipSync near the SHOTS grid).
+function _renderImgEditorLipSyncRow() {
+  const row = document.getElementById('img-editor-lipsync-row');
+  const tog = document.getElementById('img-editor-lipsync-toggle');
+  const st  = document.getElementById('img-editor-lipsync-state');
+  if (!row || !tog) return;
+  const isShot = _imgEditorCtx && _imgEditorCtx.kind === 'shot';
+  row.style.display = isShot ? 'flex' : 'none';
+  if (!isShot) return;
+  const on = !!_shotLipSync[_imgEditorCtx.idx];
+  tog.classList.toggle('on', on);
+  tog.classList.toggle('off', !on);
+  if (st) st.textContent = on ? 'On' : 'Off';
+}
+function toggleImgEditorLipSync() {
+  if (!_imgEditorCtx || _imgEditorCtx.kind !== 'shot') return;
+  const idx = _imgEditorCtx.idx;
+  _shotLipSync[idx] = !_shotLipSync[idx];
+  _renderImgEditorLipSyncRow();
+  _renderShotLipSyncIcon(idx); // keep the Storyboard thumbnail's icon in sync
+  // Changing whether this shot lip-syncs changes what the regenerated result
+  // should look like — same dirty-gating as editing the prompt or swapping a
+  // reference thumbnail (see onImgEditorInput / selectRefOption).
+  _imgEditorDirty = true;
+  const prevWrap = document.getElementById('img-editor-preview-wrap');
+  if (!prevWrap || prevWrap.dataset.busy !== '1') _setRegenBtnEnabled('img-editor-regen-btn', true);
 }
 function _renderImgEditorModelRow() {
   const gate = _imgEditorGate;
@@ -8636,7 +8748,13 @@ function closeImageEditor() {
       const target = document.getElementById(`sb-scene-${_imgEditorCtx.idx}-img`);
       if (target) target.style.filter = filter;
     } else {
-      document.querySelectorAll(`.shot-thumb[data-shot-idx="${_imgEditorCtx.idx}"] img`).forEach(img => { img.style.filter = filter; });
+      // Scoped to .shot-photo-img (not a bare `img`) — the thumbnail also
+      // contains a drag-handle icon and a Lip Sync toggle icon, both of which
+      // are <img> elements too; applying the photo's filter to those as well
+      // would clobber the Lip Sync icon's own filter:brightness(0)/invert(1)
+      // styling (this was the cause of the icon losing its black/white color
+      // whenever the editor was closed).
+      document.querySelectorAll(`.shot-thumb[data-shot-idx="${_imgEditorCtx.idx}"] .shot-photo-img`).forEach(img => { img.style.filter = filter; });
     }
   }
 }
@@ -8937,7 +9055,10 @@ function closeVideoEditor() {
   // shot thumbnail (Storyboard's Shots grid AND the Editor's Video Shots grid).
   if (_vidEditorCtx && _vidEditorVersions[_vidEditorSelectedVersion]) {
     const filter = _vidEditorVersions[_vidEditorSelectedVersion].filter;
-    document.querySelectorAll(`.shot-thumb[data-shot-idx="${_vidEditorCtx.idx}"] img`).forEach(img => { img.style.filter = filter; });
+    // Scoped to .shot-photo-img — see the matching note in closeImageEditor()
+    // above (this thumbnail also holds non-photo icon <img>s that must not
+    // receive the photo's color-grade filter).
+    document.querySelectorAll(`.shot-thumb[data-shot-idx="${_vidEditorCtx.idx}"] .shot-photo-img`).forEach(img => { img.style.filter = filter; });
   }
 }
 function onVidEditorInput() {
