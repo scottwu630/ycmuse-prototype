@@ -377,7 +377,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #img-editor-wrap.show #img-editor-dim{opacity:1;}
 #img-editor-content{position:relative;z-index:1;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
 #img-editor-wrap.show #img-editor-content{transform:translateY(0);}
-#img-editor-panel{background:#1C1C1E;border-radius:20px 20px 0 0;}
+#img-editor-panel{background:#1C1C1E;border-radius:20px 20px 0 0;display:flex;flex-direction:column;max-height:88vh;}
+#img-editor-scroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+#img-editor-scroll::-webkit-scrollbar{display:none;}
+#ref-picker-overlay{z-index:530;}
+#ref-picker-sheet{z-index:531;}
 /* ── Video editor (shot video preview + prompt + regenerate) ── */
 #vid-editor-wrap{position:absolute;inset:0;z-index:490;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none;}
 #vid-editor-wrap.show{pointer-events:all;}
@@ -488,6 +492,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .ob-ring-1{inset:20px;animation-duration:12s;}
 .ob-ring-2{inset:40px;animation-duration:8s;animation-direction:reverse;border-color:rgba(236,72,153,.15);}
 @keyframes spin{to{transform:rotate(360deg);}}
+/* Editor "generating" version thumbnail — star icon rotates continuously while bouncing up and down. */
+@keyframes gen-star-spin-bounce{0%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-4px) rotate(180deg);}100%{transform:translateY(0) rotate(360deg);}}
+.gen-star-icon{animation:gen-star-spin-bounce 1.1s ease-in-out infinite;}
 .ob-body{padding:36px 32px 0;}
 .ob-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.25);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:14px;letter-spacing:.04em;}
 .ob-title{font-size:34px;font-weight:800;line-height:1.1;color:var(--text);letter-spacing:-.5px;margin-bottom:14px;}
@@ -885,8 +892,13 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .sb-ctrl-bar{flex:1;height:3px;background:rgba(255,255,255,.2);border-radius:2px;}
 .sb-ctrl-exp{font-size:15px;color:#fff;}
 .emv-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);}
-/* Cover image — 9:16 ratio */
-#emv-cover-wrap{position:relative;width:123px;height:219px;border-radius:14px;overflow:hidden;margin:0 auto;}
+/* Cover image — one card (image + description), same pattern as Storyboard's
+   Visual Style / Scene cards. Tapping it opens the shared Image Editor. Per
+   Figma node 1451-32953, the card itself is a fixed-height landscape frame
+   (like Scene/Visual Style) — when the project's output ratio is 9:16, the
+   clip pillarboxes inside it instead of the card itself turning portrait.
+   See _syncEmvCoverRatio(). */
+#emv-cover-wrap{position:relative;width:100%;height:144px;border-radius:10px;overflow:hidden;}
 #emv-cover-generating.active ~ #emv-cover-fullscreen-btn,
 #emv-cover-generating.active + * + #emv-cover-fullscreen-btn{display:none!important;}
 #emv-cover-img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s;}
@@ -897,18 +909,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 /* Visual Style generating — shown once, on arrival at Storyboard from Scene Setup */
 #sb-visual-style-generating{position:absolute;inset:0;background:linear-gradient(160deg,#6D28D9,#A855F7);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;}
 #sb-visual-style-generating.active{opacity:1;}
-/* Cover description row */
-.emv-cover-desc-row{display:flex;align-items:center;gap:10px;background:#151519;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px 12px;cursor:pointer;transition:opacity .15s;}
-.emv-cover-desc-row:active{opacity:.7;}
-.emv-cover-desc-text{flex:1;min-width:0;font-size:12px;font-weight:500;color:#9C9CAB;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
-.emv-cover-desc-badge{display:flex;align-items:center;gap:4px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.25);border-radius:20px;padding:4px 8px;flex-shrink:0;}
-/* Cover Description sheet */
-#emv-cover-sheet-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
-#emv-cover-sheet-overlay.show{opacity:1;pointer-events:all;}
-#emv-cover-sheet{position:absolute;bottom:0;left:0;right:0;background:#151519;border-radius:26px 26px 0 0;padding:0 0 40px;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
-#emv-cover-sheet.open{transform:translateY(0);}
-#emv-cover-textarea{width:100%;min-height:120px;background:#212127;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 14px 32px;font-size:14px;font-weight:500;color:#fff;font-family:inherit;outline:none;resize:none;box-sizing:border-box;line-height:1.5;}
-#emv-cover-textarea:focus{border-color:rgba(168,85,247,.4);}
 .emv-toggle-row:last-of-type{border-bottom:none;}
 .emv-lbl{font-size:16px;font-weight:700;color:var(--text);}
 .emv-sub{font-size:12px;color:var(--text-2);margin-top:2px;}
@@ -4065,31 +4065,26 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div class="scr-scroll" style="padding:calc(var(--safe-top) + var(--nav-h) + 14px) 16px calc(140px + var(--safe-bot));">
         <div style="display:flex;flex-direction:column;gap:20px;">
 
-          <!-- COVER IMAGE -->
-          <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
-            <div id="emv-cover-wrap">
-              <img id="emv-cover-img" src="assets/images/mv-cover/mv_cover_01.jpg" alt="Cover">
-              <div id="emv-cover-generating">
-                <span class="emv-cover-gen-label">✦ Generating...</span>
-              </div>
-              <!-- Fullscreen button — bottom-right, same style as char-img -->
-              <div id="emv-cover-fullscreen-btn" onclick="openCoverFullscreen()" style="position:absolute;bottom:8px;right:8px;width:28px;height:28px;border-radius:18px;background:rgba(9,9,11,0.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;">
-                <img src="assets/icons/ui/ic_expand.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
-              </div>
-            </div>
-          </div>
-
-          <!-- COVER DESCRIPTION -->
+          <!-- COVER IMAGE — reference image + description, one card, same pattern
+               as Storyboard's Visual Style / Scene cards. Tapping it opens the
+               shared Image Editor (prompt + Select AI Model + Regenerate)
+               instead of the old cover-only sheet. -->
           <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">COVER DESCRIPTION</div>
-            <div class="emv-cover-desc-row" style="cursor:default;">
-              <!-- Text area — tap to open sheet with keyboard -->
-              <div class="emv-cover-desc-text" id="emv-cover-desc-preview" onclick="openCoverDescSheet()" style="cursor:pointer;">Create a captivating cover image for "Starlight in Your Eyes" that embodies the essence of a dreamy night sky filled with shimmering stars.</div>
-              <!-- Recreate button — tap to regen directly, purple gradient -->
-              <div onclick="generateCoverImage()" style="display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border-radius:20px;padding:6px 10px;flex-shrink:0;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
-                <img src="assets/icons/ui/ic_reload.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
-                <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
-                <span style="font-size:12px;font-weight:700;color:#fff;">10</span>
+            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">COVER IMAGE</div>
+            <div onclick="emvOpenCoverEditor()" style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px;box-sizing:border-box;cursor:pointer;">
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div id="emv-cover-wrap">
+                  <img id="emv-cover-img" src="assets/videos/storyboard-clips/clip_1.jpg" alt="Cover">
+                  <div id="emv-cover-generating">
+                    <span class="emv-cover-gen-label">✦ Generating...</span>
+                  </div>
+                  <div id="emv-cover-fullscreen-btn" onclick="event.stopPropagation();emvOpenCoverEditor()" style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;border-radius:16px;background:rgba(9,9,11,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                    <img src="assets/icons/ui/ic_edit.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div id="emv-cover-desc-preview" style="font-size:12px;font-weight:500;color:#fff;line-height:1.5;flex:1;min-width:0;">Create a captivating cover image for "Starlight in Your Eyes" that embodies the essence of a dreamy night sky filled with shimmering stars.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -4581,6 +4576,27 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
           </div>
 
+          <!-- 0. New Music Video — Draft, left mid-flow at Storyboard. Continue
+               resumes at the exact step it stopped on (unlike Edit MV / Create,
+               which restart a finished project from the top). htype="mv" so it
+               correctly shows under the Music Videos/All filters — its
+               data-status="draft" is what drives the simplified "..." menu
+               (see openHistMore()), not htype. -->
+          <div class="hist-row" data-htype="mv" data-status="draft" onclick="goTo('mv-storyboard')">
+            <div class="hist-thumb-icon" style="background:var(--mv-grad);">
+              <img src="assets/icons/ui/ic_video_ai.svg" width="24" height="24" style="display:block;">
+            </div>
+            <div class="hist-info">
+              <div class="hist-name">New Music Video</div>
+              <div class="hist-meta">Draft · Storyboard</div>
+              <div class="hist-time">2026-06-08</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
+              <button class="hist-create-btn" onclick="event.stopPropagation();goTo('mv-storyboard')">Continue</button>
+              <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
+            </div>
+          </div>
+
           <!-- 1. Cinematic Night — Music Video · Done -->
           <div class="hist-row" data-htype="mv" data-liked="true" onclick="histMarkPlayed(this);goTo('mv-result')">
             <div class="hist-thumb">
@@ -4645,8 +4661,12 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
           </div>
 
-          <!-- 3b. Starlight in Your Eyes — Storyboard · Done -->
-          <div class="hist-row" data-htype="storyboard" onclick="histMarkPlayed(this);goTo('mv-storyboard')">
+          <!-- 3b. Starlight in Your Eyes — Storyboard · Done. Hidden — the new
+               flow resumes drafts directly from the "Continue" card above, so
+               a standalone "finished Storyboard, not yet an MV" asset type is
+               no longer part of the design. Markup/menu logic kept intact in
+               case this is revisited, just not rendered. -->
+          <div class="hist-row" data-htype="storyboard" style="display:none;" onclick="histMarkPlayed(this);goTo('mv-storyboard')">
             <div class="hist-thumb">
               <img src="assets/images/storyboard/storyboard_01.jpg">
               <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="assets/icons/ui/ic_script.svg" width="12" height="12" style="display:block;"></div>
@@ -5848,63 +5868,93 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     <div id="img-editor-dim" onclick="closeImageEditor()"></div>
     <div id="img-editor-content">
       <div id="img-editor-panel">
-        <div style="display:flex;justify-content:center;padding:10px 0 6px;">
-          <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.25);"></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;padding:4px 16px 12px;">
-          <div onclick="closeImageEditor()" style="width:28px;height:28px;border-radius:14px;background:#3A3A3C;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <!-- Fixed header: grabber + close/title/done. Never scrolls. -->
+        <div style="flex-shrink:0;">
+          <div style="display:flex;justify-content:center;padding:10px 0 6px;">
+            <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.25);"></div>
           </div>
-          <div id="img-editor-label" style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">Edit Scene</div>
-          <div id="img-editor-done-btn" onclick="closeImageEditor()" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;opacity:0;pointer-events:none;transition:opacity .25s ease;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <!-- Image preview -->
-        <div style="padding:0 16px 12px;">
-          <div id="img-editor-preview-wrap" style="position:relative;border-radius:14px;overflow:hidden;width:100%;aspect-ratio:16/9;background:#1a1a1a;border:1px solid rgba(255,255,255,.15);">
-            <img id="img-editor-preview" src="" style="width:100%;height:100%;object-fit:cover;display:block;">
-          </div>
-        </div>
-        <!-- Versions — every regenerate appends a version here; tap one to pick it -->
-        <div style="padding:0 16px 12px;">
-          <div id="img-editor-versions-track" style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;"></div>
-        </div>
-        <!-- Prompt -->
-        <div style="padding:0 16px;">
-          <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;">
-            <textarea id="img-editor-ta" maxlength="2500" placeholder="Describe this image…" oninput="onImgEditorInput()" style="width:100%;min-height:90px;padding:12px 12px 4px;background:transparent;border:none;color:#fff;font-size:13px;font-family:inherit;resize:none;outline:none;line-height:1.5;"></textarea>
-            <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:4px 10px 10px;">
-              <button id="img-editor-enhance-btn" onclick="event.stopPropagation();enhancePrompt('img-editor')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
-                <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
-              </button>
-              <span id="img-editor-counter" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);">0/2500</span>
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 16px 12px;">
+            <div onclick="closeImageEditor()" style="width:28px;height:28px;border-radius:14px;background:#3A3A3C;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </div>
+            <div id="img-editor-label" style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">Edit Scene</div>
+            <div id="img-editor-done-btn" onclick="closeImageEditor()" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;opacity:0;pointer-events:none;transition:opacity .25s ease;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
         </div>
-        <!-- Select AI Model -->
-        <div style="padding:10px 16px 0;">
-          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Select AI Model</div>
-          <div id="img-editor-model-row" onclick="openAiModelSheet(_imgEditorGate)" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px 14px;cursor:pointer;">
-            <span id="img-editor-model-label" style="font-size:13px;font-weight:700;color:#fff;">Nano Banana 2 · 1K</span>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <div id="img-editor-model-credit" style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">5</div>
-              <span style="font-size:16px;color:rgba(255,255,255,.35);line-height:1;">›</span>
+        <!-- Scrollable middle: image preview, versions, prompt, reference thumbnails. -->
+        <div id="img-editor-scroll">
+          <!-- Image preview -->
+          <div style="padding:0 16px 12px;">
+            <div id="img-editor-preview-wrap" style="position:relative;border-radius:14px;overflow:hidden;width:100%;aspect-ratio:16/9;background:#1a1a1a;border:1px solid rgba(255,255,255,.15);">
+              <img id="img-editor-preview" src="" style="width:100%;height:100%;object-fit:cover;display:block;">
             </div>
           </div>
+          <!-- Versions — every regenerate appends a version here; tap one to pick it -->
+          <div style="padding:0 16px 12px;">
+            <div id="img-editor-versions-track" style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;"></div>
+          </div>
+          <!-- Prompt -->
+          <div style="padding:0 16px;">
+            <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;">
+              <textarea id="img-editor-ta" maxlength="2500" placeholder="Describe this image…" oninput="onImgEditorInput()" style="width:100%;min-height:90px;padding:12px 12px 4px;background:transparent;border:none;color:#fff;font-size:13px;font-family:inherit;resize:none;outline:none;line-height:1.5;"></textarea>
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:4px 10px 10px;">
+                <button id="img-editor-enhance-btn" onclick="event.stopPropagation();enhancePrompt('img-editor')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                  <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                </button>
+                <span id="img-editor-counter" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);">0/2500</span>
+              </div>
+            </div>
+          </div>
+          <!-- Reference thumbnails — Style (Scene editor) or Scene + Character x2 (Shot editor).
+               Hidden entirely when editing the Visual Style itself (nothing to reference below it). -->
+          <div style="padding:12px 16px 4px;">
+            <div id="img-editor-refs" style="display:none;gap:10px;"></div>
+          </div>
         </div>
-        <!-- Regenerate CTA — disabled until the prompt or AI model changes -->
-        <div style="padding:14px 16px calc(16px + var(--safe-bot));">
-          <button id="img-editor-regen-btn" disabled onclick="regenerateImageEditor()" style="width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:none;opacity:.45;transition:opacity .15s;" onmousedown="if(!this.disabled)this.style.opacity='.8'" onmouseup="if(!this.disabled)this.style.opacity='1'">
-            Regenerate
-            <span id="img-editor-regen-credit" style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:13px;font-weight:700;">
-              <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
-              20
-            </span>
-          </button>
+        <!-- Fixed footer: Select AI Model + Regenerate CTA. Never scrolls. -->
+        <div style="flex-shrink:0;">
+          <!-- Select AI Model -->
+          <div style="padding:10px 16px 0;">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Select AI Model</div>
+            <div id="img-editor-model-row" onclick="openAiModelSheet(_imgEditorGate)" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px 14px;cursor:pointer;">
+              <span id="img-editor-model-label" style="font-size:13px;font-weight:700;color:#fff;">Nano Banana 2 · 1K</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div id="img-editor-model-credit" style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">5</div>
+                <span style="font-size:16px;color:rgba(255,255,255,.35);line-height:1;">›</span>
+              </div>
+            </div>
+          </div>
+          <!-- Regenerate CTA — disabled until the prompt or AI model changes -->
+          <div style="padding:14px 16px calc(16px + var(--safe-bot));">
+            <button id="img-editor-regen-btn" disabled onclick="regenerateImageEditor()" style="width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:none;opacity:.45;transition:opacity .15s;" onmousedown="if(!this.disabled)this.style.opacity='.8'" onmouseup="if(!this.disabled)this.style.opacity='1'">
+              Regenerate
+              <span id="img-editor-regen-credit" style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:13px;font-weight:700;">
+                <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
+                20
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ══════ REFERENCE PICKER — shared sheet for the Style (Scene editor) and
+       Scene / Character (Shot editor) reference thumbnails. Only ever opened
+       when the tapped slot has more than 1 option to switch between. ══════ -->
+  <div class="overlay" id="ref-picker-overlay" onclick="hideSheet('ref-picker-sheet')"></div>
+  <div class="sheet" id="ref-picker-sheet" style="max-height:80vh;display:flex;flex-direction:column;padding-bottom:calc(var(--safe-bot) + 16px);">
+    <div class="sheet-handle"></div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 20px 4px;">
+      <div onclick="hideSheet('ref-picker-sheet')" style="width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+      <div id="ref-picker-title" style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;">Select Style</div>
+      <div style="width:28px;flex-shrink:0;"></div>
+    </div>
+    <div id="ref-picker-grid" style="overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:8px 20px 8px;"></div>
   </div>
 
   <!-- ══════ VIDEO EDITOR — shot video preview + prompt + regenerate (global scope). Opens once a shot has become a video (after Generate Video). ══════ -->
@@ -6215,39 +6265,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     </div>
   </div>
 
-  <!-- ══════ COVER DESCRIPTION SHEET ══════ -->
-  <div id="emv-cover-sheet-overlay" onclick="closeCoverDescSheet()">
-    <div id="emv-cover-sheet" onclick="event.stopPropagation()">
-      <div style="width:36px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:14px auto 0;"></div>
-      <!-- Header -->
-      <div style="display:flex;align-items:center;padding:14px 16px 10px;">
-        <div onclick="closeCoverDescSheet()" style="width:32px;height:32px;border-radius:50%;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-          <img src="assets/icons/ui/ic_close.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
-        </div>
-        <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">Cover Description</div>
-        <div id="emv-cover-gen-btn" onclick="generateCoverImage()" style="display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border-radius:20px;padding:6px 10px;flex-shrink:0;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
-          <img src="assets/icons/ui/ic_reload.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
-          <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
-          <span style="font-size:13px;font-weight:700;color:#fff;">10</span>
-        </div>
-      </div>
-      <!-- Textarea -->
-      <div style="padding:0 16px;">
-        <div style="position:relative;">
-          <textarea id="emv-cover-textarea" oninput="onCoverDescInput(this)" maxlength="2500" style="padding-bottom:32px;color:#fff;-webkit-text-fill-color:#fff;">Create a captivating cover image for "Starlight in Your Eyes" that embodies the essence of a dreamy night sky filled with shimmering stars.</textarea>
-          <!-- Count + clear — pinned bottom-right inside the textarea box -->
-          <div style="position:absolute;bottom:10px;right:12px;display:flex;align-items:center;gap:6px;pointer-events:none;">
-            <button id="emv-cover-enhance-btn" onclick="event.stopPropagation();enhancePrompt('cover')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;pointer-events:all;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
-              <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
-            </button>
-            <span id="emv-cover-charcount" style="font-size:12px;font-weight:500;color:#676779;">150/2500</span>
-            <span id="emv-cover-clear-btn" onclick="event.stopPropagation();document.getElementById('emv-cover-textarea').value='';onCoverDescInput(document.getElementById('emv-cover-textarea'));" style="font-size:13px;color:#676779;cursor:pointer;pointer-events:all;line-height:1;">✕</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- ══════ HISTORY — MORE OPTIONS SHEET ══════ -->
   <div id="hist-more-overlay" onclick="closeHistMore()">
     <div id="hist-more-sheet" onclick="event.stopPropagation()">
@@ -6518,6 +6535,7 @@ function goTo(id, dir) {
     }
   }
   if (id === 'mv-edit')  {
+    _syncEmvCoverRatio();
     if (_freshFromVideoGen) {
       // Just finished the real Generate Videos processing — the cover has its
       // own state already; the Video Shots below need their own staggered
@@ -6999,16 +7017,18 @@ function sbOpenVisualStyleEditor() {
   if (!_visualStyleGenDone) return; // not ready yet
   const img = document.getElementById('sb-visual-style-img');
   const desc = document.getElementById('sb-visual-style-text');
-  openImageEditor('style', 0, img ? img.getAttribute('src') : '', desc ? desc.textContent : '', 'Visual Style');
+  openImageEditor('style', 0, img ? img.getAttribute('src') : '', desc ? desc.textContent : '', 'Edit Visual Style');
 }
 const VS_GEN_MS = 1500; // one-shot duration for the Visual Style arrival pass
 function startVisualStyleGenerating(onDone) {
   _visualStyleGenDone = false;
   const gen = document.getElementById('sb-visual-style-generating');
   if (gen) gen.classList.add('active');
+  _setModelRowEnabled('mv-storyboard-model-row', false);
   setTimeout(() => {
     _visualStyleGenDone = true;
     if (gen) gen.classList.remove('active');
+    _setModelRowEnabled('mv-storyboard-model-row', true);
     if (onDone) onDone();
   }, VS_GEN_MS);
 }
@@ -7042,6 +7062,7 @@ function generateScenesInline() {
   // both scenes have finished (see finishScenesGeneration()).
   const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
   if (ctaFooter) ctaFooter.style.display = 'none';
+  _setModelRowEnabled('mv-storyboard-model-row', false);
   sec.style.display = 'flex';
   // No auto-scroll here (unlike generateShotsInline() below) — the Scene
   // section sits near the top of the page, right where the user already is,
@@ -7070,6 +7091,7 @@ function finishScenesGeneration() {
   // Both scenes finished generating — bring the CTA back for the next step.
   const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
   if (ctaFooter) ctaFooter.style.display = '';
+  _setModelRowEnabled('mv-storyboard-model-row', true);
   if (label) label.textContent = 'Generate Shots';
   if (btn) btn.setAttribute('onclick', "requireLogin(()=>generateShotsInline())");
   const sel = _aiModelSelected.shots;
@@ -7138,6 +7160,7 @@ function generateShotsInline() {
   // shot has finished (see finishShotsGeneration()).
   const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
   if (ctaFooter) ctaFooter.style.display = 'none';
+  _setModelRowEnabled('mv-storyboard-model-row', false);
   sec.style.display = 'flex';
   for (let i = 1; i <= 8; i++) {
     const proc = document.getElementById('shot-proc-' + i);
@@ -7181,6 +7204,7 @@ function finishShotsGeneration() {
   // All 8 shots finished generating — bring the CTA back.
   const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
   if (ctaFooter) ctaFooter.style.display = '';
+  _setModelRowEnabled('mv-storyboard-model-row', true);
   if (label) label.textContent = 'Generate Video';
   if (btn) btn.setAttribute('onclick', "requireLogin(()=>startGeneration('videos'))");
   const sel = _aiModelSelected.videos;
@@ -7735,73 +7759,27 @@ function filterTab(btn) {
       return;
     }
     const type        = row.dataset.htype || '';
+    // Storyboard-only assets are deprecated — the new flow resumes drafts via
+    // the "Continue" card instead. Keep it permanently hidden regardless of
+    // which filter tab is active (see the History list markup for why).
+    if (type === 'storyboard') { row.style.display = 'none'; return; }
     const liked       = row.dataset.liked === 'true';
     const isCommunity = row.dataset.source === 'community';
     let visible;
     if (filter === 'all')         visible = !isCommunity;
     else if (filter === 'liked')  visible = liked;
-    else if (filter === 'mv')     visible = !isCommunity && (type === 'mv' || type === 'storyboard');
+    else if (filter === 'mv')     visible = !isCommunity && type === 'mv';
     else                          visible = !isCommunity && filter === type;
     row.style.display = visible ? 'flex' : 'none';
   });
 }
 
-// ── Cover Description sheet ──
-function openCoverFullscreen() {
-  // Point the lightbox image at the cover image src
-  const coverImg = document.getElementById('emv-cover-img');
-  const lbImg    = document.querySelector('#char-img-lightbox img');
-  if (lbImg && coverImg) lbImg.src = coverImg.src;
-  openCharImage();
-}
-function openCoverDescSheet() {
-  const overlay = document.getElementById('emv-cover-sheet-overlay');
-  const sheet   = document.getElementById('emv-cover-sheet');
-  overlay.style.display = 'block';
-  requestAnimationFrame(() => { overlay.classList.add('show'); sheet.classList.add('open'); });
-  // Auto-focus textarea after sheet finishes sliding up; sync enhance button
-  setTimeout(() => {
-    const ta = document.getElementById('emv-cover-textarea');
-    if (ta) {
-      ta.focus();
-      const enh = document.getElementById('emv-cover-enhance-btn');
-      if (enh) enh.style.display = ta.value.length > 0 ? 'flex' : 'none';
-    }
-  }, 380);
-}
-function closeCoverDescSheet() {
-  const overlay = document.getElementById('emv-cover-sheet-overlay');
-  const sheet   = document.getElementById('emv-cover-sheet');
-  sheet.classList.remove('open');
-  overlay.classList.remove('show');
-  setTimeout(() => { overlay.style.display = 'none'; }, 350);
-}
-function onCoverDescInput(ta) {
-  const len = ta.value.length;
-  const el = document.getElementById('emv-cover-charcount');
-  if (el) el.textContent = len + '/2500';
-  // sync preview text
-  const preview = document.getElementById('emv-cover-desc-preview');
-  if (preview) preview.textContent = ta.value || '';
-  const enh = document.getElementById('emv-cover-enhance-btn');
-  if (enh) enh.style.display = len > 0 ? 'flex' : 'none';
-}
-function generateCoverImage() {
-  closeCoverDescSheet();
-  const gen   = document.getElementById('emv-cover-generating');
-  const img   = document.getElementById('emv-cover-img');
-  const btn   = document.getElementById('merge-mv-btn');
-  const fsBtn = document.getElementById('emv-cover-fullscreen-btn');
-  if (gen)   gen.classList.add('active');
-  if (img)   img.classList.add('hidden');
-  if (fsBtn) fsBtn.style.display = 'none';
-  if (btn)   { btn.disabled = true; btn.style.opacity = '.38'; }
-  setTimeout(() => {
-    if (gen)   gen.classList.remove('active');
-    if (img)   img.classList.remove('hidden');
-    if (fsBtn) fsBtn.style.display = 'flex';
-    if (btn)   { btn.disabled = false; btn.style.opacity = '1'; setEmvDirty(); }
-  }, 3000);
+// ── Cover Image — opens the shared Image Editor (kind='cover'), same as
+// Storyboard's Visual Style card, instead of the old cover-only sheet. ──
+function emvOpenCoverEditor() {
+  const img  = document.getElementById('emv-cover-img');
+  const desc = document.getElementById('emv-cover-desc-preview');
+  openImageEditor('cover', 0, img ? img.getAttribute('src') : '', desc ? desc.textContent : '', 'Edit Cover Image');
 }
 
 // ── Delete Project dialog ──
@@ -7837,8 +7815,9 @@ function openHistMore(btn) {
   const htype    = _histMoreRow.dataset.htype || '';
   const liked    = _histMoreRow.dataset.liked === 'true';
   const status   = _histMoreRow.dataset.status || '';
+  const isDraft  = status === 'draft';
   const isFailed = status === 'failed';
-  const isDone   = !isFailed && status !== 'proc'; // done = not failed, not generating
+  const isDone   = !isFailed && !isDraft && status !== 'proc'; // done = not failed, not draft, not generating
 
   const opts = document.getElementById('hist-more-options');
   opts.innerHTML = '';
@@ -7869,7 +7848,14 @@ function openHistMore(btn) {
   }
 
   const isCommunity = _histMoreRow.dataset.source === 'community';
-  if (isCommunity) {
+  if (isDraft) {
+    // Draft: Continue (resumes at the exact step it stopped on) + Delete only
+    // — Edit MV/Publish/Download don't apply to a project that hasn't
+    // finished generating yet.
+    addCtaRow([{icon:'ic_video_ai.svg', label:'Continue', primary:true, onClick:()=>goTo('mv-storyboard')}]);
+    addOpt(_moreIcons.delete, 'Delete', null, () => { showHistDeleteDialog(); });
+
+  } else if (isCommunity) {
     // Community item: Like/Unlike + Share only
     addOpt(_moreIcons.heart(liked), liked ? 'Unlike' : 'Like', null, () => {
       _histMoreRow.dataset.liked = liked ? 'false' : 'true';
@@ -8480,6 +8466,17 @@ function _setRegenBtnEnabled(btnId, enabled) {
   btn.style.cursor     = enabled ? 'pointer' : 'default';
   btn.style.opacity    = enabled ? '1' : '.45';
 }
+// The Select AI Model row must not be changeable while its gated step is
+// actively generating an image or video — swapping models mid-generation
+// doesn't affect a result that's already in flight. Used by the Image/Video
+// Editor's Regenerate and by the Storyboard's Generate Scenes/Shots/Visual
+// Style passes.
+function _setModelRowEnabled(rowId, enabled) {
+  const row = document.getElementById(rowId);
+  if (!row) return;
+  row.style.pointerEvents = enabled ? '' : 'none';
+  row.style.opacity       = enabled ? '' : '.45';
+}
 
 // Each Regenerate produces a new "version" (mocked here as the same base image
 // with a distinct filter, since there's no real generation backend) so the user
@@ -8488,13 +8485,26 @@ const _editorVersionFilters = ['none', 'hue-rotate(15deg) saturate(1.1)', 'hue-r
 function _renderEditorVersions(prefix, versions, selectedIdx, selectFn) {
   const track = document.getElementById(`${prefix}-editor-versions-track`);
   if (!track) return;
-  track.innerHTML = versions.map((v, i) => `
+  track.innerHTML = versions.map((v, i) => {
+    // A version mid-regeneration renders as a purple/pink gradient tile with a
+    // centered star icon instead of an image — per Figma node 1460-35034's
+    // "Generating" clip thumbnail. Not selectable while in this state.
+    if (v.generating) {
+      return `
+      <div style="flex-shrink:0;width:52px;height:52px;border-radius:10px;overflow:hidden;position:relative;background:linear-gradient(162deg, rgba(255,107,206,.5) 0%, rgba(168,85,247,.5) 50%, rgba(67,56,202,.5) 100%);">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+          <img src="assets/icons/ui/ic_star.svg" width="16" height="16" class="gen-star-icon" style="display:block;">
+        </div>
+      </div>`;
+    }
+    return `
     <div onclick="event.stopPropagation();${selectFn}(${i})" style="flex-shrink:0;width:52px;height:52px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2px solid ${i === selectedIdx ? '#A855F7' : 'rgba(255,255,255,.15)'};">
       <img src="${v.src}" style="width:100%;height:100%;object-fit:cover;display:block;filter:${v.filter};">
       <div style="position:absolute;bottom:2px;left:2px;font-size:8px;font-weight:700;color:#fff;background:rgba(9,9,11,.6);border-radius:6px;padding:1px 4px;">${i + 1}</div>
       ${i === selectedIdx ? `<div style="position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:7px;background:#A855F7;display:flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>` : ''}
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 // ══════ IMAGE EDITOR — shared by the Visual Style image, Scene images, and Shot images (Storyboard, before Generate Video) ══════
@@ -8553,17 +8563,31 @@ function _applyEditorPreviewRatio(mediaEl, forceRatio) {
   mediaEl.style.objectFit = 'cover';
   mediaEl.style.display = 'block';
 }
+// Syncs the Editor screen's Cover Image thumbnail to the project's chosen
+// output aspect ratio (see #ana-tag-ratio) using the same pillarbox technique
+// as _applyEditorPreviewRatio (Video Editor / Cover Image editor use it too):
+// the card itself stays a fixed-height landscape frame (per Figma node
+// 1451-32953), matching Scene/Visual Style — only the image inside pillarboxes
+// when the project's ratio is 9:16.
+function _syncEmvCoverRatio() {
+  _applyEditorPreviewRatio(document.getElementById('emv-cover-img'));
+}
 function openImageEditor(kind, idx, imgSrc, desc, label) {
   _imgEditorCtx = { kind, idx };
   // Visual Style shares the same model tier as Scene images.
-  _imgEditorGate = (kind === 'scene' || kind === 'style') ? 'scenes' : _storyboardModelGate;
+  // Cover Image is a single reference image with no per-shot association,
+  // same as Visual Style — reuse the 'scenes' (image) model tier for both.
+  _imgEditorGate = (kind === 'scene' || kind === 'style' || kind === 'cover') ? 'scenes' : _storyboardModelGate;
   const lbl  = document.getElementById('img-editor-label');
   const prev = document.getElementById('img-editor-preview');
   const ta   = document.getElementById('img-editor-ta');
   const ctr  = document.getElementById('img-editor-counter');
   if (lbl) lbl.textContent = label;
-  // Scene/Shot source photos are always 16:9 — always cover-fill, never letterbox.
-  if (prev) { prev.src = imgSrc; prev.style.filter = 'none'; _applyEditorPreviewRatio(prev, '16:9'); }
+  // Scene/Shot/Visual-Style source photos are always 16:9 — always cover-fill,
+  // never letterbox. Cover Image is the exception: it represents the actual
+  // video's cover, so it auto-detects the project's chosen ratio instead
+  // (same auto-detect _applyEditorPreviewRatio already uses for Video Editor).
+  if (prev) { prev.src = imgSrc; prev.style.filter = 'none'; _applyEditorPreviewRatio(prev, kind === 'cover' ? null : '16:9'); }
   if (ta) ta.value = desc || '';
   if (ctr) ctr.textContent = (desc || '').length + '/2500';
   const enhBtn = document.getElementById('img-editor-enhance-btn');
@@ -8576,6 +8600,8 @@ function openImageEditor(kind, idx, imgSrc, desc, label) {
   _renderImgEditorVersions();
   _setRegenBtnEnabled('img-editor-regen-btn', false);
   _renderImgEditorModelRow();
+  _initImgEditorRefs(kind, idx);
+  _renderImgEditorRefs();
   const wrap = document.getElementById('img-editor-wrap');
   if (wrap) wrap.classList.add('show');
 }
@@ -8603,12 +8629,125 @@ function closeImageEditor() {
     if (_imgEditorCtx.kind === 'style') {
       const target = document.getElementById('sb-visual-style-img');
       if (target) target.style.filter = filter;
+    } else if (_imgEditorCtx.kind === 'cover') {
+      const target = document.getElementById('emv-cover-img');
+      if (target) target.style.filter = filter;
     } else if (_imgEditorCtx.kind === 'scene') {
       const target = document.getElementById(`sb-scene-${_imgEditorCtx.idx}-img`);
       if (target) target.style.filter = filter;
     } else {
       document.querySelectorAll(`.shot-thumb[data-shot-idx="${_imgEditorCtx.idx}"] img`).forEach(img => { img.style.filter = filter; });
     }
+  }
+}
+// ── Reference thumbnails (Style / Scene / Character) — shown below the
+// prompt, per Figma nodes 1460-34059 (Scene editor: Style) and 1460-35034
+// (Shot editor: Scene + Character x2). Tapping one opens a picker sheet, but
+// only when that slot actually has more than 1 option to switch between.
+let _imgEditorRefs = {}; // e.g. { style:{src,label} } or { scene:{...}, char1:{...}, char2:{...} }
+// The 5 cinematic look templates already used as Visual Style placeholders —
+// doubles as the Style picker's option list for Scene editing.
+const STYLE_OPTIONS = [
+  { src: 'assets/videos/templates/04_pastel_film.jpg', label: 'Style 1' },
+  { src: 'assets/videos/templates/01_jpop.jpg', label: 'Style 2' },
+];
+// The 8 sample face photos also used on Scene Setup's character picker —
+// reused here as the Character picker's option list for Shot editing.
+const CHARACTER_NAMES = ['Emma', 'Ryan', 'Maya', 'Jake', 'Yuna', 'Daniel', 'Marco', 'Sofia'];
+const CHARACTER_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8].map(i => ({
+  src: `assets/images/character-photos/samples/Sample_P${i}.jpg`, label: CHARACTER_NAMES[i - 1],
+}));
+// A Shot's Scene reference always resolves to one of the 2 real, currently-
+// generated Storyboard scenes — shots 1-4 belong to Scene 1, 5-8 to Scene 2.
+function _sceneOptionsForShot() {
+  return [1, 2].map(i => {
+    const img = document.getElementById(`sb-scene-${i}-img`);
+    return { src: img ? img.getAttribute('src') : STYLE_OPTIONS[0].src, label: 'Scene ' + i };
+  });
+}
+function _refOptionsForSlot(slot) {
+  if (slot === 'style') return STYLE_OPTIONS;
+  if (slot === 'scene') return _sceneOptionsForShot();
+  if (slot === 'char1' || slot === 'char2') return CHARACTER_OPTIONS;
+  return [];
+}
+function _initImgEditorRefs(kind, idx) {
+  if (kind === 'scene') {
+    const styleImg = document.getElementById('sb-visual-style-img');
+    _imgEditorRefs = { style: { src: styleImg ? styleImg.getAttribute('src') : STYLE_OPTIONS[0].src, label: 'Visual Style' } };
+  } else if (kind === 'shot') {
+    const scenes = _sceneOptionsForShot();
+    const defaultScene = idx <= 4 ? scenes[0] : scenes[1];
+    _imgEditorRefs = {
+      scene: { src: defaultScene.src, label: 'Scene' },
+      char1: { src: CHARACTER_OPTIONS[0].src, label: 'Character 1' },
+      char2: { src: CHARACTER_OPTIONS[1].src, label: 'Character 2' },
+    };
+  } else {
+    _imgEditorRefs = {}; // 'style' kind — editing the master Visual Style itself, nothing to reference below it
+  }
+}
+function _renderImgEditorRefs() {
+  const wrap = document.getElementById('img-editor-refs');
+  if (!wrap) return;
+  const slots = Object.keys(_imgEditorRefs);
+  if (!slots.length) { wrap.style.display = 'none'; wrap.innerHTML = ''; return; }
+  wrap.style.display = 'flex';
+  wrap.innerHTML = slots.map(slot => {
+    const ref = _imgEditorRefs[slot];
+    const wide = slot === 'style' || slot === 'scene'; // Style/Scene: 100x65, Character: 65x65
+    const w = wide ? 100 : 65, h = 65;
+    return `
+    <div onclick="event.stopPropagation();openRefPicker('${slot}')" style="flex-shrink:0;width:${w}px;height:${h}px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:1px solid rgba(255,255,255,.15);background:#151519;">
+      <img src="${ref.src}" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <div style="position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:10px;background:rgba(9,9,11,.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;">
+        <img src="assets/icons/ui/ic_reload.svg" width="10" height="10" style="display:block;">
+      </div>
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:3px 6px 4px;background:linear-gradient(to top, rgba(0,0,0,.55), transparent);">
+        <span style="font-size:9px;font-weight:700;color:#fff;letter-spacing:-.1px;">${ref.label}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+let _refPickerSlot = null;
+function openRefPicker(slot) {
+  const options = _refOptionsForSlot(slot);
+  if (options.length <= 1) return; // nothing else to switch to
+  _refPickerSlot = slot;
+  const titles = { style: 'Select Visual Style', scene: 'Select Scene', char1: 'Select Character 1', char2: 'Select Character 2' };
+  const title = document.getElementById('ref-picker-title');
+  if (title) title.textContent = titles[slot] || 'Select';
+  const curSrc = _imgEditorRefs[slot] ? _imgEditorRefs[slot].src : null;
+  const grid = document.getElementById('ref-picker-grid');
+  if (grid) {
+    grid.innerHTML = options.map((opt, i) => `
+      <div onclick="selectRefOption(${i})" style="cursor:pointer;border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/10;border:2px solid ${opt.src === curSrc ? '#A855F7' : 'rgba(255,255,255,.12)'};">
+        <img src="${opt.src}" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <div style="position:absolute;left:0;right:0;bottom:0;padding:5px 8px;background:linear-gradient(to top, rgba(0,0,0,.6), transparent);">
+          <span style="font-size:11px;font-weight:700;color:#fff;">${opt.label}</span>
+        </div>
+        ${opt.src === curSrc ? `<div style="position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:9px;background:#A855F7;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>` : ''}
+      </div>
+    `).join('');
+  }
+  showSheet('ref-picker-sheet');
+}
+function selectRefOption(i) {
+  const slot = _refPickerSlot;
+  if (!slot) return;
+  const opt = _refOptionsForSlot(slot)[i];
+  if (!opt) return;
+  const prevSrc = _imgEditorRefs[slot] ? _imgEditorRefs[slot].src : null;
+  _imgEditorRefs[slot] = { src: opt.src, label: _imgEditorRefs[slot] ? _imgEditorRefs[slot].label : opt.label };
+  _renderImgEditorRefs();
+  hideSheet('ref-picker-sheet');
+  // Swapping the Style/Scene/Character reference changes what this image should
+  // depict — same as editing the prompt, the current result is now stale and
+  // needs a fresh Regenerate before Done can confirm it.
+  if (opt.src !== prevSrc) {
+    _imgEditorDirty = true;
+    const prevWrap = document.getElementById('img-editor-preview-wrap');
+    if (!prevWrap || prevWrap.dataset.busy !== '1') _setRegenBtnEnabled('img-editor-regen-btn', true);
   }
 }
 function onImgEditorInput() {
@@ -8618,9 +8757,12 @@ function onImgEditorInput() {
   if (ctr) ctr.textContent = ta.value.length + '/2500';
   const enhBtn = document.getElementById('img-editor-enhance-btn');
   if (enhBtn) enhBtn.style.display = ta.value.length > 0 ? 'flex' : 'none';
-  // Keep the underlying Storyboard description in sync live
+  // Keep the underlying Storyboard/Editor description in sync live
   if (_imgEditorCtx && _imgEditorCtx.kind === 'style') {
     const src = document.getElementById('sb-visual-style-text');
+    if (src) src.textContent = ta.value;
+  } else if (_imgEditorCtx && _imgEditorCtx.kind === 'cover') {
+    const src = document.getElementById('emv-cover-desc-preview');
     if (src) src.textContent = ta.value;
   } else if (_imgEditorCtx && _imgEditorCtx.kind === 'scene') {
     const src = document.getElementById(`sb-scene-${_imgEditorCtx.idx}-text`);
@@ -8636,28 +8778,36 @@ function regenerateImageEditor() {
     if (!prevWrap || prevWrap.dataset.busy === '1' || !_imgEditorDirty) return;
     prevWrap.dataset.busy = '1';
     _setRegenBtnEnabled('img-editor-regen-btn', false);
+    _setModelRowEnabled('img-editor-model-row', false);
     const doneBtn = document.getElementById('img-editor-done-btn');
     if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;';
     overlay.innerHTML = '<div class="spinner-sm"></div>';
     prevWrap.appendChild(overlay);
+    // Reserve the new version's slot with a "generating" placeholder tile
+    // (purple/pink gradient + star, per Figma 1460-35034) right next to the
+    // 1st result, while the main preview shows its own spinner overlay above.
+    const nextFilter = _editorVersionFilters[_imgEditorVersions.length % _editorVersionFilters.length];
+    _imgEditorVersions.splice(1, 0, { generating: true });
+    _renderImgEditorVersions();
     setTimeout(() => {
+      // 4s gives the rotating/bouncing star a few full loops to play out
+      // before the placeholder resolves — 1.2s felt like a flash-cut.
       overlay.remove();
       prevWrap.dataset.busy = '0';
+      _setModelRowEnabled('img-editor-model-row', true);
       _imgEditorDirty = false; // regenerated — needs a NEW change before regenerating again
-      // Add the newly "generated" version to the thumbnail history, right next to
-      // the 1st result, and select it
+      // Swap the "generating" placeholder for the real finished version and select it
       const baseSrc = _imgEditorVersions[0] ? _imgEditorVersions[0].src : document.getElementById('img-editor-preview').src;
-      const nextFilter = _editorVersionFilters[_imgEditorVersions.length % _editorVersionFilters.length];
-      _imgEditorVersions.splice(1, 0, { src: baseSrc, filter: nextFilter });
+      _imgEditorVersions.splice(1, 1, { src: baseSrc, filter: nextFilter });
       _imgEditorSelectedVersion = 1;
       const prev = document.getElementById('img-editor-preview');
       if (prev) prev.style.filter = nextFilter;
       _renderImgEditorVersions();
       // Reveal the Done button so the user can confirm the regenerated image and close
       if (doneBtn) { doneBtn.style.opacity = '1'; doneBtn.style.pointerEvents = 'auto'; }
-    }, 1200);
+    }, 4000);
   });
 }
 
@@ -8807,6 +8957,7 @@ function regenerateVideoEditor() {
     if (!prevWrap || prevWrap.dataset.busy === '1' || !_vidEditorDirty) return;
     prevWrap.dataset.busy = '1';
     _setRegenBtnEnabled('vid-editor-regen-btn', false);
+    _setModelRowEnabled('vid-editor-model-row', false);
     const doneBtn = document.getElementById('vid-editor-done-btn');
     if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
     const overlay = document.createElement('div');
@@ -8816,6 +8967,7 @@ function regenerateVideoEditor() {
     setTimeout(() => {
       overlay.remove();
       prevWrap.dataset.busy = '0';
+      _setModelRowEnabled('vid-editor-model-row', true);
       _vidEditorDirty = false; // regenerated — needs a NEW change before regenerating again
       // Add the newly "generated" version to the thumbnail history, right next to
       // the 1st result, and select it
