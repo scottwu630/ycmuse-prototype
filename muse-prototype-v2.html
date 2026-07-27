@@ -5895,10 +5895,16 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </div>
       <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;">Select AI Model</div>
-      <div style="width:28px;flex-shrink:0;"></div>
+      <!-- Done — per Figma 1487:35439/36438/1504:21870, picks commit live as they're
+           tapped; Done just dismisses. Needed because 'videos' can show two
+           independent groups (main video model + Lip Sync model) in one visit,
+           so the sheet no longer auto-closes after a single pick (see chooseAiModelRes). -->
+      <div onclick="hideSheet('ai-model-sheet')" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
     </div>
-    <div id="ai-model-subtitle" style="padding:0 20px 12px;font-size:12px;font-weight:500;color:#9C9CAB;text-align:center;line-height:1.5;">Choose the model used to generate this step.</div>
-    <div id="ai-model-list" style="overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:0 20px 8px;"></div>
+    <div id="ai-model-subtitle" style="padding:0 20px 12px;font-size:12px;font-weight:500;color:#9C9CAB;text-align:left;line-height:1.5;">Choose the model used to generate this step.</div>
+    <div id="ai-model-list" style="overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:0 20px 8px;"></div>
   </div>
 
   <!-- ══════ IMAGE EDITOR — scene / shot image + prompt + regenerate (global scope) ══════ -->
@@ -9989,51 +9995,80 @@ function pickSeg(grpId, el, tagId, label) {
 }
 
 // ══════ SELECT AI MODEL — shared component across the remaining generation gates ══════
-// Gate keys match what each model choice generates next: scenes | shots | videos
+// Gate/group keys match what each model choice generates next: scenes | shots | videos,
+// plus 'lipSyncVideos' — a second, independent model group that only appears inside the
+// 'videos' sheet when the shot(s) being generated have Lip Sync to Lyrics turned on (see
+// _lipSyncGroupActiveForModelSheet). Per Figma 1504:21870.
 // (Step 1 / Analyze Song is free — no model picker, no credit charge.)
-// Each gate maps to one of 3 UI types, which decides what info/options the sheet
+// Each group maps to one of 3 UI types, which decides what info/options the sheet
 // shows: 'song' (analyzing audio/lyrics, no resolution concept at all),
-// 'image' (scenes/shots — 1K/2K resolution), 'video' (videos — SD/HD quality).
-const AI_MODEL_TYPE = { scenes: 'image', shots: 'image', videos: 'video' };
+// 'image' (scenes/shots — 1K/2K resolution), 'video' (videos/lipSyncVideos — SD/HD quality).
+const AI_MODEL_TYPE = { scenes: 'image', shots: 'image', videos: 'video', lipSyncVideos: 'video' };
 // Each model offers one or more output tiers, each with its own credit cost.
 // 'song' models only ever have a single tier (nothing to pick, so it's hidden).
 const AI_MODELS = {
+  // 6 models, matching the roster shown in Figma 1487:35439 — Nano Banana 2 and
+  // GPT Image 2.0 High each offer 3 tiers (1K/2K/4K); others offer fewer.
   scenes: [
-    { id: 'fast', name: 'Nano Banana 2',   desc: 'Quickest turnaround, good for previews', resolutions: [{ res: '1K', credits: 10 }, { res: '2K', credits: 18 }] },
-    { id: 'std',  name: 'GPT Image 2.0',   desc: 'Balanced quality and speed',             resolutions: [{ res: '1K', credits: 20 }, { res: '2K', credits: 34 }] },
-    { id: 'pro',  name: 'Nano Banana Pro', desc: 'Sharper detail and pacing',              resolutions: [{ res: '1K', credits: 35 }, { res: '2K', credits: 58 }] }
+    { id: 'fast',       name: 'Nano Banana 2',      desc: 'Quickest turnaround, good for previews', resolutions: [{ res: '1K', credits: 10 }, { res: '2K', credits: 18 }, { res: '4K', credits: 30 }] },
+    { id: 'gptHigh',    name: 'GPT Image 2.0 High', desc: 'Sharpest detail, highest fidelity',       resolutions: [{ res: '1K', credits: 22 }, { res: '2K', credits: 38 }, { res: '4K', credits: 62 }] },
+    { id: 'pro',        name: 'Nano Banana Pro',    desc: 'Sharper detail and pacing',              resolutions: [{ res: '1K', credits: 35 }, { res: '2K', credits: 58 }, { res: '4K', credits: 95 }] },
+    { id: 'gptMedium',  name: 'GPT Image 2.0 Medium', desc: 'Balanced quality and speed',           resolutions: [{ res: '1K', credits: 14 }, { res: '2K', credits: 24 }] },
+    { id: 'seedream5',  name: 'Seedream 5.0 Pro',   desc: 'Rich color and cinematic lighting',       resolutions: [{ res: '1K', credits: 28 }, { res: '2K', credits: 46 }] },
+    { id: 'seedream45', name: 'Seedream 4.5',       desc: 'Lightweight, fastest previews',           resolutions: [{ res: '1K', credits: 12 }] }
   ],
   shots: [
-    { id: 'fast', name: 'Nano Banana 2',   desc: 'Quickest turnaround, good for previews', resolutions: [{ res: '1K', credits: 15 }, { res: '2K', credits: 26 }] },
-    { id: 'std',  name: 'Seedream 5.0',    desc: 'Balanced quality and speed',             resolutions: [{ res: '1K', credits: 30 }, { res: '2K', credits: 50 }] },
-    { id: 'pro',  name: 'Nano Banana Pro', desc: 'Sharper detail and camera motion',       resolutions: [{ res: '1K', credits: 50 }, { res: '2K', credits: 84 }] }
+    { id: 'fast',       name: 'Nano Banana 2',      desc: 'Quickest turnaround, good for previews', resolutions: [{ res: '1K', credits: 15 }, { res: '2K', credits: 26 }] },
+    { id: 'std',        name: 'Seedream 5.0',       desc: 'Balanced quality and speed',              resolutions: [{ res: '1K', credits: 30 }, { res: '2K', credits: 50 }] },
+    { id: 'pro',        name: 'Nano Banana Pro',    desc: 'Sharper detail and camera motion',        resolutions: [{ res: '1K', credits: 50 }, { res: '2K', credits: 84 }, { res: '4K', credits: 138 }] },
+    { id: 'gptHigh',    name: 'GPT Image 2.0 High', desc: 'Sharpest detail, highest fidelity',        resolutions: [{ res: '1K', credits: 33 }, { res: '2K', credits: 57 }, { res: '4K', credits: 93 }] },
+    { id: 'gptMedium',  name: 'GPT Image 2.0 Medium', desc: 'Balanced quality and speed',             resolutions: [{ res: '1K', credits: 21 }, { res: '2K', credits: 36 }] },
+    { id: 'seedream45', name: 'Seedream 4.5',       desc: 'Lightweight, fastest previews',            resolutions: [{ res: '1K', credits: 18 }] }
   ],
   videos: [
     { id: 'std',   name: 'Seedance 1.0 Lite', desc: 'Balanced quality and speed',       resolutions: [{ res: 'SD', full: 'Standard', credits: 40  }, { res: 'HD', full: 'High', credits: 68  }] },
     { id: 'pro',   name: 'Seedance 1.0 Pro',  desc: 'Sharper detail and motion',        resolutions: [{ res: 'SD', full: 'Standard', credits: 70  }, { res: 'HD', full: 'High', credits: 118 }] },
     { id: 'ultra', name: 'Seedance 2.0',      desc: 'Best-in-class cinematic fidelity', resolutions: [{ res: 'SD', full: 'Standard', credits: 120 }, { res: 'HD', full: 'High', credits: 200 }] }
+  ],
+  // Avatar / lip-sync video models — only surfaced as a second group inside the
+  // 'videos' sheet when Lip Sync to Lyrics is on for the relevant shot(s).
+  lipSyncVideos: [
+    { id: 'fast', name: 'Kling 3.0 Fast', desc: 'Quick turnaround lip sync',         resolutions: [{ res: 'SD', full: 'Standard', credits: 45  }, { res: 'HD', full: 'High', credits: 75  }] },
+    { id: 'pro',  name: 'Kling 3.0 Pro',  desc: 'Best-in-class mouth-sync accuracy', resolutions: [{ res: 'SD', full: 'Standard', credits: 60  }, { res: 'HD', full: 'High', credits: 100 }] }
   ]
 };
 const AI_MODEL_SUBTITLE = {
-  scenes:   'Choose the model used to generate your scenes.',
-  shots:    'Choose the model used to generate your shots.',
-  videos:   'Choose the model used to generate your videos.'
+  scenes:        'Choose the model used to generate your scenes.',
+  shots:         'Choose the model used to generate your shots.',
+  videos:        'Choose the model used to generate your videos.',
+  lipSyncVideos: 'Choose the model used to generate your lip sync videos.'
 };
-// Currently selected { modelId, res } per gate (defaults to the cheapest model,
+// Currently selected { modelId, res } per group (defaults to the cheapest model,
 // and to the first/lowest tier for image and video types)
 const _aiModelSelected = {
-  scenes:   { modelId: 'fast', res: '1K' },
-  shots:    { modelId: 'fast', res: '1K' },
-  videos:   { modelId: 'std',  res: 'SD' }
+  scenes:        { modelId: 'fast', res: '1K' },
+  shots:         { modelId: 'fast', res: '1K' },
+  videos:        { modelId: 'std',  res: 'SD' },
+  lipSyncVideos: { modelId: 'pro',  res: 'SD' }
 };
 let _aiModelGate = null;
-let _aiModelOpenRow = null; // which model row is expanded (accordion, one at a time)
+let _aiModelOpenRow = {}; // which model row is expanded per group — { [group]: modelId|null } — one at a time per group
 
 function _aiModelCreditPill(credits) {
   return `<div style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;flex-shrink:0;white-space:nowrap;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">${credits}</div>`;
 }
-function _aiModelFind(gate, modelId) {
-  return (AI_MODELS[gate] || []).find(m => m.id === modelId);
+function _aiModelFind(group, modelId) {
+  return (AI_MODELS[group] || []).find(m => m.id === modelId);
+}
+// SD/HD glyphs for video-model resolution chips — uses the actual
+// assets/icons/ui/ic_sd.svg / ic_hd.svg files (per Scott's request) via a CSS
+// mask so the same asset can switch between white (unselected) and accent
+// purple (selected) without needing separate pre-colored SVG exports.
+// Matches Figma 1504:21870.
+function _aiModelResIcon(res, on) {
+  const src = res === 'HD' ? 'assets/icons/ui/ic_hd.svg' : 'assets/icons/ui/ic_sd.svg';
+  const bg = on ? '#A855F7' : 'rgba(255,255,255,.8)';
+  return `<div style="width:16px;height:16px;flex-shrink:0;display:block;background-color:${bg};-webkit-mask-image:url('${src}');mask-image:url('${src}');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;"></div>`;
 }
 
 function _renderAiModelRow(gate) {
@@ -10048,63 +10083,99 @@ function _renderAiModelRow(gate) {
   if (creditEl) creditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">${r.credits}`;
 }
 
-function _aiModelRenderList() {
-  const gate = _aiModelGate;
-  const models = AI_MODELS[gate] || [];
-  const sel = _aiModelSelected[gate];
-  const list = document.getElementById('ai-model-list');
-  if (!list) return;
-  const isSong = AI_MODEL_TYPE[gate] === 'song';
-  list.innerHTML = models.map(m => {
+// Renders the row list for a single model group (scenes/shots/videos/lipSyncVideos).
+// Per Figma 1487:35439 (expanded) / 1487:36438 (collapsed): rows are a flat list
+// (no per-row card/border) — a header line of "name + chevron", and only when
+// expanded, a resolution options row below it. The header only shows the
+// resolution + credit badges when this model is BOTH selected AND collapsed
+// (the "summary" state); expanded rows show that info on the option chips
+// instead, and non-selected rows never show it.
+function _aiModelRowsHtml(group) {
+  const models = AI_MODELS[group] || [];
+  const sel = _aiModelSelected[group];
+  if (!sel) return '';
+  const isSong = AI_MODEL_TYPE[group] === 'song';
+  const isVideo = AI_MODEL_TYPE[group] === 'video';
+  return models.map(m => {
     const isSelModel = m.id === sel.modelId;
-    const isOpen = !isSong && _aiModelOpenRow === m.id;
+    const isOpen = !isSong && _aiModelOpenRow[group] === m.id;
     const activeRes = isSelModel ? sel.res : m.resolutions[0].res;
     const activeR = m.resolutions.find(r => r.res === activeRes) || m.resolutions[0];
     const resChips = isSong ? '' : m.resolutions.map(r => {
       const on = isSelModel && r.res === sel.res;
-      const label = r.full ? `${r.res} · ${r.full}` : r.res;
-      return `<div onclick="event.stopPropagation();chooseAiModelRes('${m.id}','${r.res}')" style="flex:1;text-align:center;padding:8px 6px;border-radius:10px;border:1.5px solid ${on ? '#A855F7' : 'rgba(255,255,255,.15)'};background:${on ? 'rgba(168,85,247,.18)' : '#151519'};cursor:pointer;">
-          <div style="font-size:12px;font-weight:700;color:${on ? '#A855F7' : '#fff'};">${label}</div>
-          <div style="font-size:10px;font-weight:600;color:${on ? '#A855F7' : '#9C9CAB'};margin-top:2px;">${r.credits} credits</div>
+      const label = r.full ? r.full : r.res;
+      return `<div onclick="event.stopPropagation();chooseAiModelRes('${group}','${m.id}','${r.res}')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:10px 12px;min-height:42px;box-sizing:border-box;border-radius:12px;border:1.5px solid ${on ? '#A855F7' : 'rgba(255,255,255,.15)'};background:${on ? 'rgba(168,85,247,.2)' : '#212127'};cursor:pointer;">
+          ${isVideo ? _aiModelResIcon(r.res, on) : ''}
+          <span style="font-size:12px;font-weight:600;color:${on ? '#A855F7' : 'rgba(255,255,255,.8)'};letter-spacing:-.12px;white-space:nowrap;">${label}</span>
+          ${on ? _aiModelCreditPill(r.credits) : ''}
         </div>`;
     }).join('');
     // 'song' models have nothing to expand — the row itself picks the model
     // directly, using its one (hidden) tier, with a check/radio indicator
     // instead of the resolution pill + expand chevron.
-    const rowOnclick = isSong ? `chooseAiModelRes('${m.id}','${m.resolutions[0].res}')` : `toggleAiModelRow('${m.id}')`;
+    const rowOnclick = isSong ? `chooseAiModelRes('${group}','${m.id}','${m.resolutions[0].res}')` : `toggleAiModelRow('${group}','${m.id}')`;
     const trailingControl = isSong
       ? (isSelModel
           ? `<div style="width:20px;height:20px;border-radius:10px;background:#A855F7;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`
           : `<div style="width:20px;height:20px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);flex-shrink:0;"></div>`)
-      : `<img src="assets/icons/ui/ic_chevron-right.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);opacity:.45;flex-shrink:0;transform:rotate(${isOpen ? '-90' : '90'}deg);transition:transform .2s;">`;
-    return `<div class="ai-model-opt" style="border-radius:14px;border:1.5px solid ${isSelModel ? '#A855F7' : 'rgba(255,255,255,.15)'};background:${isSelModel ? 'rgba(168,85,247,.1)' : '#212127'};overflow:hidden;transition:border-color .15s,background .15s;">
-      <div onclick="${rowOnclick}" style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;">
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:14px;font-weight:700;color:#fff;letter-spacing:-.14px;">${m.name}</div>
-          <div style="font-size:11px;font-weight:500;color:#9C9CAB;margin-top:2px;line-height:1.4;">${m.desc}</div>
-        </div>
-        ${isSong ? '' : `<div style="display:flex;align-items:center;background:rgba(255,255,255,.06);border-radius:20px;padding:4px 8px;flex-shrink:0;">
-          <span style="font-size:11px;font-weight:700;color:#fff;">${activeR.res}</span>
-        </div>`}
-        ${_aiModelCreditPill(activeR.credits)}
+      : `<img src="assets/icons/ui/ic_chevron-${isOpen ? 'up' : 'down'}.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);opacity:.5;flex-shrink:0;">`;
+    const headerBadges = (isSelModel && !isOpen && !isSong) ? `
+        <div style="display:flex;align-items:center;background:rgba(255,255,255,.15);border-radius:20px;padding:4px 8px;flex-shrink:0;"><span style="font-size:9px;font-weight:700;color:#fff;">${activeR.res}</span></div>
+        ${_aiModelCreditPill(activeR.credits)}` : '';
+    return `<div style="display:flex;flex-direction:column;gap:8px;">
+      <div onclick="${rowOnclick}" style="display:flex;align-items:center;gap:6px;cursor:pointer;min-height:20px;">
+        <div style="flex:1;min-width:0;font-size:13px;font-weight:700;color:${isSelModel ? '#A855F7' : '#fff'};letter-spacing:-.13px;">${m.name}</div>
+        ${headerBadges}
         ${trailingControl}
       </div>
-      ${isOpen ? `<div style="display:flex;gap:8px;padding:0 14px 12px;">${resChips}</div>` : ''}
+      ${isOpen ? `<div style="display:flex;gap:8px;">${resChips}</div>` : ''}
     </div>`;
   }).join('');
 }
 
+// Whether the 'videos' sheet should append the second "Lip Sync" model group
+// below a divider (per Figma 1504:21870). If the sheet was opened from the
+// per-shot Video Editor, check that one shot specifically; otherwise (opened
+// from the Storyboard's top-level "Select AI Model" before generating all
+// videos) show it if ANY shot currently has Lip Sync to Lyrics on.
+function _lipSyncGroupActiveForModelSheet() {
+  if (typeof _shotLipSync === 'undefined') return false;
+  const vidWrap = document.getElementById('vid-editor-wrap');
+  if (vidWrap && vidWrap.classList.contains('show') && typeof _vidEditorCtx !== 'undefined' && _vidEditorCtx) {
+    return !!_shotLipSync[_vidEditorCtx.idx];
+  }
+  return Object.values(_shotLipSync).some(Boolean);
+}
+
+function _aiModelRenderList() {
+  const gate = _aiModelGate;
+  const list = document.getElementById('ai-model-list');
+  if (!list) return;
+  let html = _aiModelRowsHtml(gate);
+  if (gate === 'videos' && _lipSyncGroupActiveForModelSheet()) {
+    html += `<div style="height:1px;background:rgba(255,255,255,.08);margin:2px 0;"></div>
+      <div style="font-size:12px;font-weight:500;color:#9C9CAB;line-height:1.5;text-align:left;">${AI_MODEL_SUBTITLE.lipSyncVideos}</div>
+      ${_aiModelRowsHtml('lipSyncVideos')}`;
+  }
+  list.innerHTML = html;
+}
+
 function openAiModelSheet(gate) {
   _aiModelGate = gate;
-  _aiModelOpenRow = _aiModelSelected[gate].modelId; // expand the currently selected model by default
+  _aiModelOpenRow = {};
+  const isSong = AI_MODEL_TYPE[gate] === 'song';
+  if (!isSong) _aiModelOpenRow[gate] = _aiModelSelected[gate].modelId; // expand the currently selected model by default
+  if (gate === 'videos' && _lipSyncGroupActiveForModelSheet()) {
+    _aiModelOpenRow.lipSyncVideos = _aiModelSelected.lipSyncVideos.modelId;
+  }
   const sub = document.getElementById('ai-model-subtitle');
   if (sub) sub.textContent = AI_MODEL_SUBTITLE[gate] || 'Choose the model used to generate this step.';
   _aiModelRenderList();
   showSheet('ai-model-sheet');
 }
 
-function toggleAiModelRow(modelId) {
-  _aiModelOpenRow = _aiModelOpenRow === modelId ? null : modelId;
+function toggleAiModelRow(group, modelId) {
+  _aiModelOpenRow[group] = _aiModelOpenRow[group] === modelId ? null : modelId;
   _aiModelRenderList();
 }
 
@@ -10126,29 +10197,35 @@ function _refreshCtaCredits(gate) {
   }
 }
 
-function chooseAiModelRes(modelId, res) {
-  const gate = _aiModelGate;
-  if (!gate) return;
-  _aiModelSelected[gate] = { modelId, res };
-  _renderAiModelRow(gate);
-  _refreshCtaCredits(gate);
-  if (typeof _storyboardModelGate !== 'undefined' && gate === _storyboardModelGate) _renderStoryboardModelRow();
-  // If the Image Editor or Video Editor is open on this same gate, refresh its
+// group: 'scenes' | 'shots' | 'videos' | 'lipSyncVideos'. The sheet no longer
+// auto-closes after a pick — now that 'videos' can show two independent
+// groups at once (main video model + Lip Sync model), the user needs to be
+// able to pick from both before dismissing via the header's Done button.
+function chooseAiModelRes(group, modelId, res) {
+  _aiModelSelected[group] = { modelId, res };
+  // Row stays open after picking — no auto-collapse. The chip itself already
+  // shows the active resolution + credit cost, so the row can stay expanded
+  // for the user to keep comparing tiers without re-tapping the header.
+  if (group === _aiModelGate) {
+    _renderAiModelRow(group);
+    _refreshCtaCredits(group);
+  }
+  if (typeof _storyboardModelGate !== 'undefined' && group === _storyboardModelGate) _renderStoryboardModelRow();
+  // If the Image Editor or Video Editor is open on this same group, refresh its
   // row too and count the model change as a "new change" that re-enables Regenerate.
   const imgWrap = document.getElementById('img-editor-wrap');
-  if (imgWrap && imgWrap.classList.contains('show') && gate === _imgEditorGate) {
+  if (imgWrap && imgWrap.classList.contains('show') && group === _imgEditorGate) {
     _renderImgEditorModelRow();
     _imgEditorDirty = true;
     _setRegenBtnEnabled('img-editor-regen-btn', true);
   }
   const vidWrap = document.getElementById('vid-editor-wrap');
-  if (vidWrap && vidWrap.classList.contains('show') && gate === 'videos') {
+  if (vidWrap && vidWrap.classList.contains('show') && group === 'videos') {
     _renderVidEditorModelRow();
     _vidEditorDirty = true;
     _setRegenBtnEnabled('vid-editor-regen-btn', true);
   }
   _aiModelRenderList();
-  setTimeout(() => hideSheet('ai-model-sheet'), 220);
 }
 
 function togSett(togId, tagId, label) {
