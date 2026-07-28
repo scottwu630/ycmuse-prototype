@@ -7177,6 +7177,12 @@ function initShotDragReorder() {
   const track = document.getElementById('shots-track');
   if (!track || track.dataset.dragInit) return;
   track.dataset.dragInit = '1';
+  // The page's own scroll container — frozen for the duration of an active
+  // drag so a finger drifting near the top/bottom edge can't simultaneously
+  // scroll the screen AND reposition the card (the two gestures fighting
+  // each other was exactly the kind of conflict the handle-only long-press
+  // was meant to avoid in the first place).
+  const scrollEl = track.closest('.scr-scroll');
   const LONG_PRESS_MS = 380;
   const CANCEL_MOVE_PX = 10; // moving this far before the hold completes cancels it (treated as a tap/slip, not a hold)
   let downThumb = null;
@@ -7193,6 +7199,10 @@ function initShotDragReorder() {
     dragEl.classList.add('dragging');
     try { dragEl.setPointerCapture(activePointerId); } catch (err) {}
     track.style.touchAction = 'none';
+    // Disable the page scroll entirely while dragging — re-enabling afterward
+    // restores the exact same scroll position (overflow:hidden doesn't reset
+    // scrollTop), so there's no visual jump.
+    if (scrollEl) scrollEl.style.overflowY = 'hidden';
   }
 
   track.addEventListener('pointerdown', (e) => {
@@ -7259,6 +7269,8 @@ function initShotDragReorder() {
       suppressClick = true;
       dragEl = null;
       _renumberShotThumbs();
+      // Re-enable page scrolling now that the drag has finished.
+      if (scrollEl) scrollEl.style.overflowY = '';
     }
     downThumb = null;
     activePointerId = null;
