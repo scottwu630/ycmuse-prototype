@@ -403,15 +403,23 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #vid-editor-wrap.show #vid-editor-content{transform:translateY(0);}
 #vid-editor-panel{background:#1C1C1E;border-radius:20px 20px 0 0;}
 /* ── Shot thumbnails: processing overlay + drag reorder ── */
-.shot-thumb{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;-webkit-user-drag:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
+.shot-thumb{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,border-width .18s ease;-webkit-user-drag:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
 .shot-thumb img{-webkit-user-drag:none;}
-.shot-thumb.dragging{transform:scale(1.06);box-shadow:0 10px 22px rgba(0,0,0,.5);border-color:rgba(168,85,247,.7)!important;z-index:5;cursor:grabbing;}
+/* Dragging visual per Figma 1511:36744 — 10% scale-up, 2.5px purple stroke,
+   soft drop shadow (0 8px 20px rgba(0,0,0,.25)). Activated by a long-press
+   specifically on .shot-drag-handle — see initShotDragReorder. */
+.shot-thumb.dragging{transform:scale(1.1);box-shadow:0 8px 20px rgba(0,0,0,.25);border-color:#A855F7!important;border-width:2.5px!important;z-index:5;cursor:grabbing;}
 .shot-thumb.drag-over{border-color:rgba(255,255,255,.5)!important;}
-.shot-num{position:absolute;top:8px;left:8px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:rgba(9,9,11,.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;pointer-events:none;z-index:2;}
-/* Drag handle (Storyboard SHOTS only, per Figma 1449-32427) — purely a visual
-   affordance; the whole thumbnail is already press-draggable (see
-   initShotDragReorder above), so this icon doesn't need its own listeners. */
-.shot-drag-handle{position:absolute;top:8px;right:8px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.5));pointer-events:none;z-index:2;}
+.shot-num{position:absolute;top:8px;left:8px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:rgba(9,9,11,.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;pointer-events:none;z-index:2;transition:opacity .15s ease;}
+/* Number badge hides while its card is being dragged, per Figma 1511:36744 —
+   reappears (via _renumberShotThumbs) once it's dropped. */
+.shot-thumb.dragging .shot-num{opacity:0;}
+/* Drag handle (Storyboard SHOTS only, per Figma 1449-32427 / 1511:36744) — the
+   ONLY place a press-and-hold starts a reorder drag; tapping elsewhere on the
+   card (or a quick tap on this icon) still opens the Shot Editor as normal.
+   pointer-events:auto so initShotDragReorder can detect presses that
+   originate specifically here (see the closest('.shot-drag-handle') check). */
+.shot-drag-handle{position:absolute;top:8px;right:8px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.5));pointer-events:auto;cursor:grab;z-index:2;}
 /* Lip Sync toggle icon (Storyboard SHOTS only) — mirrors the Shot Editor's
    Lip Sync row (see toggleShotLipSync / toggleImgEditorLipSync). Off = dark
    translucent circle + white mic-off icon; On = solid white circle + dark
@@ -1024,23 +1032,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .mvall-likes{display:flex;align-items:center;gap:2px;flex-shrink:0;}
 .mvall-likes-count{font-size:9px;font-weight:500;color:#E1E1E5;line-height:11px;letter-spacing:-.09px;}
 
-/* ── HOME TOAST ── */
-.home-toast{position:absolute;left:12px;right:12px;bottom:calc(var(--tab-h) + 10px);z-index:95;border-radius:16px;padding:12px 14px;display:flex;align-items:center;gap:10px;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,.10);transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .32s cubic-bezier(.34,1.56,.64,1),opacity .25s ease;will-change:transform,opacity;}
-.home-toast.visible{transform:translateY(0);opacity:1;pointer-events:auto;}
-.home-toast.processing{background:rgba(21,21,25,.92);}
-.home-toast.done{background:rgba(30,18,45,.94);border-color:rgba(168,85,247,.28);box-shadow:0 0 0 1px rgba(168,85,247,.12),0 8px 32px rgba(168,85,247,.18);}
-.toast-icon{flex-shrink:0;width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
-.toast-icon.processing{background:rgba(168,85,247,.15);}
-.toast-icon.done{background:rgba(168,85,247,.22);}
-.toast-body{flex:1;min-width:0;}
-.toast-title{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.toast-sub{font-size:11px;font-weight:500;color:rgba(255,255,255,.45);letter-spacing:-.09px;line-height:15px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.toast-cta{flex-shrink:0;padding:6px 12px;border-radius:20px;border:0;font-size:12px;font-weight:700;letter-spacing:-.1px;cursor:pointer;transition:opacity .15s;}
-.toast-cta:active{opacity:.7;}
-.toast-cta.dismiss{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);}
-.toast-cta.action{background:#A855F7;color:#fff;}
-@keyframes toast-spin{to{transform:rotate(360deg);}}
-.toast-spinner{width:16px;height:16px;border:2px solid rgba(168,85,247,.25);border-top-color:#A855F7;border-radius:50%;animation:toast-spin .8s linear infinite;}
 
 /* ══════════════════════════════════════════════════════════════
    DESIGN SYSTEM CONTROLS — Toggle · Radio · Checkbox
@@ -3312,7 +3303,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <!-- Song info -->
               <div style="flex:1;min-width:0;">
                 <div style="font-size:13px;font-weight:700;color:var(--n100);letter-spacing:-.13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Down the Memory Lane</div>
-                <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;margin-top:2px;">02:25</div>
+                <div style="font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;margin-top:2px;">
+                  <span id="sb-song-current" style="color:var(--n100);display:none;"></span><span id="sb-song-total" style="color:var(--n64);">02:25</span>
+                </div>
               </div>
             </div>
           </div>
@@ -4620,7 +4613,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                correctly shows under the Music Videos/All filters — its
                data-status="draft" is what drives the simplified "..." menu
                (see openHistMore()), not htype. -->
-          <div class="hist-row" data-htype="mv" data-status="draft" onclick="goTo('mv-storyboard')">
+          <div class="hist-row" data-htype="mv" data-status="draft" onclick="_freshFromSceneGen=true;goTo('mv-storyboard')">
             <div class="hist-thumb-icon" style="background:var(--mv-grad);">
               <img src="assets/icons/ui/ic_video_ai.svg" width="24" height="24" style="display:block;">
             </div>
@@ -4630,7 +4623,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="hist-time">2026-06-08</div>
             </div>
             <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
-              <button class="hist-create-btn" onclick="event.stopPropagation();goTo('mv-storyboard')">Continue</button>
+              <button class="hist-create-btn" onclick="event.stopPropagation();_freshFromSceneGen=true;goTo('mv-storyboard')">Continue</button>
               <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
             </div>
           </div>
@@ -6290,17 +6283,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     </div>
   </div>
 
-  <!-- Home Toast -->
-  <div class="home-toast" id="home-toast">
-    <div class="toast-icon processing" id="toast-icon">
-      <div class="toast-spinner" id="toast-spinner"></div>
-    </div>
-    <div class="toast-body">
-      <div class="toast-title" id="toast-title">Creating your MV…</div>
-      <div class="toast-sub" id="toast-sub">This may take a moment</div>
-    </div>
-    <button class="toast-cta dismiss" id="toast-cta" onclick="hideToast()">Later</button>
-  </div>
 
   <!-- Tab Bar -->
   <div class="tab-bar" id="tab-bar">
@@ -6449,11 +6431,10 @@ function stopAllMedia() {
     try { v.pause(); } catch(e) {}
   });
 
-  // Reset storyboard song play state
+  // Reset storyboard song play state (pauses shared audio + stops the live timecode)
   if (typeof _sbSongPlaying !== 'undefined' && _sbSongPlaying) {
-    _sbSongPlaying = false;
-    const icon = document.getElementById('sb-song-play-icon');
-    if (icon) icon.src = 'assets/icons/ui/ic_play.svg';
+    if (typeof _addedAudio !== 'undefined' && _addedAudio) _addedAudio.pause();
+    resetSbSongPlay();
   }
 
   // Stop the song result simulated progress timer
@@ -6613,9 +6594,9 @@ function goTo(id, dir) {
     const prevId = navStack[navStack.length - 2];
     if (proc && prevId === 'song-creating') proc.style.display = 'flex';
   }
-  if (id === 'mv-thinking') { _mvrRecreate = false; startThinking(_genStage); showToastProcessing('storyboard'); }
-  if (id === 'mv-creating') { _mvrRecreate = false; startCreating(); showToastProcessing('mv'); }
-  if (id === 'song-creating') { startSongCreating(); showToastProcessing('song'); }
+  if (id === 'mv-thinking') { _mvrRecreate = false; startThinking(_genStage); }
+  if (id === 'mv-creating') { _mvrRecreate = false; startCreating(); }
+  if (id === 'song-creating') { startSongCreating(); }
   if (id === 'song-result') { buildWaveform(); applySongResultCtx(); }
   if (id === 'mv-result') {
     // Reset publish button to initial state on each visit
@@ -6628,11 +6609,6 @@ function goTo(id, dir) {
     _songCtx = 'standalone';
     // If onboarding or splash still in history, wipe them out completely
     if (navStack.some(s => s === 'onboard' || s === 'splash')) navStack = ['home'];
-    // Re-show toast if there is a pending notification
-    setTimeout(syncToastForHome, 320); // wait for slide-in transition to finish
-  } else {
-    // Hide toast visually whenever we leave home (state is preserved)
-    hideToastVisual();
   }
 }
 
@@ -6668,134 +6644,6 @@ function tabNav(id) {
     syncHistoryLoginState();
   }
   goTo(id);
-}
-
-// ── Home Toast ──
-// Two separate timers to avoid a race condition:
-//   _toastCompleteTimer : processing → done transition (must survive hideToastVisual)
-//   _toastDismissTimer  : done → hidden auto-dismiss (cancelled by hideToastVisual)
-var _toastCompleteTimer = null;
-var _toastDismissTimer  = null;
-var _toastState         = null; // { type: 'mv'|'song', phase: 'processing'|'done' } | null
-var _toastDismissed     = false;
-
-function _isOnHome() {
-  var cur = document.querySelector('.screen.active');
-  return cur && cur.id === 'screen-home';
-}
-
-function _renderToast() {
-  if (!_toastState) return;
-  var toast = document.getElementById('home-toast');
-  var icon  = document.getElementById('toast-icon');
-  var title = document.getElementById('toast-title');
-  var sub   = document.getElementById('toast-sub');
-  var cta   = document.getElementById('toast-cta');
-  if (!toast) return;
-
-  var type  = _toastState.type;
-  var phase = _toastState.phase;
-
-  if (phase === 'processing') {
-    toast.classList.remove('done');  toast.classList.add('processing');
-    icon.classList.remove('done');   icon.classList.add('processing');
-    icon.innerHTML = '<div class="toast-spinner"></div>';
-    if (type === 'mv') {
-      title.textContent = 'Creating your MV…';
-      sub.textContent   = 'This may take a moment';
-    } else if (type === 'storyboard') {
-      title.textContent = 'Crafting your storyboard…';
-      sub.textContent   = 'Building your scene sequence';
-    } else {
-      title.textContent = 'Composing your song…';
-      sub.textContent   = 'Crafting your melody';
-    }
-    cta.className   = 'toast-cta dismiss';
-    cta.textContent = 'Later';
-    cta.onclick     = function() { hideToast(); };
-  } else {
-    toast.classList.remove('processing'); toast.classList.add('done');
-    icon.classList.remove('processing');  icon.classList.add('done');
-    icon.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8L6.5 11.5L13 4.5" stroke="#A855F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    if (type === 'mv') {
-      title.textContent = 'Your MV is ready!';
-      sub.textContent   = 'Tap to watch your music video';
-      cta.textContent   = 'Watch';
-      cta.onclick       = function() { hideToast(); goTo('mv-result'); };
-    } else if (type === 'storyboard') {
-      title.textContent = 'Your storyboard is ready!';
-      sub.textContent   = 'Tap to review your scenes';
-      cta.textContent   = 'Review';
-      cta.onclick       = function() { hideToast(); goTo('mv-storyboard'); };
-    } else {
-      title.textContent = 'Your song is ready!';
-      sub.textContent   = 'Tap to listen to your track';
-      cta.textContent   = 'Play';
-      cta.onclick       = function() { hideToast(); goTo('song-result'); navStack = navStack.filter(s => s !== 'song-creating'); };
-    }
-    cta.className = 'toast-cta action';
-  }
-}
-
-function showToastProcessing(type) {
-  _toastDismissed = false;
-  clearTimeout(_toastCompleteTimer);
-  clearTimeout(_toastDismissTimer);
-  _toastState = { type: type, phase: 'processing' };
-  _renderToast();
-  var toast = document.getElementById('home-toast');
-  if (toast && _isOnHome()) toast.classList.add('visible');
-  // Auto-transition to done after 6 s regardless of which screen is active.
-  // Uses _toastCompleteTimer so hideToastVisual() cannot cancel it.
-  _toastCompleteTimer = setTimeout(function() {
-    if (_toastState && _toastState.phase === 'processing') showToastDone(type);
-  }, 6000);
-}
-
-function showToastDone(type) {
-  if (_toastDismissed) return;
-  clearTimeout(_toastCompleteTimer);
-  clearTimeout(_toastDismissTimer);
-  _toastState = { type: type, phase: 'done' };
-  _renderToast();
-  // Show notification dot on History tab
-  var dot = document.getElementById('hist-notif-dot');
-  if (dot) dot.classList.add('show');
-  var toast = document.getElementById('home-toast');
-  if (toast && _isOnHome()) {
-    toast.classList.add('visible');
-    _toastDismissTimer = setTimeout(function() { hideToast(); }, 6000);
-  }
-  // If user is NOT on home, auto-dismiss starts when they arrive (syncToastForHome).
-}
-
-function syncToastForHome() {
-  var toast = document.getElementById('home-toast');
-  if (!toast || _toastDismissed || !_toastState) return;
-  _renderToast();
-  toast.classList.add('visible');
-  if (_toastState.phase === 'done') {
-    clearTimeout(_toastDismissTimer);
-    _toastDismissTimer = setTimeout(function() { hideToast(); }, 6000);
-  }
-}
-
-function hideToastVisual() {
-  // Hides the element without clearing state or the complete timer.
-  // Only cancels the dismiss timer (done → hidden).
-  clearTimeout(_toastDismissTimer);
-  var toast = document.getElementById('home-toast');
-  if (toast) toast.classList.remove('visible');
-}
-
-function hideToast() {
-  // Full dismiss: clears all state so the toast won't reappear.
-  _toastDismissed = true;
-  _toastState = null;
-  clearTimeout(_toastCompleteTimer);
-  clearTimeout(_toastDismissTimer);
-  var toast = document.getElementById('home-toast');
-  if (toast) toast.classList.remove('visible');
 }
 
 // ── Character Image Lightbox ──
@@ -7292,8 +7140,8 @@ function _renderShotLipSyncIcon(idx) {
   // "on" state's white circle background for contrast; leave white as-is on
   // the dark "off" state's background.
   btn.innerHTML = on
-    ? '<img src="assets/icons/ui/ic_mic.svg" width="16" height="16" style="display:block;filter:brightness(0);">'
-    : '<img src="assets/icons/ui/ic_mic_off.svg" width="16" height="16" style="display:block;">';
+    ? '<img src="assets/icons/ui/ic_singing_mic.svg" width="16" height="16" style="display:block;filter:brightness(0);">'
+    : '<img src="assets/icons/ui/ic_singing_mic_off.svg" width="16" height="16" style="display:block;">';
 }
 function _renderAllShotLipSyncIcons() {
   for (let i = 1; i <= 8; i++) _renderShotLipSyncIcon(i);
@@ -7319,29 +7167,37 @@ function _renumberShotThumbs() {
 }
 
 // ── Shot drag-to-reorder ──
-// The thumbnails live in a static 2-column grid (no native scroll), so there's
-// nothing for a long-press-drag to fight — the earlier horizontal-scrolling
-// strip made the browser's native pan gesture race our custom drag, which is
-// what made dragging feel broken and left stray pointer capture state around
-// (the likely cause of an unrelated sheet popping open afterward).
+// Per Figma 1511:36744, dragging is initiated ONLY by a long-press on the
+// grid/grip handle in the card's upper-right corner (.shot-drag-handle) — a
+// plain tap anywhere on the card (including a quick tap on the handle itself)
+// still opens the Shot Editor as before. This keeps the two gestures from
+// fighting: no ambiguity between "tap to open" and "press to reorder" since
+// they now start from different, deliberate triggers.
 function initShotDragReorder() {
   const track = document.getElementById('shots-track');
   if (!track || track.dataset.dragInit) return;
   track.dataset.dragInit = '1';
-  // Activate drag on the first small movement after pressing a thumbnail — no
-  // long-press delay. A long-press was originally needed to disambiguate from
-  // the horizontal-scrolling strip's native pan gesture, but the grid layout
-  // doesn't scroll at all, so there's nothing left to disambiguate against.
-  // Requiring a hold before drag could activate is exactly why a natural
-  // "press and immediately drag" motion never triggered it.
-  const MOVE_START_PX = 6;
+  const LONG_PRESS_MS = 380;
+  const CANCEL_MOVE_PX = 10; // moving this far before the hold completes cancels it (treated as a tap/slip, not a hold)
   let downThumb = null;
   let dragEl = null;
   let activePointerId = null;
   let startX = 0, startY = 0;
+  let pressTimer = null;
   let suppressClick = false;
 
+  function activateDrag() {
+    pressTimer = null;
+    if (!downThumb) return;
+    dragEl = downThumb;
+    dragEl.classList.add('dragging');
+    try { dragEl.setPointerCapture(activePointerId); } catch (err) {}
+    track.style.touchAction = 'none';
+  }
+
   track.addEventListener('pointerdown', (e) => {
+    // Only a press that starts on the drag handle can begin a reorder drag.
+    if (!e.target.closest('.shot-drag-handle')) return;
     const thumb = e.target.closest('.shot-thumb');
     if (!thumb) return;
     // Defensive: if a previous drag never cleaned up its capture, clear it now.
@@ -7349,16 +7205,21 @@ function initShotDragReorder() {
     downThumb = thumb;
     activePointerId = e.pointerId;
     startX = e.clientX; startY = e.clientY;
+    clearTimeout(pressTimer);
+    pressTimer = setTimeout(activateDrag, LONG_PRESS_MS);
   });
   track.addEventListener('pointermove', (e) => {
     if (!dragEl) {
       if (!downThumb) return;
-      if (Math.abs(e.clientX - startX) < MOVE_START_PX && Math.abs(e.clientY - startY) < MOVE_START_PX) return;
-      // Movement threshold crossed — activate drag now.
-      dragEl = downThumb;
-      dragEl.classList.add('dragging');
-      try { dragEl.setPointerCapture(activePointerId); } catch (err) {}
-      track.style.touchAction = 'none';
+      if (pressTimer && (Math.abs(e.clientX - startX) >= CANCEL_MOVE_PX || Math.abs(e.clientY - startY) >= CANCEL_MOVE_PX)) {
+        // Moved too far before the long-press completed — cancel the hold,
+        // let this resolve as a normal tap/scroll instead of a drag.
+        clearTimeout(pressTimer);
+        pressTimer = null;
+        downThumb = null;
+        activePointerId = null;
+      }
+      return;
     }
     e.preventDefault();
     // 2D nearest-slot reorder — find whichever OTHER thumb's center is closest
@@ -7384,6 +7245,10 @@ function initShotDragReorder() {
     }
   });
   function endDrag() {
+    // Releasing before the long-press completed — cancel the pending timer so
+    // it doesn't fire a drag activation after the pointer is already gone.
+    clearTimeout(pressTimer);
+    pressTimer = null;
     if (dragEl) {
       dragEl.classList.remove('dragging');
       // Release capture explicitly — leaving it held is what let a later click
@@ -7434,7 +7299,7 @@ function startThinking(stage) {
     if (step) step.textContent = label;
     i++;
     if (i < cfg.steps.length) thinkTimer = setTimeout(nextStep, 1000);
-    else setTimeout(() => { if (document.getElementById('screen-mv-thinking')?.classList.contains('active')) { showToastDone('storyboard'); navStack = navStack.filter(s => s !== 'mv-thinking'); if (stage === 'videos') _freshFromVideoGen = true; if (stage === 'scenes') _freshFromSceneGen = true; goTo(cfg.next); } }, 1200);
+    else setTimeout(() => { if (document.getElementById('screen-mv-thinking')?.classList.contains('active')) { navStack = navStack.filter(s => s !== 'mv-thinking'); if (stage === 'videos') _freshFromVideoGen = true; if (stage === 'scenes') _freshFromSceneGen = true; goTo(cfg.next); } }, 1200);
   }
   nextStep();
 }
@@ -7459,7 +7324,7 @@ function startCreating() {
     const rem = Math.max(0, Math.round((100 - p) / 25));
     if (cival) cival.textContent = rem > 0 ? `~${rem} minute${rem > 1 ? 's' : ''}` : 'Almost done...';
     if (p < 100) cvTimer = setTimeout(tick, 400);
-    else setTimeout(() => { if (document.getElementById('screen-mv-creating')?.classList.contains('active')) { showToastDone('mv'); navStack = navStack.filter(s => s !== 'mv-creating'); goTo('mv-result'); } }, 800);
+    else setTimeout(() => { if (document.getElementById('screen-mv-creating')?.classList.contains('active')) { navStack = navStack.filter(s => s !== 'mv-creating'); goTo('mv-result'); } }, 800);
   }
   tick();
 }
@@ -7504,7 +7369,7 @@ function startSongCreating() {
     if (step) step.textContent = msgs[Math.min(i, msgs.length - 1)];
     i++;
     if (i < msgs.length) songTimer = setTimeout(nextStep, 1200);
-    else setTimeout(() => { if (document.getElementById('screen-song-creating')?.classList.contains('active')) { showToastDone('song'); goTo('song-result'); navStack = navStack.filter(s => s !== 'song-creating'); } }, 1000);
+    else setTimeout(() => { if (document.getElementById('screen-song-creating')?.classList.contains('active')) { goTo('song-result'); navStack = navStack.filter(s => s !== 'song-creating'); } }, 1000);
   }
   nextStep();
 }
@@ -7524,6 +7389,12 @@ function buildWaveform() {
 
 // ── Edit MV / Merge MV state ──
 let _emvDirty = false;
+// True for the entire staggered "generating" pass in startEditorVideoShotsGenerating()
+// (cover + 8 shots). While true, Render Video must stay disabled even if the user
+// edits MV Title/Author/toggles in the meantime — those calls setEmvDirty(), which
+// used to enable the CTA immediately regardless of whether the content had actually
+// finished generating yet.
+let _emvShotsGenerating = false;
 
 function setEmvDirty() {
   _emvDirty = true;
@@ -7545,6 +7416,8 @@ function emvOpenVideoShot(idx, imgSrc, desc, label) {
 const EMV_SHOT_GEN_BASE_MS    = 900;
 const EMV_SHOT_GEN_STAGGER_MS = 900;
 function startEditorVideoShotsGenerating() {
+  _emvShotsGenerating = true;
+  checkMergeEnable(); // keep Render Video disabled even if the user edits Title/Author/toggles below while this runs
   // Cover Image — resolves alongside Video Shot 1, long enough to still be
   // visible once the screen-slide transition (380ms) finishes.
   const coverGen   = document.getElementById('emv-cover-generating');
@@ -7571,7 +7444,7 @@ function startEditorVideoShotsGenerating() {
       const proc  = document.getElementById('emv-shot-proc-' + i);
       if (thumb) thumb.dataset.generating = '0';
       if (proc)  proc.classList.remove('show');
-      if (i === 8) { _emvDirty = true; checkMergeEnable(); }
+      if (i === 8) { _emvShotsGenerating = false; _emvDirty = true; checkMergeEnable(); }
     }, EMV_SHOT_GEN_BASE_MS + i * EMV_SHOT_GEN_STAGGER_MS);
   }
 }
@@ -7581,8 +7454,12 @@ function checkMergeEnable() {
   if (!btn) return;
   if (btn.dataset.nextState === '1') return; // showing the neutral "Next" state — leave it alone
   const content = document.getElementById('merge-mv-content');
-  btn.disabled = !_emvDirty;
-  if (_emvDirty) {
+  // Never enable while the cover/shots are still on their staggered "generating"
+  // pass — editing Title/Author/toggles during that window must not let the
+  // user tap Render Video before there's actually a finished video to render.
+  const ready = _emvDirty && !_emvShotsGenerating;
+  btn.disabled = !ready;
+  if (ready) {
     btn.style.background = 'linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA)';
     btn.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
     btn.style.cursor = 'pointer';
@@ -7940,7 +7817,7 @@ function openHistMore(btn) {
     // Draft: Continue (resumes at the exact step it stopped on) + Delete only
     // — Edit MV/Publish/Download don't apply to a project that hasn't
     // finished generating yet.
-    addCtaRow([{icon:'ic_video_ai.svg', label:'Continue', primary:true, onClick:()=>goTo('mv-storyboard')}]);
+    addCtaRow([{icon:'ic_video_ai.svg', label:'Continue', primary:true, onClick:()=>{ _freshFromSceneGen=true; goTo('mv-storyboard'); }}]);
     addOpt(_moreIcons.delete, 'Delete', null, () => { showHistDeleteDialog(); });
 
   } else if (isCommunity) {
@@ -9155,12 +9032,70 @@ function onSceneEditorInput() {
   if (enh) enh.style.display = (ta && ta.value.length > 0) ? 'flex' : 'none';
 }
 
-// ── Storyboard: MV Song play/pause toggle ──
+// ── Storyboard: MV Song play/pause toggle (mirrors Choose-a-Song's live timecode) ──
 let _sbSongPlaying = false;
+let _sbSongTimecodeInterval = null;
+let _sbSongFakeTime = 0;
+function _startSbSongTimecode() {
+  if (_sbSongTimecodeInterval) clearInterval(_sbSongTimecodeInterval);
+  _sbSongTimecodeInterval = setInterval(function() {
+    var cur = document.getElementById('sb-song-current');
+    if (!cur) return;
+    if (_addedAudio && !_addedAudio.paused) {
+      cur.textContent = _fmtSongTime(_addedAudio.currentTime);
+    } else if (!_addedAudio) {
+      _sbSongFakeTime += 0.5;
+      cur.textContent = _fmtSongTime(_sbSongFakeTime);
+    }
+  }, 500);
+}
+function _stopSbSongTimecode() {
+  if (_sbSongTimecodeInterval) { clearInterval(_sbSongTimecodeInterval); _sbSongTimecodeInterval = null; }
+}
 function toggleSbSongPlay() {
   _sbSongPlaying = !_sbSongPlaying;
   const icon = document.getElementById('sb-song-play-icon');
-  if (icon) icon.src = _sbSongPlaying ? 'assets/icons/ui/ic_pause.svg' : 'assets/icons/ui/ic_play.svg';
+  const cur  = document.getElementById('sb-song-current');
+  const tot  = document.getElementById('sb-song-total');
+  if (_sbSongPlaying) {
+    // ── Create audio within this user gesture (required for iOS Safari) ──
+    if (window._addedAudioSrc) {
+      if (!_addedAudio) {
+        _addedAudio = new Audio(window._addedAudioSrc);
+        _addedAudio.volume = 0.9;
+        _addedAudio.addEventListener('ended', _onAddedSongEnded);
+      }
+      _addedAudio.play().catch(() => {});
+    }
+    if (icon) icon.src = 'assets/icons/ui/ic_pause.svg';
+    // Show current time and prepend " / " to total
+    if (cur) cur.style.display = 'inline';
+    if (tot && tot.textContent.indexOf(' / ') !== 0) tot.textContent = ' / ' + tot.textContent;
+    _startSbSongTimecode();
+  } else {
+    if (_addedAudio) _addedAudio.pause();
+    if (icon) icon.src = 'assets/icons/ui/ic_play.svg';
+    _stopSbSongTimecode();
+    // Hide current time, strip " / " prefix from total
+    if (cur) cur.style.display = 'none';
+    if (tot) tot.textContent = tot.textContent.replace(/^ \/ /, '');
+  }
+}
+function resetSbSongPlay() {
+  _stopSbSongTimecode();
+  _sbSongFakeTime = 0;
+  _sbSongPlaying = false;
+  const icon = document.getElementById('sb-song-play-icon');
+  const cur  = document.getElementById('sb-song-current');
+  const tot  = document.getElementById('sb-song-total');
+  if (icon) icon.src = 'assets/icons/ui/ic_play.svg';
+  if (cur)  { cur.textContent = '0:00'; cur.style.display = 'none'; }
+  if (tot)  tot.textContent = tot.textContent.replace(/^ \/ /, '');
+}
+// Fires when the shared _addedAudio finishes — resets whichever screen(s) reference it
+function _onAddedSongEnded() {
+  resetSongPlay();
+  resetSbSongPlay();
 }
 
 // ── Storyboard: Story Line expand/collapse ──
@@ -10052,7 +9987,12 @@ const _aiModelSelected = {
   lipSyncVideos: { modelId: 'pro',  res: 'SD' }
 };
 let _aiModelGate = null;
-let _aiModelOpenRow = {}; // which model row is expanded per group — { [group]: modelId|null } — one at a time per group
+let _aiModelOpenRow = {}; // which NON-selected model row is expanded per group — { [group]: modelId|null } — one at a time per group
+// Whether the currently-SELECTED model's own row is expanded, tracked
+// separately per group so that expanding some other (non-selected) row can
+// never collapse it — it only collapses if the user taps its own header, and
+// re-expands automatically the moment selection switches to a new model.
+let _aiModelSelRowOpen = {};
 
 function _aiModelCreditPill(credits) {
   return `<div style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;flex-shrink:0;white-space:nowrap;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">${credits}</div>`;
@@ -10096,15 +10036,26 @@ function _aiModelRowsHtml(group) {
   if (!sel) return '';
   const isSong = AI_MODEL_TYPE[group] === 'song';
   const isVideo = AI_MODEL_TYPE[group] === 'video';
+  // All resolution chips in this group render at the same fixed width — based
+  // on the group's widest row (e.g. 1K/2K/4K = 3 tiers) — regardless of how
+  // many tiers any individual model actually has, so a 2-tier row (1K/2K)
+  // doesn't stretch its chips wider than a 3-tier row's. Per Figma 1487:35439.
+  const maxTiers = Math.max(1, ...models.map(m => m.resolutions.length));
+  const chipBasis = maxTiers > 1 ? `calc((100% - ${(maxTiers - 1) * 8}px) / ${maxTiers})` : '100%';
   return models.map(m => {
     const isSelModel = m.id === sel.modelId;
-    const isOpen = !isSong && _aiModelOpenRow[group] === m.id;
+    // The selected model's expand state is tracked independently from every
+    // other row (_aiModelSelRowOpen) so that opening a different row can
+    // never collapse it — only the user tapping its own header, or switching
+    // selection to another model, changes it. Non-selected rows still share a
+    // single "one open at a time" slot (_aiModelOpenRow) per Scott's earlier revert.
+    const isOpen = !isSong && (isSelModel ? _aiModelSelRowOpen[group] !== false : _aiModelOpenRow[group] === m.id);
     const activeRes = isSelModel ? sel.res : m.resolutions[0].res;
     const activeR = m.resolutions.find(r => r.res === activeRes) || m.resolutions[0];
     const resChips = isSong ? '' : m.resolutions.map(r => {
       const on = isSelModel && r.res === sel.res;
       const label = r.full ? r.full : r.res;
-      return `<div onclick="event.stopPropagation();chooseAiModelRes('${group}','${m.id}','${r.res}')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:10px 12px;min-height:42px;box-sizing:border-box;border-radius:12px;border:1.5px solid ${on ? '#A855F7' : 'rgba(255,255,255,.15)'};background:${on ? 'rgba(168,85,247,.2)' : '#212127'};cursor:pointer;">
+      return `<div onclick="event.stopPropagation();chooseAiModelRes('${group}','${m.id}','${r.res}')" style="flex:0 0 ${chipBasis};display:flex;align-items:center;justify-content:center;gap:4px;padding:10px 12px;min-height:42px;box-sizing:border-box;border-radius:12px;border:1.5px solid ${on ? '#A855F7' : 'rgba(255,255,255,.15)'};background:${on ? 'rgba(168,85,247,.2)' : '#212127'};cursor:pointer;">
           ${isVideo ? _aiModelResIcon(r.res, on) : ''}
           <span style="font-size:12px;font-weight:600;color:${on ? '#A855F7' : 'rgba(255,255,255,.8)'};letter-spacing:-.12px;white-space:nowrap;">${label}</span>
           ${on ? _aiModelCreditPill(r.credits) : ''}
@@ -10124,7 +10075,7 @@ function _aiModelRowsHtml(group) {
         ${_aiModelCreditPill(activeR.credits)}` : '';
     return `<div style="display:flex;flex-direction:column;gap:8px;">
       <div onclick="${rowOnclick}" style="display:flex;align-items:center;gap:6px;cursor:pointer;min-height:20px;">
-        <div style="flex:1;min-width:0;font-size:13px;font-weight:700;color:${isSelModel ? '#A855F7' : '#fff'};letter-spacing:-.13px;">${m.name}</div>
+        <div style="flex:1;min-width:0;font-size:13px;font-weight:700;color:${(isSelModel && !isOpen) ? '#A855F7' : '#fff'};letter-spacing:-.13px;">${m.name}</div>
         ${headerBadges}
         ${trailingControl}
       </div>
@@ -10163,10 +10114,11 @@ function _aiModelRenderList() {
 function openAiModelSheet(gate) {
   _aiModelGate = gate;
   _aiModelOpenRow = {};
+  _aiModelSelRowOpen = {};
   const isSong = AI_MODEL_TYPE[gate] === 'song';
-  if (!isSong) _aiModelOpenRow[gate] = _aiModelSelected[gate].modelId; // expand the currently selected model by default
+  if (!isSong) _aiModelSelRowOpen[gate] = true; // expand the currently selected model by default
   if (gate === 'videos' && _lipSyncGroupActiveForModelSheet()) {
-    _aiModelOpenRow.lipSyncVideos = _aiModelSelected.lipSyncVideos.modelId;
+    _aiModelSelRowOpen.lipSyncVideos = true;
   }
   const sub = document.getElementById('ai-model-subtitle');
   if (sub) sub.textContent = AI_MODEL_SUBTITLE[gate] || 'Choose the model used to generate this step.';
@@ -10175,7 +10127,15 @@ function openAiModelSheet(gate) {
 }
 
 function toggleAiModelRow(group, modelId) {
-  _aiModelOpenRow[group] = _aiModelOpenRow[group] === modelId ? null : modelId;
+  const sel = _aiModelSelected[group];
+  if (sel && sel.modelId === modelId) {
+    // Toggling the currently-selected model's own row — tracked separately
+    // so this can never be affected by (or affect) any other row's state.
+    _aiModelSelRowOpen[group] = _aiModelSelRowOpen[group] === false ? true : false;
+  } else {
+    // Non-selected rows still share a single "one open at a time" slot.
+    _aiModelOpenRow[group] = _aiModelOpenRow[group] === modelId ? null : modelId;
+  }
   _aiModelRenderList();
 }
 
@@ -10202,7 +10162,12 @@ function _refreshCtaCredits(gate) {
 // groups at once (main video model + Lip Sync model), the user needs to be
 // able to pick from both before dismissing via the header's Done button.
 function chooseAiModelRes(group, modelId, res) {
+  const switchedModel = _aiModelSelected[group] && _aiModelSelected[group].modelId !== modelId;
   _aiModelSelected[group] = { modelId, res };
+  // When selection switches to a different model, its row takes over the
+  // "always expanded" treatment immediately — matches "keep the row expanded
+  // until the option is switched, then expand the newly-picked row."
+  if (switchedModel) _aiModelSelRowOpen[group] = true;
   // Row stays open after picking — no auto-collapse. The chip itself already
   // shows the active resolution + credit cost, so the row can stay expanded
   // for the user to keep comparing tiers without re-tapping the header.
@@ -10336,7 +10301,7 @@ function toggleSongPlay() {
       if (!_addedAudio) {
         _addedAudio = new Audio(window._addedAudioSrc);
         _addedAudio.volume = 0.9;
-        _addedAudio.addEventListener('ended', resetSongPlay);
+        _addedAudio.addEventListener('ended', _onAddedSongEnded);
       }
       _addedAudio.play().catch(() => {});
     }
@@ -11135,8 +11100,6 @@ function enhancePrompt(type) {
     else if (isImgEditor) onImgEditorInput();
     else if (isVidEditor) onVidEditorInput();
     else               updateLyricsClear(ta);
-
-    showToast('Prompt enhanced');
   }, 1400);
 }
 
