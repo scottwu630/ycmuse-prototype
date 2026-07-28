@@ -7070,6 +7070,15 @@ function initShotDragReorder() {
     if (!downThumb) return;
     dragEl = downThumb;
     dragEl.classList.add('dragging');
+    // Pin the scale's pivot to the EXACT point the user grabbed (the handle),
+    // instead of the default center. Scaling around center would shift that
+    // grabbed point away from the pointer by roughly half the size increase
+    // (a few px per axis) the moment scale(1.1) kicks in — since the handle
+    // sits near a corner, this offset was large enough that the card visibly
+    // failed to stick to the finger/cursor. With transform-origin pinned here,
+    // the grabbed point is scale-invariant, so plain translate (below) is
+    // enough to keep it locked under the pointer with no compensation math.
+    dragEl.style.transformOrigin = `${grabOffsetX}px ${grabOffsetY}px`;
     // No transition while actively following the pointer — the card must
     // track 1:1 with zero lag; the base class's transform transition would
     // otherwise smooth/delay every position update. The eased ease-in-out
@@ -7090,7 +7099,9 @@ function initShotDragReorder() {
   // keeps the math correct even though _flipReorder may have just moved it to
   // a different DOM slot moments earlier in this same pointermove. `translate`
   // is listed BEFORE `scale` so the px values below are real screen pixels,
-  // not values pre-multiplied by the 1.1x scale.
+  // not values pre-multiplied by the 1.1x scale — and since transform-origin
+  // is pinned to the grab point (see activateDrag), that exact point ends up
+  // exactly under (px,py) with no further correction needed.
   function _followPointer(px, py) {
     dragEl.style.transform = '';
     const r = dragEl.getBoundingClientRect();
@@ -7207,6 +7218,13 @@ function initShotDragReorder() {
     const firstRects = new Map(siblings.map(t => [t, t.getBoundingClientRect()]));
     if (beforeEl) track.insertBefore(el, beforeEl);
     else track.appendChild(el);
+    // The shot order just actually changed, so any previously-generated videos
+    // are now stale for that order and need to be regenerated. If the CTA is
+    // currently showing the neutral "Next" state (e.g. the user came back here
+    // from the Editor without changing anything yet), reverting it to its real
+    // action — "Generate Video" — reflects that a re-render is needed again.
+    // A no-op when the CTA isn't in the Next state (restoreCtaNormal checks).
+    restoreCtaNormal('mv-storyboard');
     firstRects.forEach((firstRect, t) => {
       const lastRect = t.getBoundingClientRect();
       const dx = firstRect.left - lastRect.left;
@@ -7250,10 +7268,12 @@ function initShotDragReorder() {
       if (el.style.transform) {
         el.style.transition = `transform ${FLIP_MS}ms ease-in-out`;
         el.style.transform = '';
+        el.style.transformOrigin = '';
         const cleanup = () => { el.style.transition = ''; el.removeEventListener('transitionend', cleanup); };
         el.addEventListener('transitionend', cleanup);
       } else {
         el.style.transition = '';
+        el.style.transformOrigin = '';
       }
       suppressClick = true;
       dragEl = null;
