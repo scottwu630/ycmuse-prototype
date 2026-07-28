@@ -3653,134 +3653,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
     </div>
 
-    <!-- ══════ (STORYBOARD) VIEW SHOT RESULTS ══════ -->
-    <div id="screen-shot-results" class="screen">
-      <div class="nav nav-blur">
-        <div class="nav-back" onclick="goBack()"><img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
-        <div class="nav-title">Editor</div>
-        <div style="min-width:36px;display:flex;justify-content:flex-end;">
-          <div onclick="goTo('credits')" style="background:rgba(245,158,11,.18);border-radius:20px;padding:4px 6px;display:flex;align-items:center;gap:4px;cursor:pointer;">
-            <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
-            <span style="font-size:13px;font-weight:700;color:#f59e0b;">390</span>
-          </div>
-        </div>
-      </div>
-      <div class="scr-scroll" style="padding:calc(var(--safe-top) + var(--nav-h) + 14px) 16px calc(90px + var(--safe-bot));">
-        <div style="display:flex;flex-direction:column;gap:20px;">
-
-          <!-- SHOT TIMELINE -->
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="display:flex;flex-direction:column;gap:2px;">
-              <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">SHOTS</div>
-              <div style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;line-height:16px;">Each scene breaks into a few shots — select one to edit</div>
-            </div>
-            <div id="shot-cuts" style="display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;">
-              <div onclick="shotPickClip(this,0,'assets/videos/storyboard-clips/clip_1.jpg','Wide establishing shot of the dressing room, warm golden light spilling across the mirror.')"
-                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid #A855F7;">
-                <img src="assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div onclick="shotPickClip(this,1,'assets/videos/storyboard-clips/clip_2.jpg','Medium shot — she adjusts the strap of her gown, eyes soft with anticipation.')"
-                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div onclick="shotPickClip(this,2,'assets/videos/storyboard-clips/clip_3.jpg','Close-up on her eyes catching the light as she begins to sing.')"
-                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div onclick="shotPickClip(this,3,'assets/videos/storyboard-clips/clip_4.jpg','Tracking shot following her hand along the lace patterns of her dress.')"
-                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div onclick="shotPickClip(this,4,'assets/videos/storyboard-clips/clip_5.jpg','Two-shot as the partners embrace, silhouetted in golden light.')"
-                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div onclick="shotPickClip(this,5,'assets/videos/storyboard-clips/clip_6.jpg','Slow push-in as the chorus swells, light flaring across the lens.')"
-                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div onclick="shotPickClip(this,6,'assets/videos/storyboard-clips/clip_7.jpg','Wide cinematic pull-back revealing the full stage.')"
-                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div onclick="shotPickClip(this,7,'assets/videos/storyboard-clips/clip_8.jpg','Final close-up — joy, longing, and resolution in one quiet moment.')"
-                style="flex-shrink:0;width:67px;height:67px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;">
-                <img src="assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              </div>
-            </div>
-          </div>
-
-          <!-- PREVIEW -->
-          <div id="shot-preview-wrap" style="border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;position:relative;height:180px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),#212127;">
-            <img id="shot-preview-img" src="assets/videos/storyboard-clips/clip_1.jpg"
-              style="position:absolute;top:0;left:50%;transform:translateX(-50%);height:100%;width:auto;object-fit:cover;pointer-events:none;">
-            <div style="position:relative;z-index:2;background:linear-gradient(to top,rgba(0,0,0,.5),transparent);padding:8px 10px;">
-              <div style="display:flex;align-items:center;gap:6px;">
-                <div id="shot-ctrl-play-btn" onclick="shotTogglePlay()" style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-                  <img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
-                </div>
-                <span style="font-size:10px;color:#9C9CAB;width:28px;text-align:right;flex-shrink:0;">00:02</span>
-                <div style="flex:1;position:relative;height:12px;display:flex;align-items:center;">
-                  <div style="width:100%;height:3px;background:rgba(255,255,255,.2);border-radius:2px;position:relative;overflow:visible;">
-                    <div id="shot-progress-fill" style="width:32%;height:100%;background:linear-gradient(to right,#A855F7,#FF6BCE);border-radius:2px;position:relative;">
-                      <div style="position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 4px rgba(0,0,0,.4);"></div>
-                    </div>
-                  </div>
-                </div>
-                <span style="font-size:10px;color:#9C9CAB;width:28px;flex-shrink:0;">00:03</span>
-                <div onclick="shotToggleMute(this)" style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-                  <img src="assets/icons/ui/ic_speaker_on.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- EDIT SHOT (short description) -->
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">EDIT SHOT</div>
-            <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;min-height:131px;display:flex;flex-direction:column;">
-              <textarea id="shot-desc-ta" oninput="updateShotCount(this)"
-                style="flex:1;min-height:83px;padding:10px 10px 4px;background:transparent;border:none;color:#fff;font-size:12px;font-weight:500;font-family:inherit;line-height:1.5;resize:none;outline:none;">Wide establishing shot of the dressing room, warm golden light spilling across the mirror.</textarea>
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px;padding:4px 10px 10px;">
-                <button id="shot-desc-enhance-btn" onclick="event.stopPropagation();enhancePrompt('shot-desc')" style="display:flex;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
-                  <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
-                </button>
-                <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);" id="shot-desc-cnt">92/2500</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- REGENERATE -->
-          <div onclick="regenerateShots(this)" style="display:flex;align-items:center;justify-content:center;gap:8px;height:46px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
-            <img src="assets/icons/ui/ic_reload.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.8;">
-            <span style="font-size:14px;font-weight:600;color:#fff;letter-spacing:-.14px;">Regenerate This Shot</span>
-          </div>
-
-          <!-- SELECT AI MODEL (gate 4 — gates Generating Videos) -->
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">SELECT AI MODEL</div>
-            <div onclick="openAiModelSheet('videos')" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:12px 14px;cursor:pointer;">
-              <span id="ai-model-label-videos" style="font-size:14px;font-weight:700;color:#fff;">Seedance 1.0 Lite · SD</span>
-              <div style="display:flex;align-items:center;gap:8px;">
-                <div id="ai-model-credit-videos" style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">40</div>
-                <span style="font-size:18px;color:rgba(255,255,255,.35);line-height:1;">›</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="cta-footer">
-        <button onclick="requireLogin(()=>startGeneration('videos'))" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-          Generate Videos
-          <span style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
-            <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
-            40
-          </span>
-        </button>
-      </div>
-    </div>
-
     <!-- ══════ CREATING MV ══════ -->
     <div id="screen-mv-creating" class="screen">
       <div class="creating-body">
@@ -7256,33 +7128,47 @@ function initShotDragReorder() {
       return;
     }
     e.preventDefault();
-    // 2D nearest-slot reorder — find whichever OTHER thumb's center is closest
-    // to the pointer, then place dragEl right before/after it in DOM order
-    // (grid-auto-flow renders cells in DOM order, so this is all that's needed).
-    // This still only decides the eventual drop slot / how siblings shift —
-    // the card's own on-screen position is handled separately below so it can
-    // move freely and follow the pointer instead of snapping between cells.
     const px = e.clientX, py = e.clientY;
-    const thumbs = Array.from(track.querySelectorAll('.shot-thumb'));
-    let nearest = null, nearestDist = Infinity;
-    for (const t of thumbs) {
-      if (t === dragEl) continue;
-      const r = t.getBoundingClientRect();
-      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-      const dist = (px - cx) ** 2 + (py - cy) ** 2;
-      if (dist < nearestDist) { nearestDist = dist; nearest = t; }
-    }
-    if (nearest) {
-      const nearestIdx = thumbs.indexOf(nearest);
-      const dragIdx = thumbs.indexOf(dragEl);
-      if (nearestIdx < dragIdx) {
-        _scheduleReorder(nearest);
-      } else if (nearest.nextElementSibling !== dragEl) {
-        _scheduleReorder(nearest.nextElementSibling);
-      } else {
-        // Pointer drifted back over the card's current slot — nothing new to commit.
-        _cancelScheduledReorder();
+    // Require the card to have actually traveled a meaningful distance from
+    // where the drag started before considering a sibling rearrange at all —
+    // without this, cards near the drop threshold would trigger the below
+    // cards' shift from only a small wobble. Measured against the fixed
+    // press-down point (startX/startY), not the last evaluated position, so
+    // it reflects real intent to move toward another slot rather than drift.
+    const REORDER_TRIGGER_PX = 120;
+    const movedFromStart = Math.abs(px - startX) > REORDER_TRIGGER_PX || Math.abs(py - startY) > REORDER_TRIGGER_PX;
+    if (movedFromStart) {
+      // 2D nearest-slot reorder — find whichever OTHER thumb's center is closest
+      // to the pointer, then place dragEl right before/after it in DOM order
+      // (grid-auto-flow renders cells in DOM order, so this is all that's needed).
+      // This still only decides the eventual drop slot / how siblings shift —
+      // the card's own on-screen position is handled separately below so it can
+      // move freely and follow the pointer instead of snapping between cells.
+      const thumbs = Array.from(track.querySelectorAll('.shot-thumb'));
+      let nearest = null, nearestDist = Infinity;
+      for (const t of thumbs) {
+        if (t === dragEl) continue;
+        const r = t.getBoundingClientRect();
+        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const dist = (px - cx) ** 2 + (py - cy) ** 2;
+        if (dist < nearestDist) { nearestDist = dist; nearest = t; }
       }
+      if (nearest) {
+        const nearestIdx = thumbs.indexOf(nearest);
+        const dragIdx = thumbs.indexOf(dragEl);
+        if (nearestIdx < dragIdx) {
+          _scheduleReorder(nearest);
+        } else if (nearest.nextElementSibling !== dragEl) {
+          _scheduleReorder(nearest.nextElementSibling);
+        } else {
+          // Pointer drifted back over the card's current slot — nothing new to commit.
+          _cancelScheduledReorder();
+        }
+      }
+    } else {
+      // Hasn't cleared the trigger distance yet — don't let an already-scheduled
+      // reorder (from an earlier, larger excursion) fire while lingering near start.
+      _cancelScheduledReorder();
     }
     _followPointer(px, py);
   });
@@ -7715,51 +7601,6 @@ function sbTogglePlay() {
 function sbToggleMute(el) {
   _sbMuted = !_sbMuted;
   el.querySelector('img').src = _sbMuted
-    ? 'assets/icons/ui/ic_speaker_off.svg'
-    : 'assets/icons/ui/ic_speaker_on.svg';
-}
-
-// ── (Storyboard) View Shot Results — same interaction pattern as Scene Detail above ──
-function shotPickClip(el, idx, imgSrc, desc) {
-  document.querySelectorAll('#shot-cuts > div').forEach(c => c.style.borderColor = 'transparent');
-  el.style.borderColor = '#A855F7';
-  const previewImg = document.getElementById('shot-preview-img');
-  if (previewImg && imgSrc) previewImg.src = imgSrc;
-  const ta = document.getElementById('shot-desc-ta');
-  if (ta) { ta.value = desc; updateShotCount(ta); }
-}
-function updateShotCount(ta) {
-  const el = document.getElementById('shot-desc-cnt');
-  if (el) el.textContent = `${ta.value.length}/2500`;
-  const enh = document.getElementById('shot-desc-enhance-btn');
-  if (enh) enh.style.display = ta.value.length > 0 ? 'flex' : 'none';
-}
-let _shotPlaying = false;
-let _shotMuted = false;
-let _shotProgressTimer = null;
-function shotTogglePlay() {
-  _shotPlaying = !_shotPlaying;
-  const btn = document.getElementById('shot-ctrl-play-btn');
-  if (btn) {
-    btn.querySelector('img').src = _shotPlaying
-      ? 'assets/icons/ui/ic_pause.svg'
-      : 'assets/icons/ui/ic_play.svg';
-  }
-  if (_shotPlaying) {
-    _shotProgressTimer = setInterval(() => {
-      const fill = document.getElementById('shot-progress-fill');
-      if (!fill) return;
-      const pct = parseFloat(fill.style.width) || 32;
-      const next = pct >= 98 ? 0 : pct + 0.8;
-      fill.style.width = next + '%';
-    }, 100);
-  } else {
-    clearInterval(_shotProgressTimer);
-  }
-}
-function shotToggleMute(el) {
-  _shotMuted = !_shotMuted;
-  el.querySelector('img').src = _shotMuted
     ? 'assets/icons/ui/ic_speaker_off.svg'
     : 'assets/icons/ui/ic_speaker_on.svg';
 }
@@ -9270,7 +9111,6 @@ function regenerateSceneImage(el) {
   });
 }
 function regenerateScenes(el) { requireLogin(() => regenerateStep(el, 'Regenerating...', 'Scenes Updated')); }
-function regenerateShots(el)  { requireLogin(() => regenerateStep(el, 'Regenerating...', 'Shots Updated')); }
 function regenerateVideoShots(el) { requireLogin(() => regenerateStep(el, 'Regenerating...', 'Videos Updated')); }
 
 function clearSceneEditor() {
