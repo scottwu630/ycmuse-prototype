@@ -7249,11 +7249,36 @@ function initShotDragReorder() {
     const nearestIdx = thumbs.indexOf(nearest);
     const dragIdx = thumbs.indexOf(dragEl);
     if (nearestIdx < dragIdx) {
-      track.insertBefore(dragEl, nearest);
+      _flipReorder(dragEl, nearest);
     } else {
-      track.insertBefore(dragEl, nearest.nextElementSibling);
+      _flipReorder(dragEl, nearest.nextElementSibling);
     }
   });
+  // FLIP (First-Last-Invert-Play): the grid can't transition a position change
+  // caused by a DOM-order swap on its own, so every OTHER card that gets
+  // bumped into a new slot is measured before/after the reorder and animated
+  // across the gap with an eased transform — only the actively-dragged card
+  // (already snapping under the pointer) is excluded.
+  const FLIP_MS = 280;
+  function _flipReorder(el, beforeEl) {
+    const siblings = Array.from(track.querySelectorAll('.shot-thumb')).filter(t => t !== el);
+    const firstRects = new Map(siblings.map(t => [t, t.getBoundingClientRect()]));
+    if (beforeEl) track.insertBefore(el, beforeEl);
+    else track.appendChild(el);
+    firstRects.forEach((firstRect, t) => {
+      const lastRect = t.getBoundingClientRect();
+      const dx = firstRect.left - lastRect.left;
+      const dy = firstRect.top - lastRect.top;
+      if (!dx && !dy) return;
+      t.style.transition = 'none';
+      t.style.transform = `translate(${dx}px,${dy}px)`;
+      t.getBoundingClientRect(); // force reflow so the "from" position actually paints
+      t.style.transition = `transform ${FLIP_MS}ms ease-in-out`;
+      t.style.transform = '';
+      const cleanup = () => { t.style.transition = ''; t.style.transform = ''; t.removeEventListener('transitionend', cleanup); };
+      t.addEventListener('transitionend', cleanup);
+    });
+  }
   function endDrag() {
     // Releasing before the long-press completed — cancel the pending timer so
     // it doesn't fire a drag activation after the pointer is already gone.
