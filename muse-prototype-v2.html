@@ -7189,6 +7189,7 @@ function initShotDragReorder() {
   let dragEl = null;
   let activePointerId = null;
   let startX = 0, startY = 0;
+  let grabOffsetX = 0, grabOffsetY = 0; // press point relative to the card's own top-left, so it doesn't "snap" to a corner
   let pressTimer = null;
   let suppressClick = false;
 
@@ -7197,12 +7198,33 @@ function initShotDragReorder() {
     if (!downThumb) return;
     dragEl = downThumb;
     dragEl.classList.add('dragging');
+    // No transition while actively following the pointer — the card must
+    // track 1:1 with zero lag; the base class's transform transition would
+    // otherwise smooth/delay every position update. The eased ease-in-out
+    // transition only applies afterward, when settling into place on drop.
+    dragEl.style.transition = 'none';
     try { dragEl.setPointerCapture(activePointerId); } catch (err) {}
     track.style.touchAction = 'none';
     // Disable the page scroll entirely while dragging — re-enabling afterward
     // restores the exact same scroll position (overflow:hidden doesn't reset
     // scrollTop), so there's no visual jump.
     if (scrollEl) scrollEl.style.overflowY = 'hidden';
+  }
+
+  // Moves dragEl freely under the pointer, independent of whatever grid cell
+  // it currently occupies. Re-measures its NATURAL (untransformed) position
+  // fresh each call — clearing transform, measuring, then reapplying is a
+  // synchronous same-tick swap so nothing actually paints in between — which
+  // keeps the math correct even though _flipReorder may have just moved it to
+  // a different DOM slot moments earlier in this same pointermove. `translate`
+  // is listed BEFORE `scale` so the px values below are real screen pixels,
+  // not values pre-multiplied by the 1.1x scale.
+  function _followPointer(px, py) {
+    dragEl.style.transform = '';
+    const r = dragEl.getBoundingClientRect();
+    const tx = (px - grabOffsetX) - r.left;
+    const ty = (py - grabOffsetY) - r.top;
+    dragEl.style.transform = `translate(${tx}px,${ty}px) scale(1.1)`;
   }
 
   track.addEventListener('pointerdown', (e) => {
@@ -7215,6 +7237,8 @@ function initShotDragReorder() {
     downThumb = thumb;
     activePointerId = e.pointerId;
     startX = e.clientX; startY = e.clientY;
+    const r = thumb.getBoundingClientRect();
+    grabOffsetX = startX - r.left; grabOffsetY = startY - r.top;
     clearTimeout(pressTimer);
     pressTimer = setTimeout(activateDrag, LONG_PRESS_MS);
   });
@@ -7235,6 +7259,9 @@ function initShotDragReorder() {
     // 2D nearest-slot reorder — find whichever OTHER thumb's center is closest
     // to the pointer, then place dragEl right before/after it in DOM order
     // (grid-auto-flow renders cells in DOM order, so this is all that's needed).
+    // This still only decides the eventual drop slot / how siblings shift —
+    // the card's own on-screen position is handled separately below so it can
+    // move freely and follow the pointer instead of snapping between cells.
     const px = e.clientX, py = e.clientY;
     const thumbs = Array.from(track.querySelectorAll('.shot-thumb'));
     let nearest = null, nearestDist = Infinity;
@@ -7245,15 +7272,44 @@ function initShotDragReorder() {
       const dist = (px - cx) ** 2 + (py - cy) ** 2;
       if (dist < nearestDist) { nearestDist = dist; nearest = t; }
     }
-    if (!nearest) return;
-    const nearestIdx = thumbs.indexOf(nearest);
-    const dragIdx = thumbs.indexOf(dragEl);
-    if (nearestIdx < dragIdx) {
-      _flipReorder(dragEl, nearest);
-    } else {
-      _flipReorder(dragEl, nearest.nextElementSibling);
+    if (nearest) {
+      const nearestIdx = thumbs.indexOf(nearest);
+      const dragIdx = thumbs.indexOf(dragEl);
+      if (nearestIdx < dragIdx) {
+        _scheduleReorder(nearest);
+      } else if (nearest.nextElementSibling !== dragEl) {
+        _scheduleReorder(nearest.nextElementSibling);
+      } else {
+        // Pointer drifted back over the card's current slot — nothing new to commit.
+        _cancelScheduledReorder();
+      }
     }
+    _followPointer(px, py);
   });
+  // Debounce the actual reorder commit by REORDER_DELAY_MS so the other cards
+  // don't rearrange the instant the pointer drifts over a new nearest slot —
+  // giving the user a brief window to keep adjusting before the layout
+  // visually commits to that position. Restarting the timer on every new
+  // target (and flushing immediately on drop, see endDrag) keeps the FINAL
+  // drop order always correct regardless of the delay.
+  const REORDER_DELAY_MS = 300;
+  let reorderTimer = null;
+  let pendingBeforeEl = undefined; // undefined = nothing pending
+  function _scheduleReorder(beforeEl) {
+    if (reorderTimer && pendingBeforeEl === beforeEl) return; // already debouncing toward this exact target
+    clearTimeout(reorderTimer);
+    pendingBeforeEl = beforeEl;
+    reorderTimer = setTimeout(() => {
+      reorderTimer = null;
+      pendingBeforeEl = undefined;
+      _flipReorder(dragEl, beforeEl);
+    }, REORDER_DELAY_MS);
+  }
+  function _cancelScheduledReorder() {
+    clearTimeout(reorderTimer);
+    reorderTimer = null;
+    pendingBeforeEl = undefined;
+  }
   // FLIP (First-Last-Invert-Play): the grid can't transition a position change
   // caused by a DOM-order swap on its own, so every OTHER card that gets
   // bumped into a new slot is measured before/after the reorder and animated
@@ -7285,11 +7341,33 @@ function initShotDragReorder() {
     clearTimeout(pressTimer);
     pressTimer = null;
     if (dragEl) {
-      dragEl.classList.remove('dragging');
+      const el = dragEl;
+      // Flush any still-pending debounced reorder immediately — releasing
+      // over a slot the user was hovering (even for less than 300ms) should
+      // still drop it there, rather than discarding the intended position.
+      if (reorderTimer) {
+        clearTimeout(reorderTimer);
+        reorderTimer = null;
+        _flipReorder(el, pendingBeforeEl);
+        pendingBeforeEl = undefined;
+      }
+      el.classList.remove('dragging');
       // Release capture explicitly — leaving it held is what let a later click
       // land on a completely unrelated element (e.g. the Visual Style card).
       if (activePointerId !== null) {
-        try { dragEl.releasePointerCapture(activePointerId); } catch (err) {}
+        try { el.releasePointerCapture(activePointerId); } catch (err) {}
+      }
+      // Settle smoothly from wherever it was following the pointer back into
+      // its final grid cell, instead of snapping there instantly. If the
+      // pointer never actually moved (transform still empty), there's
+      // nothing to animate — just drop the 'none' override immediately.
+      if (el.style.transform) {
+        el.style.transition = `transform ${FLIP_MS}ms ease-in-out`;
+        el.style.transform = '';
+        const cleanup = () => { el.style.transition = ''; el.removeEventListener('transitionend', cleanup); };
+        el.addEventListener('transitionend', cleanup);
+      } else {
+        el.style.transition = '';
       }
       suppressClick = true;
       dragEl = null;
