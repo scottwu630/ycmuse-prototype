@@ -1144,6 +1144,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .describe-ta::placeholder{color:var(--text-3);}
 .describe-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 12px 10px;}
 .insp-btn{background:rgba(255,255,255,.1);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);border:none;cursor:pointer;transition:background .15s;}
+.enh-txt{font-size:11px;font-weight:600;color:#000;white-space:nowrap;}
 .insp-btn:active{background:rgba(255,255,255,.18);}
 .desc-counter{font-size:12px;color:var(--text-3);}
 .clear-btn{width:22px;height:22px;border-radius:50%;background:var(--card-3);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-3);cursor:pointer;}
@@ -2750,6 +2751,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div style="display:flex;align-items:center;gap:6px;">
                 <button id="mvr-enhance-btn" onclick="event.stopPropagation();enhancePrompt('mvr')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
                   <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                  <span class="enh-txt">Enhance</span>
                 </button>
                 <span id="desc-cnt" style="font-size:12px;color:#9C9CAB;">0/2500</span>
                 <div id="desc-clear-btn" onclick="clearDescribe()" style="display:none;width:20px;height:20px;border-radius:18px;background:#212127;border:none;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
@@ -3980,6 +3982,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px;padding:4px 10px 10px;">
                 <button id="sb-desc-enhance-btn" onclick="event.stopPropagation();enhancePrompt('sb-desc')" style="display:flex;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
                   <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                  <span class="enh-txt">Enhance</span>
                 </button>
                 <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);" id="sb-desc-cnt">165/2500</span>
                 <div id="sb-desc-clear-btn" onclick="document.getElementById('sb-desc-ta').value='';updateSbCount(document.getElementById('sb-desc-ta'))"
@@ -4199,6 +4202,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 <div style="display:flex;align-items:center;gap:6px;">
                   <button id="simple-enhance-btn" onclick="event.stopPropagation();enhancePrompt('simple')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
                     <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                    <span class="enh-txt">Enhance</span>
                   </button>
                   <span id="song-simple-cnt" style="font-size:12px;color:rgba(255,255,255,.4);">0/2500</span>
                   <div id="song-simple-clear" onclick="event.stopPropagation();document.getElementById('song-simple-idea').value='';updateSimpleSongCTA(document.getElementById('song-simple-idea'))" style="display:none;width:20px;height:20px;border-radius:10px;background:#383842;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
@@ -4252,6 +4256,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 </div>
                 <div style="display:flex;align-items:center;gap:6px;">
                   <button id="lyrics-enhance-btn" onclick="event.stopPropagation();openEnhanceDirectionSheet()" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                    <!-- Custom mode: icon-only, no room for the "Enhance" label alongside Idea/Lyrics/counter -->
                     <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
                   </button>
                   <span id="lyrics-cnt" style="font-size:12px;color:#9C9CAB;">0/2500</span>
@@ -5683,6 +5688,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding-top:4px;">
             <button id="scene-editor-enhance-btn" onclick="event.stopPropagation();enhancePrompt('scene')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
               <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+              <span class="enh-txt">Enhance</span>
             </button>
             <div id="scene-editor-counter">0/2500</div>
             <div id="scene-editor-clear-btn" onclick="clearSceneEditor()" style="font-size:16px;color:rgba(255,255,255,.35);cursor:pointer;line-height:1;padding:0 2px;">×</div>
@@ -5861,6 +5867,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:4px 10px 10px;">
                 <button id="img-editor-enhance-btn" onclick="event.stopPropagation();enhancePrompt('img-editor')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
                   <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                  <span class="enh-txt">Enhance</span>
                 </button>
                 <span id="img-editor-counter" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);">0/2500</span>
               </div>
@@ -5983,6 +5990,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:4px 10px 10px;">
               <button id="vid-editor-enhance-btn" onclick="event.stopPropagation();enhancePrompt('vid-editor')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
                 <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                <span class="enh-txt">Enhance</span>
               </button>
               <span id="vid-editor-counter" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);">0/2500</span>
             </div>
@@ -7772,6 +7780,7 @@ function updateSbCount(ta) {
   if (rBtn) { rBtn.disabled = false; rBtn.style.opacity = '1'; }
   const enh = document.getElementById('sb-desc-enhance-btn');
   if (enh) enh.style.display = ta.value.length > 0 ? 'flex' : 'none';
+  fitEnhanceBtn('sb-desc-enhance-btn');
 }
 
 // ── Scene Detail player controls ──
@@ -8963,6 +8972,7 @@ function onImgEditorInput() {
   if (ctr) ctr.textContent = ta.value.length + '/2500';
   const enhBtn = document.getElementById('img-editor-enhance-btn');
   if (enhBtn) enhBtn.style.display = ta.value.length > 0 ? 'flex' : 'none';
+  fitEnhanceBtn('img-editor-enhance-btn');
   // Keep the underlying Storyboard/Editor description in sync live
   if (_imgEditorCtx && _imgEditorCtx.kind === 'style') {
     const src = document.getElementById('sb-visual-style-text');
@@ -9182,6 +9192,7 @@ function onVidEditorInput() {
   if (ctr) ctr.textContent = ta.value.length + '/2500';
   const enhBtn = document.getElementById('vid-editor-enhance-btn');
   if (enhBtn) enhBtn.style.display = ta.value.length > 0 ? 'flex' : 'none';
+  fitEnhanceBtn('vid-editor-enhance-btn');
   _vidEditorDirty = true;
   const prevWrap = document.getElementById('vid-editor-preview-wrap');
   if (!prevWrap || prevWrap.dataset.busy !== '1') _setRegenBtnEnabled('vid-editor-regen-btn', true);
@@ -9264,6 +9275,7 @@ function onSceneEditorInput() {
   if (ta && ctr) ctr.textContent = ta.value.length + '/2500';
   const enh = document.getElementById('scene-editor-enhance-btn');
   if (enh) enh.style.display = (ta && ta.value.length > 0) ? 'flex' : 'none';
+  fitEnhanceBtn('scene-editor-enhance-btn');
 }
 
 // ── Storyboard: MV Song play/pause toggle (mirrors Choose-a-Song's live timecode) ──
@@ -9909,6 +9921,7 @@ function updateDescCount(ta) {
   if (btn) btn.style.display = hasText ? 'flex' : 'none';
   const enh = document.getElementById('mvr-enhance-btn');
   if (enh) enh.style.display = hasText ? 'flex' : 'none';
+  fitEnhanceBtn('mvr-enhance-btn');
 }
 function clearDescribe() {
   const ta = document.getElementById('mvr-describe');
@@ -10980,6 +10993,8 @@ function switchSongMode(mode) {
     if (st) st.style.background = '#3A3A47';
     if (sk) sk.style.transform  = 'translateX(0)';
   }
+
+  fitEnhanceBtn('simple-enhance-btn');
 }
 
 const _songIdeaPrompts = [
@@ -11077,6 +11092,52 @@ function generateFullLyrics() {
   updateLyricsClear(ta);
 }
 
+// ── Enhance button: show the "Enhance" label when its row has room, otherwise
+// fall back to icon-only. Measured live since sibling widths shift (char
+// counter digits, clear button appearing/disappearing, Idea/Lyrics buttons). ──
+function fitEnhanceBtn(btnId, opts) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  const txt = btn.querySelector('.enh-txt');
+  if (!txt || getComputedStyle(btn).display === 'none') return;
+  opts = opts || {};
+  const row = opts.row || btn.parentElement;
+  if (!row) return;
+
+  txt.style.display = 'inline'; // measure the "with text" state first
+  let contentWidth = 0, visible = 0;
+  Array.from(row.children).forEach(child => {
+    if (getComputedStyle(child).display === 'none') return;
+    contentWidth += child.getBoundingClientRect().width;
+    visible++;
+  });
+  const rowStyle = getComputedStyle(row);
+  const rowGap = parseFloat(rowStyle.columnGap);
+  contentWidth += (isNaN(rowGap) ? 0 : rowGap) * Math.max(0, visible - 1);
+
+  let available;
+  if (opts.containerEl) {
+    available = opts.containerEl.clientWidth - (opts.reserve || 0);
+  } else {
+    const padL = parseFloat(rowStyle.paddingLeft) || 0;
+    const padR = parseFloat(rowStyle.paddingRight) || 0;
+    available = row.clientWidth - padL - padR;
+  }
+
+  if (contentWidth > available + 0.5) txt.style.display = 'none';
+}
+
+function fitAllEnhanceBtns() {
+  fitEnhanceBtn('mvr-enhance-btn');
+  fitEnhanceBtn('sb-desc-enhance-btn');
+  fitEnhanceBtn('simple-enhance-btn');
+  fitEnhanceBtn('scene-editor-enhance-btn');
+  fitEnhanceBtn('img-editor-enhance-btn');
+  fitEnhanceBtn('vid-editor-enhance-btn');
+}
+window.addEventListener('resize', fitAllEnhanceBtns);
+window.addEventListener('load', fitAllEnhanceBtns);
+
 function updateLyricsClear(ta) {
   const cnt = document.getElementById('lyrics-cnt');
   if (cnt) cnt.textContent = ta.value.length + '/2500';
@@ -11095,6 +11156,7 @@ function updateSimpleSongCTA(ta) {
   if (clearBtn) clearBtn.style.display = hasText ? 'flex' : 'none';
   const enh = document.getElementById('simple-enhance-btn');
   if (enh) enh.style.display = hasText ? 'flex' : 'none';
+  fitEnhanceBtn('simple-enhance-btn');
   const btn = document.getElementById('song-cta-simple');
   if (!btn) return;
   if (hasText) {
@@ -11228,6 +11290,8 @@ function enhancePrompt(type) {
       img.style.filter = 'brightness(0) invert(1)';
       img.style.animation = 'spin 0.8s linear infinite reverse';
     }
+    const txt = btn.querySelector('.enh-txt');
+    if (txt) txt.style.color = '#fff';
   }
 
   // ── Enhanced text samples per context ─────────────────────────────
@@ -11324,6 +11388,8 @@ function enhancePrompt(type) {
         img.style.filter = 'brightness(0)';
         img.style.animation = '';
       }
+      const txt = btn.querySelector('.enh-txt');
+      if (txt) txt.style.color = '';
     }
 
     // Sync count display

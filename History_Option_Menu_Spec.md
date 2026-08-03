@@ -17,13 +17,13 @@ Controlled by `data-status` on the row. `isDone` is derived from status, not the
 | Type | Status | CTA Row | Options |
 |---|---|---|---|
 | **Community** | *(any — Liked tab only)* | — | Like / Unlike, Share |
-| **MV** | Completed · Publish OFF | Edit MV · Get Proof | Like / Unlike, Share, Publish (toggle), Download, **Delete** |
-| **MV** | Completed · Publish (Review) | Edit MV · Get Proof | Like / Unlike, Share, Publish (Review toggle ON), Download |
-| **MV** | Completed · Publish ON | Edit MV · Get Proof | Like / Unlike, Share, Publish (toggle ON), Download |
+| **MV** | Completed · Publish OFF | Edit MV | Like / Unlike, Share, Publish (toggle), Download, **Delete** |
+| **MV** | Completed · Publish (Review) | Edit MV | Like / Unlike, Share, Publish (Review toggle ON), Download |
+| **MV** | Completed · Publish ON | Edit MV | Like / Unlike, Share, Publish (toggle ON), Download |
 | **MV** | Failed | — | Delete |
 | **MV** | Generating | *(button hidden)* | — |
-| **Song** | Completed · Publish OFF | Create MV · Get Proof | Like / Unlike, Share, Publish (toggle), Download, **Delete** |
-| **Song** | Completed · Publish ON | Create MV · Get Proof | Like / Unlike, Share, Publish (toggle ON), Download *(Delete hidden)* |
+| **Song** | Completed · Publish OFF | Create MV | Like / Unlike, Share, Publish (toggle), Download, **Delete** |
+| **Song** | Completed · Publish ON | Create MV | Like / Unlike, Share, Publish (toggle ON), Download *(Delete hidden)* |
 | **Song** | Failed | — | Delete |
 | **Song** | Generating | *(button hidden)* | — |
 | **Storyboard** | Completed | Create MV | Delete |
@@ -40,15 +40,15 @@ Controlled by `data-status` on the row. `isDone` is derived from status, not the
 
 ## CTA Button Style
 
-All CTA row buttons use the **secondary style** (white background, dark text/icon) unless noted:
+The CTA row now always renders a single full-width button (Get Proof was removed; see note below):
 
 | CTA | Style |
 |---|---|
 | Edit MV | Secondary (white) |
-| Get Proof (MV) | Secondary (white) |
 | Create MV (Song) | Primary (gradient) |
-| Get Proof (Song) | Secondary (white) |
 | Create MV (Storyboard) | Primary (gradient) |
+
+> **Get Proof removed:** The "Get Proof" CTA (MV and Song rows) was removed from the History page's row option menu. The CTA row now holds only Edit MV / Create MV, which fills the full row width since the row is a flex container (no layout change needed). "Get Proof" still exists elsewhere in the app (e.g. the player screen's own options sheet) — this change is scoped to the History page menu only.
 
 ---
 
@@ -59,8 +59,6 @@ All CTA row buttons use the **secondary style** (white background, dark text/ico
 | Edit MV | MV Edit screen |
 | Create MV (Song) | MV Style Select screen |
 | Create MV (Storyboard) | Edit Storyboard screen |
-| Get Proof (MV) | Proof of Creation screen |
-| Get Proof (Song) | Proof of Creation screen |
 
 ---
 

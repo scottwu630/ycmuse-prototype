@@ -855,17 +855,20 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #emv-cover-img.hidden{opacity:0;}
 .emv-cover-gen-label{font-size:13px;font-weight:600;color:#fff;letter-spacing:-.13px;}
 /* Cover description row */
-.emv-cover-desc-row{display:flex;align-items:center;gap:10px;background:#151519;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px 12px;cursor:pointer;transition:opacity .15s;}
+.emv-cover-desc-row{display:flex;flex-direction:column;align-items:center;gap:6px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px;cursor:pointer;transition:opacity .15s;}
 .emv-cover-desc-row:active{opacity:.7;}
-.emv-cover-desc-text{flex:1;min-width:0;font-size:12px;font-weight:500;color:#9C9CAB;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.emv-cover-desc-text{width:100%;font-size:12px;font-weight:500;color:#fff;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .emv-cover-desc-badge{display:flex;align-items:center;gap:4px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.25);border-radius:20px;padding:4px 8px;flex-shrink:0;}
 /* Cover Description sheet */
 #emv-cover-sheet-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
 #emv-cover-sheet-overlay.show{opacity:1;pointer-events:all;}
-#emv-cover-sheet{position:absolute;bottom:0;left:0;right:0;background:#151519;border-radius:26px 26px 0 0;padding:0 0 40px;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
+#emv-cover-sheet{position:absolute;bottom:0;left:0;right:0;background:#151519;border-radius:26px 26px 0 0;padding:0;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);overflow:hidden;}
 #emv-cover-sheet.open{transform:translateY(0);}
-#emv-cover-textarea{width:100%;min-height:120px;background:#212127;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 14px 32px;font-size:14px;font-weight:500;color:#fff;font-family:inherit;outline:none;resize:none;box-sizing:border-box;line-height:1.5;}
+#emv-cover-textarea{width:100%;min-height:220px;background:#212127;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 14px 32px;font-size:14px;font-weight:500;color:#fff;font-family:inherit;outline:none;resize:none;box-sizing:border-box;line-height:1.5;scrollbar-width:none;-ms-overflow-style:none;}
+#emv-cover-textarea::-webkit-scrollbar{display:none;}
 #emv-cover-textarea:focus{border-color:rgba(168,85,247,.4);}
+/* Simulated iOS keyboard — opens directly with the sheet, same treatment as the Scene Text Editor */
+#emv-cover-keyboard{background:#D1D5DB;padding:8px 3px 6px;user-select:none;-webkit-user-select:none;}
 .emv-toggle-row:last-of-type{border-bottom:none;}
 .emv-lbl{font-size:16px;font-weight:700;color:var(--text);}
 .emv-sub{font-size:12px;color:var(--text-2);margin-top:2px;}
@@ -1083,6 +1086,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .describe-ta::placeholder{color:var(--text-3);}
 .describe-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 12px 10px;}
 .insp-btn{background:rgba(255,255,255,.1);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);border:none;cursor:pointer;transition:background .15s;}
+.enh-txt{font-size:11px;font-weight:600;color:#000;white-space:nowrap;}
 .insp-btn:active{background:rgba(255,255,255,.18);}
 .desc-counter{font-size:12px;color:var(--text-3);}
 .clear-btn{width:22px;height:22px;border-radius:50%;background:var(--card-3);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-3);cursor:pointer;}
@@ -2708,6 +2712,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div style="display:flex;align-items:center;gap:6px;">
                 <button id="mvr-enhance-btn" onclick="event.stopPropagation();enhancePrompt('mvr')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
                   <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                  <span class="enh-txt">Enhance</span>
                 </button>
                 <span id="desc-cnt" style="font-size:12px;color:#9C9CAB;">0/2500</span>
                 <div id="desc-clear-btn" onclick="clearDescribe()" style="display:none;width:20px;height:20px;border-radius:18px;background:#212127;border:none;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
@@ -3768,6 +3773,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px;padding:4px 10px 10px;">
                 <button id="sb-desc-enhance-btn" onclick="event.stopPropagation();enhancePrompt('sb-desc')" style="display:flex;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
                   <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                  <span class="enh-txt">Enhance</span>
                 </button>
                 <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);" id="sb-desc-cnt">165/2500</span>
                 <div id="sb-desc-clear-btn" onclick="document.getElementById('sb-desc-ta').value='';updateSbCount(document.getElementById('sb-desc-ta'))"
@@ -3824,13 +3830,18 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="display:flex;flex-direction:column;gap:6px;">
             <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">COVER DESCRIPTION</div>
             <div class="emv-cover-desc-row" style="cursor:default;">
-              <!-- Text area — tap to open sheet with keyboard -->
+              <!-- Text preview — tap to open sheet with keyboard -->
               <div class="emv-cover-desc-text" id="emv-cover-desc-preview" onclick="openCoverDescSheet()" style="cursor:pointer;">Create a captivating cover image for "Starlight in Your Eyes" that embodies the essence of a dreamy night sky filled with shimmering stars.</div>
-              <!-- Recreate button — tap to regen directly, purple gradient -->
-              <div onclick="generateCoverImage()" style="display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border-radius:20px;padding:6px 10px;flex-shrink:0;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
+              <!-- Divider -->
+              <div style="width:100%;height:1px;background:rgba(255,255,255,.15);flex-shrink:0;"></div>
+              <!-- Recreate button — tap to regen directly, purple/pink/blue gradient (Figma node 496:8580) -->
+              <div id="emv-cover-recreate-btn" onclick="generateCoverImage()" style="display:flex;align-items:center;gap:3px;background:var(--mv-grad);border-radius:18px;padding:5px 8px;flex-shrink:0;cursor:pointer;transition:opacity .15s,background .2s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
                 <img src="assets/icons/ui/ic_reload.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
-                <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
-                <span style="font-size:12px;font-weight:700;color:#fff;">10</span>
+                <span style="font-size:11px;font-weight:500;color:#fff;letter-spacing:-.11px;line-height:16px;white-space:nowrap;">Recreate</span>
+                <div style="display:flex;align-items:center;gap:2px;">
+                  <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
+                  <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">10</span>
+                </div>
               </div>
             </div>
           </div>
@@ -4025,6 +4036,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 <div style="display:flex;align-items:center;gap:6px;">
                   <button id="simple-enhance-btn" onclick="event.stopPropagation();enhancePrompt('simple')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
                     <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                    <span class="enh-txt">Enhance</span>
                   </button>
                   <span id="song-simple-cnt" style="font-size:12px;color:rgba(255,255,255,.4);">0/2500</span>
                   <div id="song-simple-clear" onclick="event.stopPropagation();document.getElementById('song-simple-idea').value='';updateSimpleSongCTA(document.getElementById('song-simple-idea'))" style="display:none;width:20px;height:20px;border-radius:10px;background:#383842;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
@@ -4078,6 +4090,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 </div>
                 <div style="display:flex;align-items:center;gap:6px;">
                   <button id="lyrics-enhance-btn" onclick="event.stopPropagation();openEnhanceDirectionSheet()" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                    <!-- Custom mode: icon-only, no room for the "Enhance" label alongside Idea/Lyrics/counter -->
                     <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
                   </button>
                   <span id="lyrics-cnt" style="font-size:12px;color:#9C9CAB;">0/2500</span>
@@ -5484,6 +5497,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding-top:4px;">
             <button id="scene-editor-enhance-btn" onclick="event.stopPropagation();enhancePrompt('scene')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
               <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+              <span class="enh-txt">Enhance</span>
             </button>
             <div id="scene-editor-counter">0/2500</div>
             <div id="scene-editor-clear-btn" onclick="clearSceneEditor()" style="font-size:16px;color:rgba(255,255,255,.35);cursor:pointer;line-height:1;padding:0 2px;">×</div>
@@ -5783,17 +5797,75 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
       </div>
       <!-- Textarea -->
-      <div style="padding:0 16px;">
+      <div style="padding:0 16px 14px;">
         <div style="position:relative;">
-          <textarea id="emv-cover-textarea" oninput="onCoverDescInput(this)" maxlength="2500" style="padding-bottom:32px;color:#fff;-webkit-text-fill-color:#fff;">Create a captivating cover image for "Starlight in Your Eyes" that embodies the essence of a dreamy night sky filled with shimmering stars.</textarea>
+          <textarea id="emv-cover-textarea" oninput="onCoverDescInput(this)" maxlength="2500" inputmode="none" style="padding-bottom:32px;color:#fff;-webkit-text-fill-color:#fff;">Create a captivating cover image for "Starlight in Your Eyes" that embodies the essence of a dreamy night sky filled with shimmering stars.</textarea>
           <!-- Count + clear — pinned bottom-right inside the textarea box -->
           <div style="position:absolute;bottom:10px;right:12px;display:flex;align-items:center;gap:6px;pointer-events:none;">
             <button id="emv-cover-enhance-btn" onclick="event.stopPropagation();enhancePrompt('cover')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;pointer-events:all;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
               <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+              <span class="enh-txt">Enhance</span>
             </button>
             <span id="emv-cover-charcount" style="font-size:12px;font-weight:500;color:#676779;">150/2500</span>
             <span id="emv-cover-clear-btn" onclick="event.stopPropagation();document.getElementById('emv-cover-textarea').value='';onCoverDescInput(document.getElementById('emv-cover-textarea'));" style="font-size:13px;color:#676779;cursor:pointer;pointer-events:all;line-height:1;">✕</span>
           </div>
+        </div>
+      </div>
+
+      <!-- Simulated iOS Keyboard — rises together with the sheet so it reads as "opening the keyboard" the moment the input is tapped -->
+      <div id="emv-cover-keyboard">
+        <!-- Predictive text bar -->
+        <div class="kb-suggestions">
+          <div class="kb-sug-item" onclick="coverKbInsert('&quot;The&quot;')">"The"</div>
+          <div class="kb-sug-item" onclick="coverKbInsert('the ')">the</div>
+          <div class="kb-sug-item" onclick="coverKbInsert('to ')">to</div>
+        </div>
+        <!-- Row 1 -->
+        <div class="kb-row" style="margin-top:8px;">
+          <div class="kb-key" onclick="coverKbType('q')">q</div>
+          <div class="kb-key" onclick="coverKbType('w')">w</div>
+          <div class="kb-key" onclick="coverKbType('e')">e</div>
+          <div class="kb-key" onclick="coverKbType('r')">r</div>
+          <div class="kb-key" onclick="coverKbType('t')">t</div>
+          <div class="kb-key" onclick="coverKbType('y')">y</div>
+          <div class="kb-key" onclick="coverKbType('u')">u</div>
+          <div class="kb-key" onclick="coverKbType('i')">i</div>
+          <div class="kb-key" onclick="coverKbType('o')">o</div>
+          <div class="kb-key" onclick="coverKbType('p')">p</div>
+        </div>
+        <!-- Row 2 -->
+        <div class="kb-row" style="padding:0 14px;">
+          <div class="kb-key" onclick="coverKbType('a')">a</div>
+          <div class="kb-key" onclick="coverKbType('s')">s</div>
+          <div class="kb-key" onclick="coverKbType('d')">d</div>
+          <div class="kb-key" onclick="coverKbType('f')">f</div>
+          <div class="kb-key" onclick="coverKbType('g')">g</div>
+          <div class="kb-key" onclick="coverKbType('h')">h</div>
+          <div class="kb-key" onclick="coverKbType('j')">j</div>
+          <div class="kb-key" onclick="coverKbType('k')">k</div>
+          <div class="kb-key" onclick="coverKbType('l')">l</div>
+        </div>
+        <!-- Row 3 -->
+        <div class="kb-row">
+          <div class="kb-key kb-key-spec" onclick="coverKbShift()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 12 6 7 11"/><line x1="12" y1="6" x2="12" y2="18"/></svg>
+          </div>
+          <div class="kb-key" onclick="coverKbType('z')">z</div>
+          <div class="kb-key" onclick="coverKbType('x')">x</div>
+          <div class="kb-key" onclick="coverKbType('c')">c</div>
+          <div class="kb-key" onclick="coverKbType('v')">v</div>
+          <div class="kb-key" onclick="coverKbType('b')">b</div>
+          <div class="kb-key" onclick="coverKbType('n')">n</div>
+          <div class="kb-key" onclick="coverKbType('m')">m</div>
+          <div class="kb-key kb-key-spec" onclick="coverKbDelete()">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 002-2V6a2 2 0 00-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
+          </div>
+        </div>
+        <!-- Row 4 -->
+        <div class="kb-row">
+          <div class="kb-key kb-key-spec" style="flex:0 0 78px;max-width:none;font-size:14px;" onclick="coverKbInsert('123')">ABC</div>
+          <div class="kb-key kb-key-space" onclick="coverKbType(' ')">space</div>
+          <div class="kb-key kb-key-ret" onclick="coverKbType('\n')">return</div>
         </div>
       </div>
     </div>
@@ -6582,6 +6654,7 @@ function updateSbCount(ta) {
   if (rBtn) { rBtn.disabled = false; rBtn.style.opacity = '1'; }
   const enh = document.getElementById('sb-desc-enhance-btn');
   if (enh) enh.style.display = ta.value.length > 0 ? 'flex' : 'none';
+  fitEnhanceBtn('sb-desc-enhance-btn');
 }
 
 // ── Scene Detail player controls ──
@@ -6742,22 +6815,77 @@ function onCoverDescInput(ta) {
   if (preview) preview.textContent = ta.value || '';
   const enh = document.getElementById('emv-cover-enhance-btn');
   if (enh) enh.style.display = len > 0 ? 'flex' : 'none';
+  fitEnhanceBtn('emv-cover-enhance-btn', { containerEl: ta.parentElement, reserve: 20 });
+}
+
+// ── Cover Description simulated keyboard — rises with the sheet so tapping
+// the input reads as opening the keyboard directly (same approach as the
+// Scene Text Editor's simulated keyboard). ──
+let _coverKbShifted = false;
+function coverKbType(char) {
+  const ta = document.getElementById('emv-cover-textarea');
+  if (!ta) return;
+  const ch = (_coverKbShifted && char.length === 1) ? char.toUpperCase() : char;
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  ta.value = ta.value.slice(0, s) + ch + ta.value.slice(e);
+  const pos = s + ch.length;
+  ta.setSelectionRange(pos, pos);
+  if (_coverKbShifted && char !== '\n') { _coverKbShifted = false; }
+  onCoverDescInput(ta);
+}
+function coverKbInsert(str) {
+  const ta = document.getElementById('emv-cover-textarea');
+  if (!ta) return;
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  ta.value = ta.value.slice(0, s) + str + ta.value.slice(e);
+  const pos = s + str.length;
+  ta.setSelectionRange(pos, pos);
+  onCoverDescInput(ta);
+}
+function coverKbDelete() {
+  const ta = document.getElementById('emv-cover-textarea');
+  if (!ta) return;
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  if (s !== e) { ta.value = ta.value.slice(0, s) + ta.value.slice(e); ta.setSelectionRange(s, s); }
+  else if (s > 0) { ta.value = ta.value.slice(0, s - 1) + ta.value.slice(s); ta.setSelectionRange(s - 1, s - 1); }
+  onCoverDescInput(ta);
+}
+function coverKbShift() {
+  _coverKbShifted = !_coverKbShifted;
+  document.querySelectorAll('#emv-cover-keyboard .kb-key:not(.kb-key-spec):not(.kb-key-space):not(.kb-key-ret)').forEach(k => {
+    const ch = k.textContent.trim();
+    if (ch.length === 1) k.textContent = _coverKbShifted ? ch.toUpperCase() : ch.toLowerCase();
+  });
 }
 function generateCoverImage() {
   closeCoverDescSheet();
-  const gen   = document.getElementById('emv-cover-generating');
-  const img   = document.getElementById('emv-cover-img');
-  const btn   = document.getElementById('merge-mv-btn');
-  const fsBtn = document.getElementById('emv-cover-fullscreen-btn');
+  const gen       = document.getElementById('emv-cover-generating');
+  const img       = document.getElementById('emv-cover-img');
+  const btn       = document.getElementById('merge-mv-btn');
+  const fsBtn     = document.getElementById('emv-cover-fullscreen-btn');
+  const recreate  = document.getElementById('emv-cover-recreate-btn');
+  const sheetBtn  = document.getElementById('emv-cover-gen-btn');
   if (gen)   gen.classList.add('active');
   if (img)   img.classList.add('hidden');
   if (fsBtn) fsBtn.style.display = 'none';
   if (btn)   { btn.disabled = true; btn.style.opacity = '.38'; }
+  [recreate, sheetBtn].forEach(b => {
+    if (!b) return;
+    b.style.background = '#383842';
+    b.style.opacity = '.5';
+    b.style.pointerEvents = 'none';
+  });
   setTimeout(() => {
     if (gen)   gen.classList.remove('active');
     if (img)   img.classList.remove('hidden');
     if (fsBtn) fsBtn.style.display = 'flex';
     if (btn)   { btn.disabled = false; btn.style.opacity = '1'; setEmvDirty(); }
+    [recreate, sheetBtn].forEach(b => {
+      if (!b) return;
+      b.style.background = 'var(--mv-grad)';
+      b.style.opacity = '1';
+      b.style.pointerEvents = '';
+    });
   }, 3000);
 }
 
@@ -7465,6 +7593,7 @@ function onSceneEditorInput() {
   if (ta && ctr) ctr.textContent = ta.value.length + '/2500';
   const enh = document.getElementById('scene-editor-enhance-btn');
   if (enh) enh.style.display = (ta && ta.value.length > 0) ? 'flex' : 'none';
+  fitEnhanceBtn('scene-editor-enhance-btn');
 }
 
 // ── Storyboard: MV Song play/pause toggle ──
@@ -7993,6 +8122,7 @@ function updateDescCount(ta) {
   if (btn) btn.style.display = hasText ? 'flex' : 'none';
   const enh = document.getElementById('mvr-enhance-btn');
   if (enh) enh.style.display = hasText ? 'flex' : 'none';
+  fitEnhanceBtn('mvr-enhance-btn');
 }
 function clearDescribe() {
   const ta = document.getElementById('mvr-describe');
@@ -8766,6 +8896,8 @@ function switchSongMode(mode) {
     if (st) st.style.background = '#3A3A47';
     if (sk) sk.style.transform  = 'translateX(0)';
   }
+
+  fitEnhanceBtn('simple-enhance-btn');
 }
 
 const _songIdeaPrompts = [
@@ -8863,6 +8995,52 @@ function generateFullLyrics() {
   updateLyricsClear(ta);
 }
 
+// ── Enhance button: show the "Enhance" label when its row has room, otherwise
+// fall back to icon-only. Measured live since sibling widths shift (char
+// counter digits, clear button appearing/disappearing, Idea/Lyrics buttons). ──
+function fitEnhanceBtn(btnId, opts) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  const txt = btn.querySelector('.enh-txt');
+  if (!txt || getComputedStyle(btn).display === 'none') return;
+  opts = opts || {};
+  const row = opts.row || btn.parentElement;
+  if (!row) return;
+
+  txt.style.display = 'inline'; // measure the "with text" state first
+  let contentWidth = 0, visible = 0;
+  Array.from(row.children).forEach(child => {
+    if (getComputedStyle(child).display === 'none') return;
+    contentWidth += child.getBoundingClientRect().width;
+    visible++;
+  });
+  const rowStyle = getComputedStyle(row);
+  const rowGap = parseFloat(rowStyle.columnGap);
+  contentWidth += (isNaN(rowGap) ? 0 : rowGap) * Math.max(0, visible - 1);
+
+  let available;
+  if (opts.containerEl) {
+    available = opts.containerEl.clientWidth - (opts.reserve || 0);
+  } else {
+    const padL = parseFloat(rowStyle.paddingLeft) || 0;
+    const padR = parseFloat(rowStyle.paddingRight) || 0;
+    available = row.clientWidth - padL - padR;
+  }
+
+  if (contentWidth > available + 0.5) txt.style.display = 'none';
+}
+
+function fitAllEnhanceBtns() {
+  fitEnhanceBtn('mvr-enhance-btn');
+  fitEnhanceBtn('sb-desc-enhance-btn');
+  fitEnhanceBtn('simple-enhance-btn');
+  fitEnhanceBtn('scene-editor-enhance-btn');
+  const coverTa = document.getElementById('emv-cover-textarea');
+  fitEnhanceBtn('emv-cover-enhance-btn', { containerEl: coverTa ? coverTa.parentElement : null, reserve: 20 });
+}
+window.addEventListener('resize', fitAllEnhanceBtns);
+window.addEventListener('load', fitAllEnhanceBtns);
+
 function updateLyricsClear(ta) {
   const cnt = document.getElementById('lyrics-cnt');
   if (cnt) cnt.textContent = ta.value.length + '/2500';
@@ -8881,6 +9059,7 @@ function updateSimpleSongCTA(ta) {
   if (clearBtn) clearBtn.style.display = hasText ? 'flex' : 'none';
   const enh = document.getElementById('simple-enhance-btn');
   if (enh) enh.style.display = hasText ? 'flex' : 'none';
+  fitEnhanceBtn('simple-enhance-btn');
   const btn = document.getElementById('song-cta-simple');
   if (!btn) return;
   if (hasText) {
@@ -9000,6 +9179,8 @@ function enhancePrompt(type) {
       img.style.filter = 'brightness(0) invert(1)';
       img.style.animation = 'spin 0.8s linear infinite reverse';
     }
+    const txt = btn.querySelector('.enh-txt');
+    if (txt) txt.style.color = '#fff';
   }
 
   // ── Enhanced text samples per context ─────────────────────────────
@@ -9093,6 +9274,8 @@ function enhancePrompt(type) {
         img.style.filter = 'brightness(0)';
         img.style.animation = '';
       }
+      const txt = btn.querySelector('.enh-txt');
+      if (txt) txt.style.color = '';
     }
 
     // Sync count display
