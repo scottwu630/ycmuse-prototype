@@ -1045,10 +1045,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .song-like-btn,.song-share-btn{flex-shrink:0;background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;width:20px;height:20px;transition:transform .15s;}
 .song-like-btn:active,.song-share-btn:active{transform:scale(.88);}
 
-/* ── NEW SONGS LIST SECTION ── */
-.new-songs-wrap{overflow-x:auto;overflow-y:hidden;display:flex;width:100%;max-width:320px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 0 32px;}
-.new-songs-wrap::-webkit-scrollbar{display:none;}
-.new-songs-page{flex-shrink:0;width:320px;scroll-snap-align:start;}
+/* ── NEW SONGS LIST SECTION — now a plain vertical list (see #new-songs-track), no horizontal paging ── */
 .new-song-row{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;transition:opacity .15s;}
 .new-song-row:active{opacity:.55;}
 .new-song-art{position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;}
@@ -1060,10 +1057,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .new-song-tags{font-size:12px;color:var(--text-2);}
 .new-song-create{flex-shrink:0;padding:6px 10px;border-radius:14px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.28);color:var(--accent);font-size:12px;font-weight:500;cursor:pointer;transition:background .15s;letter-spacing:-.11px;}
 .new-song-create:active{background:rgba(168,85,247,.22);}
-/* page indicator dots */
-.page-dots{display:flex;gap:5px;justify-content:center;margin:-20px 0 20px;}
-.page-dot{width:5px;height:5px;border-radius:50%;background:var(--text-3);transition:all .25s;}
-.page-dot.on{background:var(--accent);width:14px;border-radius:3px;}
 
 /* ── ONBOARDING SLIDER ── */
 #screen-onboard{display:flex;flex-direction:column;}
@@ -1440,10 +1433,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">New Songs</div>
           <div onclick="document.querySelector('#screen-songs-all .nav-title').textContent='New Songs';goTo('songs-all')" style="display:flex;align-items:center;gap:2px;font-size:11px;font-weight:500;color:#A855F7;cursor:pointer;">See all <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;"><path d="M8.29295 5.29298C8.65907 4.92686 9.23807 4.90427 9.63084 5.22462L9.70702 5.29298L15.707 11.293C16.0975 11.6835 16.0975 12.3165 15.707 12.707L9.70702 18.707C9.31649 19.0976 8.68348 19.0976 8.29295 18.707C7.90243 18.3165 7.90243 17.6835 8.29295 17.293L13.5859 12L8.29295 6.70704L8.22459 6.63087C7.90424 6.2381 7.92684 5.65909 8.29295 5.29298Z" fill="#A855F7"/></svg></div>
         </div>
-        <div id="new-songs-wrap" style="overflow:hidden;width:320px;">
-          <div id="new-songs-track" style="display:flex;will-change:transform;transition:transform .52s cubic-bezier(.22,1,.36,1);">
-          <!-- Page 1 -->
-          <div style="flex-shrink:0;width:320px;">
+        <div id="new-songs-track" style="display:flex;flex-direction:column;">
             <div class="songsall-item" onclick="openSongPlayer('Down the Memory Lane','Lo-fi · Soothing · Cozy','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
               <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_05.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
@@ -1492,9 +1482,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               </div>
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Forest Morning','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-          </div>
-          <!-- Page 2 -->
-          <div style="flex-shrink:0;width:320px;">
             <div class="songsall-item" onclick="openSongPlayer('Neon Pulse','Electronic · Energetic','assets/images/album-art/album_02.jpg','Electronic','Energetic')">
               <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_02.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
@@ -1543,9 +1530,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               </div>
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Ocean Dreams','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-          </div>
-          <!-- Page 3 -->
-          <div style="flex-shrink:0;width:320px;">
             <div class="songsall-item" onclick="openSongPlayer('Last September','Pop · Nostalgic','assets/images/album-art/album_06.jpg','Pop','Melancholic')">
               <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_06.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
@@ -1594,9 +1578,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               </div>
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Winter Song','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-          </div>
-          <!-- Page 4 -->
-          <div style="flex-shrink:0;width:320px;">
             <div class="songsall-item" onclick="openSongPlayer('Foam of the Days','Lo-fi · Asian · Cozy','assets/images/album-art/album_07.jpg','Lo-fi','Cozy')">
               <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_07.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
@@ -1645,9 +1626,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               </div>
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Morning Dew','Ambient','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-          </div>
-          <!-- Page 5 -->
-          <div style="flex-shrink:0;width:320px;">
             <div class="songsall-item" onclick="openSongPlayer('Ocean &amp; Silence','Ambient · Peaceful','assets/images/album-art/album_09.jpg','Ambient','Calm')">
               <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_09.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
@@ -1696,17 +1674,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               </div>
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Neon City Nights','Electronic','Dark');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
-          </div>
-          </div><!-- /new-songs-track -->
-        </div><!-- /new-songs-wrap -->
-        <!-- Dots -->
-        <div id="new-songs-dots" style="display:flex;gap:5px;justify-content:center;padding:10px 0 8px;">
-          <div onclick="scrollNewSongsTo(0)" style="width:16px;height:4px;border-radius:3px;background:#fff;transition:all .3s;cursor:pointer;"></div>
-          <div onclick="scrollNewSongsTo(1)" style="width:6px;height:4px;border-radius:3px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer;"></div>
-          <div onclick="scrollNewSongsTo(2)" style="width:6px;height:4px;border-radius:3px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer;"></div>
-          <div onclick="scrollNewSongsTo(3)" style="width:6px;height:4px;border-radius:3px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer;"></div>
-          <div onclick="scrollNewSongsTo(4)" style="width:6px;height:4px;border-radius:3px;background:rgba(255,255,255,.4);transition:all .3s;cursor:pointer;"></div>
-        </div>
+        </div><!-- /new-songs-track -->
 
       </div>
     </div>
@@ -6139,6 +6107,12 @@ function tabNav(id) {
     if (dot) dot.classList.remove('show');
     syncHistoryLoginState();
   }
+  if (id === 'home') {
+    // Re-tapping Explore (or switching to it) always scrolls back to the top,
+    // even if screen-home is already the active screen (goTo() no-ops in that case).
+    const homeScroll = document.querySelector('#screen-home .scr-scroll');
+    if (homeScroll) homeScroll.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   goTo(id);
 }
 
@@ -6870,11 +6844,10 @@ function openHistMore(btn) {
     addOpt(_moreIcons.delete, 'Delete', null, () => { showHistDeleteDialog(); });
 
   } else if (htype === 'song') {
-    // Song: always show [Create MV | Get Proof] + Like, Share, Publish, Download, Delete (if not published)
+    // Song: always show [Create MV] + Like, Share, Publish, Download, Delete (if not published)
     const isPublished = _histMoreRow.dataset.published === 'true';
     addCtaRow([
-      {icon:'ic_video_ai.svg',   label:'Create MV',  primary:true,  onClick:()=>goTo('mv-style')},
-      {icon:'ic_certified.svg',  label:'Get Proof',  primary:false, onClick:()=>goTo('proof')}
+      {icon:'ic_video_ai.svg',   label:'Create MV',  primary:true,  onClick:()=>goTo('mv-style')}
     ]);
     addOpt(_moreIcons.heart(liked), liked ? 'Unlike' : 'Like', null, () => {
       _histMoreRow.dataset.liked = liked ? 'false' : 'true';
@@ -6891,12 +6864,11 @@ function openHistMore(btn) {
     }
 
   } else {
-    // MV: [Edit MV | Get Proof] CTA row + Like, Share, Publish, Download, Delete (done items)
+    // MV: [Edit MV] CTA row + Like, Share, Publish, Download, Delete (done items)
     const isMvPublished = _histMoreRow.dataset.published === 'true';
     const isMvReviewing = _histMoreRow.dataset.reviewing === 'true';
     addCtaRow([
-      {icon:'ic_edit.svg',      label:'Edit MV',   primary:false, onClick:()=>goTo('mv-edit')},
-      {icon:'ic_certified.svg', label:'Get Proof', primary:false, onClick:()=>goTo('proof')}
+      {icon:'ic_edit.svg',      label:'Edit MV',   primary:false, onClick:()=>goTo('mv-edit')}
     ]);
     addOpt(_moreIcons.heart(liked), liked ? 'Unlike' : 'Like', null, () => {
       _histMoreRow.dataset.liked = liked ? 'false' : 'true';
@@ -8315,17 +8287,6 @@ function applySettings() {
   hideSheet('settings-sheet');
 }
 
-// ── New Songs page dot indicator ──
-window.addEventListener('load', () => {
-  const wrap = document.getElementById('new-songs-wrap');
-  const dots = document.querySelectorAll('#new-songs-dots .page-dot');
-  if (!wrap || !dots.length) return;
-  wrap.addEventListener('scroll', () => {
-    const idx = Math.round(wrap.scrollLeft / wrap.offsetWidth);
-    dots.forEach((d, i) => d.classList.toggle('on', i === idx));
-  }, { passive: true });
-});
-
 // ── Song context (mv = came from MV Room, standalone = direct) ──
 let _songCtx = 'standalone';
 
@@ -9400,79 +9361,6 @@ function iapSuccess() {
   setTimeout(() => toast.remove(), 2800);
   goBack();
 }
-// ── New Songs drag pager ──────────────────────────────────────────────────
-(function() {
-  const PAGE_W = 320, TOTAL = 5, THRESHOLD = 60;
-  let nsIdx = 0, sx = 0, dragging = false, _nsDid = false;
-
-  function getTrack() { return document.getElementById('new-songs-track'); }
-
-  function setNsPage(idx, animated) {
-    nsIdx = Math.max(0, Math.min(TOTAL - 1, idx));
-    const t = getTrack();
-    if (!t) return;
-    t.style.transition = animated ? 'transform .52s cubic-bezier(.22,1,.36,1)' : 'none';
-    t.style.transform  = `translateX(${-nsIdx * PAGE_W}px)`;
-    const dots = document.querySelectorAll('#new-songs-dots > div');
-    dots.forEach((d, i) => {
-      d.style.width      = i === nsIdx ? '16px' : '6px';
-      d.style.background = i === nsIdx ? '#fff' : 'rgba(255,255,255,.4)';
-    });
-  }
-
-  function onStart(clientX) { sx = clientX; dragging = true; _nsDid = false; const t = getTrack(); if (t) t.style.transition = 'none'; }
-  function onMove(clientX) {
-    if (!dragging) return;
-    const dx = clientX - sx;
-    if (Math.abs(dx) > 6) _nsDid = true;
-    const atS = nsIdx === 0, atE = nsIdx === TOTAL - 1;
-    let delta = dx;
-    if (dx > 0 && atS) delta = dx / 3;
-    if (dx < 0 && atE) delta = dx / 3;
-    const t = getTrack();
-    if (t) t.style.transform = `translateX(${-nsIdx * PAGE_W + delta}px)`;
-  }
-  function onEnd(clientX) {
-    if (!dragging) return;
-    dragging = false;
-    const dx = clientX - sx;
-    if (dx < -THRESHOLD && nsIdx < TOTAL - 1)     setNsPage(nsIdx + 1, true);
-    else if (dx > THRESHOLD && nsIdx > 0)          setNsPage(nsIdx - 1, true);
-    else if (Math.abs(dx) > 4)                    setNsPage(nsIdx, true);
-    else { const t = getTrack(); if (t) t.style.transition = ''; }
-  }
-
-  window.addEventListener('load', () => {
-    setNsPage(0, false);
-    const wrap = document.getElementById('new-songs-wrap');
-    if (!wrap) return;
-    wrap.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true });
-    wrap.addEventListener('touchmove',  e => onMove(e.touches[0].clientX),  { passive: true });
-    wrap.addEventListener('touchend',   e => onEnd(e.changedTouches[0].clientX), { passive: true });
-    wrap.addEventListener('click', e => { if (_nsDid) { e.stopPropagation(); _nsDid = false; } }, true);
-    wrap.addEventListener('mousedown', e => onStart(e.clientX));
-    window.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX); });
-    window.addEventListener('mouseup',   e => { if (dragging) onEnd(e.clientX); });
-  });
-})();
-
-function updateNewSongsDots() {} // legacy stub — handled by drag pager above
-function scrollNewSongsTo(idx) { /* dot click */ (function(){ const fn = window._nsSetPage; }()); }
-// expose setNsPage for dot clicks
-window.addEventListener('load', () => {
-  // Dot clicks
-  document.querySelectorAll('#new-songs-dots > div').forEach((d, i) => {
-    d.onclick = () => {
-      const t = document.getElementById('new-songs-track');
-      const dots = document.querySelectorAll('#new-songs-dots > div');
-      if (!t) return;
-      // inline setNsPage equivalent
-      t.style.transition = 'transform .52s cubic-bezier(.22,1,.36,1)';
-      t.style.transform  = `translateX(${-i * 320}px)`;
-      dots.forEach((dd, ii) => { dd.style.width = ii === i ? '16px' : '6px'; dd.style.background = ii === i ? '#fff' : 'rgba(255,255,255,.4)'; });
-    };
-  });
-});
 
 // ═══════════════════════════════════════════════════
 // MV PREVIEW PLAYER
