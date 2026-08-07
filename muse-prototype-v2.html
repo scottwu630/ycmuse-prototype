@@ -157,9 +157,33 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
 /* ── SCREEN SYSTEM ── */
 .screen-wrap{position:absolute;inset:0;overflow:hidden;contain:paint;}
-.screen{position:absolute;inset:0;background:var(--bg);transform:translateX(105%);transition:transform .36s cubic-bezier(.25,.46,.45,.94);will-change:transform;overflow:hidden;}
+/* `contain:paint` above makes .screen-wrap its own stacking context, which
+   traps any z-index set on a .screen inside it — a child's z-index:260
+   (see .screen.vsheet below) only ever wins against OTHER children of
+   .screen-wrap, never against siblings of .screen-wrap itself like
+   #mini-player. Without this rule, #mini-player (z-index:95, its own
+   stacking context at the phone-frame level) always paints on top of the
+   entire .screen-wrap — including an open Song Player/Song Result sheet —
+   because .screen-wrap itself has no explicit z-index of its own. Bumping
+   .screen-wrap's z-index above #mini-player's for as long as any vsheet is
+   present (open OR mid-close) makes the whole contained unit — sheet
+   included — paint over the mini player, exactly as the sheet's own
+   z-index:260 already intends internally.  */
+.screen-wrap:has(.screen.vsheet){z-index:300;}
+.screen{position:absolute;inset:0;background:var(--bg);transform:translateX(105%);transition:transform .36s cubic-bezier(.25,.46,.45,.94);will-change:transform;overflow:hidden;z-index:0;}
 .screen.active{transform:translateX(0);}
 .screen.behind{transform:translateX(-28%);}
+/* `.screen` elements are plain siblings inside .screen-wrap's own stacking
+   context (see `contain:paint` above), all at the same base z-index — so
+   with no other signal they'd paint in DOM ORDER, which does NOT track
+   navigation order (e.g. screen-history sits after screen-song-result /
+   screen-mv-result in the markup, purely by authoring accident). goTo()
+   below adds this class to whichever of cur/nxt is supposed to visually
+   cover the other for the duration of a transition, so paint order always
+   matches the animation's intent instead of silently depending on markup
+   position. Kept below .screen.vsheet's 260 so it never fights the
+   mini-player-triggered sheet mechanism. */
+.screen.nav-top{z-index:10;}
 .scr-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .scr-scroll::-webkit-scrollbar{display:none;}
 #cp-scroll{scrollbar-width:none;}
@@ -185,6 +209,32 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .tab-create{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:48px;height:48px;border-radius:39px;background:var(--mv-grad);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 2px rgba(0,0,0,.25);cursor:pointer;transition:transform .18s;padding:14px;box-sizing:border-box;}
 .tab-create:active{transform:translateX(-50%) scale(.93);}
 .tab-create svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;}
+
+/* ── MINI SONG PLAYER — persists across Home / See All Songs / History / Community Profile / Trending MV see-all while a track plays.
+   Sizing/spacing below matches the updated, more compact Figma spec (node 1150:23589 /
+   "Mini Song Player" 1995:26987) — total resting height ~43px vs. the previous ~54px. ── */
+#mini-player{position:absolute;left:0;right:0;bottom:0;z-index:95;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;flex-direction:column;gap:6px;padding-bottom:6px;transform:translateY(calc(100% + var(--tab-h) + 20px));transition:transform .32s cubic-bezier(.25,.46,.45,.94);pointer-events:none;}
+#mini-player.show{transform:translateY(0);pointer-events:auto;}
+#mini-player.tabbed{bottom:var(--tab-h);}
+.mp-progress{position:relative;height:1px;width:100%;background:rgba(255,255,255,.15);flex-shrink:0;}
+.mp-progress-fill{position:absolute;left:0;top:0;bottom:0;background:#fff;width:0%;}
+.mp-row{display:flex;align-items:center;gap:8px;padding:0 16px;box-sizing:border-box;}
+.mp-tap{display:flex;align-items:center;gap:8px;flex:1;min-width:0;cursor:pointer;}
+.mp-art{width:30px;height:30px;border-radius:6px;object-fit:cover;flex-shrink:0;background:#212127;}
+.mp-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.mp-title{font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mp-time{font-size:9px;font-weight:500;color:#9C9CAB;letter-spacing:-.09px;line-height:11px;}
+.mp-time .mp-now{color:#fff;}
+.mp-btns{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.mp-btn{width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.mp-btn img{width:22px;height:22px;display:block;filter:brightness(0) invert(1);}
+.mp-btn.mp-btn-next{width:16px;height:16px;}
+.mp-btn.mp-btn-next img{width:16px;height:16px;}
+
+/* ── Player screens presented as a bottom→top sheet (opened by tapping the mini player) ── */
+.screen.vsheet{z-index:260;}
+.screen.vsheet:not(.vopen){transform:translateY(100%);}
+.screen.vsheet.vopen{transform:translateY(0);}
 
 /* ── NAV BAR ── */
 /* ── NavBar — synced from Figma Design System (2nd Layer) ── */
@@ -1488,7 +1538,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
         <div id="new-songs-track" style="display:flex;flex-direction:column;">
             <div class="songsall-item" onclick="openSongPlayer('Down the Memory Lane','Lo-fi · Soothing · Cozy','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_05.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Down the Memory Lane','Lo-fi · Soothing · Cozy','assets/images/album-art/album_05.jpg','Lo-fi','Calm')"><img src="assets/images/album-art/album_05.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Down the Memory Lane</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1504,7 +1554,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Down the Memory Lane','Lo-fi','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','assets/images/album-art/album_08.jpg','Electronic','Dark')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_08.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Midnight Drive','Electronic · Dark','assets/images/album-art/album_08.jpg','Electronic','Dark')"><img src="assets/images/album-art/album_08.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Midnight Drive</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1520,7 +1570,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Midnight Drive','Electronic','Dark');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Forest Morning','Acoustic · Folk','assets/images/album-art/album_01.jpg','Acoustic','Calm')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_01.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Forest Morning','Acoustic · Folk','assets/images/album-art/album_01.jpg','Acoustic','Calm')"><img src="assets/images/album-art/album_01.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Forest Morning</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1536,7 +1586,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Forest Morning','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Neon Pulse','Electronic · Energetic','assets/images/album-art/album_02.jpg','Electronic','Energetic')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_02.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Neon Pulse','Electronic · Energetic','assets/images/album-art/album_02.jpg','Electronic','Energetic')"><img src="assets/images/album-art/album_02.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Neon Pulse</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1552,7 +1602,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Neon Pulse','Electronic','Energetic');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Golden Hour','R&B · Warm','assets/images/album-art/album_03.jpg','R&B','Uplifting')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_03.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Golden Hour','R&B · Warm','assets/images/album-art/album_03.jpg','R&B','Uplifting')"><img src="assets/images/album-art/album_03.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Golden Hour</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1568,7 +1618,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Golden Hour','R&B','Uplifting');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Ocean Dreams','Ambient · Calm','assets/images/album-art/album_04.jpg','Acoustic','Calm')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_04.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Ocean Dreams','Ambient · Calm','assets/images/album-art/album_04.jpg','Acoustic','Calm')"><img src="assets/images/album-art/album_04.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Ocean Dreams</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1584,7 +1634,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Ocean Dreams','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Last September','Pop · Nostalgic','assets/images/album-art/album_06.jpg','Pop','Melancholic')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_06.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Last September','Pop · Nostalgic','assets/images/album-art/album_06.jpg','Pop','Melancholic')"><img src="assets/images/album-art/album_06.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Last September</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1600,7 +1650,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Last September','Pop','Melancholic');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('City Lights','Jazz · Cinematic','assets/images/album-art/album_07.jpg','Jazz','Calm')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_07.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'City Lights','Jazz · Cinematic','assets/images/album-art/album_07.jpg','Jazz','Calm')"><img src="assets/images/album-art/album_07.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">City Lights</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1616,7 +1666,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('City Lights','Jazz','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Winter Song','Acoustic · Cozy','assets/images/album-art/album_09.jpg','Acoustic','Calm')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_09.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Winter Song','Acoustic · Cozy','assets/images/album-art/album_09.jpg','Acoustic','Calm')"><img src="assets/images/album-art/album_09.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Winter Song</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1632,7 +1682,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Winter Song','Acoustic','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Foam of the Days','Lo-fi · Asian · Cozy','assets/images/album-art/album_07.jpg','Lo-fi','Cozy')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_07.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Foam of the Days','Lo-fi · Asian · Cozy','assets/images/album-art/album_07.jpg','Lo-fi','Cozy')"><img src="assets/images/album-art/album_07.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Foam of the Days</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1648,7 +1698,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Foam of the Days','Lo-fi','Cozy');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Random Access Memories','Dreamy · Synth · Retro','assets/images/album-art/album_10.jpg','Electronic','Retro')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_10.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Random Access Memories','Dreamy · Synth · Retro','assets/images/album-art/album_10.jpg','Electronic','Retro')"><img src="assets/images/album-art/album_10.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Random Access Memories</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1664,7 +1714,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Random Access Memories','Electronic','Retro');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Morning Dew','Ambient · Nature','assets/images/album-art/album_04.jpg','Ambient','Calm')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_04.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Morning Dew','Ambient · Nature','assets/images/album-art/album_04.jpg','Ambient','Calm')"><img src="assets/images/album-art/album_04.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Morning Dew</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1680,7 +1730,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Morning Dew','Ambient','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Ocean &amp; Silence','Ambient · Peaceful','assets/images/album-art/album_09.jpg','Ambient','Calm')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_09.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Ocean &amp; Silence','Ambient · Peaceful','assets/images/album-art/album_09.jpg','Ambient','Calm')"><img src="assets/images/album-art/album_09.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Ocean &amp; Silence</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1696,7 +1746,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Ocean &amp; Silence','Ambient','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Whispers of the Past','Lo-fi · Soothing','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_05.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Whispers of the Past','Lo-fi · Soothing','assets/images/album-art/album_05.jpg','Lo-fi','Calm')"><img src="assets/images/album-art/album_05.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Whispers of the Past</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1712,7 +1762,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="songsall-actions"><button onclick="event.stopPropagation();applySongTemplate('Whispers of the Past','Lo-fi','Calm');goTo('song-create')" class="songsall-create">Create</button></div>
             </div>
             <div class="songsall-item" onclick="openSongPlayer('Neon City Nights','Electronic · Urban','assets/images/album-art/album_03.jpg','Electronic','Dark')">
-              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_03.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+              <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Neon City Nights','Electronic · Urban','assets/images/album-art/album_03.jpg','Electronic','Dark')"><img src="assets/images/album-art/album_03.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
               <div class="songsall-info">
                 <div class="songsall-title">Neon City Nights</div>
                 <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
@@ -1893,8 +1943,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- NavBar -->
       <div style="position:absolute;top:0;left:0;right:0;z-index:20;background:linear-gradient(to bottom,rgba(0,0,0,.5),transparent);padding:calc(var(--safe-top) + 12px) 16px 16px;display:flex;align-items:center;gap:6px;">
-        <div onclick="goBack()" style="width:28px;height:28px;border-radius:18px;background:rgba(33,33,39,.7);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-          <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+        <div onclick="playerBack('song-player')" style="width:28px;height:28px;border-radius:18px;background:rgba(33,33,39,.7);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+          <img id="sp-back-ico" src="assets/icons/ui/ic_chevron-down.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
         </div>
         <div style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;line-height:22px;">Now Playing</div>
         <div style="width:28px;height:28px;opacity:0;flex-shrink:0;"></div>
@@ -2033,7 +2083,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- 01 Whispers of the Past -->
           <div class="songsall-item" onclick="openSongPlayer('Whispers of the Past','Lo-fi · Soothing · Cozy','assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
-            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_05.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Whispers of the Past','Lo-fi · Soothing · Cozy','assets/images/album-art/album_05.jpg','Lo-fi','Calm')"><img src="assets/images/album-art/album_05.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Whispers of the Past</div>
               <div class="songsall-user-row">
@@ -2055,7 +2105,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- 02 Down the Memory Lane -->
           <div class="songsall-item" onclick="openSongPlayer('Down the Memory Lane','Lo-fi · Soothing · Cozy','assets/images/album-art/album_06.jpg','Lo-fi','Calm')">
-            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_06.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Down the Memory Lane','Lo-fi · Soothing · Cozy','assets/images/album-art/album_06.jpg','Lo-fi','Calm')"><img src="assets/images/album-art/album_06.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Down the Memory Lane</div>
               <div class="songsall-user-row">
@@ -2077,7 +2127,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- 03 Midnight Drive -->
           <div class="songsall-item" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','assets/images/album-art/album_08.jpg','Electronic','Dark')">
-            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_08.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Midnight Drive','Electronic · Dark','assets/images/album-art/album_08.jpg','Electronic','Dark')"><img src="assets/images/album-art/album_08.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Midnight Drive</div>
               <div class="songsall-user-row">
@@ -2099,7 +2149,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- 04 Midnight Drive #2 -->
           <div class="songsall-item" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','assets/images/album-art/album_02.jpg','Electronic','Dark')">
-            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_02.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Midnight Drive','Electronic · Dark','assets/images/album-art/album_02.jpg','Electronic','Dark')"><img src="assets/images/album-art/album_02.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Midnight Drive</div>
               <div class="songsall-user-row">
@@ -2120,7 +2170,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- 05 Forest Morning -->
           <div class="songsall-item" onclick="openSongPlayer('Forest Morning','Acoustic · Folk','assets/images/album-art/album_01.jpg','Acoustic','Calm')">
-            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_01.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Forest Morning','Acoustic · Folk','assets/images/album-art/album_01.jpg','Acoustic','Calm')"><img src="assets/images/album-art/album_01.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Forest Morning</div>
               <div class="songsall-user-row">
@@ -2142,7 +2192,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- 06 Morning Dew -->
           <div class="songsall-item" onclick="openSongPlayer('Morning Dew','Ambient · Nature','assets/images/album-art/album_04.jpg','Ambient','Calm')">
-            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_04.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Morning Dew','Ambient · Nature','assets/images/album-art/album_04.jpg','Ambient','Calm')"><img src="assets/images/album-art/album_04.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Morning Dew</div>
               <div class="songsall-user-row">
@@ -2164,7 +2214,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- 07 Random Access Memories -->
           <div class="songsall-item" onclick="openSongPlayer('Random Access Memories','Dreamy · Synth · Retro','assets/images/album-art/album_03.jpg','Electronic','Retro')">
-            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_03.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Random Access Memories','Dreamy · Synth · Retro','assets/images/album-art/album_03.jpg','Electronic','Retro')"><img src="assets/images/album-art/album_03.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Random Access Memories</div>
               <div class="songsall-user-row">
@@ -2186,7 +2236,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- 08 Foam of the Days -->
           <div class="songsall-item" onclick="openSongPlayer('Foam of the Days','Lo-fi · Asian · Cozy','assets/images/album-art/album_07.jpg','Lo-fi','Cozy')">
-            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_07.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Foam of the Days','Lo-fi · Asian · Cozy','assets/images/album-art/album_07.jpg','Lo-fi','Cozy')"><img src="assets/images/album-art/album_07.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Foam of the Days</div>
               <div class="songsall-user-row">
@@ -2208,7 +2258,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- 09 Ocean & Silence -->
           <div class="songsall-item" onclick="openSongPlayer('Ocean &amp; Silence','Ambient · Calm · Peaceful','assets/images/album-art/album_09.jpg','Ambient','Calm')">
-            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_09.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Ocean &amp; Silence','Ambient · Calm · Peaceful','assets/images/album-art/album_09.jpg','Ambient','Calm')"><img src="assets/images/album-art/album_09.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Ocean &amp; Silence</div>
               <div class="songsall-user-row">
@@ -2230,7 +2280,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- 10 Neon Pulse -->
           <div class="songsall-item" onclick="openSongPlayer('Neon Pulse','Electronic · Energetic · Urban','assets/images/album-art/album_10.jpg','Electronic','Energetic')">
-            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this)"><img src="assets/images/album-art/album_10.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
+            <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Neon Pulse','Electronic · Energetic · Urban','assets/images/album-art/album_10.jpg','Electronic','Energetic')"><img src="assets/images/album-art/album_10.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Neon Pulse</div>
               <div class="songsall-user-row">
@@ -2304,7 +2354,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div id="cp-content-mv" style="padding:0 16px 80px;">
 
           <!-- MV 1: Cinematic Night -->
-          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('mv',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2323,7 +2373,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- MV 2: Neon City Nights -->
-          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('mv',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2342,7 +2392,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- MV 3: Starfall Serenade -->
-          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('mv',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2361,7 +2411,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- MV 4: Electric Dreams -->
-          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('mv',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2380,7 +2430,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- MV 5: Urban Whispers -->
-          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('mv',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2399,7 +2449,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- MV 6: Crystal Horizon -->
-          <div onclick="cpRowTap('mv')" style="display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;">
+          <div onclick="cpRowTap('mv',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2423,7 +2473,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div id="cp-content-songs" style="display:none;padding:0 16px 80px;">
 
           <!-- Song 1: Golden Hour -->
-          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('song',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2442,7 +2492,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 2: Midnight Drive -->
-          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('song',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_06.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2461,7 +2511,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 3: Dusk Ballad -->
-          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('song',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_08.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2480,7 +2530,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 4: Forest Morning -->
-          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('song',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_01.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2499,7 +2549,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 5: Velvet Sky -->
-          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('song',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_02.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2518,7 +2568,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 6: Neon Pulse -->
-          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('song',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_03.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2537,7 +2587,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 7: Dreaming Loud -->
-          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
+          <div onclick="cpRowTap('song',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_04.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -2556,7 +2606,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- Song 8: Ocean Drift -->
-          <div onclick="cpRowTap('song')" style="display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;">
+          <div onclick="cpRowTap('song',this)" style="display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;">
             <div style="position:relative;width:61px;height:61px;border-radius:10px;overflow:hidden;flex-shrink:0;">
               <img src="assets/images/album-art/album_07.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);pointer-events:none;"></div>
@@ -4316,11 +4366,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- NavBar -->
       <div style="position:absolute;top:0;left:0;right:0;z-index:20;padding:calc(var(--safe-top) + 12px) 16px 16px;display:flex;align-items:center;gap:6px;">
-        <div onclick="goBack()" style="width:28px;height:28px;border-radius:18px;background:rgba(33,33,39,.7);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-          <img src="assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+        <div onclick="playerBack('song-result')" style="width:28px;height:28px;border-radius:18px;background:rgba(33,33,39,.7);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+          <img id="sr-back-ico" src="assets/icons/ui/ic_chevron-down.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
         </div>
         <div style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;line-height:22px;">Result</div>
-        <div onclick="goTo('home')" style="width:28px;height:28px;border-radius:18px;background:rgba(33,33,39,.7);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <div onclick="playerHome('song-result')" style="width:28px;height:28px;border-radius:18px;background:rgba(33,33,39,.7);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
           <img src="assets/icons/ui/ic_home.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
         </div>
       </div>
@@ -6168,6 +6218,24 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
   </div>
 
 
+  <!-- Mini Song Player — shows the currently playing track at the bottom of Home / See All Songs / History / Community Profile. Tapping the album art or title opens Now Playing / Song Result with a bottom→top slide. -->
+  <div id="mini-player">
+    <div class="mp-progress"><div class="mp-progress-fill" id="mp-progress-fill"></div></div>
+    <div class="mp-row">
+      <div class="mp-tap" onclick="mpOpen()">
+        <img id="mp-art" class="mp-art" src="" alt="">
+        <div class="mp-info">
+          <div class="mp-title" id="mp-title">&nbsp;</div>
+          <div class="mp-time"><span class="mp-now" id="mp-time-now">0:00</span><span id="mp-time-total"> / 0:00</span></div>
+        </div>
+      </div>
+      <div class="mp-btns">
+        <div class="mp-btn" onclick="mpToggle(event)"><img id="mp-play-ico" src="assets/icons/ui/ic_play.svg" alt=""></div>
+        <div class="mp-btn mp-btn-next" onclick="mpNext(event)"><img src="assets/icons/ui/ic_skip_forward.svg" alt=""></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Tab Bar -->
   <div class="tab-bar" id="tab-bar">
     <div class="tab-item on" data-tab="home" onclick="tabNav('home')">
@@ -6270,6 +6338,199 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 const TAB_SCREENS = ['home','history'];
 let navStack = ['splash'];
 
+// ═══════════════════════════════════════════════════
+// MINI SONG PLAYER — global playback surface that keeps a track "playing"
+// while browsing, and mirrors the full Now Playing (sp-*) / Song Result
+// (sr-*) screens so both stay in sync. Tapping its album art / title opens
+// the matching full screen as a bottom→top sheet (see openPlayerSheet).
+// ═══════════════════════════════════════════════════
+const MINI_PLAYER_SCREENS = ['home','songs-all','history','community-profile','mv-all'];
+let _mp = { active: false, kind: null }; // kind: 'sp' (Now Playing) | 'sr' (Song Result)
+
+function mpPaintProgress(pct, dur) {
+  const fill = document.getElementById('mp-progress-fill');
+  if (fill) fill.style.width = pct + '%';
+  const now = document.getElementById('mp-time-now');
+  if (now) now.textContent = fmtTime(Math.round((pct / 100) * dur));
+  const tot = document.getElementById('mp-time-total');
+  if (tot) tot.textContent = ' / ' + fmtTime(dur);
+}
+
+function mpPaintPlayIcon(playing) {
+  const ico = document.getElementById('mp-play-ico');
+  if (ico) ico.src = playing ? 'assets/icons/ui/ic_pause.svg' : 'assets/icons/ui/ic_play.svg';
+}
+
+// Called whenever screen-song-player / screen-song-result becomes the
+// active screen — pulls whatever title/art/progress that screen currently
+// holds into the mini player, and marks it as the live source of truth.
+function mpSyncFromScreen(kind) {
+  _mp.active = true;
+  _mp.kind = kind;
+  const titleEl = document.getElementById(kind === 'sp' ? 'sp-title' : 'sr-title');
+  const artEl   = document.getElementById(kind === 'sp' ? 'sp-art'   : 'sr-album-img');
+  const mpTitle = document.getElementById('mp-title');
+  const mpArt   = document.getElementById('mp-art');
+  if (mpTitle && titleEl) mpTitle.textContent = titleEl.textContent;
+  if (mpArt && artEl && artEl.src) mpArt.src = artEl.src;
+  const pct = kind === 'sp' ? _spProgress : _srProgress;
+  const dur = kind === 'sp' ? _spDuration : _srDuration;
+  mpPaintProgress(pct, dur);
+  mpPaintPlayIcon(kind === 'sp' ? _spPlaying : _srPlaying);
+  // Let mpUpdateVisibility auto-detect the current screen here — this is
+  // called from many contexts (track loads, progress hooks, the mini
+  // player's own Next button) where the truly active screen may be Home/
+  // History/etc., not the player screen itself. Hardcoding the player id
+  // would wrongly hide the mini player whenever a track advances while
+  // it's being driven from the mini player rather than the full screen.
+  mpUpdateVisibility();
+}
+
+function mpToggle(e) {
+  if (e) e.stopPropagation();
+  if (_mp.kind === 'sp') toggleSpPlay();
+  else if (_mp.kind === 'sr') toggleSongResultPlay();
+}
+function mpNext(e) {
+  if (e) e.stopPropagation();
+  if (_mp.kind === 'sp') nextSong();
+  else if (_mp.kind === 'sr') nextSongResult();
+}
+// Tapping the album art / title — opens the matching full screen as a
+// bottom→top sheet over whatever screen is currently showing.
+function mpOpen() {
+  if (!_mp.kind) return;
+  openPlayerSheet(_mp.kind === 'sp' ? 'song-player' : 'song-result');
+}
+
+function mpUpdateVisibility(knownId) {
+  const el = document.getElementById('mini-player');
+  if (!el) return;
+  // Prefer an explicitly-passed screen id over re-querying '.screen.active' —
+  // during goTo()'s transition window BOTH the outgoing and incoming screens
+  // briefly carry the .active class (the outgoing one is only cleared inside
+  // a setTimeout), so querySelector('.screen.active') can resolve to whichever
+  // one happens to sit first in the DOM rather than the screen actually being
+  // navigated to.
+  let curId = knownId;
+  if (curId === undefined) {
+    const activeScreen = document.querySelector('.screen.active');
+    curId = activeScreen ? activeScreen.id.replace('screen-', '') : '';
+  }
+  const eligible = _mp.active && MINI_PLAYER_SCREENS.includes(curId);
+  el.classList.toggle('show', eligible);
+  el.classList.toggle('tabbed', TAB_SCREENS.includes(curId));
+}
+
+// ── Present Now Playing / Song Result as a bottom→top sheet, layered over
+// whatever screen is currently active (does NOT go through goTo — the
+// underlying screen stays put so closing just reveals it again). ──
+function openPlayerSheet(kind) {
+  const screen = document.getElementById('screen-' + kind);
+  if (!screen) return;
+  // The mini player and the sheet should read as ONE upward motion, not two:
+  // the sheet rising from the bottom, and the mini player separately sliding
+  // away underneath it. Since the sheet sits at a higher z-index and is
+  // opaque, its rising edge covers the mini player's screen position within
+  // the first few frames of its own rise — so instead of also animating the
+  // mini player's own hide transition (which moves in the OPPOSITE direction
+  // and reads as a second, competing motion), freeze it in place and let the
+  // sheet's single motion do all the covering.
+  const mini = document.getElementById('mini-player');
+  if (mini) mini.style.transition = 'none';
+  document.getElementById('tab-bar')?.classList.remove('show');
+  // Jump straight to the off-screen-below starting position with the
+  // screen's own transition suspended, so translateY(100%) is committed as
+  // a settled, non-animating starting point. Without this, simply adding
+  // 'vsheet' would itself kick off a transition from the base rule's
+  // translateX(105%) to vsheet's translateY(100%) — and the very next line
+  // (adding 'vopen') would then interrupt THAT transition mid-flight rather
+  // than starting a fresh one from a settled translateY(100%). Since the
+  // interrupted transition's current value is still essentially
+  // translateX(105%) (barely any time has elapsed), retargeting to
+  // translateY(0) decomposes into an X-only animation — the sheet appears
+  // to slide in horizontally from the right instead of rising vertically.
+  // This only shows up the first time a screen is opened this way, before
+  // it has ever been through native goTo() navigation (which is the only
+  // other place 'active' — and thus a translateX-based resting state — gets
+  // set/cleared).
+  screen.style.transition = 'none';
+  screen.classList.add('vsheet');
+  screen.offsetHeight; // force reflow so translateY(100%) is committed with no animation
+  screen.style.transition = '';
+  screen.classList.add('vopen');
+  setTimeout(() => {
+    // The sheet has now fully risen and covers the mini player — hide it for
+    // real (invisible, since it's already hidden behind the sheet) and
+    // restore its normal transition for the next time it's shown.
+    mini?.classList.remove('show');
+    if (mini) { mini.offsetHeight; mini.style.transition = ''; }
+  }, 380);
+}
+function closePlayerSheet(kind) {
+  const screen = document.getElementById('screen-' + kind);
+  if (!screen) return;
+  // The mini player stays in its hidden resting position (translated below
+  // the frame, same as it was left after it last finished opening a sheet)
+  // while the sheet starts its 360ms slide down. Instead of snapping the
+  // mini player straight to "shown" underneath the sheet (invisible, just
+  // waiting to be uncovered), give it its own slide-up reveal: wait until
+  // the sheet is most of the way down — close to uncovering the mini
+  // player's spot — then let the mini player's own transform transition
+  // (.32s, same easing curve as the sheet) carry it up into view. That way
+  // the sheet's departure and the mini player's arrival read as one
+  // connected upward motion rather than an instant pop-in.
+  const mini = document.getElementById('mini-player');
+  screen.classList.remove('vopen');
+  setTimeout(() => { if (mini) mpUpdateVisibility(); }, 220);
+  setTimeout(() => {
+    // Once the vertical slide-down has finished, dropping the 'vsheet' class
+    // lets the base '.screen{transform:translateX(105%)}' rule take back
+    // over — a DIFFERENT axis than the translateY(100%) it's currently
+    // resting at. Left alone, that class swap animates a second, diagonal
+    // transition (down, then over to the right) on top of the one the user
+    // already watched finish. Suspend the transition for that instant reset
+    // so it's invisible, exactly like the native goTo() exit does.
+    screen.style.transition = 'none';
+    screen.classList.remove('vsheet');
+    screen.offsetHeight; // force reflow so transition:none takes effect before...
+    screen.style.transition = '';   // ...restoring the normal transition for next time
+    // Icon stays the "collapse" chevron — Now Playing / Song Result always
+    // present as a bottom sheet now, whether opened via the mini player or
+    // by navigating to them directly, so there's no separate "back arrow" state.
+    // Restore the tab bar if the screen revealed underneath uses one
+    const activeScreen = document.querySelector('.screen.active');
+    const curId = activeScreen ? activeScreen.id.replace('screen-', '') : '';
+    document.getElementById('tab-bar')?.classList.toggle('show', TAB_SCREENS.includes(curId));
+    // (mini player visibility was already set at the top of this function —
+    // nothing about eligibility changes during the close animation itself.)
+  }, 380);
+}
+// Back/collapse-button handler shared by both full-screen players — closes
+// the mini-player-triggered sheet overlay (slide down) when present, otherwise
+// falls back to normal back navigation, which (see goTo) also slides these
+// two screens down rather than sliding horizontally.
+function playerBack(kind) {
+  const screen = document.getElementById('screen-' + kind);
+  if (screen && screen.classList.contains('vsheet')) closePlayerSheet(kind);
+  else goBack();
+}
+// Home-button handler (Song Result only) — same dual behavior as playerBack.
+function playerHome(kind) {
+  const screen = document.getElementById('screen-' + kind);
+  if (screen && screen.classList.contains('vsheet')) {
+    closePlayerSheet(kind);
+    if (document.querySelector('.screen.active')?.id !== 'screen-home') goTo('home');
+  } else {
+    // Dismiss straight to Home — reset the stack the same way tabbing to
+    // Home does (so a stray leftover "song-result" entry can't linger below
+    // it), and pass 'back' so goTo() slides this screen down instead of
+    // pushing horizontally.
+    navStack = ['home'];
+    goTo('home', 'back');
+  }
+}
+
 // ── Mobile frame height is driven purely by CSS `100lvh` (large viewport unit) ──
 // 100lvh = Safari's maximum height with toolbars retracted, so the frame fills the
 // screen from first paint and never leaves a bottom gap. It also auto-updates on
@@ -6321,13 +6582,10 @@ function stopAllMedia() {
     resetSbSongPlay();
   }
 
-  // Stop the song result simulated progress timer
-  if (_srPlaying) {
-    _srPlaying = false;
-    clearInterval(_srTimer); _srTimer = null;
-    const ico = document.getElementById('sr-play-ico');
-    if (ico) ico.src = 'assets/icons/ui/ic_play.svg';
-  }
+  // NOTE: the song-result (_srPlaying) and song-player (_spPlaying) simulated
+  // timers are intentionally NOT stopped here anymore — they now drive the
+  // global Mini Song Player, so playback should keep going while the user
+  // browses to other screens (see MINI_PLAYER_SCREENS / mpUpdateVisibility).
 
   // Reset MV result play button to paused state
   const mvrBtn  = document.getElementById('mvr-play-btn');
@@ -6339,14 +6597,6 @@ function stopAllMedia() {
   const mvpIcon = document.getElementById('mvp-ctrl-icon');
   if (mvpIcon) mvpIcon.src = 'assets/icons/ui/ic_play.svg';
 
-  // Stop the song player simulated timer
-  if (typeof _spPlaying !== 'undefined' && _spPlaying) {
-    _spPlaying = false;
-    clearInterval(_spTimer); _spTimer = null;
-    const spIcon = document.getElementById('sp-play-ico');
-    if (spIcon) { spIcon.src = 'assets/icons/ui/ic_play.svg'; spIcon.style.paddingLeft = '2px'; }
-  }
-
   // Stop the Video Editor's simulated playback timer
   if (typeof _vidEditorPlaying !== 'undefined' && _vidEditorPlaying) {
     _vidEditorPlaying = false;
@@ -6355,6 +6605,13 @@ function stopAllMedia() {
     if (btn) { const img = btn.querySelector('img'); if (img) img.src = 'assets/icons/ui/ic_play.svg'; }
   }
 }
+
+// Now Playing (song-player) and Song Result always present/dismiss as a
+// bottom sheet — slide up to open, slide down to close — no matter where
+// they're opened from (a song card, History, Community Profile, the mini
+// player, song creation finishing, etc.), instead of the standard
+// left/right push used by every other screen.
+const VERTICAL_SCREENS = ['song-player', 'song-result'];
 
 function goTo(id, dir) {
   const cur = document.querySelector('.screen.active');
@@ -6365,8 +6622,56 @@ function goTo(id, dir) {
   stopAllMedia();
 
   const isBack = dir === 'back';
+  const curId = cur ? cur.id.replace('screen-', '') : '';
+  const vertEnter = !isBack && VERTICAL_SCREENS.includes(id);
+  const vertExit  = isBack && VERTICAL_SCREENS.includes(curId);
+  // Home <-> History behave as peer tabs, not a navigation stack: Home is
+  // the permanent base screen and never physically moves in either
+  // direction — only History slides fully on/off over it. That's different
+  // from ordinary forward/back navigation, which gives the outgoing screen
+  // a partial "behind" push (see the plain else/isBack branches below).
+  const tabHomeToOther = !isBack && TAB_SCREENS.includes(id) && id !== 'home' && curId === 'home';
+  const tabOtherToHome = id === 'home' && TAB_SCREENS.includes(curId) && curId !== 'home';
 
-  if (isBack) {
+  // Decide which of cur/nxt should visually paint on top for this
+  // transition and mark it with .nav-top (see the CSS rule above) — DOM
+  // order is not a reliable stand-in for navigation order (screen-history
+  // sits after screen-song-result/screen-mv-result in the markup purely by
+  // accident), so without this, History would silently occlude an
+  // incoming/outgoing screen it has no relationship to, making the
+  // transition invisible even though it's genuinely animating underneath.
+  // "Forward/covering" transitions (entering a new screen that slides over
+  // cur) put nxt on top; "backward/revealing" transitions (cur sliding away
+  // to uncover nxt underneath) put cur on top instead.
+  const forwardCover = vertEnter || tabHomeToOther || (!vertExit && !tabOtherToHome && !isBack);
+  if (cur) {
+    const topScreen = forwardCover ? nxt : cur;
+    const otherScreen = forwardCover ? cur : nxt;
+    topScreen.classList.add('nav-top');
+    otherScreen.classList.remove('nav-top');
+  }
+
+  if (vertEnter) {
+    // nxt's resting value up to this point is the base '.screen' rule's
+    // translateX(105%) (or whatever horizontal value it was last left at) —
+    // never translateY. Setting translateY(100%) here with the transition
+    // still live would itself kick off an animated transition (X -> Y), and
+    // the vertEnter block below would then retarget that transition to
+    // translateY(0) practically at t=0 — decomposing into an X-only slide
+    // (still ~105%->0) while Y stays flat throughout, i.e. exactly the
+    // horizontal slide-in this vertical entry is supposed to replace.
+    // Suspend the transition to commit translateY(100%) as a real, static
+    // starting point first (same fix as openPlayerSheet uses).
+    nxt.style.transition = 'none';
+    nxt.style.transform = 'translateY(100%)';
+    nxt.offsetHeight; // commit with no animation
+    nxt.style.transition = '';
+  } else if (tabOtherToHome) {
+    // Home has been resting untouched at translateX(0) this whole time
+    // (see tabHomeToOther below, which leaves it there on the way out) —
+    // don't give it a "start" position at all. Only History (cur) moves,
+    // sliding itself back off to the right in the block below.
+  } else if (isBack) {
     nxt.style.transform = 'translateX(-28%)';
   } else {
     nxt.style.transform = 'translateX(105%)';
@@ -6376,17 +6681,85 @@ function goTo(id, dir) {
   nxt.offsetHeight;
 
   nxt.classList.add('active');
-  if (isBack) {
+  if (vertEnter) {
+    // Slide the player screen up over whatever is currently showing — it
+    // stays exactly where it is underneath (no exit animation needed; the
+    // rising screen fully covers it).
+    //
+    // The forced reflow above (nxt.offsetHeight) guarantees the browser has
+    // recalculated LAYOUT for the suspended translateY(100%) starting point,
+    // but not that it has actually PAINTED a frame with it yet. If this next
+    // style change — the one that's supposed to kick off the visible
+    // animation — lands before any real paint happens, some engines fold
+    // the two writes together and jump straight to the end value instead of
+    // animating between them, i.e. exactly an invisible "open" with no
+    // slide. Two rAFs guarantee at least one real painted frame at the
+    // starting position first, so the following change is guaranteed to be
+    // seen as a genuine transition rather than folded into the same frame.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        cur.style.transform = 'translateX(0)';
+        nxt.style.transform = 'translateY(0)';
+      });
+    });
+  } else if (vertExit) {
+    // Slide the player screen back down, revealing the screen underneath
+    // (which was never moved, so it just needs to be marked active/at rest).
+    nxt.style.transform = 'translateX(0)';
+    cur.style.transform = 'translateY(100%)';
+  } else if (tabHomeToOther) {
+    // Leaving Home for History: drop 'active' from Home so
+    // document.querySelector('.screen.active') only ever matches one
+    // screen (lots of code relies on that), but keep it sitting exactly at
+    // translateX(0) — never animate it — while History slides fully in
+    // from the right on top of it. DOM order (History comes after Home)
+    // keeps History painting on top with no z-index needed.
+    cur.classList.remove('active');
+    cur.style.transform = 'translateX(0)';
+    nxt.style.transform = 'translateX(0)';
+  } else if (tabOtherToHome) {
+    // Returning to Home from History: Home was already resting at
+    // translateX(0) the whole time (untouched above) — nothing to animate
+    // on its side. History just slides itself fully back off to the right,
+    // revealing Home underneath exactly as it was left.
+    nxt.style.transform = 'translateX(0)';
+    cur.style.transform = 'translateX(105%)';
+  } else if (isBack) {
     nxt.style.transform = 'translateX(0)';
     cur.style.transform = 'translateX(105%)';
   } else {
     cur.classList.add('behind');
+    cur.style.transform = 'translateX(-28%)';
     nxt.style.transform = 'translateX(0)';
   }
 
   setTimeout(() => {
-    cur.classList.remove('active', 'behind');
-    cur.style.transform = '';
+    // The transition has settled — the temporary paint-order override is no
+    // longer needed (whichever screen is now truly off-screen doesn't need
+    // to out-rank anything, and the one left showing has no sibling
+    // animating over/under it until the next goTo() call decides again).
+    cur.classList.remove('nav-top');
+    nxt.classList.remove('nav-top');
+    // Home stays parked at translateX(0) with 'active' already dropped
+    // (see tabHomeToOther above) for as long as History is showing — the
+    // usual reset-to-base-rule cleanup below would instead snap it to the
+    // base '.screen' rule's translateX(105%), and it would need to slide
+    // back in (instead of just being revealed) the next time the user taps
+    // the Home tab. Skip the cleanup entirely for cur in that one case.
+    if (!tabHomeToOther) {
+      cur.classList.remove('active', 'behind');
+      // Clearing the inline transform normally falls back to the base
+      // '.screen{transform:translateX(105%)}' rule with no visible jump,
+      // because the horizontal exit above always leaves the inline value
+      // matching that same resting spot. That's NOT true for a vertical exit
+      // (cur was left at translateY(100%)) — clearing straight to '' would
+      // animate a diagonal snap over to translateX(105%). Suspend the
+      // transition for that instant reset so it's invisible either way.
+      cur.style.transition = 'none';
+      cur.style.transform = '';
+      cur.offsetHeight; // force reflow so the transition:none takes effect before...
+      cur.style.transition = '';   // ...restoring the normal transition for next time
+    }
     // Screen-specific init
     if (id === 'mv-result') initMvResultController();
     if (id === 'iap') selectIAPPlan('weekly');
@@ -6491,7 +6864,8 @@ function goTo(id, dir) {
   if (id === 'mv-thinking') { _mvrRecreate = false; startThinking(_genStage); }
   if (id === 'mv-creating') { _mvrRecreate = false; startCreating(); }
   if (id === 'song-creating') { startSongCreating(); }
-  if (id === 'song-result') { buildWaveform(); applySongResultCtx(); }
+  if (id === 'song-player') { mpSyncFromScreen('sp'); }
+  if (id === 'song-result') { buildWaveform(); applySongResultCtx(); mpSyncFromScreen('sr'); }
   if (id === 'mv-result') {
     // Reset publish button to initial state on each visit
     const pb = document.getElementById('mvr-publish-btn');
@@ -6504,6 +6878,12 @@ function goTo(id, dir) {
     // If onboarding or splash still in history, wipe them out completely
     if (navStack.some(s => s === 'onboard' || s === 'splash')) navStack = ['home'];
   }
+
+  // Show/hide the global Mini Song Player for whichever screen is now active.
+  // Pass `id` explicitly rather than re-querying '.screen.active' — during the
+  // transition above both the outgoing and incoming screens briefly carry the
+  // .active class, which would otherwise let this resolve to the wrong screen.
+  mpUpdateVisibility(id);
 }
 
 function goBack() {
@@ -10443,7 +10823,11 @@ var _playingSongArt = null;
 var _pauseSVG = '<img src="assets/icons/ui/ic_pause.svg" width="20" height="20" style="display:block;">';
 var _playSVG  = '<img src="assets/icons/ui/ic_play.svg"  width="20" height="20" style="display:block;">';
 
-function toggleSongListPlay(artDiv) {
+// Tapping a list row's album art plays that track inline — it starts real
+// playback and surfaces the global mini player, but (unlike tapping the rest
+// of the row) never navigates to the full Now Playing screen. Tapping the
+// same art again pauses it; tapping a different row's art switches tracks.
+function toggleSongListPlay(artDiv, title, tags, art, genre, mood) {
   var btn = artDiv.querySelector('.songsall-play-btn');
   var item = artDiv.closest('.songsall-item');
   var titleEl = item ? item.querySelector('.songsall-title') : null;
@@ -10464,6 +10848,16 @@ function toggleSongListPlay(artDiv) {
     if (btn) { btn.innerHTML = _pauseSVG; btn.classList.add('is-playing'); }
     if (titleEl) titleEl.style.color = '#A855F7';
     _playingSongArt = artDiv;
+    _spLoadFields(title, tags, art, genre, mood);
+    startSpPlayback();
+    mpSyncFromScreen('sp');
+  } else if (_mp.kind === 'sp') {
+    // Tapped the currently-playing row's art again — pause real playback
+    // (the reset above already restored this row's icon to "play").
+    _spPlaying = false;
+    clearInterval(_spTimer);
+    _spTimer = null;
+    _spSetPlayState(false);
   }
 }
 
@@ -11926,7 +12320,27 @@ function openOwnProfile(tab) {
 }
 
 // ── Community profile row tap — navigates based on own vs other ──
-function cpRowTap(type) {
+// rowEl (the tapped row) lets song rows push their real title/art into the
+// Now Playing / Song Result screen before it opens, so the mini player that
+// follows shows the right track instead of stale data from elsewhere.
+function cpRowTap(type, rowEl) {
+  if (type === 'song' && rowEl) {
+    const titleEl = rowEl.querySelector('div[style*="font-weight:700"]');
+    const imgEl   = rowEl.querySelector('img');
+    if (_cpIsOwnProfile) {
+      const srTitle = document.getElementById('sr-title');
+      const srImg   = document.getElementById('sr-album-img');
+      if (srTitle && titleEl) srTitle.textContent = titleEl.textContent;
+      if (srImg && imgEl) srImg.src = imgEl.src;
+    } else {
+      const spTitle = document.getElementById('sp-title');
+      const spArt   = document.getElementById('sp-art');
+      const spBg    = document.getElementById('sp-bg');
+      if (spTitle && titleEl) spTitle.textContent = titleEl.textContent;
+      if (spArt && imgEl) spArt.src = imgEl.src;
+      if (spBg && imgEl)  spBg.src  = imgEl.src;
+    }
+  }
   if (_cpIsOwnProfile) {
     goTo(type === 'mv' ? 'mv-result' : 'song-result');
   } else {
@@ -12180,7 +12594,11 @@ let _spList = [], _spIdx = 0, _spPlaying = false, _spLiked = false;
 let _spTimer = null, _spProgress = 0, _spDuration = 125;
 let _songTpl = { title:'', genre:'Pop', mood:'Uplifting' };
 
-function openSongPlayer(title, tags, art, genre, mood) {
+// Populate the Now Playing screen's fields for a track, without navigating
+// or starting playback — shared by openSongPlayer (full-screen entry) and
+// playSongInline (album-art tap in a list, which only surfaces the mini
+// player and never navigates away from the list).
+function _spLoadFields(title, tags, art, genre, mood) {
   _songTpl = { title, genre, mood };
   // find closest match in playlist for prev/next navigation
   const idx = _spPlaylist.findIndex(t => t.title === title);
@@ -12200,6 +12618,10 @@ function openSongPlayer(title, tags, art, genre, mood) {
   document.getElementById('sp-like-ico').src    = 'assets/icons/ui/ic_favorite_off.svg';
   document.getElementById('sp-like-ico').style.filter = 'brightness(0) invert(1)';
   clearInterval(_spTimer);
+}
+
+function openSongPlayer(title, tags, art, genre, mood) {
+  _spLoadFields(title, tags, art, genre, mood);
   goTo('song-player');
   setTimeout(startSpPlayback, 400);
 }
@@ -12217,6 +12639,7 @@ function _spSetPlayState(playing) {
     if (lyrIco)  { lyrIco.src  = 'assets/icons/ui/ic_play.svg'; lyrIco.style.filter = 'brightness(0)'; }
     if (disc)    disc.classList.remove('disc-spinning');
   }
+  if (_mp.kind === 'sp') mpPaintPlayIcon(playing);
 }
 function startSpPlayback() {
   _spPlaying = true;
@@ -12232,7 +12655,18 @@ function startSpPlayback() {
     const lyrTc = document.getElementById('sp-lyr-timecode');
     if (lyrTc) lyrTc.textContent = fmtTime(now);
     _spLyricsHighlight(now);
-    if (_spProgress >= 100) { clearInterval(_spTimer); _spPlaying = false; _spSetPlayState(false); }
+    if (_spProgress >= 100) {
+      // Track finished with nothing queued to auto-continue into (nextSong()
+      // only fires on an explicit tap) — reset back to the start rather than
+      // leaving the progress bar/timecode sitting at the finished state.
+      clearInterval(_spTimer); _spTimer = null; _spPlaying = false; _spSetPlayState(false);
+      _spProgress = 0;
+      _spUpdateProgress(0);
+      document.getElementById('sp-time-now').textContent = '0:00';
+      const lyrTc = document.getElementById('sp-lyr-timecode');
+      if (lyrTc) lyrTc.textContent = '0:00';
+      _spLyricsHighlight(0);
+    }
   }, 1000);
 }
 function toggleSpPlay() {
@@ -12245,6 +12679,7 @@ function _spUpdateProgress(pct) {
   const thumb = document.getElementById('sp-progress-thumb');
   if (fill)  fill.style.width = pct + '%';
   if (thumb) thumb.style.left = pct + '%';
+  if (_mp.kind === 'sp') mpPaintProgress(pct, _spDuration);
 }
 function seekSpByClick(e, bar) {
   const rect = bar.getBoundingClientRect();
@@ -12297,6 +12732,7 @@ function _spLoadTrack(idx) {
   if (miniTitle) miniTitle.textContent = track.title;
   const lyrTc = document.getElementById('sp-lyr-timecode');
   if (lyrTc) lyrTc.textContent = '0:00';
+  if (_mp.kind === 'sp') mpSyncFromScreen('sp');
   setTimeout(startSpPlayback, 300);
 }
 function prevSong() { _spLoadTrack(_spCurrentIdx - 1); }
@@ -12474,6 +12910,7 @@ function _srUpdateProgress(pct) {
   if (tc) tc.textContent = nowStr;
   // update active lyric
   _lyricsHighlight(nowSec);
+  if (_mp.kind === 'sr') mpPaintProgress(pct, _srDuration);
 }
 
 function _srSetPlayState(playing) {
@@ -12491,6 +12928,7 @@ function _srSetPlayState(playing) {
     if (lyrIco)  lyrIco.src  = 'assets/icons/ui/ic_play.svg';
     if (lyrIco)  lyrIco.style.filter = 'brightness(0)';
   }
+  if (_mp.kind === 'sr') mpPaintPlayIcon(playing);
 }
 
 function toggleSongResultPlay() {
@@ -12502,7 +12940,12 @@ function toggleSongResultPlay() {
       _srProgress = Math.min(_srProgress + (100 / _srDuration), 100);
       _srUpdateProgress(_srProgress);
       if (_srProgress >= 100) {
-        clearInterval(_srTimer); _srPlaying = false; _srSetPlayState(false);
+        // Same reasoning as the Song Player timer: nothing auto-continues
+        // after this track, so reset progress/timecode to the start instead
+        // of leaving it parked at the finished state.
+        clearInterval(_srTimer); _srTimer = null; _srPlaying = false; _srSetPlayState(false);
+        _srProgress = 0;
+        _srUpdateProgress(0);
       }
     }, 1000);
   } else {
