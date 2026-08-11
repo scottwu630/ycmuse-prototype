@@ -193,6 +193,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #img-editor-ta,#vid-editor-ta{scrollbar-width:none;-ms-overflow-style:none;}
 #img-editor-ta::-webkit-scrollbar,#vid-editor-ta::-webkit-scrollbar{display:none;}
 #img-editor-versions-track::-webkit-scrollbar,#vid-editor-versions-track::-webkit-scrollbar{display:none;}
+#mvr-visual-style-row::-webkit-scrollbar,#custom-style-photos-row::-webkit-scrollbar,#custom-style-editor-versions-track::-webkit-scrollbar{display:none;}
 
 /* ── TAB BAR ── */
 .tab-bar{position:absolute;bottom:0;left:0;right:0;height:var(--tab-h);background:rgba(9,9,11,.93);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-top:1px solid rgba(255,255,255,.06);display:none;align-items:flex-start;justify-content:space-evenly;padding-top:11px;z-index:100;overflow:visible;}
@@ -445,6 +446,21 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #img-editor-scroll::-webkit-scrollbar{display:none;}
 #ref-picker-overlay{z-index:530;}
 #ref-picker-sheet{z-index:531;}
+/* ── Custom Visual Style (Add/Edit sheet for Scene Setup's "Custom" style
+   card) — same fullscreen-panel mechanics as the Image Editor above, kept as
+   its own set of rules/IDs since it's a distinct sheet (Style Name field +
+   multi-photo upload row instead of a single reference thumbnail). Sits
+   below the AI Model / Reference Picker sheets (z-index 520+) so those can
+   still open on top of it. ── */
+#custom-style-wrap{position:absolute;inset:0;z-index:495;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none;}
+#custom-style-wrap.show{pointer-events:all;}
+#custom-style-dim{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s;}
+#custom-style-wrap.show #custom-style-dim{opacity:1;}
+#custom-style-content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
+#custom-style-wrap.show #custom-style-content{transform:translateY(0);}
+#custom-style-panel{background:#1C1C1E;border-radius:20px 20px 0 0;display:flex;flex-direction:column;max-height:90%;}
+#custom-style-scroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+#custom-style-scroll::-webkit-scrollbar{display:none;}
 /* ── Video editor (shot video preview + prompt + regenerate) ── */
 #vid-editor-wrap{position:absolute;inset:0;z-index:490;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none;}
 #vid-editor-wrap.show{pointer-events:all;}
@@ -3319,34 +3335,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- SELECT STYLE -->
-          <div>
-            <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Select MV Type</div>
-            <div id="mvr-mini-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-              <div onclick="mvrPickStyle(0,this)" style="border-radius:12px;position:relative;aspect-ratio:3/4;cursor:pointer;border:2px solid #A855F7;background:#1a1a1a;overflow:hidden;min-width:0;">
-                <div style="position:absolute;inset:0;z-index:1;">
-                  <video src="assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4" muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-                  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85));"></div>
-                </div>
-                <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Singing</div>
-              </div>
-              <div onclick="mvrPickStyle(1,this)" style="border-radius:12px;position:relative;aspect-ratio:3/4;cursor:pointer;border:2px solid transparent;background:#1a1a1a;overflow:hidden;min-width:0;">
-                <div style="position:absolute;inset:0;z-index:1;">
-                  <video src="assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4" muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-                  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85));"></div>
-                </div>
-                <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Storytelling</div>
-              </div>
-              <div onclick="mvrPickStyle(2,this)" style="border-radius:12px;position:relative;aspect-ratio:3/4;cursor:pointer;border:2px solid transparent;background:#1a1a1a;overflow:hidden;min-width:0;">
-                <div style="position:absolute;inset:0;z-index:1;">
-                  <video src="assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4" muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-                  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85));"></div>
-                </div>
-                <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Hybrid</div>
-              </div>
-            </div>
-          </div>
-
           <!-- SELECT CHARACTERS -->
           <div>
             <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Select Characters</div>
@@ -3377,28 +3365,19 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- VISUAL STYLE (required — gates the Generate Style CTA) -->
+          <!-- SELECT VISUAL STYLE (required — gates the Generate Style CTA).
+               Image-thumbnail picker per Figma 1448-31525/2209-52324 —
+               replaces the old text-chip row above. The first card is always
+               "Custom" and opens the Add/Edit Custom Visual Style sheet (see
+               openCustomStyleSheet() + #custom-style-wrap further below) to
+               create a style from a name plus optional reference photos
+               and/or a prompt. Populated by renderMvrStyleRow() in JS. -->
           <div>
             <div style="display:flex;align-items:center;gap:4px;margin-bottom:10px;">
-              <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;">Visual Style</span>
+              <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;">Select Visual Style</span>
               <span style="font-size:11px;font-weight:500;color:#676779;">(Required)</span>
             </div>
-            <div id="mvr-visual-style-row" style="display:flex;flex-wrap:wrap;gap:6px;">
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Golden Hour</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Cinematic Warmth</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Pastel Dream</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Moody Noir</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Late Night Stage</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Lo-fi Grain</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Neon Nightlife</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Pop Vibrant</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Electronic Futuristic</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Indie Rock Raw</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Studio Minimal</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Epic Cinematic</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Retro Film</div>
-              <div class="vstyle-chip" onclick="pickVisualStyle(this)">Anime Style</div>
-            </div>
+            <div id="mvr-visual-style-row" style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;"></div>
           </div>
 
           <!-- SELECT ASPECT RATIO -->
@@ -5923,6 +5902,118 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     </div>
   </div>
 
+  <!-- ══════ CUSTOM VISUAL STYLE — Add/Edit sheet for Scene Setup's "Custom"
+       style card (global scope). Distinct from the Image Editor above: this
+       one creates/edits a brand-new NAMED style from a Style Name plus
+       optional reference photos and/or a text prompt (either photos or a
+       prompt alone is enough to generate), rather than editing a single
+       existing image. Matches Figma 2161-45525 (empty) / 2209-53513 (filled)
+       / 1458-33687 (generated). ══════ -->
+  <div id="custom-style-wrap">
+    <div id="custom-style-dim" onclick="closeCustomStyleSheet()"></div>
+    <div id="custom-style-content">
+      <div id="custom-style-panel">
+        <!-- Fixed header: grabber + close/title/done. Never scrolls. -->
+        <div style="flex-shrink:0;">
+          <div style="display:flex;justify-content:center;padding:10px 0 6px;">
+            <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.25);"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 16px 12px;">
+            <div onclick="closeCustomStyleSheet()" style="width:28px;height:28px;border-radius:14px;background:#3A3A3C;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </div>
+            <div id="custom-style-label" style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">Add Visual Style</div>
+            <div id="custom-style-done-btn" onclick="confirmCustomStyleSheet()" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;opacity:0;pointer-events:none;transition:opacity .25s ease;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+        <!-- Scrollable middle: name, preview (once generated), reference photos, prompt. -->
+        <div id="custom-style-scroll">
+          <!-- Style Name -->
+          <div style="padding:0 16px 12px;">
+            <div style="font-size:11px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Visual Style Name</div>
+            <div style="position:relative;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;">
+              <input id="custom-style-name" maxlength="40" placeholder="Enter style name" oninput="onCustomStyleInput()" style="width:100%;height:46px;padding:0 36px 0 14px;background:transparent;border:none;color:#fff;font-size:14px;font-weight:600;font-family:inherit;outline:none;box-sizing:border-box;">
+              <div id="custom-style-name-clear" onclick="clearCustomStyleName()" style="display:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:10px;background:#212127;align-items:center;justify-content:center;cursor:pointer;">
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Generated preview — hidden until the first Generate completes -->
+          <div id="custom-style-preview-wrap-outer" style="display:none;padding:0 16px 12px;">
+            <div style="position:relative;border-radius:14px;overflow:hidden;width:100%;aspect-ratio:16/9;background:#1a1a1a;border:1px solid rgba(255,255,255,.15);">
+              <img id="custom-style-preview" src="" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div id="custom-style-generating" style="position:absolute;inset:0;background:linear-gradient(160deg,#6D28D9,#A855F7);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;">
+                <span class="emv-cover-gen-label">✦ Generating...</span>
+              </div>
+            </div>
+            <!-- Versions — every Generate/Regenerate appends a version here; tap one to pick it. Reuses the shared Image Editor's version-track renderer (_renderEditorVersions expects a "<prefix>-editor-versions-track" id). -->
+            <div style="padding-top:10px;">
+              <div id="custom-style-editor-versions-track" style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;"></div>
+            </div>
+          </div>
+          <!-- Reference Photos — tapping "+" simulates picking a photo (this
+               prototype cycles a small placeholder pool since there's no real
+               file picker); each added photo can be removed via its X. Stays
+               visible even after generating (Scott asked to bring this back
+               after an earlier pass hid it post-generate). No "(Optional)"
+               tag: this and the Prompt below aren't independently optional —
+               at least ONE of the two is required to generate, so labeling
+               both "Optional" would be misleading (see the CTA's disabled
+               state, gated in onCustomStyleInput() below). -->
+          <div id="custom-style-photos-section" style="padding:0 16px 12px;">
+            <div style="font-size:11px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Reference Photos</div>
+            <div id="custom-style-photos-row" style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;"></div>
+            <div style="font-size:11px;font-weight:500;color:#676779;line-height:1.5;margin-top:8px;">Upload a few images in the look you want — we'll use them to shape your visual style.</div>
+          </div>
+          <!-- Prompt -->
+          <div style="padding:0 16px;">
+            <div style="font-size:11px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Describe Your Visual Style</div>
+            <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;">
+              <textarea id="custom-style-ta" maxlength="2500" placeholder="e.g. warm golden light, soft film grain, dreamy pastel tones" oninput="onCustomStyleInput()" style="width:100%;min-height:90px;padding:12px 12px 4px;background:transparent;border:none;color:#fff;font-size:13px;font-family:inherit;resize:none;outline:none;line-height:1.5;"></textarea>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;padding:4px 10px 10px;">
+                <button id="custom-style-idea-btn" onclick="event.stopPropagation();customStyleIdea()" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;border-radius:20px;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">
+                  <img src="assets/icons/ui/ic_lightbulb.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
+                  Idea
+                </button>
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <button id="custom-style-enhance-btn" onclick="event.stopPropagation();customStyleEnhance()" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                    <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                    <span class="enh-txt">Enhance</span>
+                  </button>
+                  <span id="custom-style-counter" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);">0/2500</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fixed footer: Select AI Model + Generate/Regenerate CTA. Never scrolls. -->
+        <div style="flex-shrink:0;">
+          <div style="padding:10px 16px 0;">
+            <div style="font-size:11px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Select AI Model</div>
+            <div id="custom-style-model-row" onclick="openAiModelSheet('scenes')" style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px 14px;cursor:pointer;">
+              <span id="custom-style-model-label" style="font-size:13px;font-weight:700;color:#fff;">Nano Banana 2 · 1K</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div id="custom-style-model-credit" style="display:flex;align-items:center;gap:3px;background:rgba(245,158,11,.15);border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700;color:#f59e0b;"><img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">5</div>
+                <span style="font-size:16px;color:rgba(255,255,255,.35);line-height:1;">›</span>
+              </div>
+            </div>
+          </div>
+          <div style="padding:14px 16px calc(16px + var(--safe-bot));">
+            <button id="custom-style-regen-btn" disabled onclick="regenerateCustomStyle()" style="width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:none;opacity:.45;transition:opacity .15s;" onmousedown="if(!this.disabled)this.style.opacity='.8'" onmouseup="if(!this.disabled)this.style.opacity='1'">
+              <span id="custom-style-regen-label">Generate</span>
+              <span id="custom-style-regen-credit" style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:13px;font-weight:700;">
+                <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">
+                30
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ══════ REFERENCE PICKER — shared sheet for the Style (Scene editor) and
        Scene / Character (Shot editor) reference thumbnails. Only ever opened
        when the tapped slot has more than 1 option to switch between. ══════ -->
@@ -6791,7 +6882,7 @@ function goTo(id, dir) {
   // Screen-specific actions
   if (isBack && CTA_BACK_CONFIG[id]) setCtaNext(id);
   if (id === 'mv-style') setTimeout(initStyleCarousel, 50);
-  if (id === 'mv-analysis') { setTimeout(() => mvrPickStyle(styleIdx, null), 400); updateAnalysisCtaState(); }
+  if (id === 'mv-analysis') { updateAnalysisCtaState(); }
   if (id === 'mv-storyboard') {
     // Re-derive the reorder lock fresh every time Storyboard is (re)entered —
     // from the Editor's back arrow, from a Next-shortcut chain, or a plain
@@ -7180,16 +7271,16 @@ function initCtaBackNextWatchers() {
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCtaBackNextWatchers);
 else initCtaBackNextWatchers();
 
-// ── Visual Style (Scene Setup) — required single-select chip picker that
-// gates the Generate Style CTA. Nothing is selected by default, so the CTA
-// starts disabled until the user picks one. ──
-let _visualStyleSelected = null;
-function pickVisualStyle(el) {
-  document.querySelectorAll('#mvr-visual-style-row .vstyle-chip').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-  _visualStyleSelected = el.textContent.trim();
-  updateAnalysisCtaState();
-}
+// ── Visual Style (Scene Setup) — required image-thumbnail picker that gates
+// the Generate Style CTA. Nothing is selected by default, so the CTA starts
+// disabled until the user picks one. Per Figma 1448-31525/2209-52324, this
+// replaced the old text-chip row with visualized style cards — the first
+// card is always "Custom" and opens openCustomStyleSheet() (see the
+// #custom-style-wrap sheet + functions further below) to create a style from
+// a name plus optional reference photos and/or a prompt. ──
+let _visualStyleSelected = null;       // selected style's NAME — kept as a plain string for back-compat with the VISUAL_STYLE_PROMPTS lookup below
+let _visualStyleSelectedThumb = null;  // selected style's thumbnail — propagated to Storyboard's sb-visual-style-img
+let _visualStyleSelectedDesc  = null;  // selected style's description — propagated to sb-visual-style-text, takes priority over VISUAL_STYLE_PROMPTS (needed for user-authored Custom styles, which have no VISUAL_STYLE_PROMPTS entry)
 function updateAnalysisCtaState() {
   const btn = document.getElementById('mv-analysis-cta');
   if (!btn) return;
@@ -7228,6 +7319,302 @@ const VISUAL_STYLE_PROMPTS = {
   'Anime Style':            'Vivid stylized colors and dynamic lighting — a bold, expressive anime-inspired visual style.',
 };
 const VISUAL_STYLE_PROMPT_DEFAULT = 'Soft, cinematic visual style with warm lighting and a gentle, romantic color grade.';
+
+// Thumbnail art for the preset style cards — only 5 placeholder template
+// photos exist in this prototype, so they're cycled across the 14 named
+// presets (same placeholder-reuse pattern STYLE_OPTIONS uses elsewhere).
+const MVR_STYLE_THUMBS = [
+  'assets/videos/templates/01_jpop.jpg',
+  'assets/videos/templates/02_midnight_static.jpg',
+  'assets/videos/templates/03_paper_wonderland.jpg',
+  'assets/videos/templates/04_pastel_film.jpg',
+  'assets/videos/templates/05_alice_in_wonderland.jpg',
+];
+const MVR_PRESET_STYLES = Object.keys(VISUAL_STYLE_PROMPTS).map((name, i) => ({
+  id: 'preset-' + i,
+  name,
+  desc: VISUAL_STYLE_PROMPTS[name],
+  thumb: MVR_STYLE_THUMBS[i % MVR_STYLE_THUMBS.length],
+  custom: false,
+}));
+// User-created Custom Visual Styles — unshifted onto the front as they're
+// generated in the Add/Edit Custom Visual Style sheet (see
+// confirmCustomStyleSheet() further below), so each new one lands right
+// after the "Custom" add-card — per Figma 2209-52324.
+let _mvrCustomStyles = [];
+let _mvrStyleSelectedId = null;
+function _mvrAllStyles() { return [..._mvrCustomStyles, ...MVR_PRESET_STYLES]; }
+function renderMvrStyleRow() {
+  const row = document.getElementById('mvr-visual-style-row');
+  if (!row) return;
+  const styles = _mvrAllStyles();
+  const customAddTile = `
+    <div onclick="openCustomStyleSheet(null)" style="flex-shrink:0;width:96px;height:96px;border-radius:14px;border:1.5px dashed rgba(255,255,255,.25);background:#151519;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;">
+      <div style="width:28px;height:28px;border-radius:14px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+      <span style="font-size:11px;font-weight:700;color:#fff;">Custom</span>
+    </div>`;
+  row.innerHTML = customAddTile + styles.map(s => `
+    <div onclick="selectMvrStyle('${s.id}')" data-style-id="${s.id}" style="flex-shrink:0;width:96px;height:96px;border-radius:14px;position:relative;cursor:pointer;overflow:hidden;border:2px solid ${s.id === _mvrStyleSelectedId ? '#A855F7' : 'transparent'};background:#1a1a1a;">
+      <img src="${s.thumb}" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 55%);"></div>
+      <div style="position:absolute;left:0;right:0;bottom:6px;padding:0 6px;font-size:10.5px;font-weight:700;color:#fff;line-height:1.2;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.name}</div>
+      ${s.custom ? `<div onclick="event.stopPropagation();openCustomStyleSheet('${s.id}')" style="position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:9px;background:rgba(9,9,11,.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;">
+        <img src="assets/icons/ui/ic_edit.svg" width="9" height="9" style="display:block;filter:brightness(0) invert(1);">
+      </div>` : ''}
+    </div>`).join('');
+}
+function selectMvrStyle(id) {
+  const s = _mvrAllStyles().find(x => x.id === id);
+  if (!s) return;
+  _mvrStyleSelectedId = id;
+  _visualStyleSelected = s.name;
+  _visualStyleSelectedThumb = s.thumb;
+  _visualStyleSelectedDesc = s.desc || null;
+  renderMvrStyleRow();
+  updateAnalysisCtaState();
+}
+renderMvrStyleRow(); // initial paint — #mvr-visual-style-row exists in the DOM from page load (inside its .screen, just not the active one yet), so this can run immediately
+
+// ══════ CUSTOM VISUAL STYLE — Add/Edit sheet for the "Custom" style card
+// above (global scope, #custom-style-wrap). Lets the user name a style and
+// supply reference photos and/or a prompt — either is enough to generate,
+// per Scott's request. Reuses the shared Image Editor's version-track
+// renderer (_renderEditorVersions) and Regenerate/Model-row helpers
+// (_setRegenBtnEnabled / _setModelRowEnabled), but keeps its own state so it
+// never touches the Image Editor's _imgEditorCtx/_imgEditorRefs. ══════
+let _customStyleEditingId = null;  // id of the existing custom style being re-edited, or null when creating new
+let _customStylePhotos = [];       // reference photo srcs currently attached (fake "upload" — cycles the template photo pool below)
+let _customStyleVersions = [];     // [{ src, prompt }] — filmstrip of generated results
+let _customStyleSelectedVersion = 0;
+let _customStyleGenerated = false; // whether at least one generation has completed this sheet visit
+const CUSTOM_STYLE_TEMPLATE_IMAGES = [
+  'assets/videos/templates/01_jpop.jpg',
+  'assets/videos/templates/02_midnight_static.jpg',
+  'assets/videos/templates/03_paper_wonderland.jpg',
+  'assets/videos/templates/04_pastel_film.jpg',
+  'assets/videos/templates/05_alice_in_wonderland.jpg',
+];
+// A few ready-made name+prompt pairs for the "💡 Idea" button, for anyone
+// starting from a blank sheet.
+const CUSTOM_STYLE_IDEAS = [
+  { name: 'Golden Reverie', desc: 'Warm, glowing sunset light with soft golden tones — gentle lens flares and a dreamy, romantic film look.' },
+  { name: 'Neon Mirage',    desc: 'Cinematic neon-lit portrait, dreamy purple-to-pink gradient haze, soft volumetric light, glossy film grain, high-contrast rim lighting, futuristic pop concert atmosphere.' },
+  { name: 'Arena Lights',   desc: 'Deep stage lighting with dramatic spotlights and haze — an intimate, moody live-performance atmosphere.' },
+  { name: 'Paper Wonderland', desc: 'Soft, whimsical paper-craft world with pastel washes and gentle diffused light — a storybook, handmade feel.' },
+];
+
+function openCustomStyleSheet(existingId) {
+  _customStyleEditingId = existingId || null;
+  const existing = existingId ? _mvrCustomStyles.find(s => s.id === existingId) : null;
+  const lbl = document.getElementById('custom-style-label');
+  if (lbl) lbl.textContent = existing ? 'Edit Visual Style' : 'Add Visual Style';
+  const nameInput = document.getElementById('custom-style-name');
+  if (nameInput) nameInput.value = existing ? existing.name : '';
+  const ta = document.getElementById('custom-style-ta');
+  if (ta) ta.value = existing ? (existing.desc || '') : '';
+  _customStylePhotos = existing ? (existing.photos || []).slice() : [];
+  _customStyleVersions = existing ? [{ src: existing.thumb, prompt: existing.desc || '' }] : [];
+  _customStyleSelectedVersion = 0;
+  _customStyleGenerated = !!existing;
+  const previewOuter = document.getElementById('custom-style-preview-wrap-outer');
+  if (previewOuter) previewOuter.style.display = existing ? '' : 'none';
+  const prev = document.getElementById('custom-style-preview');
+  if (prev) prev.src = existing ? existing.thumb : '';
+  const gen = document.getElementById('custom-style-generating');
+  if (gen) gen.style.opacity = '0';
+  renderCustomStylePhotosRow();
+  _renderEditorVersions('custom-style', _customStyleVersions, _customStyleSelectedVersion, 'selectCustomStyleVersion');
+  _renderCustomStyleModelRow();
+  _setModelRowEnabled('custom-style-model-row', true);
+  const regenLbl = document.getElementById('custom-style-regen-label');
+  if (regenLbl) regenLbl.textContent = existing ? 'Regenerate' : 'Generate';
+  const doneBtn = document.getElementById('custom-style-done-btn');
+  if (doneBtn) { doneBtn.style.opacity = existing ? '1' : '0'; doneBtn.style.pointerEvents = existing ? 'auto' : 'none'; }
+  onCustomStyleInput(); // syncs counters/clear-btn/enhance-btn + Regenerate's enabled state
+  const wrap = document.getElementById('custom-style-wrap');
+  if (wrap) wrap.classList.add('show');
+}
+
+function closeCustomStyleSheet() {
+  document.getElementById('custom-style-wrap')?.classList.remove('show');
+}
+
+function clearCustomStyleName() {
+  const input = document.getElementById('custom-style-name');
+  if (input) { input.value = ''; input.focus(); onCustomStyleInput(); }
+}
+
+function onCustomStyleInput() {
+  const nameInput = document.getElementById('custom-style-name');
+  const clearBtn = document.getElementById('custom-style-name-clear');
+  if (clearBtn) clearBtn.style.display = (nameInput && nameInput.value.length) ? 'flex' : 'none';
+  const ta = document.getElementById('custom-style-ta');
+  const ctr = document.getElementById('custom-style-counter');
+  if (ta && ctr) ctr.textContent = ta.value.length + '/2500';
+  const enhBtn = document.getElementById('custom-style-enhance-btn');
+  if (enhBtn) enhBtn.style.display = (ta && ta.value.length > 0) ? 'flex' : 'none';
+  fitEnhanceBtn('custom-style-enhance-btn');
+  const hasName = !!(nameInput && nameInput.value.trim());
+  const hasPromptOrPhoto = !!(ta && ta.value.trim()) || _customStylePhotos.length > 0;
+  _setRegenBtnEnabled('custom-style-regen-btn', hasName && hasPromptOrPhoto);
+  // Any edit after a completed generation means the shown result is stale —
+  // hide Done until the user (re)generates again, same as the Image Editor.
+  if (_customStyleGenerated) {
+    const doneBtn = document.getElementById('custom-style-done-btn');
+    if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+  }
+}
+
+function customStyleIdea() {
+  const idea = CUSTOM_STYLE_IDEAS[Math.floor(Math.random() * CUSTOM_STYLE_IDEAS.length)];
+  const nameInput = document.getElementById('custom-style-name');
+  const ta = document.getElementById('custom-style-ta');
+  if (nameInput && !nameInput.value.trim()) nameInput.value = idea.name;
+  if (ta) ta.value = idea.desc;
+  onCustomStyleInput();
+}
+
+function customStyleEnhance() {
+  const ta = document.getElementById('custom-style-ta');
+  const btn = document.getElementById('custom-style-enhance-btn');
+  if (!ta || !ta.value.trim()) return;
+  ta.style.opacity = '.3'; ta.style.pointerEvents = 'none';
+  if (btn) {
+    btn.style.pointerEvents = 'none';
+    const img = btn.querySelector('img');
+    if (img) img.style.animation = 'spin 0.8s linear infinite reverse';
+  }
+  setTimeout(() => {
+    ta.value = ta.value.trim() + ' — rendered with rich cinematic detail, refined lighting, and a cohesive color palette.';
+    ta.style.opacity = ''; ta.style.pointerEvents = '';
+    if (btn) { btn.style.pointerEvents = ''; const img = btn.querySelector('img'); if (img) img.style.animation = ''; }
+    onCustomStyleInput();
+  }, 900);
+}
+
+function addCustomStylePhoto() {
+  if (_customStylePhotos.length >= 4) return;
+  const next = CUSTOM_STYLE_TEMPLATE_IMAGES[_customStylePhotos.length % CUSTOM_STYLE_TEMPLATE_IMAGES.length];
+  _customStylePhotos.push(next);
+  renderCustomStylePhotosRow();
+  onCustomStyleInput();
+}
+function removeCustomStylePhoto(i) {
+  _customStylePhotos.splice(i, 1);
+  renderCustomStylePhotosRow();
+  onCustomStyleInput();
+}
+function renderCustomStylePhotosRow() {
+  const row = document.getElementById('custom-style-photos-row');
+  if (!row) return;
+  const addTile = _customStylePhotos.length < 4 ? `
+    <div onclick="addCustomStylePhoto()" style="flex-shrink:0;width:65px;height:65px;border-radius:12px;border:1.5px dashed rgba(255,255,255,.25);background:#151519;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </div>` : '';
+  row.innerHTML = addTile + _customStylePhotos.map((src, i) => `
+    <div style="flex-shrink:0;width:65px;height:65px;border-radius:12px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.15);">
+      <img src="${src}" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <div onclick="event.stopPropagation();removeCustomStylePhoto(${i})" style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:9px;background:rgba(9,9,11,.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+        <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+    </div>`).join('');
+}
+
+function _renderCustomStyleModelRow() {
+  const sel = _aiModelSelected.scenes;
+  const m = _aiModelFind('scenes', sel.modelId);
+  if (!m) return;
+  const r = m.resolutions.find(x => x.res === sel.res) || m.resolutions[0];
+  const nameEl = document.getElementById('custom-style-model-label');
+  const creditEl = document.getElementById('custom-style-model-credit');
+  const regenCreditEl = document.getElementById('custom-style-regen-credit');
+  if (nameEl) nameEl.textContent = `${m.name} · ${r.res}`;
+  if (creditEl) creditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="12" height="12" style="display:block;">${r.credits}`;
+  if (regenCreditEl) regenCreditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">${r.credits}`;
+}
+
+function selectCustomStyleVersion(i) {
+  const v = _customStyleVersions[i];
+  if (!v || v.generating) return;
+  _customStyleSelectedVersion = i;
+  const prev = document.getElementById('custom-style-preview');
+  if (prev) prev.src = v.src;
+  const ta = document.getElementById('custom-style-ta');
+  if (ta) ta.value = v.prompt || '';
+  _renderEditorVersions('custom-style', _customStyleVersions, _customStyleSelectedVersion, 'selectCustomStyleVersion');
+  onCustomStyleInput();
+  // Picking an earlier version to carry forward is itself a completed
+  // result — re-reveal Done rather than leaving it hidden by onCustomStyleInput().
+  const doneBtn = document.getElementById('custom-style-done-btn');
+  if (doneBtn) { doneBtn.style.opacity = '1'; doneBtn.style.pointerEvents = 'auto'; }
+}
+
+function regenerateCustomStyle() {
+  const btn = document.getElementById('custom-style-regen-btn');
+  if (!btn || btn.disabled) return;
+  requireLogin(() => {
+    const nameInput = document.getElementById('custom-style-name');
+    const ta = document.getElementById('custom-style-ta');
+    const name = nameInput ? nameInput.value.trim() : '';
+    const desc = ta ? ta.value.trim() : '';
+    if (!name || (!desc && !_customStylePhotos.length)) return;
+    _setRegenBtnEnabled('custom-style-regen-btn', false);
+    _setModelRowEnabled('custom-style-model-row', false);
+    const doneBtn = document.getElementById('custom-style-done-btn');
+    if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+    const previewOuter = document.getElementById('custom-style-preview-wrap-outer');
+    if (previewOuter) previewOuter.style.display = '';
+    const gen = document.getElementById('custom-style-generating');
+    if (gen) gen.style.opacity = '1';
+    // Reserve the new version's slot with a "generating" placeholder tile,
+    // same pattern as the shared Image Editor's regenerate.
+    _customStyleVersions.push({ generating: true });
+    _renderEditorVersions('custom-style', _customStyleVersions, _customStyleSelectedVersion, 'selectCustomStyleVersion');
+    setTimeout(() => {
+      if (gen) gen.style.opacity = '0';
+      _setModelRowEnabled('custom-style-model-row', true);
+      // Pick a placeholder "generated" look: the first uploaded reference
+      // photo if one was given, otherwise cycle through the template pool.
+      const src = _customStylePhotos[0] || CUSTOM_STYLE_TEMPLATE_IMAGES[_customStyleVersions.length % CUSTOM_STYLE_TEMPLATE_IMAGES.length];
+      _customStyleVersions.splice(_customStyleVersions.length - 1, 1, { src, prompt: desc });
+      _customStyleSelectedVersion = _customStyleVersions.length - 1;
+      const prev = document.getElementById('custom-style-preview');
+      if (prev) prev.src = src;
+      _customStyleGenerated = true;
+      _renderEditorVersions('custom-style', _customStyleVersions, _customStyleSelectedVersion, 'selectCustomStyleVersion');
+      const regenLbl = document.getElementById('custom-style-regen-label');
+      if (regenLbl) regenLbl.textContent = 'Regenerate';
+      if (doneBtn) { doneBtn.style.opacity = '1'; doneBtn.style.pointerEvents = 'auto'; }
+    }, 2500);
+  });
+}
+
+// Confirms the generated style — creates a new selectable card right after
+// "Custom" (or updates the existing one when re-editing), auto-selects it,
+// and closes the sheet. Per Figma 2209-52324: a newly generated custom style
+// becomes a new card in Scene Setup's Select Visual Style row.
+function confirmCustomStyleSheet() {
+  const doneBtn = document.getElementById('custom-style-done-btn');
+  if (!doneBtn || doneBtn.style.pointerEvents === 'none') return;
+  const nameInput = document.getElementById('custom-style-name');
+  const ta = document.getElementById('custom-style-ta');
+  const name = (nameInput && nameInput.value.trim()) || 'Custom Style';
+  const desc = ta ? ta.value.trim() : '';
+  const v = _customStyleVersions[_customStyleSelectedVersion] || {};
+  const thumb = v.src || CUSTOM_STYLE_TEMPLATE_IMAGES[0];
+  if (_customStyleEditingId) {
+    const existing = _mvrCustomStyles.find(s => s.id === _customStyleEditingId);
+    if (existing) { existing.name = name; existing.desc = desc; existing.thumb = thumb; existing.photos = _customStylePhotos.slice(); }
+    selectMvrStyle(_customStyleEditingId);
+  } else {
+    const id = 'custom-' + Date.now();
+    _mvrCustomStyles.unshift({ id, name, desc, thumb, photos: _customStylePhotos.slice(), custom: true });
+    selectMvrStyle(id);
+  }
+  closeCustomStyleSheet();
+}
 
 let _genStage = 'analysis';
 // True only for the single goTo('mv-edit') call that follows a REAL Generate
@@ -7419,8 +7806,12 @@ function resetStoryboardGeneration() {
   // Reflect the Visual Style actually picked on Scene Setup — an intuitive,
   // relevant cinematic-look description (lighting/color/mood), not a generic
   // placeholder — so this card's copy stays relative to the user's choice.
+  // _visualStyleSelectedDesc takes priority since it also covers
+  // user-authored Custom styles, which have no VISUAL_STYLE_PROMPTS entry.
   const vsText = document.getElementById('sb-visual-style-text');
-  if (vsText) vsText.textContent = VISUAL_STYLE_PROMPTS[_visualStyleSelected] || VISUAL_STYLE_PROMPT_DEFAULT;
+  if (vsText) vsText.textContent = _visualStyleSelectedDesc || VISUAL_STYLE_PROMPTS[_visualStyleSelected] || VISUAL_STYLE_PROMPT_DEFAULT;
+  const vsImg = document.getElementById('sb-visual-style-img');
+  if (vsImg && _visualStyleSelectedThumb) vsImg.setAttribute('src', _visualStyleSelectedThumb);
   startVisualStyleGenerating(() => { if (ctaFooter) ctaFooter.style.display = ''; });
 }
 
@@ -10223,27 +10614,6 @@ function obNext() {
 })();
 
 // ── MV Feature Room interactions ──
-function mvrPickStyle(idx, el) {
-  const row = document.querySelectorAll('#mvr-mini-row > div');
-  row.forEach((c, i) => {
-    c.style.border = i === idx ? '2px solid #A855F7' : '2px solid transparent';
-    const vid = c.querySelector('video');
-    if (!vid) return;
-    if (i === idx) {
-      // iOS Safari needs load() before play() if the video hasn't buffered yet
-      if (vid.readyState < 3) {
-        vid.load();
-        vid.oncanplay = function() { vid.play().catch(()=>{}); vid.oncanplay = null; };
-      } else {
-        vid.play().catch(()=>{});
-      }
-    } else {
-      vid.oncanplay = null;
-      vid.pause();
-    }
-  });
-  styleIdx = idx;
-}
 function pickSong(el) {
   document.querySelectorAll('.song-opt').forEach(o => o.classList.remove('sel-song'));
   el.classList.add('sel-song');
@@ -10783,6 +11153,15 @@ function chooseAiModelRes(group, modelId, res) {
     _renderVidEditorModelRow();
     _vidEditorDirty = true;
     _setRegenBtnEnabled('vid-editor-regen-btn', true);
+  }
+  // Same live-refresh for the Add/Edit Custom Visual Style sheet, which also
+  // shares the 'scenes' model tier (see _renderCustomStyleModelRow above).
+  // Its Generate/Regenerate gating depends on Name + (Prompt or Photo), not
+  // just "did the model change" — onCustomStyleInput() re-derives that.
+  const csWrap = document.getElementById('custom-style-wrap');
+  if (csWrap && csWrap.classList.contains('show') && group === 'scenes') {
+    _renderCustomStyleModelRow();
+    onCustomStyleInput();
   }
   _aiModelRenderList();
 }
@@ -11483,6 +11862,7 @@ function fitAllEnhanceBtns() {
   fitEnhanceBtn('scene-editor-enhance-btn');
   fitEnhanceBtn('img-editor-enhance-btn');
   fitEnhanceBtn('vid-editor-enhance-btn');
+  fitEnhanceBtn('custom-style-enhance-btn');
 }
 window.addEventListener('resize', fitAllEnhanceBtns);
 window.addEventListener('load', fitAllEnhanceBtns);
