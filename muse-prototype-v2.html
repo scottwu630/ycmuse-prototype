@@ -997,9 +997,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #emv-cover-generating.active{opacity:1;}
 #emv-cover-img.hidden{opacity:0;}
 .emv-cover-gen-label{font-size:13px;font-weight:600;color:#fff;letter-spacing:-.13px;}
-/* Visual Style generating — shown once, on arrival at Storyboard from Scene Setup */
-#sb-visual-style-generating{position:absolute;inset:0;background:linear-gradient(160deg,#6D28D9,#A855F7);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;}
-#sb-visual-style-generating.active{opacity:1;}
 .emv-toggle-row:last-of-type{border-bottom:none;}
 .emv-lbl{font-size:16px;font-weight:700;color:var(--text);}
 .emv-sub{font-size:12px;color:var(--text-2);margin-top:2px;}
@@ -3365,7 +3362,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- SELECT VISUAL STYLE (required — gates the Generate Style CTA).
+          <!-- SELECT VISUAL STYLE (required — gates the Generate Scenes CTA).
                Image-thumbnail picker per Figma 1448-31525/2209-52324 —
                replaces the old text-chip row above. The first card is always
                "Custom" and opens the Add/Edit Custom Visual Style sheet (see
@@ -3414,7 +3411,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <!-- CTA -->
       <div class="cta-footer">
         <button id="mv-analysis-cta" onclick="startGeneration('scenes')" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-          <span>Generate Style</span>
+          <span>Generate Scenes</span>
           <span id="mv-analysis-cta-credits" style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
             <img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
             10
@@ -3470,25 +3467,17 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div class="scr-scroll" style="padding:calc(var(--safe-top) + var(--nav-h) + 12px) 0 100px;">
         <div style="padding:0 16px;display:flex;flex-direction:column;gap:20px;">
 
-          <!-- VISUAL STYLE — reference image + description, one card. Tapping it opens
-               the Image Editor (same regenerate flow as a Scene) — already generated on
-               a previous step, so it does NOT re-run during Generate Scenes. -->
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Visual Style</div>
-            <div onclick="sbOpenVisualStyleEditor()" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;box-sizing:border-box;cursor:pointer;">
-              <div style="display:flex;flex-direction:column;gap:8px;">
-                <div style="position:relative;border-radius:10px;overflow:hidden;height:144px;background:#1a1a1a;flex-shrink:0;">
-                  <img id="sb-visual-style-img" src="assets/videos/templates/04_pastel_film.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
-                  <div id="sb-visual-style-generating"><span class="emv-cover-gen-label">✦ Generating...</span></div>
-                  <div onclick="event.stopPropagation();sbOpenVisualStyleEditor()" style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;border-radius:16px;background:rgba(9,9,11,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                    <img src="assets/icons/ui/ic_edit.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
-                  </div>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div id="sb-visual-style-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;flex:1;min-width:0;">Soft, cinematic visual style with warm lighting and a gentle, romantic color grade.</div>
-                </div>
-              </div>
-            </div>
+          <!-- Visual Style card removed from Storyboard per Figma 1449-32207 —
+               creating/editing the style now happens entirely on Scene Setup
+               (see the #custom-style-wrap sheet there). sb-visual-style-img/
+               -text stay in the DOM (hidden) purely as a data holder: they're
+               still read as the "Visual Style" reference thumbnail shown in
+               the Scene/Character editors below (_initImgEditorRefs), and
+               resetStoryboardGeneration() still seeds them with whatever the
+               user picked on Scene Setup. -->
+          <div style="display:none;">
+            <img id="sb-visual-style-img" src="assets/videos/templates/04_pastel_film.jpg">
+            <div id="sb-visual-style-text">Soft, cinematic visual style with warm lighting and a gentle, romantic color grade.</div>
           </div>
 
           <!-- STORY -->
@@ -3548,13 +3537,16 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- CHARACTERS — hidden until Generate Scenes is tapped (this single step now
-               generates the Scene images AND the Character reference images together, per
-               Figma node 1449-32207). -->
+          <!-- COSTUME — hidden until "Generate Costumes" is tapped (Storyboard's second
+               explicit step, between Generate Scenes and Generate Shots), per Figma node
+               2224-56165. Section header text is "Costume" (singular) to match Figma; the
+               DOM ids/functions below still say "character(s)" since these cards are keyed
+               by which character each costume belongs to (@Chloe, @Leo Miller) — renaming
+               every id would touch a lot of unrelated code for no visible difference. -->
           <div id="sb-characters-section" style="display:none;flex-direction:column;gap:8px;">
             <!-- Header with expand/collapse -->
             <div onclick="toggleCharactersSection()" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
-              <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Characters</div>
+              <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Costume</div>
               <img id="sb-characters-chevron" src="assets/icons/ui/ic_chevron-right.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);transform:rotate(-90deg);transition:transform .25s;">
             </div>
 
@@ -7241,7 +7233,7 @@ function restoreCtaNormal(screenId) {
     btn.style.color = '#fff';
     btn.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
   }
-  // Generate Style has its own required-selection-gated enable/disable styling
+  // Generate Scenes has its own required-selection-gated enable/disable styling
   // (Visual Style chip must be picked) — re-apply it now that the button is
   // back to its normal action, since something on the screen actually changed.
   if (screenId === 'mv-analysis') updateAnalysisCtaState();
@@ -7272,7 +7264,7 @@ if (document.readyState === 'loading') document.addEventListener('DOMContentLoad
 else initCtaBackNextWatchers();
 
 // ── Visual Style (Scene Setup) — required image-thumbnail picker that gates
-// the Generate Style CTA. Nothing is selected by default, so the CTA starts
+// the Generate Scenes CTA. Nothing is selected by default, so the CTA starts
 // disabled until the user picks one. Per Figma 1448-31525/2209-52324, this
 // replaced the old text-chip row with visualized style cards — the first
 // card is always "Custom" and opens openCustomStyleSheet() (see the
@@ -7644,32 +7636,14 @@ function startGeneration(stage) {
   goTo('mv-thinking');
 }
 
-// ── Storyboard: Visual Style — one-time "generating" pass on arrival from
-// Scene Setup (see the mv-storyboard goTo hook / resetStoryboardGeneration()
-// below). Represents the style reference being generated from the settings
-// just confirmed on Scene Setup. Resolves BEFORE the "Generate Scenes" CTA
-// is revealed, and does NOT re-run during Generate Scenes itself — that step
-// only (re)generates the Scene images, reusing this already-ready style. ──
-let _visualStyleGenDone = true; // default ready (normal/back-nav visits)
-function sbOpenVisualStyleEditor() {
-  if (!_visualStyleGenDone) return; // not ready yet
-  const img = document.getElementById('sb-visual-style-img');
-  const desc = document.getElementById('sb-visual-style-text');
-  openImageEditor('style', 0, img ? img.getAttribute('src') : '', desc ? desc.textContent : '', 'Edit Visual Style');
-}
-const VS_GEN_MS = 1500; // one-shot duration for the Visual Style arrival pass
-function startVisualStyleGenerating(onDone) {
-  _visualStyleGenDone = false;
-  const gen = document.getElementById('sb-visual-style-generating');
-  if (gen) gen.classList.add('active');
-  _setModelRowEnabled('mv-storyboard-model-row', false);
-  setTimeout(() => {
-    _visualStyleGenDone = true;
-    if (gen) gen.classList.remove('active');
-    _setModelRowEnabled('mv-storyboard-model-row', true);
-    if (onDone) onDone();
-  }, VS_GEN_MS);
-}
+// NOTE: the Storyboard used to have its own "Visual Style" generating pass +
+// editor here (sbOpenVisualStyleEditor/startVisualStyleGenerating). Both were
+// removed per Figma 1449-32207 — the style is already finalized back on
+// Scene Setup by the time the user arrives here, so there's nothing left to
+// (re)generate or edit on this screen. sb-visual-style-img/-text (in the
+// hidden holder above) still carry that finalized style's thumbnail/
+// description forward, both into resetStoryboardGeneration() below and into
+// the Scene/Character editors' "Visual Style" reference thumbnail.
 
 // ── Storyboard: Scene images — staggered "generating" pass. Runs once, right
 // after the user taps the "Generate Scenes" CTA (the first of the
@@ -7693,53 +7667,99 @@ const SB_SCENE_GEN_BASE_MS    = 1000;
 const SB_SCENE_GEN_STAGGER_MS = 1000;
 
 // ── Generate Scenes — inline, gated behind its own CTA tap (Storyboard's
-// first explicit step). Reveals the Scene section AND the Characters section
-// (hidden until now) and staggers each pair's generating overlays together —
-// per Figma node 1449-32207, this single step now produces both the Scene
-// images and the Character reference images. Once both finish, the Select AI
-// Model row + CTA flip to 'shots', mirroring how generateShotsInline() below
-// flips them to 'videos'. ──
+// first explicit step). Reveals the Scene section (hidden until now) and
+// staggers its generating overlays. Once done, the Select AI Model row + CTA
+// flip to 'costumes' (see finishScenesGeneration() below) — Costume/Character
+// reference images are now their own separate step (generateCostumesInline()),
+// per Figma node 2224-56165, rather than being generated in this same pass. ──
 let _scenesGenerated = false;
 let _storyboardModelGate = 'scenes';
 function generateScenesInline() {
   if (_scenesGenerated) return;
   const sec = document.getElementById('sb-storyline-section');
   if (!sec) return;
-  const charSec = document.getElementById('sb-characters-section');
-  // Hide the bottom CTA while scenes/characters are generating — it comes
-  // back once both finish (see finishScenesGeneration()).
+  // Hide the bottom CTA while scenes are generating — it comes back once
+  // they finish (see finishScenesGeneration()).
   const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
   if (ctaFooter) ctaFooter.style.display = 'none';
   _setModelRowEnabled('mv-storyboard-model-row', false);
   sec.style.display = 'flex';
-  if (charSec) charSec.style.display = 'flex';
   // No auto-scroll here (unlike generateShotsInline() below) — the Scene
   // section sits near the top of the page, right where the user already is,
   // and scrollIntoView({block:'start'}) on such a short section ends up
   // over-scrolling past it, dragging the Select AI Model row into view.
   for (let i = 1; i <= 2; i++) {
     _sbSceneGenDone[i] = false;
-    _sbCharacterGenDone[i] = false;
     document.getElementById('sb-scene-proc-' + i)?.classList.add('show');
-    document.getElementById('sb-character-proc-' + i)?.classList.add('show');
   }
   for (let i = 1; i <= 2; i++) {
     setTimeout(() => {
       _sbSceneGenDone[i] = true;
-      _sbCharacterGenDone[i] = true;
       document.getElementById('sb-scene-proc-' + i)?.classList.remove('show');
-      document.getElementById('sb-character-proc-' + i)?.classList.remove('show');
       if (i === 2) { _scenesGenerated = true; finishScenesGeneration(); }
     }, SB_SCENE_GEN_BASE_MS + i * SB_SCENE_GEN_STAGGER_MS);
   }
 }
 function finishScenesGeneration() {
+  _storyboardModelGate = 'costumes';
+  _renderStoryboardModelRow();
+  const label = document.getElementById('mv-storyboard-cta-label');
+  const creditsWrap = document.getElementById('mv-storyboard-cta-credits');
+  const btn = document.getElementById('mv-storyboard-cta');
+  // Scenes finished generating — bring the CTA back for the next step.
+  const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
+  if (ctaFooter) ctaFooter.style.display = '';
+  _setModelRowEnabled('mv-storyboard-model-row', true);
+  if (label) label.textContent = 'Generate Costumes';
+  if (btn) btn.setAttribute('onclick', "requireLogin(()=>generateCostumesInline())");
+  const sel = _aiModelSelected.costumes;
+  const m = _aiModelFind('costumes', sel.modelId);
+  const r = m && m.resolutions.find(x => x.res === sel.res);
+  if (creditsWrap && r) creditsWrap.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">${r.credits}`;
+  // Refresh the Back→Next cache so a later Back visit restores to THIS state, not the stale "Generate Scenes" one
+  if (btn) {
+    btn.dataset.origHtml = btn.innerHTML;
+    btn.dataset.origBg = btn.style.background || btn.dataset.origBg || '';
+    btn.dataset.origOnclick = btn.getAttribute('onclick') || '';
+    btn.dataset.nextState = '0';
+  }
+}
+// ── Generate Costumes — inline, gated behind its own CTA tap (Storyboard's
+// second explicit step, between Generate Scenes and Generate Shots). Reveals
+// the Costume section (the @Chloe / @Leo Miller reference cards — hidden
+// until now) and staggers its generating overlays. Once done, the Select AI
+// Model row + CTA flip to 'shots'. Per Figma node 2224-56165. ──
+let _costumesGenerated = false;
+function generateCostumesInline() {
+  if (_costumesGenerated) return;
+  const charSec = document.getElementById('sb-characters-section');
+  if (!charSec) return;
+  // Hide the bottom CTA while costumes are generating — it comes back once
+  // they finish (see finishCostumesGeneration()).
+  const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
+  if (ctaFooter) ctaFooter.style.display = 'none';
+  _setModelRowEnabled('mv-storyboard-model-row', false);
+  charSec.style.display = 'flex';
+  setTimeout(() => { charSec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+  for (let i = 1; i <= 2; i++) {
+    _sbCharacterGenDone[i] = false;
+    document.getElementById('sb-character-proc-' + i)?.classList.add('show');
+  }
+  for (let i = 1; i <= 2; i++) {
+    setTimeout(() => {
+      _sbCharacterGenDone[i] = true;
+      document.getElementById('sb-character-proc-' + i)?.classList.remove('show');
+      if (i === 2) { _costumesGenerated = true; finishCostumesGeneration(); }
+    }, SB_SCENE_GEN_BASE_MS + i * SB_SCENE_GEN_STAGGER_MS);
+  }
+}
+function finishCostumesGeneration() {
   _storyboardModelGate = 'shots';
   _renderStoryboardModelRow();
   const label = document.getElementById('mv-storyboard-cta-label');
   const creditsWrap = document.getElementById('mv-storyboard-cta-credits');
   const btn = document.getElementById('mv-storyboard-cta');
-  // Both scenes finished generating — bring the CTA back for the next step.
+  // Costumes finished generating — bring the CTA back for the next step.
   const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
   if (ctaFooter) ctaFooter.style.display = '';
   _setModelRowEnabled('mv-storyboard-model-row', true);
@@ -7749,7 +7769,7 @@ function finishScenesGeneration() {
   const m = _aiModelFind('shots', sel.modelId);
   const r = m && m.resolutions.find(x => x.res === sel.res);
   if (creditsWrap && r) creditsWrap.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">${r.credits}`;
-  // Refresh the Back→Next cache so a later Back visit restores to THIS state, not the stale "Generate Scenes" one
+  // Refresh the Back→Next cache so a later Back visit restores to THIS state, not the stale "Generate Costumes" one
   if (btn) {
     btn.dataset.origHtml = btn.innerHTML;
     btn.dataset.origBg = btn.style.background || btn.dataset.origBg || '';
@@ -7762,6 +7782,7 @@ function finishScenesGeneration() {
 // goTo hook), including re-generating an already-completed MV from scratch.
 function resetStoryboardGeneration() {
   _scenesGenerated = false;
+  _costumesGenerated = false;
   _shotsGenerated = false;
   _storyboardModelGate = 'scenes';
   _sbSceneGenDone[1] = true;
@@ -7781,7 +7802,6 @@ function resetStoryboardGeneration() {
   const label = document.getElementById('mv-storyboard-cta-label');
   const creditsWrap = document.getElementById('mv-storyboard-cta-credits');
   const btn = document.getElementById('mv-storyboard-cta');
-  const ctaFooter = document.getElementById('mv-storyboard-cta-footer');
   if (label) label.textContent = 'Generate Scenes';
   if (btn) btn.setAttribute('onclick', "requireLogin(()=>generateScenesInline())");
   const sel = _aiModelSelected.scenes;
@@ -7799,20 +7819,20 @@ function resetStoryboardGeneration() {
   // of whatever state a previous MV session left the drag lock in.
   _videoShotsSentToEditor = false;
   setShotDragLocked(false);
-  // The Visual Style reference is (re)generated as part of arriving here fresh
-  // from Scene Setup — show its processing state first, and only reveal the
-  // "Generate Scenes" CTA once it completes.
-  if (ctaFooter) ctaFooter.style.display = 'none';
-  // Reflect the Visual Style actually picked on Scene Setup — an intuitive,
-  // relevant cinematic-look description (lighting/color/mood), not a generic
-  // placeholder — so this card's copy stays relative to the user's choice.
-  // _visualStyleSelectedDesc takes priority since it also covers
+  // Carry the Visual Style actually picked on Scene Setup into the hidden
+  // sb-visual-style-img/-text holder — still read by the Scene/Character
+  // editors' "Visual Style" reference thumbnail (_initImgEditorRefs).
+  // _visualStyleSelectedDesc/-Thumb take priority since they also cover
   // user-authored Custom styles, which have no VISUAL_STYLE_PROMPTS entry.
   const vsText = document.getElementById('sb-visual-style-text');
   if (vsText) vsText.textContent = _visualStyleSelectedDesc || VISUAL_STYLE_PROMPTS[_visualStyleSelected] || VISUAL_STYLE_PROMPT_DEFAULT;
   const vsImg = document.getElementById('sb-visual-style-img');
   if (vsImg && _visualStyleSelectedThumb) vsImg.setAttribute('src', _visualStyleSelectedThumb);
-  startVisualStyleGenerating(() => { if (ctaFooter) ctaFooter.style.display = ''; });
+  // The style itself is already generated (that happened back on Scene
+  // Setup) — arriving here fresh goes straight into generating the Scenes,
+  // per Figma 1449-32207, rather than waiting for a separate manual
+  // "Generate Scenes" tap on this screen.
+  generateScenesInline();
 }
 
 // ── Generate Shots — inline: dummy thumbnails reveal with a processing
@@ -9467,9 +9487,9 @@ function openImageEditor(kind, idx, imgSrc, desc, label) {
   // Visual Style shares the same model tier as Scene images.
   // Cover Image is a single reference image with no per-shot association,
   // same as Visual Style — reuse the 'scenes' (image) model tier for both.
-  // Characters are generated in the same pass as Scenes (see generateScenesInline()),
-  // so they share that tier too.
-  _imgEditorGate = (kind === 'scene' || kind === 'style' || kind === 'cover' || kind === 'character') ? 'scenes' : _storyboardModelGate;
+  // Character/Costume reference images are their own separate generation step
+  // (see generateCostumesInline()), so they use the 'costumes' tier instead.
+  _imgEditorGate = (kind === 'scene' || kind === 'style' || kind === 'cover') ? 'scenes' : (kind === 'character' ? 'costumes' : _storyboardModelGate);
   const lbl  = document.getElementById('img-editor-label');
   const prev = document.getElementById('img-editor-preview');
   const ta   = document.getElementById('img-editor-ta');
@@ -10902,13 +10922,23 @@ function pickSeg(grpId, el, tagId, label) {
 // Each group maps to one of 3 UI types, which decides what info/options the sheet
 // shows: 'song' (analyzing audio/lyrics, no resolution concept at all),
 // 'image' (scenes/shots — 1K/2K resolution), 'video' (videos/lipSyncVideos — SD/HD quality).
-const AI_MODEL_TYPE = { scenes: 'image', shots: 'image', videos: 'video', lipSyncVideos: 'video' };
+const AI_MODEL_TYPE = { scenes: 'image', costumes: 'image', shots: 'image', videos: 'video', lipSyncVideos: 'video' };
 // Each model offers one or more output tiers, each with its own credit cost.
 // 'song' models only ever have a single tier (nothing to pick, so it's hidden).
 const AI_MODELS = {
   // 6 models, matching the roster shown in Figma 1487:35439 — Nano Banana 2 and
   // GPT Image 2.0 High each offer 3 tiers (1K/2K/4K); others offer fewer.
   scenes: [
+    { id: 'fast',       name: 'Nano Banana 2',      desc: 'Quickest turnaround, good for previews', resolutions: [{ res: '1K', credits: 10 }, { res: '2K', credits: 18 }, { res: '4K', credits: 30 }] },
+    { id: 'gptHigh',    name: 'GPT Image 2.0 High', desc: 'Sharpest detail, highest fidelity',       resolutions: [{ res: '1K', credits: 22 }, { res: '2K', credits: 38 }, { res: '4K', credits: 62 }] },
+    { id: 'pro',        name: 'Nano Banana Pro',    desc: 'Sharper detail and pacing',              resolutions: [{ res: '1K', credits: 35 }, { res: '2K', credits: 58 }, { res: '4K', credits: 95 }] },
+    { id: 'gptMedium',  name: 'GPT Image 2.0 Medium', desc: 'Balanced quality and speed',           resolutions: [{ res: '1K', credits: 14 }, { res: '2K', credits: 24 }] },
+    { id: 'seedream5',  name: 'Seedream 5.0 Pro',   desc: 'Rich color and cinematic lighting',       resolutions: [{ res: '1K', credits: 28 }, { res: '2K', credits: 46 }] },
+    { id: 'seedream45', name: 'Seedream 4.5',       desc: 'Lightweight, fastest previews',           resolutions: [{ res: '1K', credits: 12 }] }
+  ],
+  // Costume/character reference images — same roster+pricing as 'scenes' (both
+  // are single-image generations off the same tier of image models).
+  costumes: [
     { id: 'fast',       name: 'Nano Banana 2',      desc: 'Quickest turnaround, good for previews', resolutions: [{ res: '1K', credits: 10 }, { res: '2K', credits: 18 }, { res: '4K', credits: 30 }] },
     { id: 'gptHigh',    name: 'GPT Image 2.0 High', desc: 'Sharpest detail, highest fidelity',       resolutions: [{ res: '1K', credits: 22 }, { res: '2K', credits: 38 }, { res: '4K', credits: 62 }] },
     { id: 'pro',        name: 'Nano Banana Pro',    desc: 'Sharper detail and pacing',              resolutions: [{ res: '1K', credits: 35 }, { res: '2K', credits: 58 }, { res: '4K', credits: 95 }] },
@@ -10938,6 +10968,7 @@ const AI_MODELS = {
 };
 const AI_MODEL_SUBTITLE = {
   scenes:        'Choose the model used to generate your scenes.',
+  costumes:      'Choose the model used to generate your costumes.',
   shots:         'Choose the model used to generate your shots.',
   videos:        'Choose the model used to generate your videos.',
   lipSyncVideos: 'Choose the model used to generate your lip sync videos.'
@@ -10946,6 +10977,7 @@ const AI_MODEL_SUBTITLE = {
 // and to the first/lowest tier for image and video types)
 const _aiModelSelected = {
   scenes:        { modelId: 'fast', res: '1K' },
+  costumes:      { modelId: 'fast', res: '1K' },
   shots:         { modelId: 'fast', res: '1K' },
   videos:        { modelId: 'std',  res: 'SD' },
   lipSyncVideos: { modelId: 'pro',  res: 'SD' }
@@ -11115,13 +11147,13 @@ function _refreshCtaCredits(gate) {
   if (gate === 'scenes') {
     const el = document.getElementById('mv-analysis-cta-credits');
     if (el) el.innerHTML = creditHtml;
-  } else if ((gate === 'shots' || gate === 'videos') && typeof _storyboardModelGate !== 'undefined' && gate === _storyboardModelGate) {
+  } else if ((gate === 'costumes' || gate === 'shots' || gate === 'videos') && typeof _storyboardModelGate !== 'undefined' && gate === _storyboardModelGate) {
     const el = document.getElementById('mv-storyboard-cta-credits');
     if (el) el.innerHTML = creditHtml;
   }
 }
 
-// group: 'scenes' | 'shots' | 'videos' | 'lipSyncVideos'. The sheet no longer
+// group: 'scenes' | 'costumes' | 'shots' | 'videos' | 'lipSyncVideos'. The sheet no longer
 // auto-closes after a pick — now that 'videos' can show two independent
 // groups at once (main video model + Lip Sync model), the user needs to be
 // able to pick from both before dismissing via the header's Done button.
