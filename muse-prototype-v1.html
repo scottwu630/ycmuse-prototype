@@ -54,6 +54,7 @@
   --border:   rgba(255,255,255,0.09);  /* primary divider (NavBar, Section) */
   --border-2: rgba(255,255,255,0.15);  /* card / input border               */
   --border-3: rgba(255,255,255,0.06);  /* subtle separator                  */
+  --color-white-15: rgba(255,255,255,0.15);  /* glass badge fill (Figma Badge component) */
 
   /* ── Brand accents ── */
   --accent:   #A855F7;  /* color/accent/purple  */
@@ -1227,13 +1228,13 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <!-- Message -->
             <div style="position:absolute;left:24px;right:24px;bottom:16px;display:flex;flex-direction:column;gap:8px;">
               <!-- Badge -->
-              <div style="display:inline-flex;align-items:center;gap:3px;background:rgba(168,85,247,0.2);border:1px solid rgba(168,85,247,0.35);border-radius:20px;padding:4px 8px;width:fit-content;">
-                <span style="display:block;width:10px;height:10px;flex-shrink:0;background-color:#A855F7;-webkit-mask:url(assets/icons/ui/ic_star.svg) no-repeat center/contain;mask:url(assets/icons/ui/ic_star.svg) no-repeat center/contain;"></span>
-                <span style="font-size:10px;font-weight:700;color:#A855F7;white-space:nowrap;">AI Music Video</span>
+              <div style="display:inline-flex;align-items:center;gap:3px;background:var(--color-white-15);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:20px;padding:4px 8px;width:fit-content;">
+                <img src="assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
+                <span style="font-size:10px;font-weight:700;color:#fff;white-space:nowrap;">AI Music Video</span>
               </div>
               <!-- Title -->
               <div style="font-size:30px;font-weight:800;line-height:36px;letter-spacing:-0.3px;">
-                <span style="color:#fff;">Transform song into </span><span style="background:linear-gradient(to right,#ff6bce,#a855f7,#4338ca);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Cinematic Video</span>
+                <span style="color:#fff;">Transform song into </span><span style="color:#fff;">Cinematic Video</span>
               </div>
               <!-- Body -->
               <p style="font-size:14px;font-weight:500;line-height:20px;color:rgba(255,255,255,0.52);letter-spacing:-0.14px;">Upload your selfie, choose a style, and watch AI craft a stunning music video in minutes.</p>
@@ -1252,13 +1253,13 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <!-- Message -->
             <div style="position:absolute;left:24px;right:24px;bottom:16px;display:flex;flex-direction:column;gap:8px;">
               <!-- Badge -->
-              <div style="display:inline-flex;align-items:center;gap:3px;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.25);border-radius:14px;padding:4px 8px;width:fit-content;">
-                <span style="display:block;width:10px;height:10px;flex-shrink:0;background-color:#f59e0b;-webkit-mask:url(assets/icons/ui/ic_star.svg) no-repeat center/contain;mask:url(assets/icons/ui/ic_star.svg) no-repeat center/contain;"></span>
-                <span style="font-size:10px;font-weight:700;color:#f59e0b;white-space:nowrap;">AI Song Composer</span>
+              <div style="display:inline-flex;align-items:center;gap:3px;background:var(--color-white-15);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:20px;padding:4px 8px;width:fit-content;">
+                <img src="assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
+                <span style="font-size:10px;font-weight:700;color:#fff;white-space:nowrap;">AI Song Composer</span>
               </div>
               <!-- Title -->
               <div style="font-size:30px;font-weight:800;line-height:36px;letter-spacing:-0.3px;">
-                <span style="color:#fff;">Compose </span><span style="background:linear-gradient(to right,#ffb347,#ff4e50,#d63af9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">original songs with AI</span>
+                <span style="color:#fff;">Compose </span><span style="color:#fff;">original songs with AI</span>
               </div>
               <!-- Body -->
               <p style="font-size:14px;font-weight:500;line-height:20px;color:rgba(255,255,255,0.52);letter-spacing:-0.14px;">Write your lyrics, pick a style, and AI generates a full song ready to share or use in your MV.</p>
