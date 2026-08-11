@@ -7430,6 +7430,8 @@ function openCustomStyleSheet(existingId) {
 }
 
 function closeCustomStyleSheet() {
+  // Same leftover-sheet issue as closeImageEditor() above.
+  hideSheet('ai-model-sheet');
   document.getElementById('custom-style-wrap')?.classList.remove('show');
 }
 
@@ -7724,6 +7726,27 @@ function finishScenesGeneration() {
     btn.dataset.nextState = '0';
   }
 }
+// A plain el.scrollIntoView() call walks up EVERY scrollable ancestor to
+// bring `el` into view — and #screen-*'s .scr-scroll isn't the only one that
+// qualifies: .device itself has overflow:hidden, and every hidden bottom
+// sheet (.sheet — Select AI Model, Select Visual Style/Reference Picker,
+// etc.) sits translated far below .device's own bottom edge, which per the
+// CSS Overflow spec counts as scrollable overflow on .device. The browser's
+// scrollIntoView algorithm sometimes "helps" by nudging .device's OWN
+// scrollTop a little too — which shifts every one of those hidden sheets
+// up by that same amount, since their hidden position is normally flush
+// with .device's edge. The result: opening any of those sheets afterward
+// shows it peeking in from the bottom of the screen instead of sliding up
+// cleanly from fully offscreen. Since the browser resolves every ancestor's
+// scroll target synchronously when scrollIntoView() is called (even for
+// behavior:'smooth' — only the animation itself is deferred), forcing
+// .device.scrollTop back to 0 right after cancels only ITS unwanted nudge
+// without touching .scr-scroll's own (intended) smooth-scroll animation.
+function _scrollSectionIntoView(el) {
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const device = document.querySelector('.device');
+  if (device) device.scrollTop = 0;
+}
 // ── Generate Costumes — inline, gated behind its own CTA tap (Storyboard's
 // second explicit step, between Generate Scenes and Generate Shots). Reveals
 // the Costume section (the @Chloe / @Leo Miller reference cards — hidden
@@ -7740,7 +7763,7 @@ function generateCostumesInline() {
   if (ctaFooter) ctaFooter.style.display = 'none';
   _setModelRowEnabled('mv-storyboard-model-row', false);
   charSec.style.display = 'flex';
-  setTimeout(() => { charSec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+  setTimeout(() => { _scrollSectionIntoView(charSec); }, 60);
   for (let i = 1; i <= 2; i++) {
     _sbCharacterGenDone[i] = false;
     document.getElementById('sb-character-proc-' + i)?.classList.add('show');
@@ -7856,7 +7879,7 @@ function generateShotsInline() {
     const proc = document.getElementById('shot-proc-' + i);
     if (proc) proc.classList.add('show');
   }
-  setTimeout(() => { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+  setTimeout(() => { _scrollSectionIntoView(sec); }, 60);
   for (let i = 1; i <= 8; i++) {
     setTimeout(() => {
       const proc = document.getElementById('shot-proc-' + i);
@@ -9568,6 +9591,13 @@ function _renderImgEditorModelRow() {
   if (regenCreditEl) regenCreditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">${r.credits}`;
 }
 function closeImageEditor() {
+  // Close any nested sheet the user may have opened from inside this editor
+  // (the "Visual Style" reference thumbnail's picker, or the Select AI Model
+  // row) — otherwise it's left in its 'show' state, sitting on top of
+  // whatever screen is now revealed underneath once this editor closes, and
+  // peeks in at the bottom of the screen instead of being fully dismissed.
+  hideSheet('ref-picker-sheet');
+  hideSheet('ai-model-sheet');
   const wrap = document.getElementById('img-editor-wrap');
   if (wrap) wrap.classList.remove('show');
   // Persist the currently-selected version's look onto the real underlying element(s).
@@ -9917,6 +9947,10 @@ function _renderVidEditorModelRow() {
   if (regenCreditEl) regenCreditEl.innerHTML = `<img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;">${r.credits}`;
 }
 function closeVideoEditor() {
+  // Same leftover-sheet issue as closeImageEditor() above — close the Select
+  // AI Model row's sheet too, in case it was opened from inside here and
+  // never explicitly dismissed before the editor itself was closed.
+  hideSheet('ai-model-sheet');
   const wrap = document.getElementById('vid-editor-wrap');
   if (wrap) wrap.classList.remove('show');
   clearInterval(_vidEditorProgressTimer); _vidEditorProgressTimer = null;
