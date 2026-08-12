@@ -3553,36 +3553,68 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <!-- Characters (collapsible) -->
             <div id="sb-characters-content" style="display:flex;flex-direction:column;gap:8px;max-height:3000px;overflow:hidden;transition:max-height .5s ease-in-out,opacity .5s ease-in-out;opacity:1;">
 
-              <!-- Character 1 -->
-              <div onclick="sbOpenCharacterEditor(1,'assets/images/character-photos/acter_1.jpg',document.getElementById('sb-character-1-text').textContent,'Edit @Chloe')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;box-sizing:border-box;cursor:pointer;">
+              <!-- Character 1 — Age/Hair/Outfit/Visual mirror _sbCharacterData[1]
+                   (see _syncCharacterCard()); Outfit/Visual are 2-line clamped
+                   to match Figma's truncated card text (2224-56165). -->
+              <div onclick="sbOpenCharacterEditor(1,'assets/images/character-photos/acter_1.jpg','Edit @Chloe')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;box-sizing:border-box;cursor:pointer;">
                 <div style="display:flex;flex-direction:column;gap:8px;">
                   <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">@Chloe</div>
                   <div style="position:relative;border-radius:10px;overflow:hidden;height:108px;background:#1a1a1a;flex-shrink:0;">
                     <img id="sb-character-1-img" src="assets/images/character-photos/acter_1.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
                     <div id="sb-character-proc-1" class="shot-proc"><div class="spinner-sm"></div></div>
-                    <div onclick="event.stopPropagation();sbOpenCharacterEditor(1,'assets/images/character-photos/acter_1.jpg',document.getElementById('sb-character-1-text').textContent,'Edit @Chloe')" style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;border-radius:16px;background:rgba(9,9,11,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                    <div onclick="event.stopPropagation();sbOpenCharacterEditor(1,'assets/images/character-photos/acter_1.jpg','Edit @Chloe')" style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;border-radius:16px;background:rgba(9,9,11,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
                       <img src="assets/icons/ui/ic_edit.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
                     </div>
                   </div>
-                  <div style="display:flex;align-items:center;gap:8px;">
-                    <div id="sb-character-1-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;flex:1;min-width:0;">White mid-calf stockings. Barbie-pink high-fashion ensemble with puff sleeves and glossy leather in a whimsical candy fairytale setting.</div>
+                  <div style="display:flex;gap:10px;">
+                    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
+                      <div style="font-size:10px;font-weight:700;color:#676779;letter-spacing:.06em;text-transform:uppercase;">Age</div>
+                      <div id="sb-character-1-age" style="font-size:12px;font-weight:500;color:var(--n100);">22</div>
+                    </div>
+                    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
+                      <div style="font-size:10px;font-weight:700;color:#676779;letter-spacing:.06em;text-transform:uppercase;">Hair</div>
+                      <div id="sb-character-1-hair" style="font-size:12px;font-weight:500;color:var(--n100);">Honey-blonde, Long</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:2px;">
+                    <div style="font-size:10px;font-weight:700;color:#676779;letter-spacing:.06em;text-transform:uppercase;">Outfit</div>
+                    <div id="sb-character-1-outfit" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">Barbie-inspired high-fashion editorial. Light pink square-neck cropped top with puff sleeves and a high-waisted pink leather mini skirt. Elevated off-duty model aesthetic with a whimsical fairytale polish.</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:2px;">
+                    <div style="font-size:10px;font-weight:700;color:#676779;letter-spacing:.06em;text-transform:uppercase;">Visual</div>
+                    <div id="sb-character-1-visual" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">White mid-calf stockings. Barbie-pink high-fashion ensemble with puff sleeves and glossy leather in a whimsical candy fairytale setting.</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Character 2 -->
-              <div onclick="sbOpenCharacterEditor(2,'assets/images/character-photos/acter_5.jpg',document.getElementById('sb-character-2-text').textContent,'Edit @Leo Miller')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;box-sizing:border-box;cursor:pointer;">
+              <!-- Character 2 — mirrors _sbCharacterData[2]. -->
+              <div onclick="sbOpenCharacterEditor(2,'assets/images/character-photos/acter_5.jpg','Edit @Leo Miller')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;box-sizing:border-box;cursor:pointer;">
                 <div style="display:flex;flex-direction:column;gap:8px;">
                   <div style="font-size:13px;font-weight:700;color:#A855F7;letter-spacing:-.13px;line-height:18px;">@Leo Miller</div>
                   <div style="position:relative;border-radius:10px;overflow:hidden;height:108px;background:#1a1a1a;flex-shrink:0;">
                     <img id="sb-character-2-img" src="assets/images/character-photos/acter_5.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
                     <div id="sb-character-proc-2" class="shot-proc"><div class="spinner-sm"></div></div>
-                    <div onclick="event.stopPropagation();sbOpenCharacterEditor(2,'assets/images/character-photos/acter_5.jpg',document.getElementById('sb-character-2-text').textContent,'Edit @Leo Miller')" style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;border-radius:16px;background:rgba(9,9,11,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                    <div onclick="event.stopPropagation();sbOpenCharacterEditor(2,'assets/images/character-photos/acter_5.jpg','Edit @Leo Miller')" style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;border-radius:16px;background:rgba(9,9,11,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
                       <img src="assets/icons/ui/ic_edit.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
                     </div>
                   </div>
-                  <div style="display:flex;align-items:center;gap:8px;">
-                    <div id="sb-character-2-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;flex:1;min-width:0;">Deconstructed academy uniform with a rebellious, stage-ready rock aesthetic.</div>
+                  <div style="display:flex;gap:10px;">
+                    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
+                      <div style="font-size:10px;font-weight:700;color:#676779;letter-spacing:.06em;text-transform:uppercase;">Age</div>
+                      <div id="sb-character-2-age" style="font-size:12px;font-weight:500;color:var(--n100);">24</div>
+                    </div>
+                    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
+                      <div style="font-size:10px;font-weight:700;color:#676779;letter-spacing:.06em;text-transform:uppercase;">Hair</div>
+                      <div id="sb-character-2-hair" style="font-size:12px;font-weight:500;color:var(--n100);">Brown, Short</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:2px;">
+                    <div style="font-size:10px;font-weight:700;color:#676779;letter-spacing:.06em;text-transform:uppercase;">Outfit</div>
+                    <div id="sb-character-2-outfit" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">A crisp white cotton oxford shirt is tucked cleanly into charcoal-grey tailored wool-blend trousers. A deep-navy fine-gauge knit v-neck sweater vest is worn as the primary layering piece over the shirt. The collar is structured but the top button is left open. Completed with polished black leather penny loafers and dark grey ribbed crew socks.</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:2px;">
+                    <div style="font-size:10px;font-weight:700;color:#676779;letter-spacing:.06em;text-transform:uppercase;">Visual</div>
+                    <div id="sb-character-2-visual" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">Modern Western private-academy school uniform with a refined youthful prep aesthetic.</div>
                   </div>
                 </div>
               </div>
@@ -5836,8 +5868,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="padding:0 16px 12px;">
             <div id="img-editor-versions-track" style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;"></div>
           </div>
-          <!-- Prompt -->
-          <div style="padding:0 16px;">
+          <!-- Prompt — generic single-description field, used by every kind
+               EXCEPT 'character' (Costume editor), which swaps this out for
+               the Age/Hair/Outfit/Visual field set below. Toggled in
+               openImageEditor(). -->
+          <div id="img-editor-generic-fields" style="padding:0 16px;">
             <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;">
               <textarea id="img-editor-ta" maxlength="2500" placeholder="Describe this image…" oninput="onImgEditorInput()" style="width:100%;min-height:90px;padding:12px 12px 4px;background:transparent;border:none;color:#fff;font-size:13px;font-family:inherit;resize:none;outline:none;line-height:1.5;"></textarea>
               <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:4px 10px 10px;">
@@ -5846,6 +5881,61 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                   <span class="enh-txt">Enhance</span>
                 </button>
                 <span id="img-editor-counter" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);">0/2500</span>
+              </div>
+            </div>
+          </div>
+          <!-- Costume/Character fields — Age, Hair, Outfit, Visual (kind='character'
+               only). Per Figma node 1567-70138. Age/Hair are short single-line
+               inputs (same input+clear-x pattern as Custom Visual Style's
+               "Style Name" field); Outfit/Visual are full prompt-style
+               textareas with Enhance + counter, same chrome as the generic
+               prompt field above. Editing any of these marks the editor dirty
+               (enables Regenerate) and live-syncs the Costume card on the
+               Storyboard screen, same as the generic textarea does via
+               onImgEditorInput(). -->
+          <div id="img-editor-character-fields" style="display:none;flex-direction:column;gap:14px;padding:0 16px;">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Age</div>
+              <div style="position:relative;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;">
+                <input id="img-editor-age-input" maxlength="20" placeholder="Age" oninput="onImgEditorCharacterFieldInput('age')" style="width:100%;height:46px;padding:0 36px 0 14px;background:transparent;border:none;color:#fff;font-size:14px;font-weight:600;font-family:inherit;outline:none;box-sizing:border-box;">
+                <div id="img-editor-age-clear" onclick="clearImgEditorCharacterField('age')" style="display:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:10px;background:#212127;align-items:center;justify-content:center;cursor:pointer;">
+                  <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Hair</div>
+              <div style="position:relative;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;">
+                <input id="img-editor-hair-input" maxlength="60" placeholder="Hair" oninput="onImgEditorCharacterFieldInput('hair')" style="width:100%;height:46px;padding:0 36px 0 14px;background:transparent;border:none;color:#fff;font-size:14px;font-weight:600;font-family:inherit;outline:none;box-sizing:border-box;">
+                <div id="img-editor-hair-clear" onclick="clearImgEditorCharacterField('hair')" style="display:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:10px;background:#212127;align-items:center;justify-content:center;cursor:pointer;">
+                  <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Outfit</div>
+              <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;">
+                <textarea id="img-editor-outfit-ta" maxlength="2500" placeholder="Describe the outfit…" oninput="onImgEditorCharacterFieldInput('outfit')" style="width:100%;min-height:70px;padding:12px 12px 4px;background:transparent;border:none;color:#fff;font-size:13px;font-family:inherit;resize:none;outline:none;line-height:1.5;"></textarea>
+                <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:4px 10px 10px;">
+                  <button id="img-editor-outfit-enhance-btn" onclick="event.stopPropagation();enhanceCharacterField('outfit')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                    <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                    <span class="enh-txt">Enhance</span>
+                  </button>
+                  <span id="img-editor-outfit-counter" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);">0/2500</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">Visual</div>
+              <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;">
+                <textarea id="img-editor-visual-ta" maxlength="2500" placeholder="Describe the overall visual…" oninput="onImgEditorCharacterFieldInput('visual')" style="width:100%;min-height:70px;padding:12px 12px 4px;background:transparent;border:none;color:#fff;font-size:13px;font-family:inherit;resize:none;outline:none;line-height:1.5;"></textarea>
+                <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:4px 10px 10px;">
+                  <button id="img-editor-visual-enhance-btn" onclick="event.stopPropagation();enhanceCharacterField('visual')" style="display:none;padding:4px 8px;border-radius:20px;background:#ffffff;border:none;align-items:center;justify-content:center;gap:2px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity='1'">
+                    <img src="assets/icons/ui/ic_edit_ai.svg" width="12" height="12" style="display:block;flex-shrink:0;filter:brightness(0);">
+                    <span class="enh-txt">Enhance</span>
+                  </button>
+                  <span id="img-editor-visual-counter" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);">0/2500</span>
+                </div>
               </div>
             </div>
           </div>
@@ -7658,9 +7748,43 @@ function sbOpenSceneEditor(idx, imgSrc, desc, label) {
 // Same idea as _sbSceneGenDone, for the Character reference cards generated
 // alongside the Scenes in the same Generate Scenes pass (see generateScenesInline()).
 const _sbCharacterGenDone = { 1: true, 2: true }; // defaults ready (normal/back-nav visits)
-function sbOpenCharacterEditor(idx, imgSrc, desc, label) {
+// Costume card data — Age/Hair/Outfit/Visual per character, per Figma nodes
+// 2224-56165 (Storyboard Costume cards) and 1567-70138 (Costume Editor sheet).
+// Replaces the old single free-text "description" the cards used to show —
+// see _syncCharacterCard() (renders this onto the card) and
+// onImgEditorCharacterFieldInput() (keeps it live-synced while editing).
+const _sbCharacterData = {
+  1: {
+    age: '22',
+    hair: 'Honey-blonde, Long',
+    outfit: 'Barbie-inspired high-fashion editorial. Light pink square-neck cropped top with puff sleeves and a high-waisted pink leather mini skirt. Elevated off-duty model aesthetic with a whimsical fairytale polish.',
+    visual: 'White mid-calf stockings. Barbie-pink high-fashion ensemble with puff sleeves and glossy leather in a whimsical candy fairytale setting.',
+  },
+  2: {
+    age: '24',
+    hair: 'Brown, Short',
+    outfit: 'A crisp white cotton oxford shirt is tucked cleanly into charcoal-grey tailored wool-blend trousers. A deep-navy fine-gauge knit v-neck sweater vest is worn as the primary layering piece over the shirt. The collar is structured but the top button is left open. Completed with polished black leather penny loafers and dark grey ribbed crew socks.',
+    visual: 'Modern Western private-academy school uniform with a refined youthful prep aesthetic.',
+  },
+};
+// Pushes _sbCharacterData[idx] onto the Storyboard Costume card's Age/Hair/
+// Outfit/Visual fields (2-line clamp on Outfit/Visual matches Figma's
+// truncated card text — the full text is only ever shown in the Editor).
+function _syncCharacterCard(idx) {
+  const d = _sbCharacterData[idx];
+  if (!d) return;
+  const ageEl    = document.getElementById(`sb-character-${idx}-age`);
+  const hairEl   = document.getElementById(`sb-character-${idx}-hair`);
+  const outfitEl = document.getElementById(`sb-character-${idx}-outfit`);
+  const visualEl = document.getElementById(`sb-character-${idx}-visual`);
+  if (ageEl) ageEl.textContent = d.age;
+  if (hairEl) hairEl.textContent = d.hair;
+  if (outfitEl) outfitEl.textContent = d.outfit;
+  if (visualEl) visualEl.textContent = d.visual;
+}
+function sbOpenCharacterEditor(idx, imgSrc, label) {
   if (!_sbCharacterGenDone[idx]) return; // not ready yet
-  openImageEditor('character', idx, imgSrc, desc, label);
+  openImageEditor('character', idx, imgSrc, '', label);
 }
 // Slower, more deliberate cadence so the reveal reads like a real generation
 // pass rather than an instant flash — base delay before the first item
@@ -9432,6 +9556,17 @@ function selectImgEditorVersion(i) {
 function _restoreImgEditorPromptForVersion(i) {
   const v = _imgEditorVersions[i];
   if (!v) return;
+  // Costume/Character fields (Age/Hair/Outfit/Visual) are direct-edit inputs
+  // tied to _sbCharacterData, not a single versioned "prompt" like every
+  // other kind — switching versions here only changes which generated
+  // look/image is shown, not the text fields. Still clear dirty state + fade
+  // Regenerate back to disabled, same as every other kind below.
+  if (_imgEditorCtx && _imgEditorCtx.kind === 'character') {
+    _imgEditorDirty = false;
+    const prevWrap = document.getElementById('img-editor-preview-wrap');
+    if (!prevWrap || prevWrap.dataset.busy !== '1') _setRegenBtnEnabled('img-editor-regen-btn', false);
+    return;
+  }
   const promptText = v.prompt || '';
   const ta  = document.getElementById('img-editor-ta');
   const ctr = document.getElementById('img-editor-counter');
@@ -9447,9 +9582,6 @@ function _restoreImgEditorPromptForVersion(i) {
     if (src) src.textContent = promptText;
   } else if (_imgEditorCtx && _imgEditorCtx.kind === 'scene') {
     const src = document.getElementById(`sb-scene-${_imgEditorCtx.idx}-text`);
-    if (src) src.textContent = promptText;
-  } else if (_imgEditorCtx && _imgEditorCtx.kind === 'character') {
-    const src = document.getElementById(`sb-character-${_imgEditorCtx.idx}-text`);
     if (src) src.textContent = promptText;
   }
   _imgEditorDirty = false;
@@ -9530,10 +9662,21 @@ function openImageEditor(kind, idx, imgSrc, desc, label) {
     // composite letterboxed instead of cropping it like Scene/Style/Shot photos.
     prev.style.objectFit = (kind === 'character') ? 'contain' : 'cover';
   }
-  if (ta) ta.value = desc || '';
-  if (ctr) ctr.textContent = (desc || '').length + '/2500';
-  const enhBtn = document.getElementById('img-editor-enhance-btn');
-  if (enhBtn) enhBtn.style.display = (desc || '').length > 0 ? 'flex' : 'none';
+  // Costume/Character editing uses its own Age/Hair/Outfit/Visual field set
+  // (per Figma 1567-70138) instead of this single generic textarea — swap
+  // which block is visible and populate from _sbCharacterData instead.
+  const genericFields = document.getElementById('img-editor-generic-fields');
+  const charFields = document.getElementById('img-editor-character-fields');
+  if (genericFields) genericFields.style.display = (kind === 'character') ? 'none' : '';
+  if (charFields) charFields.style.display = (kind === 'character') ? 'flex' : 'none';
+  if (kind === 'character') {
+    _renderImgEditorCharacterFields(idx);
+  } else {
+    if (ta) ta.value = desc || '';
+    if (ctr) ctr.textContent = (desc || '').length + '/2500';
+    const enhBtn = document.getElementById('img-editor-enhance-btn');
+    if (enhBtn) enhBtn.style.display = (desc || '').length > 0 ? 'flex' : 'none';
+  }
   const doneBtn = document.getElementById('img-editor-done-btn');
   if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
   _imgEditorDirty = false;
@@ -9547,6 +9690,121 @@ function openImageEditor(kind, idx, imgSrc, desc, label) {
   _renderImgEditorLipSyncRow();
   const wrap = document.getElementById('img-editor-wrap');
   if (wrap) wrap.classList.add('show');
+}
+// Populates the Costume Editor's Age/Hair/Outfit/Visual fields from
+// _sbCharacterData[idx] (see openImageEditor(), kind==='character'). Also
+// resets each field's clear-x / counter / enhance-btn chrome to match the
+// freshly-loaded value, same as onImgEditorCharacterFieldInput() does live.
+function _renderImgEditorCharacterFields(idx) {
+  const d = _sbCharacterData[idx] || { age: '', hair: '', outfit: '', visual: '' };
+  const ageInput    = document.getElementById('img-editor-age-input');
+  const hairInput   = document.getElementById('img-editor-hair-input');
+  const outfitTa    = document.getElementById('img-editor-outfit-ta');
+  const visualTa    = document.getElementById('img-editor-visual-ta');
+  if (ageInput)  ageInput.value  = d.age  || '';
+  if (hairInput) hairInput.value = d.hair || '';
+  if (outfitTa)  outfitTa.value  = d.outfit || '';
+  if (visualTa)  visualTa.value  = d.visual || '';
+  const ageClear  = document.getElementById('img-editor-age-clear');
+  if (ageClear) ageClear.style.display = d.age ? 'flex' : 'none';
+  const hairClear = document.getElementById('img-editor-hair-clear');
+  if (hairClear) hairClear.style.display = d.hair ? 'flex' : 'none';
+  const outfitCtr = document.getElementById('img-editor-outfit-counter');
+  if (outfitCtr) outfitCtr.textContent = (d.outfit || '').length + '/2500';
+  const outfitEnh = document.getElementById('img-editor-outfit-enhance-btn');
+  if (outfitEnh) outfitEnh.style.display = (d.outfit || '').length > 0 ? 'flex' : 'none';
+  const visualCtr = document.getElementById('img-editor-visual-counter');
+  if (visualCtr) visualCtr.textContent = (d.visual || '').length + '/2500';
+  const visualEnh = document.getElementById('img-editor-visual-enhance-btn');
+  if (visualEnh) visualEnh.style.display = (d.visual || '').length > 0 ? 'flex' : 'none';
+}
+// Live handler for the Costume Editor's Age/Hair/Outfit/Visual fields —
+// mirrors onImgEditorInput() below but per-field, since kind='character' has
+// 4 separate inputs instead of 1 shared textarea. Keeps _sbCharacterData and
+// the Storyboard Costume card in sync as the user types, and marks the
+// editor dirty so Regenerate lights up (same dirty-gating every other kind
+// uses for its own prompt/reference edits).
+function onImgEditorCharacterFieldInput(field) {
+  if (!_imgEditorCtx || _imgEditorCtx.kind !== 'character') return;
+  const idx = _imgEditorCtx.idx;
+  const d = _sbCharacterData[idx];
+  if (!d) return;
+  const elId = {
+    age: 'img-editor-age-input', hair: 'img-editor-hair-input',
+    outfit: 'img-editor-outfit-ta', visual: 'img-editor-visual-ta',
+  }[field];
+  const el = document.getElementById(elId);
+  if (!el) return;
+  d[field] = el.value;
+  if (field === 'age' || field === 'hair') {
+    const clearBtn = document.getElementById(`img-editor-${field}-clear`);
+    if (clearBtn) clearBtn.style.display = el.value ? 'flex' : 'none';
+  } else {
+    const ctr = document.getElementById(`img-editor-${field}-counter`);
+    if (ctr) ctr.textContent = el.value.length + '/2500';
+    const enhBtn = document.getElementById(`img-editor-${field}-enhance-btn`);
+    if (enhBtn) enhBtn.style.display = el.value.length > 0 ? 'flex' : 'none';
+    fitEnhanceBtn(`img-editor-${field}-enhance-btn`);
+  }
+  _syncCharacterCard(idx);
+  _imgEditorDirty = true;
+  const prevWrap = document.getElementById('img-editor-preview-wrap');
+  if (!prevWrap || prevWrap.dataset.busy !== '1') _setRegenBtnEnabled('img-editor-regen-btn', true);
+}
+// Clear-x handler for the Age/Hair single-line inputs (Outfit/Visual
+// textareas don't have one, matching the generic prompt textarea's chrome).
+function clearImgEditorCharacterField(field) {
+  const elId = { age: 'img-editor-age-input', hair: 'img-editor-hair-input' }[field];
+  const el = document.getElementById(elId);
+  if (el) { el.value = ''; el.focus(); }
+  onImgEditorCharacterFieldInput(field);
+}
+// Enhance — Costume Editor's Outfit/Visual textareas. Self-contained rather
+// than routed through enhancePrompt() (that function's isXxx/taId/btnId/
+// clearId/ctaId chain is keyed by a fixed set of single-textarea contexts;
+// adding 2 more branches there for fields that don't have a clear-btn or a
+// dedicated CTA id would add more risk than it saves).
+const ENHANCED_OUTFIT = [
+  `A tailored ivory trench coat cinched at the waist over a fine-knit turtleneck, paired with wide-leg wool trousers and polished ankle boots. Clean, editorial silhouette with just one statement accessory.`,
+  `An oversized denim jacket layered over a simple white tee, distressed straight-leg jeans, and classic white sneakers. Effortless, off-duty styling with a worn-in, lived-in texture.`,
+  `A fitted black turtleneck under a structured blazer, slim tailored trousers, and minimalist leather loafers. Monochrome palette with sharp, confident lines throughout.`,
+];
+const ENHANCED_VISUAL = [
+  `Soft, diffused studio lighting with a warm neutral palette — polished but approachable, like an editorial fashion spread.`,
+  `High-contrast, moody lighting with cool undertones — sleek and cinematic, as if lit for a night scene.`,
+  `Bright, airy natural light with pastel accents — youthful and optimistic, like a lifestyle campaign shoot.`,
+];
+function enhanceCharacterField(field) {
+  const taId  = field === 'outfit' ? 'img-editor-outfit-ta' : 'img-editor-visual-ta';
+  const btnId = field === 'outfit' ? 'img-editor-outfit-enhance-btn' : 'img-editor-visual-enhance-btn';
+  const ta  = document.getElementById(taId);
+  const btn = document.getElementById(btnId);
+  if (!ta || !ta.value.trim()) return;
+  ta.style.opacity = '0.3';
+  ta.style.pointerEvents = 'none';
+  if (btn) {
+    btn.style.background = '#A855F7';
+    btn.style.pointerEvents = 'none';
+    const img = btn.querySelector('img');
+    if (img) { img.src = 'assets/icons/ui/ic_refresh.svg'; img.style.filter = 'brightness(0) invert(1)'; img.style.animation = 'spin 0.8s linear infinite reverse'; }
+    const txt = btn.querySelector('.enh-txt');
+    if (txt) txt.style.color = '#fff';
+  }
+  const pool = field === 'outfit' ? ENHANCED_OUTFIT : ENHANCED_VISUAL;
+  setTimeout(() => {
+    ta.value = pool[Math.floor(Math.random() * pool.length)];
+    ta.style.opacity = '';
+    ta.style.pointerEvents = '';
+    if (btn) {
+      btn.style.background = '#ffffff';
+      btn.style.pointerEvents = '';
+      const img = btn.querySelector('img');
+      if (img) { img.src = 'assets/icons/ui/ic_edit_ai.svg'; img.style.filter = 'brightness(0)'; img.style.animation = ''; }
+      const txt = btn.querySelector('.enh-txt');
+      if (txt) txt.style.color = '';
+    }
+    onImgEditorCharacterFieldInput(field);
+  }, 1400);
 }
 // Lip Sync row — shown only for kind='shot' (see openImageEditor above).
 // State is shared with each Storyboard thumbnail's Lip Sync icon via the
@@ -9660,12 +9918,16 @@ function _refOptionsForSlot(slot) {
   return [];
 }
 function _initImgEditorRefs(kind, idx) {
-  if (kind === 'scene' || kind === 'character') {
-    // Scenes and Characters are both generated FROM the confirmed Visual
-    // Style — per Figma node 1567-70138 (Character Editor), the Character
-    // sheet references it below the prompt exactly like Scene's does.
-    const styleImg = document.getElementById('sb-visual-style-img');
-    _imgEditorRefs = { style: { src: styleImg ? styleImg.getAttribute('src') : STYLE_OPTIONS[0].src, label: 'Visual Style' } };
+  if (kind === 'character') {
+    // Costume/Character images reference which Scene that character appears
+    // in — not the Visual Style (that's already finalized back on Scene
+    // Setup by the time a Costume gets edited, so there's nothing left to
+    // pick there; see the removed Scene-editor Visual Style ref below).
+    // Defaults Character 1 -> Scene 1, Character 2 -> Scene 2, same simple
+    // pairing convention as the Shot editor's char1/char2 refs.
+    const scenes = _sceneOptionsForShot();
+    const defaultScene = idx === 2 ? scenes[1] : scenes[0];
+    _imgEditorRefs = { scene: { src: defaultScene.src, label: 'Scene' } };
   } else if (kind === 'shot') {
     const scenes = _sceneOptionsForShot();
     const defaultScene = idx <= 4 ? scenes[0] : scenes[1];
@@ -9675,7 +9937,10 @@ function _initImgEditorRefs(kind, idx) {
       char2: { src: CHARACTER_OPTIONS[1].src, label: 'Character 2' },
     };
   } else {
-    _imgEditorRefs = {}; // 'style' kind — editing the master Visual Style itself, nothing to reference below it
+    // 'scene' kind (editing a Scene image itself — no reference needed below
+    // it anymore, since the Visual Style it's generated from is already
+    // finalized on Scene Setup), 'style', 'cover' — nothing to reference.
+    _imgEditorRefs = {};
   }
 }
 function _renderImgEditorRefs() {
@@ -9759,10 +10024,10 @@ function onImgEditorInput() {
   } else if (_imgEditorCtx && _imgEditorCtx.kind === 'scene') {
     const src = document.getElementById(`sb-scene-${_imgEditorCtx.idx}-text`);
     if (src) src.textContent = ta.value;
-  } else if (_imgEditorCtx && _imgEditorCtx.kind === 'character') {
-    const src = document.getElementById(`sb-character-${_imgEditorCtx.idx}-text`);
-    if (src) src.textContent = ta.value;
   }
+  // Note: kind === 'character' (Costume editor) doesn't use this generic
+  // textarea at all — it has its own Age/Hair/Outfit/Visual fields, synced
+  // live via onImgEditorCharacterFieldInput() instead. See openImageEditor().
   _imgEditorDirty = true;
   const prevWrap = document.getElementById('img-editor-preview-wrap');
   if (!prevWrap || prevWrap.dataset.busy !== '1') _setRegenBtnEnabled('img-editor-regen-btn', true);
@@ -11927,6 +12192,8 @@ function fitAllEnhanceBtns() {
   fitEnhanceBtn('simple-enhance-btn');
   fitEnhanceBtn('scene-editor-enhance-btn');
   fitEnhanceBtn('img-editor-enhance-btn');
+  fitEnhanceBtn('img-editor-outfit-enhance-btn');
+  fitEnhanceBtn('img-editor-visual-enhance-btn');
   fitEnhanceBtn('vid-editor-enhance-btn');
   fitEnhanceBtn('custom-style-enhance-btn');
 }
