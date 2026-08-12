@@ -1328,7 +1328,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
             <!-- Card 2: Trending MV — Thrilling Harmonies -->
             <div style="min-width:272px;height:153px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
-              onclick="openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Hybrid | 3-4 min')">
+              onclick="openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Sing & Story | 3-4 min')">
               <img src="assets/videos/sample-mvs/mv_13_Urban Fashion.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
               <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
               <div style="display:none;position:absolute;top:8px;left:8px;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">
@@ -1338,9 +1338,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="trend-info" style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
                 <div>
                   <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Thrilling Harmonies</div>
-                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Hybrid | 3-4 min</div>
+                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Sing &amp; Story | 3-4 min</div>
                 </div>
-                <button onclick="event.stopPropagation();openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Hybrid | 3-4 min')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create MV</button>
+                <button onclick="event.stopPropagation();openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Sing & Story | 3-4 min')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create MV</button>
               </div>
             </div>
 
@@ -2550,24 +2550,24 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div class="style-carousel-wrap" id="style-carousel">
           <div class="style-carousel-track" id="style-track">
 
-            <!-- Singing -->
+            <!-- Storytelling (now 1st) -->
             <div class="style-vid-card active" onclick="setStyleActive(0)">
               <video id="style-vid-0"
-                src="assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4"
+                src="assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4"
                 autoplay muted loop playsinline preload="auto"></video>
               <button class="style-sound-btn" id="style-sound-btn" onclick="event.stopPropagation();toggleStyleSound()">
                 <img id="style-sound-ico" src="assets/icons/ui/ic_speaker_off.svg" width="16" height="16" style="display:block;">
               </button>
             </div>
 
-            <!-- Storytelling -->
+            <!-- Singing (now 2nd) -->
             <div class="style-vid-card adj-right" style="margin-left:16px;" onclick="setStyleActive(1)">
               <video id="style-vid-1"
-                src="assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4"
+                src="assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4"
                 muted loop playsinline preload="auto"></video>
             </div>
 
-            <!-- Hybrid -->
+            <!-- Hybrid (still last) -->
             <div class="style-vid-card adj-right" style="margin-left:16px;" onclick="setStyleActive(2)">
               <video id="style-vid-2"
                 src="assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4"
@@ -2584,8 +2584,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div class="c-dot" onclick="setStyleActive(1)"></div>
             <div class="c-dot" onclick="setStyleActive(2)"></div>
           </div>
-          <div class="style-info-name" id="style-name-disp">Singing</div>
-          <div class="style-info-desc" id="style-desc-disp">A virtual artist lip-syncs to your vocals, focusing on the singing performance.</div>
+          <div class="style-info-name" id="style-name-disp">Storytelling</div>
+          <div class="style-info-desc" id="style-desc-disp">Your music drives a cinematic visual narrative that brings your story to life scene by scene.</div>
         </div>
 
         <!-- CTA — Figma Button/Pill Primary -->
@@ -2638,7 +2638,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 <video src="assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4" muted loop playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
                 <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85));"></div>
               </div>
-              <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Hybrid</div>
+              <div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#fff;line-height:1.2;pointer-events:none;z-index:2;transform:translateZ(0);-webkit-transform:translateZ(0);">Sing &amp; Story</div>
             </div>
           </div>
 
@@ -9263,17 +9263,21 @@ function selectPhoto(){}
 function setAudio(){}
 
 // ── MV Style Carousel ──
+// Order is positional (index i pairs with the i-th .style-vid-card in the DOM
+// and its style-vid-{i} element) — per Scott's 2026-08-12 request the picker
+// now leads with Storytelling, then Singing, then Hybrid last (was
+// Singing/Storytelling/Hybrid).
 const mvStyleData = [
-  {
-    name: 'Singing',
-    desc: 'A virtual artist lip-syncs to your vocals, focusing on the singing performance.'
-  },
   {
     name: 'Storytelling',
     desc: 'Your music drives a cinematic visual narrative that brings your story to life scene by scene.'
   },
   {
-    name: 'Hybrid',
+    name: 'Singing',
+    desc: 'A virtual artist lip-syncs to your vocals, focusing on the singing performance.'
+  },
+  {
+    name: 'Sing & Story',
     desc: 'The best of both — performance moments seamlessly woven into an immersive story.'
   }
 ];

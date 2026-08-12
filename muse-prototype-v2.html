@@ -1452,7 +1452,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
             <!-- Card 2: Trending MV — Thrilling Harmonies -->
             <div style="min-width:272px;height:153px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
-              onclick="openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Hybrid | 3-4 min')">
+              onclick="openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Sing & Story | 3-4 min')">
               <img src="assets/videos/sample-mvs/mv_13_Urban Fashion.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
               <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
               <div style="display:none;position:absolute;top:8px;left:8px;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">
@@ -1462,9 +1462,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="trend-info" style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
                 <div>
                   <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Thrilling Harmonies</div>
-                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Hybrid | 3-4 min</div>
+                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Sing &amp; Story | 3-4 min</div>
                 </div>
-                <button onclick="event.stopPropagation();openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Hybrid | 3-4 min')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create MV</button>
+                <button onclick="event.stopPropagation();openMvPreview('Thrilling Harmonies','assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Sing & Story | 3-4 min')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create MV</button>
               </div>
             </div>
 
@@ -2674,24 +2674,24 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div class="style-carousel-wrap" id="style-carousel">
           <div class="style-carousel-track" id="style-track">
 
-            <!-- Singing -->
+            <!-- Storytelling (now 1st) -->
             <div class="style-vid-card active" onclick="setStyleActive(0)">
               <video id="style-vid-0"
-                src="assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4"
+                src="assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4"
                 autoplay muted loop playsinline preload="auto"></video>
               <button class="style-sound-btn" id="style-sound-btn" onclick="event.stopPropagation();toggleStyleSound()">
                 <img id="style-sound-ico" src="assets/icons/ui/ic_speaker_off.svg" width="16" height="16" style="display:block;">
               </button>
             </div>
 
-            <!-- Storytelling -->
+            <!-- Singing (now 2nd) -->
             <div class="style-vid-card adj-right" style="margin-left:16px;" onclick="setStyleActive(1)">
               <video id="style-vid-1"
-                src="assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4"
+                src="assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4"
                 muted loop playsinline preload="auto"></video>
             </div>
 
-            <!-- Hybrid -->
+            <!-- Hybrid (still last) -->
             <div class="style-vid-card adj-right" style="margin-left:16px;" onclick="setStyleActive(2)">
               <video id="style-vid-2"
                 src="assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4"
@@ -2708,8 +2708,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div class="c-dot" onclick="setStyleActive(1)"></div>
             <div class="c-dot" onclick="setStyleActive(2)"></div>
           </div>
-          <div class="style-info-name" id="style-name-disp">Singing</div>
-          <div class="style-info-desc" id="style-desc-disp">A virtual artist lip-syncs to your vocals, focusing on the singing performance.</div>
+          <div class="style-info-name" id="style-name-disp">Storytelling</div>
+          <div class="style-info-desc" id="style-desc-disp">Your music drives a cinematic visual narrative that brings your story to life scene by scene.</div>
         </div>
 
         <!-- CTA — Figma Button/Pill Primary -->
@@ -5852,8 +5852,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </div>
             <div id="img-editor-label" style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">Edit Scene</div>
-            <div id="img-editor-done-btn" onclick="closeImageEditor()" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;opacity:0;pointer-events:none;transition:opacity .25s ease;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div id="img-editor-done-btn" onclick="closeImageEditor()" style="width:28px;height:28px;border-radius:14px;background:#383842;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;pointer-events:none;transition:background .2s ease;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="opacity:.3;" id="img-editor-done-icon"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
         </div>
@@ -6006,8 +6006,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </div>
             <div id="custom-style-label" style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">Add Visual Style</div>
-            <div id="custom-style-done-btn" onclick="confirmCustomStyleSheet()" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;opacity:0;pointer-events:none;transition:opacity .25s ease;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div id="custom-style-done-btn" onclick="confirmCustomStyleSheet()" style="width:28px;height:28px;border-radius:14px;background:#383842;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;pointer-events:none;transition:background .2s ease;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="opacity:.3;" id="custom-style-done-icon"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
         </div>
@@ -6126,8 +6126,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </div>
           <div id="vid-editor-label" style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">Edit Video</div>
-          <div id="vid-editor-done-btn" onclick="closeVideoEditor()" style="width:28px;height:28px;border-radius:14px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;opacity:0;pointer-events:none;transition:opacity .25s ease;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div id="vid-editor-done-btn" onclick="closeVideoEditor()" style="width:28px;height:28px;border-radius:14px;background:#383842;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;pointer-events:none;transition:background .2s ease;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="opacity:.3;" id="vid-editor-done-icon"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
         </div>
         <!-- Video preview — full control bar: play/pause, time, scrubber, duration, mute, fullscreen -->
@@ -7386,38 +7386,46 @@ function updateAnalysisCtaState() {
 // Shown on Storyboard's Visual Style card so the copy stays relative to
 // whichever style the user actually picked on Scene Setup.
 const VISUAL_STYLE_PROMPTS = {
-  'Golden Hour':            'Warm, glowing sunset light with soft golden tones — gentle lens flares and a dreamy, romantic film look.',
-  'Cinematic Warmth':       'Rich amber and teal color grading with soft contrast — a warm, polished cinematic feel in every frame.',
-  'Pastel Dream':           'Soft pastel tones and gentle diffused light — a whimsical, dreamlike atmosphere with delicate color washes.',
-  'Moody Noir':             'High-contrast shadows and cool blue-black tones — a moody, mysterious film-noir atmosphere.',
-  'Late Night Stage':       'Deep stage lighting with dramatic spotlights and haze — an intimate, moody live-performance atmosphere.',
-  'Lo-fi Grain':            'Soft film grain and muted, faded tones — a nostalgic, lo-fi analog look with gentle imperfections.',
-  'Neon Nightlife':         'Vibrant neon glows against deep night tones — an electric, high-energy urban nightlife atmosphere.',
-  'Pop Vibrant':            'Bold, saturated colors and crisp bright lighting — a fun, punchy pop-music visual energy.',
-  'Electronic Futuristic':  'Cool chrome tones and glowing digital light trails — a sleek, futuristic electronic aesthetic.',
-  'Indie Rock Raw':         'Natural light with gritty, unpolished texture — a raw, authentic indie-rock live feel.',
-  'Studio Minimal':         'Clean studio lighting on a neutral backdrop — a minimal, polished look that keeps focus on the artist.',
-  'Epic Cinematic':         'Sweeping wide shots with dramatic golden-hour light — a grand, epic blockbuster film look.',
-  'Retro Film':             'Warm faded colors and a soft vignette — a nostalgic retro film look reminiscent of old home movies.',
-  'Anime Style':            'Vivid stylized colors and dynamic lighting — a bold, expressive anime-inspired visual style.',
+  'Arena Lights':         'Deep stage lighting with dramatic spotlights and haze — an intimate, moody live-performance atmosphere.',
+  'Celestial Bloom':      'Soft glowing starlight and blooming pastel florals — an ethereal, celestial dreamscape atmosphere.',
+  'Concrete Pulse':       'Raw concrete textures and pulsing urban energy — a gritty, high-voltage street atmosphere.',
+  'Dust & Chrome':        'Sun-bleached dust and gleaming chrome accents — a rugged, retro-futuristic desert atmosphere.',
+  'Gilded Baroque':       'Ornate gold filigree and rich baroque opulence — a lavish, regal cinematic atmosphere.',
+  'Golden Hour Anthem':   'Warm, glowing sunset light with soaring, anthemic energy — a triumphant golden-hour atmosphere.',
+  'Monochrome Noir':      'High-contrast black-and-white shadows — a moody, mysterious film-noir atmosphere.',
+  'Neon Mirage':          'Cinematic neon-lit portrait, dreamy purple-to-pink gradient haze, soft volumetric light, glossy film grain, high-contrast rim lighting, futuristic pop concert atmosphere.',
+  'Sakura Anime Dream':   'Soft cherry-blossom pastels and vivid anime-inspired color — a dreamy, stylized Sakura atmosphere.',
+  'Super 8 Nostalgia':    'Warm faded colors and vintage film grain — a nostalgic Super 8 home-movie atmosphere.',
+  'Vaporwave Static':     'Glitchy pastel gradients and retro digital static — a surreal vaporwave atmosphere.',
 };
 const VISUAL_STYLE_PROMPT_DEFAULT = 'Soft, cinematic visual style with warm lighting and a gentle, romantic color grade.';
 
-// Thumbnail art for the preset style cards — only 5 placeholder template
-// photos exist in this prototype, so they're cycled across the 14 named
-// presets (same placeholder-reuse pattern STYLE_OPTIONS uses elsewhere).
-const MVR_STYLE_THUMBS = [
-  'assets/videos/templates/01_jpop.jpg',
-  'assets/videos/templates/02_midnight_static.jpg',
-  'assets/videos/templates/03_paper_wonderland.jpg',
-  'assets/videos/templates/04_pastel_film.jpg',
-  'assets/videos/templates/05_alice_in_wonderland.jpg',
-];
+// Thumbnail art for the preset style cards — Scott supplied a real reference
+// photo per style, named "vs_<Style Name>.jpg", in assets/images/visaul-style/
+// (folder name matches exactly what he provided — not a typo to fix). Keyed
+// by name rather than cycled/positional like the old 5-placeholder approach,
+// so each preset always shows its own matching photo regardless of list
+// order. (His folder also included "vs_Rectangle.jpg", which doesn't match
+// any style name — left unused; ping Scott if that one was meant for
+// something.)
+const MVR_STYLE_THUMBS = {
+  'Arena Lights':       'assets/images/visaul-style/vs_Arena Lights.jpg',
+  'Celestial Bloom':    'assets/images/visaul-style/vs_Celestial Bloom.jpg',
+  'Concrete Pulse':     'assets/images/visaul-style/vs_Concrete Pulse.jpg',
+  'Dust & Chrome':      'assets/images/visaul-style/vs_Dust & Chrome.jpg',
+  'Gilded Baroque':     'assets/images/visaul-style/vs_Gilded Baroque.jpg',
+  'Golden Hour Anthem': 'assets/images/visaul-style/vs_Golden Hour Anthem.jpg',
+  'Monochrome Noir':    'assets/images/visaul-style/vs_Monochrome Noir.jpg',
+  'Neon Mirage':        'assets/images/visaul-style/vs_Neon Mirage.jpg',
+  'Sakura Anime Dream': 'assets/images/visaul-style/vs_Sakura Anime Dream.jpg',
+  'Super 8 Nostalgia':  'assets/images/visaul-style/vs_Super 8 Nostalgia.jpg',
+  'Vaporwave Static':   'assets/images/visaul-style/vs_Vaporwave Static.jpg',
+};
 const MVR_PRESET_STYLES = Object.keys(VISUAL_STYLE_PROMPTS).map((name, i) => ({
   id: 'preset-' + i,
   name,
   desc: VISUAL_STYLE_PROMPTS[name],
-  thumb: MVR_STYLE_THUMBS[i % MVR_STYLE_THUMBS.length],
+  thumb: MVR_STYLE_THUMBS[name],
   custom: false,
 }));
 // User-created Custom Visual Styles — unshifted onto the front as they're
@@ -7427,18 +7435,8 @@ const MVR_PRESET_STYLES = Object.keys(VISUAL_STYLE_PROMPTS).map((name, i) => ({
 let _mvrCustomStyles = [];
 let _mvrStyleSelectedId = null;
 function _mvrAllStyles() { return [..._mvrCustomStyles, ...MVR_PRESET_STYLES]; }
-function renderMvrStyleRow() {
-  const row = document.getElementById('mvr-visual-style-row');
-  if (!row) return;
-  const styles = _mvrAllStyles();
-  const customAddTile = `
-    <div onclick="openCustomStyleSheet(null)" style="flex-shrink:0;width:96px;height:96px;border-radius:14px;border:1.5px dashed rgba(255,255,255,.25);background:#151519;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;">
-      <div style="width:28px;height:28px;border-radius:14px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      </div>
-      <span style="font-size:11px;font-weight:700;color:#fff;">Custom</span>
-    </div>`;
-  row.innerHTML = customAddTile + styles.map(s => `
+function _mvrStyleCardHtml(s) {
+  return `
     <div onclick="selectMvrStyle('${s.id}')" data-style-id="${s.id}" style="flex-shrink:0;width:96px;height:96px;border-radius:14px;position:relative;cursor:pointer;overflow:hidden;border:2px solid ${s.id === _mvrStyleSelectedId ? '#A855F7' : 'transparent'};background:#1a1a1a;">
       <img src="${s.thumb}" style="width:100%;height:100%;object-fit:cover;display:block;">
       <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 55%);"></div>
@@ -7446,7 +7444,30 @@ function renderMvrStyleRow() {
       ${s.custom ? `<div onclick="event.stopPropagation();openCustomStyleSheet('${s.id}')" style="position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:9px;background:rgba(9,9,11,.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;">
         <img src="assets/icons/ui/ic_edit.svg" width="9" height="9" style="display:block;filter:brightness(0) invert(1);">
       </div>` : ''}
-    </div>`).join('');
+    </div>`;
+}
+function renderMvrStyleRow() {
+  const row = document.getElementById('mvr-visual-style-row');
+  if (!row) return;
+  const customAddTile = `
+    <div onclick="openCustomStyleSheet(null)" style="flex-shrink:0;width:96px;height:96px;border-radius:14px;border:1.5px dashed rgba(255,255,255,.25);background:#151519;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;">
+      <div style="width:28px;height:28px;border-radius:14px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+      <span style="font-size:11px;font-weight:700;color:#fff;">Custom</span>
+    </div>`;
+  const customCards = _mvrCustomStyles.map(_mvrStyleCardHtml).join('');
+  const presetCards = MVR_PRESET_STYLES.map(_mvrStyleCardHtml).join('');
+  // Per Scott's request, a thin vertical divider separates "your styles"
+  // (Custom add-tile + any created custom styles) from the built-in
+  // presets — but only once a custom style actually exists; with none yet,
+  // the Custom tile sits directly against the first preset (no empty gap
+  // to divide). Fixed 4x36px pill, vertically centered against the row's
+  // 96px-tall cards.
+  const divider = _mvrCustomStyles.length
+    ? `<div style="flex-shrink:0;width:4px;height:36px;border-radius:2px;align-self:center;background:rgba(255,255,255,.15);"></div>`
+    : '';
+  row.innerHTML = customAddTile + customCards + divider + presetCards;
 }
 function selectMvrStyle(id) {
   const s = _mvrAllStyles().find(x => x.id === id);
@@ -7513,8 +7534,7 @@ function openCustomStyleSheet(existingId) {
   _setModelRowEnabled('custom-style-model-row', true);
   const regenLbl = document.getElementById('custom-style-regen-label');
   if (regenLbl) regenLbl.textContent = existing ? 'Regenerate' : 'Generate';
-  const doneBtn = document.getElementById('custom-style-done-btn');
-  if (doneBtn) { doneBtn.style.opacity = existing ? '1' : '0'; doneBtn.style.pointerEvents = existing ? 'auto' : 'none'; }
+  _setDoneBtnEnabled('custom-style-done-btn', 'custom-style-done-icon', !!existing);
   onCustomStyleInput(); // syncs counters/clear-btn/enhance-btn + Regenerate's enabled state
   const wrap = document.getElementById('custom-style-wrap');
   if (wrap) wrap.classList.add('show');
@@ -7547,8 +7567,7 @@ function onCustomStyleInput() {
   // Any edit after a completed generation means the shown result is stale —
   // hide Done until the user (re)generates again, same as the Image Editor.
   if (_customStyleGenerated) {
-    const doneBtn = document.getElementById('custom-style-done-btn');
-    if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+    _setDoneBtnEnabled('custom-style-done-btn', 'custom-style-done-icon', false);
   }
 }
 
@@ -7631,9 +7650,8 @@ function selectCustomStyleVersion(i) {
   _renderEditorVersions('custom-style', _customStyleVersions, _customStyleSelectedVersion, 'selectCustomStyleVersion');
   onCustomStyleInput();
   // Picking an earlier version to carry forward is itself a completed
-  // result — re-reveal Done rather than leaving it hidden by onCustomStyleInput().
-  const doneBtn = document.getElementById('custom-style-done-btn');
-  if (doneBtn) { doneBtn.style.opacity = '1'; doneBtn.style.pointerEvents = 'auto'; }
+  // result — re-enable Done rather than leaving it dimmed by onCustomStyleInput().
+  _setDoneBtnEnabled('custom-style-done-btn', 'custom-style-done-icon', true);
 }
 
 function regenerateCustomStyle() {
@@ -7647,8 +7665,7 @@ function regenerateCustomStyle() {
     if (!name || (!desc && !_customStylePhotos.length)) return;
     _setRegenBtnEnabled('custom-style-regen-btn', false);
     _setModelRowEnabled('custom-style-model-row', false);
-    const doneBtn = document.getElementById('custom-style-done-btn');
-    if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+    _setDoneBtnEnabled('custom-style-done-btn', 'custom-style-done-icon', false);
     const previewOuter = document.getElementById('custom-style-preview-wrap-outer');
     if (previewOuter) previewOuter.style.display = '';
     const gen = document.getElementById('custom-style-generating');
@@ -7671,7 +7688,7 @@ function regenerateCustomStyle() {
       _renderEditorVersions('custom-style', _customStyleVersions, _customStyleSelectedVersion, 'selectCustomStyleVersion');
       const regenLbl = document.getElementById('custom-style-regen-label');
       if (regenLbl) regenLbl.textContent = 'Regenerate';
-      if (doneBtn) { doneBtn.style.opacity = '1'; doneBtn.style.pointerEvents = 'auto'; }
+      _setDoneBtnEnabled('custom-style-done-btn', 'custom-style-done-icon', true);
     }, 2500);
   });
 }
@@ -9490,6 +9507,18 @@ function _setRegenBtnEnabled(btnId, enabled) {
   btn.style.cursor     = enabled ? 'pointer' : 'default';
   btn.style.opacity    = enabled ? '1' : '.45';
 }
+// The small circular Done/checkmark button in an editor sheet's header
+// (Image Editor, Video Editor, Custom Style sheet) must stay visible at all
+// times per Figma (node 2161-45525) — it's never fully hidden, only shown in
+// a dimmed "disabled" look (gray circle, faint check) until there's something
+// to confirm, then an active purple look once enabled. Mirrors the Edit
+// Profile sheet's ep-done-btn/ep-done-icon treatment.
+function _setDoneBtnEnabled(btnId, iconId, enabled) {
+  const btn  = document.getElementById(btnId);
+  const icon = document.getElementById(iconId);
+  if (btn)  { btn.style.background = enabled ? '#A855F7' : '#383842'; btn.style.pointerEvents = enabled ? 'auto' : 'none'; }
+  if (icon) icon.style.opacity = enabled ? '1' : '.3';
+}
 // The Select AI Model row must not be changeable while its gated step is
 // actively generating an image or video — swapping models mid-generation
 // doesn't affect a result that's already in flight. Used by the Image/Video
@@ -9689,8 +9718,7 @@ function openImageEditor(kind, idx, imgSrc, desc, label) {
     const enhBtn = document.getElementById('img-editor-enhance-btn');
     if (enhBtn) enhBtn.style.display = (desc || '').length > 0 ? 'flex' : 'none';
   }
-  const doneBtn = document.getElementById('img-editor-done-btn');
-  if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+  _setDoneBtnEnabled('img-editor-done-btn', 'img-editor-done-icon', false);
   _imgEditorDirty = false;
   _imgEditorVersions = [{ src: imgSrc, filter: 'none', prompt: desc || '' }];
   _imgEditorSelectedVersion = 0;
@@ -10128,8 +10156,7 @@ function regenerateImageEditor() {
     prevWrap.dataset.busy = '1';
     _setRegenBtnEnabled('img-editor-regen-btn', false);
     _setModelRowEnabled('img-editor-model-row', false);
-    const doneBtn = document.getElementById('img-editor-done-btn');
-    if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+    _setDoneBtnEnabled('img-editor-done-btn', 'img-editor-done-icon', false);
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;';
     overlay.innerHTML = '<div class="spinner-sm"></div>';
@@ -10154,8 +10181,8 @@ function regenerateImageEditor() {
       const prev = document.getElementById('img-editor-preview');
       if (prev) prev.style.filter = nextFilter;
       _renderImgEditorVersions();
-      // Reveal the Done button so the user can confirm the regenerated image and close
-      if (doneBtn) { doneBtn.style.opacity = '1'; doneBtn.style.pointerEvents = 'auto'; }
+      // Re-enable the Done button so the user can confirm the regenerated image and close
+      _setDoneBtnEnabled('img-editor-done-btn', 'img-editor-done-icon', true);
       // Costume Editor regenerates also append a new "Costume N" look onto
       // this character's variant list — this is what makes the Shot editor's
       // "Select Costume" picker show more results after the user generates
@@ -10286,8 +10313,7 @@ function openVideoEditor(idx, vidSrc, desc, label) {
   if (ctr) ctr.textContent = (desc || '').length + '/2500';
   const enhBtn = document.getElementById('vid-editor-enhance-btn');
   if (enhBtn) enhBtn.style.display = (desc || '').length > 0 ? 'flex' : 'none';
-  const doneBtn = document.getElementById('vid-editor-done-btn');
-  if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+  _setDoneBtnEnabled('vid-editor-done-btn', 'vid-editor-done-icon', false);
   _vidEditorDirty = false;
   _vidEditorVersions = [{ src: vidSrc, filter: 'none', prompt: desc || '' }];
   _vidEditorSelectedVersion = 0;
@@ -10351,8 +10377,7 @@ function regenerateVideoEditor() {
     prevWrap.dataset.busy = '1';
     _setRegenBtnEnabled('vid-editor-regen-btn', false);
     _setModelRowEnabled('vid-editor-model-row', false);
-    const doneBtn = document.getElementById('vid-editor-done-btn');
-    if (doneBtn) { doneBtn.style.opacity = '0'; doneBtn.style.pointerEvents = 'none'; }
+    _setDoneBtnEnabled('vid-editor-done-btn', 'vid-editor-done-icon', false);
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;';
     overlay.innerHTML = '<div class="spinner-sm"></div>';
@@ -10371,7 +10396,7 @@ function regenerateVideoEditor() {
       const prev = document.getElementById('vid-editor-preview');
       if (prev) prev.style.filter = nextFilter;
       _renderVidEditorVersions();
-      if (doneBtn) { doneBtn.style.opacity = '1'; doneBtn.style.pointerEvents = 'auto'; }
+      _setDoneBtnEnabled('vid-editor-done-btn', 'vid-editor-done-icon', true);
     }, 1200);
   });
 }
@@ -12584,17 +12609,21 @@ function selectPhoto(){}
 function setAudio(){}
 
 // ── MV Style Carousel ──
+// Order is positional (index i pairs with the i-th .style-vid-card in the DOM
+// and its style-vid-{i} element) — per Scott's 2026-08-12 request the picker
+// now leads with Storytelling, then Singing, then Hybrid last (was
+// Singing/Storytelling/Hybrid).
 const mvStyleData = [
-  {
-    name: 'Singing',
-    desc: 'A virtual artist lip-syncs to your vocals, focusing on the singing performance.'
-  },
   {
     name: 'Storytelling',
     desc: 'Your music drives a cinematic visual narrative that brings your story to life scene by scene.'
   },
   {
-    name: 'Hybrid',
+    name: 'Singing',
+    desc: 'A virtual artist lip-syncs to your vocals, focusing on the singing performance.'
+  },
+  {
+    name: 'Sing & Story',
     desc: 'The best of both — performance moments seamlessly woven into an immersive story.'
   }
 ];
