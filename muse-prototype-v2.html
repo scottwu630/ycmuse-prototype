@@ -193,6 +193,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #img-editor-ta,#vid-editor-ta{scrollbar-width:none;-ms-overflow-style:none;}
 #img-editor-ta::-webkit-scrollbar,#vid-editor-ta::-webkit-scrollbar{display:none;}
 #img-editor-versions-track::-webkit-scrollbar,#vid-editor-versions-track::-webkit-scrollbar{display:none;}
+#img-editor-refs::-webkit-scrollbar{display:none;}
 #mvr-visual-style-row::-webkit-scrollbar,#custom-style-photos-row::-webkit-scrollbar,#custom-style-editor-versions-track::-webkit-scrollbar{display:none;}
 
 /* ── TAB BAR ── */
@@ -442,7 +443,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #img-editor-content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);}
 #img-editor-wrap.show #img-editor-content{transform:translateY(0);}
 #img-editor-panel{background:#1C1C1E;border-radius:20px 20px 0 0;display:flex;flex-direction:column;max-height:88%;}
-#img-editor-scroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+#img-editor-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
 #img-editor-scroll::-webkit-scrollbar{display:none;}
 #ref-picker-overlay{z-index:530;}
 #ref-picker-sheet{z-index:531;}
@@ -5942,7 +5943,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <!-- Reference thumbnails — Style (Scene editor) or Scene + Character x2 (Shot editor).
                Hidden entirely when editing the Visual Style itself (nothing to reference below it). -->
           <div style="padding:12px 16px 4px;">
-            <div id="img-editor-refs" style="display:none;gap:10px;"></div>
+            <div id="img-editor-refs" style="display:none;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;"></div>
           </div>
           <!-- Lip Sync — Shot editor only ('shot' kind): whether this shot's
                character mouths along with the song's lyrics. Hidden for
@@ -9505,23 +9506,29 @@ function _setModelRowEnabled(rowId, enabled) {
 // with a distinct filter, since there's no real generation backend) so the user
 // can compare results side by side and confirm which one to carry forward.
 const _editorVersionFilters = ['none', 'hue-rotate(15deg) saturate(1.1)', 'hue-rotate(-18deg) brightness(1.06)', 'sepia(.18) contrast(1.06)', 'hue-rotate(32deg) saturate(.92)'];
-function _renderEditorVersions(prefix, versions, selectedIdx, selectFn) {
+function _renderEditorVersions(prefix, versions, selectedIdx, selectFn, size) {
   const track = document.getElementById(`${prefix}-editor-versions-track`);
   if (!track) return;
+  // Costume/Character versions are wide multi-pose composites (2.35:1, per
+  // Figma 1567-70138) — callers for that kind pass size:{w:120,h:50} (same
+  // ~2.4:1 ratio) instead of the default 52x52 square, so the whole
+  // composite is visible via object-fit:cover instead of being cropped down
+  // to a tiny square slice.
+  const w = (size && size.w) || 52, h = (size && size.h) || 52;
   track.innerHTML = versions.map((v, i) => {
     // A version mid-regeneration renders as a purple/pink gradient tile with a
     // centered star icon instead of an image — per Figma node 1460-35034's
     // "Generating" clip thumbnail. Not selectable while in this state.
     if (v.generating) {
       return `
-      <div style="flex-shrink:0;width:52px;height:52px;border-radius:10px;overflow:hidden;position:relative;background:linear-gradient(162deg, rgba(255,107,206,.5) 0%, rgba(168,85,247,.5) 50%, rgba(67,56,202,.5) 100%);">
+      <div style="flex-shrink:0;width:${w}px;height:${h}px;border-radius:10px;overflow:hidden;position:relative;background:linear-gradient(162deg, rgba(255,107,206,.5) 0%, rgba(168,85,247,.5) 50%, rgba(67,56,202,.5) 100%);">
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
           <img src="assets/icons/ui/ic_star.svg" width="16" height="16" class="gen-star-icon" style="display:block;">
         </div>
       </div>`;
     }
     return `
-    <div onclick="event.stopPropagation();${selectFn}(${i})" style="flex-shrink:0;width:52px;height:52px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2px solid ${i === selectedIdx ? '#A855F7' : 'rgba(255,255,255,.15)'};">
+    <div onclick="event.stopPropagation();${selectFn}(${i})" style="flex-shrink:0;width:${w}px;height:${h}px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2px solid ${i === selectedIdx ? '#A855F7' : 'rgba(255,255,255,.15)'};">
       <img src="${v.src}" style="width:100%;height:100%;object-fit:cover;display:block;filter:${v.filter};">
       <div style="position:absolute;bottom:2px;left:2px;font-size:8px;font-weight:700;color:#fff;background:rgba(9,9,11,.6);border-radius:6px;padding:1px 4px;">${i + 1}</div>
       ${i === selectedIdx ? `<div style="position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:7px;background:#A855F7;display:flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>` : ''}
@@ -9537,7 +9544,8 @@ let _imgEditorDirty = false;
 let _imgEditorVersions = []; // [{ src, filter, prompt }] — index 0 is the original
 let _imgEditorSelectedVersion = 0;
 function _renderImgEditorVersions() {
-  _renderEditorVersions('img', _imgEditorVersions, _imgEditorSelectedVersion, 'selectImgEditorVersion');
+  const isCostume = _imgEditorCtx && _imgEditorCtx.kind === 'character';
+  _renderEditorVersions('img', _imgEditorVersions, _imgEditorSelectedVersion, 'selectImgEditorVersion', isCostume ? { w: 120, h: 50 } : null);
 }
 function selectImgEditorVersion(i) {
   if (!_imgEditorVersions[i]) return;
@@ -9650,13 +9658,17 @@ function openImageEditor(kind, idx, imgSrc, desc, label) {
   const ta   = document.getElementById('img-editor-ta');
   const ctr  = document.getElementById('img-editor-counter');
   if (lbl) lbl.textContent = label;
-  // Scene/Shot/Visual-Style source photos are always 16:9 — always cover-fill,
-  // never letterbox. Cover Image is the exception: it represents the actual
-  // video's cover, so it auto-detects the project's chosen ratio instead
-  // (same auto-detect _applyEditorPreviewRatio already uses for Video Editor).
+  // Scene/Visual-Style source photos are always 16:9 — always cover-fill,
+  // never letterbox. Shot photos are actually the vertical clip stills
+  // (9:16, same footage shown in the Storyboard shot thumbnails), so the
+  // Shot Editor preview pillarboxes them inside the wrapper instead of
+  // stretching/cropping to a landscape fill — same technique the Video
+  // Editor preview already uses for a 9:16 project ratio. Cover Image is
+  // the other exception: it represents the actual video's cover, so it
+  // auto-detects the project's chosen ratio instead.
   if (prev) {
     prev.src = imgSrc; prev.style.filter = 'none';
-    _applyEditorPreviewRatio(prev, kind === 'cover' ? null : '16:9');
+    _applyEditorPreviewRatio(prev, kind === 'cover' ? null : (kind === 'shot' ? '9:16' : '16:9'));
     // Character references are wide multi-pose composites (face + full-body
     // angles side by side, per Figma node 1567-70138) — show the whole
     // composite letterboxed instead of cropping it like Scene/Style/Shot photos.
@@ -9897,12 +9909,37 @@ const STYLE_OPTIONS = [
   { src: 'assets/videos/templates/04_pastel_film.jpg', label: 'Style 1' },
   { src: 'assets/videos/templates/01_jpop.jpg', label: 'Style 2' },
 ];
-// The 8 sample face photos also used on Scene Setup's character picker —
-// reused here as the Character picker's option list for Shot editing.
-const CHARACTER_NAMES = ['Emma', 'Ryan', 'Maya', 'Jake', 'Yuna', 'Daniel', 'Marco', 'Sofia'];
-const CHARACTER_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8].map(i => ({
-  src: `assets/images/character-photos/samples/Sample_P${i}.jpg`, label: CHARACTER_NAMES[i - 1],
-}));
+// Costume image variants per character — the Shot editor's char1/char2 refs
+// used to point at 8 generic sample face photos (CHARACTER_OPTIONS, now
+// removed); per Figma 1460-35034 / 1468-39930 they instead point at that
+// character's actual generated COSTUME image, and tapping one opens a
+// "Select Costume" picker listing every look generated so far for that
+// character — not a fixed roster of different people. Seeded here with each
+// character's current costume image as "Costume 1"; every regenerate on that
+// character's Costume Editor (kind='character') appends a new "Costume N"
+// entry — see regenerateImageEditor(). Keyed 1/2 to match _sbCharacterData.
+let _sbCharacterCostumeVariants = {
+  1: [{ src: 'assets/images/character-photos/acter_1.jpg', label: 'Costume 1' }],
+  2: [
+    { src: 'assets/images/character-photos/acter_5.jpg', label: 'Costume 1' },
+    { src: 'assets/images/character-photos/acter_3.jpg', label: 'Costume 2' },
+    { src: 'assets/images/character-photos/acter_6.jpg', label: 'Costume 3' },
+  ],
+};
+const CHARACTER_HANDLES = { 1: '@Chloe', 2: '@Leo Miller' };
+// Which variant is "current" (what a freshly-opened shot's char1/char2 ref
+// defaults to) is tracked by index, separate from array order — Leo Miller
+// was seeded above with 2 extra browsable looks (Costume 2/3) so the picker
+// has more to show, but Costume 1 (his existing/active look) should stay
+// the default until an actual regenerate makes a newer one current. A real
+// regenerate (see regenerateImageEditor()) both appends the new variant AND
+// advances this index, matching "latest wins" for that case.
+let _sbCharacterCostumeCurrent = { 1: 0, 2: 0 };
+function _currentCostumeVariant(idx) {
+  const variants = _sbCharacterCostumeVariants[idx] || [];
+  const i = _sbCharacterCostumeCurrent[idx] || 0;
+  return variants[i] || variants[variants.length - 1] || { src: '', label: 'Costume 1' };
+}
 // A Shot's Scene reference always resolves to one of the 2 real, currently-
 // generated Storyboard scenes — shots 1-4 belong to Scene 1, 5-8 to Scene 2.
 function _sceneOptionsForShot() {
@@ -9914,7 +9951,8 @@ function _sceneOptionsForShot() {
 function _refOptionsForSlot(slot) {
   if (slot === 'style') return STYLE_OPTIONS;
   if (slot === 'scene') return _sceneOptionsForShot();
-  if (slot === 'char1' || slot === 'char2') return CHARACTER_OPTIONS;
+  if (slot === 'char1') return _sbCharacterCostumeVariants[1];
+  if (slot === 'char2') return _sbCharacterCostumeVariants[2];
   return [];
 }
 function _initImgEditorRefs(kind, idx) {
@@ -9933,8 +9971,8 @@ function _initImgEditorRefs(kind, idx) {
     const defaultScene = idx <= 4 ? scenes[0] : scenes[1];
     _imgEditorRefs = {
       scene: { src: defaultScene.src, label: 'Scene' },
-      char1: { src: CHARACTER_OPTIONS[0].src, label: 'Character 1' },
-      char2: { src: CHARACTER_OPTIONS[1].src, label: 'Character 2' },
+      char1: { src: _currentCostumeVariant(1).src, filter: _currentCostumeVariant(1).filter || 'none', label: CHARACTER_HANDLES[1] },
+      char2: { src: _currentCostumeVariant(2).src, filter: _currentCostumeVariant(2).filter || 'none', label: CHARACTER_HANDLES[2] },
     };
   } else {
     // 'scene' kind (editing a Scene image itself — no reference needed below
@@ -9951,11 +9989,17 @@ function _renderImgEditorRefs() {
   wrap.style.display = 'flex';
   wrap.innerHTML = slots.map(slot => {
     const ref = _imgEditorRefs[slot];
-    const wide = slot === 'style' || slot === 'scene'; // Style/Scene: 100x65, Character: 65x65
-    const w = wide ? 100 : 65, h = 65;
+    const isCostume = slot === 'char1' || slot === 'char2';
+    // Costume refs now share Scene/Style's 100x65 width (previously a
+    // smaller 65x65 square) so more of the composite photo is visible.
+    // object-position:left keeps the crop anchored to the left of the
+    // source composite instead of centering, since the character's
+    // current look sits on the left of these wide multi-pose photos.
+    const w = 100, h = 65;
+    const objectPosition = isCostume ? 'left center' : 'center';
     return `
     <div onclick="event.stopPropagation();openRefPicker('${slot}')" style="flex-shrink:0;width:${w}px;height:${h}px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:1px solid rgba(255,255,255,.15);background:#151519;">
-      <img src="${ref.src}" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <img src="${ref.src}" style="width:100%;height:100%;object-fit:cover;object-position:${objectPosition};display:block;${ref.filter && ref.filter !== 'none' ? `filter:${ref.filter};` : ''}">
       <div style="position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:10px;background:rgba(9,9,11,.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;">
         <img src="assets/icons/ui/ic_reload.svg" width="10" height="10" style="display:block;">
       </div>
@@ -9968,23 +10012,57 @@ function _renderImgEditorRefs() {
 let _refPickerSlot = null;
 function openRefPicker(slot) {
   const options = _refOptionsForSlot(slot);
-  if (options.length <= 1) return; // nothing else to switch to
+  const isCostume = slot === 'char1' || slot === 'char2';
+  // Style/Scene: skip opening the sheet when there's nothing else to switch
+  // to (a single option would just show one un-tappable card). Costume
+  // (char1/char2) always opens per Figma 1468-39930 — it's the character's
+  // full "Select Costume" list, and even a single generated look should be
+  // viewable/confirmable there, not silently no-op the tap.
+  if (options.length <= 1 && !isCostume) return;
   _refPickerSlot = slot;
-  const titles = { style: 'Select Visual Style', scene: 'Select Scene', char1: 'Select Character 1', char2: 'Select Character 2' };
+  // char1/char2 are Costume pickers now (per Figma 1460-35034 / 1468-39930) —
+  // both slots share the same "Select Costume" title regardless of which
+  // character, since the sheet just lists that ONE character's generated
+  // looks, not a roster of different people.
+  const titles = { style: 'Select Visual Style', scene: 'Select Scene', char1: 'Select Costume', char2: 'Select Costume' };
   const title = document.getElementById('ref-picker-title');
   if (title) title.textContent = titles[slot] || 'Select';
   const curSrc = _imgEditorRefs[slot] ? _imgEditorRefs[slot].src : null;
+  // Variants can share the same underlying photo with only a different CSS
+  // filter (this prototype simulates "another generated look" the same way
+  // the versions track does — see _editorVersionFilters), so src alone can't
+  // disambiguate which one is selected; filter must match too.
+  const curFilter = (_imgEditorRefs[slot] && _imgEditorRefs[slot].filter) || 'none';
   const grid = document.getElementById('ref-picker-grid');
   if (grid) {
-    grid.innerHTML = options.map((opt, i) => `
-      <div onclick="selectRefOption(${i})" style="cursor:pointer;border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/10;border:2px solid ${opt.src === curSrc ? '#A855F7' : 'rgba(255,255,255,.12)'};">
-        <img src="${opt.src}" style="width:100%;height:100%;object-fit:cover;display:block;">
+    grid.style.gridTemplateColumns = isCostume ? '1fr' : '1fr 1fr';
+    grid.innerHTML = options.map((opt, i) => {
+      const optFilter = opt.filter || 'none';
+      const selected = opt.src === curSrc && optFilter === curFilter;
+      const filterStyle = optFilter !== 'none' ? `filter:${optFilter};` : '';
+      // Costume options render as a single-column list of wide cards (per
+      // Figma 1468-39930 — matches the Storyboard Costume card's own 268x108
+      // image proportions), instead of the 2-column 16:10 grid every other
+      // ref slot (Style/Scene) uses.
+      if (isCostume) {
+        return `
+        <div onclick="selectRefOption(${i})" style="cursor:pointer;border-radius:14px;overflow:hidden;position:relative;border:2px solid ${selected ? '#A855F7' : 'rgba(255,255,255,.12)'};">
+          <img src="${opt.src}" style="width:100%;height:108px;object-fit:cover;display:block;${filterStyle}">
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:6px 10px;background:linear-gradient(to top, rgba(0,0,0,.65), transparent);">
+            <span style="font-size:12px;font-weight:700;color:#fff;">${opt.label}</span>
+          </div>
+          ${selected ? `<div style="position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:11px;background:#A855F7;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>` : ''}
+        </div>`;
+      }
+      return `
+      <div onclick="selectRefOption(${i})" style="cursor:pointer;border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/10;border:2px solid ${selected ? '#A855F7' : 'rgba(255,255,255,.12)'};">
+        <img src="${opt.src}" style="width:100%;height:100%;object-fit:cover;display:block;${filterStyle}">
         <div style="position:absolute;left:0;right:0;bottom:0;padding:5px 8px;background:linear-gradient(to top, rgba(0,0,0,.6), transparent);">
           <span style="font-size:11px;font-weight:700;color:#fff;">${opt.label}</span>
         </div>
-        ${opt.src === curSrc ? `<div style="position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:9px;background:#A855F7;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>` : ''}
-      </div>
-    `).join('');
+        ${selected ? `<div style="position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:9px;background:#A855F7;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>` : ''}
+      </div>`;
+    }).join('');
   }
   showSheet('ref-picker-sheet');
 }
@@ -9994,13 +10072,19 @@ function selectRefOption(i) {
   const opt = _refOptionsForSlot(slot)[i];
   if (!opt) return;
   const prevSrc = _imgEditorRefs[slot] ? _imgEditorRefs[slot].src : null;
-  _imgEditorRefs[slot] = { src: opt.src, label: _imgEditorRefs[slot] ? _imgEditorRefs[slot].label : opt.label };
+  // Costume variants can share the same underlying photo with only a
+  // different CSS filter (see openRefPicker()'s curFilter comment) — src
+  // alone doesn't tell "same look" from "different look" for those, so the
+  // dirty check below needs filter too, or picking a different Costume that
+  // happens to reuse a photo would silently fail to enable Regenerate.
+  const prevFilter = (_imgEditorRefs[slot] && _imgEditorRefs[slot].filter) || 'none';
+  _imgEditorRefs[slot] = { src: opt.src, filter: opt.filter || 'none', label: _imgEditorRefs[slot] ? _imgEditorRefs[slot].label : opt.label };
   _renderImgEditorRefs();
   hideSheet('ref-picker-sheet');
   // Swapping the Style/Scene/Character reference changes what this image should
   // depict — same as editing the prompt, the current result is now stale and
   // needs a fresh Regenerate before Done can confirm it.
-  if (opt.src !== prevSrc) {
+  if (opt.src !== prevSrc || (opt.filter || 'none') !== prevFilter) {
     _imgEditorDirty = true;
     const prevWrap = document.getElementById('img-editor-preview-wrap');
     if (!prevWrap || prevWrap.dataset.busy !== '1') _setRegenBtnEnabled('img-editor-regen-btn', true);
@@ -10072,6 +10156,21 @@ function regenerateImageEditor() {
       _renderImgEditorVersions();
       // Reveal the Done button so the user can confirm the regenerated image and close
       if (doneBtn) { doneBtn.style.opacity = '1'; doneBtn.style.pointerEvents = 'auto'; }
+      // Costume Editor regenerates also append a new "Costume N" look onto
+      // this character's variant list — this is what makes the Shot editor's
+      // "Select Costume" picker show more results after the user generates
+      // more looks (per Figma 1468-39930's "shows more results if user has
+      // generated more variations" requirement).
+      if (_imgEditorCtx && _imgEditorCtx.kind === 'character') {
+        const idx = _imgEditorCtx.idx;
+        const variants = _sbCharacterCostumeVariants[idx];
+        if (variants) {
+          variants.push({ src: baseSrc, filter: nextFilter, label: 'Costume ' + (variants.length + 1) });
+          // A genuine regenerate makes the new look "current" (latest wins) —
+          // see _currentCostumeVariant()/_sbCharacterCostumeCurrent above.
+          _sbCharacterCostumeCurrent[idx] = variants.length - 1;
+        }
+      }
     }, 4000);
   });
 }
