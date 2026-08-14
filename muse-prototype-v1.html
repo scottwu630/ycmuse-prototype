@@ -166,6 +166,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #cp-scroll{scrollbar-width:none;}
 #cp-scroll::-webkit-scrollbar{display:none;}
 #credits-detail-scroll::-webkit-scrollbar{display:none;}
+#credit-packs-scroll{scrollbar-width:none;-ms-overflow-style:none;}
+#credit-packs-scroll::-webkit-scrollbar{display:none;}
 
 /* ── TAB BAR ── */
 .tab-bar{position:absolute;bottom:0;left:0;right:0;height:var(--tab-h);background:rgba(9,9,11,.93);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-top:1px solid rgba(255,255,255,.06);display:none;align-items:flex-start;justify-content:space-evenly;padding-top:11px;z-index:100;overflow:visible;}
@@ -5287,7 +5289,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
 
       <!-- ── Scrollable: pack cards only ── -->
-      <div id="credit-packs-scroll" style="flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 16px calc(var(--safe-bot) + 160px);">
+      <div id="credit-packs-scroll" style="flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;padding:20px 16px calc(var(--safe-bot) + 160px);">
 
         <!-- Pack cards — 2-col grid, 6 packs (139x88, gap 10) -->
         <div id="credit-packs" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
