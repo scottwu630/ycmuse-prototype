@@ -5500,10 +5500,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     </div><!-- /screen-credits-detail -->
 
     <!-- ══════ BUY CREDITS (Credit iAP) ══════ -->
-    <div id="screen-credits" class="screen" style="background:#09090B;display:flex;flex-direction:column;">
+    <div id="screen-credits" class="screen" style="background:#09090B;display:flex;flex-direction:column;min-height:0;">
 
-      <!-- BG Glow Gold -->
-      <div style="position:absolute;left:0;top:0;width:320px;height:320px;pointer-events:none;z-index:1;background:radial-gradient(ellipse 200px 360px at 66px -21px,rgba(245,158,11,.25),transparent);"></div>
+      <!-- BG Glow Purple (negative z-index so it renders behind the balance/header content, which is unpositioned) -->
+      <div style="position:absolute;left:0;top:0;width:320px;height:320px;pointer-events:none;z-index:-1;background:radial-gradient(ellipse 200px 360px at 66px -21px,rgba(147,51,234,.28),transparent);"></div>
 
       <!-- NavBar -->
       <div class="nav" style="z-index:10;flex-shrink:0;background:transparent;border-bottom:none;">
@@ -5519,132 +5519,128 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
         <!-- Balance (no background, no CTA) -->
         <div style="margin-bottom:14px;">
-          <div style="font-size:12px;font-weight:600;color:#9c9cab;letter-spacing:.04em;margin-bottom:2px;">YOUR BALANCE</div>
+          <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.4);letter-spacing:-.12px;margin-bottom:2px;text-transform:uppercase;">YOUR BALANCE</div>
           <div style="display:flex;align-items:center;gap:4px;">
-            <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;flex-shrink:0;align-self:flex-end;margin-bottom:4px;">
-            <span style="font-size:42px;font-weight:800;color:#ffffff;letter-spacing:-.5px;line-height:1;">360</span>
-            <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.8);margin-left:4px;align-self:flex-end;padding-bottom:5px;">credits</span>
+            <img src="assets/icons/ui/ic_credit@3x.png" width="14" height="14" style="display:block;flex-shrink:0;align-self:flex-end;margin-bottom:6px;">
+            <span style="font-size:38px;font-weight:800;color:#ffffff;letter-spacing:-.38px;line-height:50px;">360</span>
+            <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.8);margin-left:4px;align-self:flex-end;letter-spacing:-.12px;padding-bottom:7px;">Credits</span>
           </div>
         </div>
 
         <!-- Section title (15px w700) -->
-        <div style="font-size:15px;font-weight:700;color:#ffffff;letter-spacing:-.2px;">Credit Pack</div>
+        <div style="font-size:15px;font-weight:700;color:#ffffff;letter-spacing:-.15px;">Buy Credit Pack</div>
 
       </div>
 
       <!-- ── Scrollable: pack cards only ── -->
-      <div id="credit-packs-scroll" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 16px calc(var(--safe-bot) + 8px);">
+      <div id="credit-packs-scroll" style="flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 16px calc(var(--safe-bot) + 160px);">
 
         <!-- Pack cards — 2-col grid, 6 packs (139x88, gap 10) -->
-        <div id="credit-packs" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;">
+        <div id="credit-packs" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
 
-          <!-- Pack 1 — 300 credits -->
-          <div class="credit-pack-card" data-pack="1" data-credits="300" data-price="$14.99" onclick="selectCreditPack(1)"
-            style="height:88px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;transition:border-color .18s,background .18s,border-width .18s;">
-            <div style="display:flex;align-items:baseline;justify-content:space-between;width:100%;">
-              <div style="display:flex;align-items:baseline;gap:3px;">
-                <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;flex-shrink:0;align-self:center;opacity:.4;">
-                <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;line-height:22px;">300</span>
-              </div>
-              <div class="credit-pack-check" style="display:none;width:18px;height:18px;border-radius:9px;background:var(--gold);align-items:center;justify-content:center;flex-shrink:0;">
-                <img src="assets/icons/ui/ic_check.svg" width="10" height="10" style="display:block;filter:brightness(0);">
-              </div>
+          <!-- Pack — 8,000 credits (20% OFF) -->
+          <div class="credit-pack-card" data-pack="8000" data-credits="8000" data-price="$191.99" onclick="selectCreditPack(8000)" style="position:relative;width:100%;box-sizing:border-box;">
+            <div style="position:absolute;top:-7.5px;right:12px;z-index:2;display:flex;gap:4px;">
+              <div style="backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);background:rgba(242,59,119,.6);border:1px solid rgba(242,59,119,.4);border-radius:14px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;white-space:nowrap;line-height:11px;">20% OFF</div>
             </div>
-            <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">$14.99</div>
-          </div>
-
-          <!-- Pack 2 — 600 credits (POPULAR, default selected) -->
-          <div class="credit-pack-card" data-pack="2" data-credits="600" data-price="$23.99" onclick="selectCreditPack(2)"
-            style="height:88px;box-sizing:border-box;background:linear-gradient(to right,#422503,rgba(0,0,0,.4));border:1.5px solid #f59e0b;border-radius:12px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;overflow:visible;transition:border-color .18s,background .18s,border-width .18s;">
-            <!-- POPULAR badge -->
-            <div style="position:absolute;top:-8.5px;left:8.5px;z-index:10;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);background:rgba(255,138,2,.6);border:1px solid rgba(245,158,11,.25);border-radius:14px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;white-space:nowrap;">POPULAR</div>
-            <div style="display:flex;align-items:baseline;justify-content:space-between;width:100%;">
-              <div style="display:flex;align-items:baseline;gap:3px;">
-                <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;flex-shrink:0;align-self:center;opacity:.4;">
-                <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;line-height:22px;">600</span>
+            <div class="credit-pack-row" style="height:54px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .18s,background .18s,border-width .18s;">
+              <div>
+                <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:-.11px;">Add Credit</div>
+                <div style="display:flex;align-items:baseline;gap:3px;margin-top:1px;">
+                  <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;opacity:.4;">
+                  <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">8,000</span>
+                </div>
               </div>
-              <div class="credit-pack-check" style="display:flex;width:18px;height:18px;border-radius:9px;background:var(--gold);align-items:center;justify-content:center;flex-shrink:0;">
-                <img src="assets/icons/ui/ic_check.svg" width="10" height="10" style="display:block;filter:brightness(0);">
+              <div style="display:flex;align-items:baseline;gap:4px;">
+                <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);text-decoration:line-through;">$239.99</span>
+                <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">$191.99</span>
               </div>
-            </div>
-            <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">$23.99</div>
-          </div>
-
-          <!-- Pack 3 — 1,000 credits (BEST VALUE, 20% OFF) -->
-          <div class="credit-pack-card" data-pack="3" data-credits="1000" data-price="$31.99" onclick="selectCreditPack(3)"
-            style="height:88px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;overflow:visible;transition:border-color .18s,background .18s,border-width .18s;">
-            <!-- BEST VALUE badge -->
-            <div style="position:absolute;top:-8px;left:9px;z-index:10;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);background:rgba(145,50,255,.6);border:1px solid rgba(168,85,247,.35);border-radius:20px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;white-space:nowrap;">BEST VALUE</div>
-            <div style="display:flex;align-items:baseline;justify-content:space-between;width:100%;">
-              <div style="display:flex;align-items:baseline;gap:3px;">
-                <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;flex-shrink:0;align-self:center;opacity:.4;">
-                <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;line-height:22px;">1,000</span>
-              </div>
-              <div class="credit-pack-check" style="display:none;width:18px;height:18px;border-radius:9px;background:var(--gold);align-items:center;justify-content:center;flex-shrink:0;">
-                <img src="assets/icons/ui/ic_check.svg" width="10" height="10" style="display:block;filter:brightness(0);">
-              </div>
-            </div>
-            <div style="backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);background:rgba(242,59,119,.6);border:1px solid rgba(242,59,119,.4);border-radius:14px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;align-self:flex-start;">20% OFF</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:-.11px;text-decoration:line-through;text-decoration-color:#F23B77;">$39.99</span>
-              <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">$31.99</span>
             </div>
           </div>
 
-          <!-- Pack 4 — 2,000 credits (20% OFF) -->
-          <div class="credit-pack-card" data-pack="4" data-credits="2000" data-price="$47.99" onclick="selectCreditPack(4)"
-            style="height:88px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;transition:border-color .18s,background .18s,border-width .18s;">
-            <div style="display:flex;align-items:baseline;justify-content:space-between;width:100%;">
-              <div style="display:flex;align-items:baseline;gap:3px;">
-                <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;flex-shrink:0;align-self:center;opacity:.4;">
-                <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;line-height:22px;">2,000</span>
-              </div>
-              <div class="credit-pack-check" style="display:none;width:18px;height:18px;border-radius:9px;background:var(--gold);align-items:center;justify-content:center;flex-shrink:0;">
-                <img src="assets/icons/ui/ic_check.svg" width="10" height="10" style="display:block;filter:brightness(0);">
-              </div>
+          <!-- Pack — 5,000 credits (20% OFF) -->
+          <div class="credit-pack-card" data-pack="5000" data-credits="5000" data-price="$119.99" onclick="selectCreditPack(5000)" style="position:relative;width:100%;box-sizing:border-box;">
+            <div style="position:absolute;top:-7.5px;right:12px;z-index:2;display:flex;gap:4px;">
+              <div style="backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);background:rgba(242,59,119,.6);border:1px solid rgba(242,59,119,.4);border-radius:14px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;white-space:nowrap;line-height:11px;">20% OFF</div>
             </div>
-            <div style="backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);background:rgba(242,59,119,.6);border:1px solid rgba(242,59,119,.4);border-radius:14px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;align-self:flex-start;">20% OFF</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:-.11px;text-decoration:line-through;text-decoration-color:#F23B77;">$59.99</span>
-              <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">$47.99</span>
-            </div>
-          </div>
-
-          <!-- Pack 5 — 5,000 credits (20% OFF) -->
-          <div class="credit-pack-card" data-pack="5" data-credits="5000" data-price="$119.99" onclick="selectCreditPack(5)"
-            style="height:88px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;transition:border-color .18s,background .18s,border-width .18s;">
-            <div style="display:flex;align-items:baseline;justify-content:space-between;width:100%;">
-              <div style="display:flex;align-items:baseline;gap:3px;">
-                <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;flex-shrink:0;align-self:center;opacity:.4;">
-                <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;line-height:22px;">5,000</span>
+            <div class="credit-pack-row" style="height:54px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .18s,background .18s,border-width .18s;">
+              <div>
+                <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:-.11px;">Add Credit</div>
+                <div style="display:flex;align-items:baseline;gap:3px;margin-top:1px;">
+                  <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;opacity:.4;">
+                  <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">5,000</span>
+                </div>
               </div>
-              <div class="credit-pack-check" style="display:none;width:18px;height:18px;border-radius:9px;background:var(--gold);align-items:center;justify-content:center;flex-shrink:0;">
-                <img src="assets/icons/ui/ic_check.svg" width="10" height="10" style="display:block;filter:brightness(0);">
+              <div style="display:flex;align-items:baseline;gap:4px;">
+                <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);text-decoration:line-through;">$149.99</span>
+                <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">$119.99</span>
               </div>
-            </div>
-            <div style="backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);background:rgba(242,59,119,.6);border:1px solid rgba(242,59,119,.4);border-radius:14px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;align-self:flex-start;">20% OFF</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:-.11px;text-decoration:line-through;text-decoration-color:#F23B77;">$149.99</span>
-              <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">$119.99</span>
             </div>
           </div>
 
-          <!-- Pack 6 — 8,000 credits (20% OFF) -->
-          <div class="credit-pack-card" data-pack="6" data-credits="8000" data-price="$191.99" onclick="selectCreditPack(6)"
-            style="height:88px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;transition:border-color .18s,background .18s,border-width .18s;">
-            <div style="display:flex;align-items:baseline;justify-content:space-between;width:100%;">
-              <div style="display:flex;align-items:baseline;gap:3px;">
-                <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;flex-shrink:0;align-self:center;opacity:.4;">
-                <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;line-height:22px;">8,000</span>
+          <!-- Pack — 2,000 credits (BEST VALUE, 20% OFF) -->
+          <div class="credit-pack-card" data-pack="2000" data-credits="2000" data-price="$47.99" onclick="selectCreditPack(2000)" style="position:relative;width:100%;box-sizing:border-box;">
+            <div style="position:absolute;top:-7.5px;right:12px;z-index:2;display:flex;gap:4px;">
+              <div style="backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);background:rgba(145,50,255,.6);border:1px solid rgba(168,85,247,.35);border-radius:20px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;white-space:nowrap;line-height:11px;">BEST VALUE</div>
+              <div style="backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);background:rgba(242,59,119,.6);border:1px solid rgba(242,59,119,.4);border-radius:14px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;white-space:nowrap;line-height:11px;">20% OFF</div>
+            </div>
+            <div class="credit-pack-row" style="height:54px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .18s,background .18s,border-width .18s;">
+              <div>
+                <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:-.11px;">Add Credit</div>
+                <div style="display:flex;align-items:baseline;gap:3px;margin-top:1px;">
+                  <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;opacity:.4;">
+                  <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">2,000</span>
+                </div>
               </div>
-              <div class="credit-pack-check" style="display:none;width:18px;height:18px;border-radius:9px;background:var(--gold);align-items:center;justify-content:center;flex-shrink:0;">
-                <img src="assets/icons/ui/ic_check.svg" width="10" height="10" style="display:block;filter:brightness(0);">
+              <div style="display:flex;align-items:baseline;gap:4px;">
+                <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.4);text-decoration:line-through;">$59.99</span>
+                <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">$47.99</span>
               </div>
             </div>
-            <div style="backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);background:rgba(242,59,119,.6);border:1px solid rgba(242,59,119,.4);border-radius:14px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;align-self:flex-start;">20% OFF</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:-.11px;text-decoration:line-through;text-decoration-color:#F23B77;">$239.99</span>
-              <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">$191.99</span>
+          </div>
+
+          <!-- Pack — 1,000 credits (POPULAR) -->
+          <div class="credit-pack-card" data-pack="1000" data-credits="1000" data-price="$39.99" onclick="selectCreditPack(1000)" style="position:relative;width:100%;box-sizing:border-box;">
+            <div style="position:absolute;top:-7.5px;right:12px;z-index:2;display:flex;gap:4px;">
+              <div style="backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);background:rgba(1,179,123,.6);border:1px solid rgba(1,179,123,.4);border-radius:14px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.02em;white-space:nowrap;line-height:11px;">POPULAR</div>
+            </div>
+            <div class="credit-pack-row" style="height:54px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .18s,background .18s,border-width .18s;">
+              <div>
+                <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:-.11px;">Add Credit</div>
+                <div style="display:flex;align-items:baseline;gap:3px;margin-top:1px;">
+                  <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;opacity:.4;">
+                  <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">1,000</span>
+                </div>
+              </div>
+              <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">$39.99</span>
+            </div>
+          </div>
+
+          <!-- Pack — 600 credits -->
+          <div class="credit-pack-card" data-pack="600" data-credits="600" data-price="$29.99" onclick="selectCreditPack(600)" style="position:relative;width:100%;box-sizing:border-box;">
+            <div class="credit-pack-row" style="height:54px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .18s,background .18s,border-width .18s;">
+              <div>
+                <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:-.11px;">Add Credit</div>
+                <div style="display:flex;align-items:baseline;gap:3px;margin-top:1px;">
+                  <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;opacity:.4;">
+                  <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">600</span>
+                </div>
+              </div>
+              <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">$29.99</span>
+            </div>
+          </div>
+
+          <!-- Pack — 300 credits -->
+          <div class="credit-pack-card" data-pack="300" data-credits="300" data-price="$14.99" onclick="selectCreditPack(300)" style="position:relative;width:100%;box-sizing:border-box;">
+            <div class="credit-pack-row" style="height:54px;box-sizing:border-box;background:rgba(9,9,11,.4);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .18s,background .18s,border-width .18s;">
+              <div>
+                <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:-.11px;">Add Credit</div>
+                <div style="display:flex;align-items:baseline;gap:3px;margin-top:1px;">
+                  <img src="assets/icons/ui/ic_credits.svg" width="10" height="10" style="display:block;opacity:.4;">
+                  <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">300</span>
+                </div>
+              </div>
+              <span style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">$14.99</span>
             </div>
           </div>
 
@@ -6938,7 +6934,11 @@ function goTo(id, dir) {
     // Screen-specific init
     if (id === 'mv-result') initMvResultController();
     if (id === 'iap') selectIAPPlan('weekly');
-    if (id === 'credits') selectCreditPack(_selectedPack);
+    if (id === 'credits') {
+      selectCreditPack(_selectedPack);
+      const scroller = document.getElementById('credit-packs-scroll');
+      if (scroller) scroller.scrollTop = 0;
+    }
     if (id === 'mv-room') { const b = document.getElementById('mv-room-credit-btn'); if (b) b.style.display = _isLoggedIn ? 'flex' : 'none'; }
     if (id === 'song-create') { const b = document.getElementById('song-create-credit-btn'); if (b) b.style.display = _isLoggedIn ? 'flex' : 'none'; }
   }, 380);
@@ -10633,7 +10633,7 @@ function kbShift() {
 }
 
 // ── Buy Credits ──
-let _selectedPack = 2; // default: Creator Pack
+let _selectedPack = 1000; // default: Popular Pack
 
 function switchCreditsTab(tab) {
   // Update tab button styles
@@ -10656,22 +10656,14 @@ function switchCreditsTab(tab) {
 
 function selectCreditPack(packNum) {
   _selectedPack = packNum;
-  const cards = document.querySelectorAll('.credit-pack-card');
-  cards.forEach(card => {
-    const packId = parseInt(card.dataset.pack);
+  document.querySelectorAll('.credit-pack-card').forEach(card => {
+    const packId = parseInt(card.dataset.pack, 10);
+    const row = card.querySelector('.credit-pack-row');
+    if (!row) return;
     const isSelected = packId === packNum;
-    const check = card.querySelector('.credit-pack-check');
-    if (isSelected) {
-      card.style.background = 'linear-gradient(to right,#422503,rgba(0,0,0,.4))';
-      card.style.borderColor = '#f59e0b';
-      card.style.borderWidth = '1.5px';
-      if (check) check.style.display = 'flex';
-    } else {
-      card.style.background = 'rgba(9,9,11,.4)';
-      card.style.borderColor = 'rgba(255,255,255,.15)';
-      card.style.borderWidth = '1px';
-      if (check) check.style.display = 'none';
-    }
+    row.style.background = isSelected ? 'linear-gradient(to right,#36055b 0%,#151519 65%)' : 'rgba(9,9,11,.4)';
+    row.style.borderColor = isSelected ? '#a855f7' : 'rgba(255,255,255,.15)';
+    row.style.borderWidth = isSelected ? '1.5px' : '1px';
   });
 }
 
