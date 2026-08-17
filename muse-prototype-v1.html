@@ -3301,13 +3301,23 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- CHARACTER IMAGE -->
           <div style="display:flex;flex-direction:column;gap:5px;align-items:center;">
-            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;width:100%;">Character Image</div>
             <!-- Portrait card — clickable, opens full image view -->
             <div onclick="openCharImage()" style="position:relative;width:124px;height:219px;border-radius:14px;overflow:hidden;cursor:pointer;background:linear-gradient(60deg,#2d1a08,#5a3a18);flex-shrink:0;">
               <img src="assets/images/storyboard/storyboard_01.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
               <!-- Expand button -->
               <div onclick="openCharImage()" style="position:absolute;bottom:8px;right:8px;width:28px;height:28px;border-radius:18px;background:rgba(9,9,11,0.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;">
                 <img src="assets/icons/ui/ic_expand.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+              </div>
+            </div>
+          </div>
+
+          <!-- VISUAL STYLE -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Visual Style</div>
+            <div onclick="openSceneEditor('Visual Style','sb-visual-style-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:69px;box-sizing:border-box;cursor:pointer;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div id="sb-visual-style-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;flex:1;min-width:0;">Radiant and joyful, with a dreamy yet devoted expression. Her look is glamorous and sophisticated.</div>
+                <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;flex-shrink:0;filter:invert(66%) sepia(5%) saturate(400%) hue-rotate(210deg) brightness(92%) contrast(90%);">
               </div>
             </div>
           </div>
@@ -3327,17 +3337,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div style="flex:1;min-width:0;">
                 <div style="font-size:13px;font-weight:700;color:var(--n100);letter-spacing:-.13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Down the Memory Lane</div>
                 <div style="font-size:11px;font-weight:500;color:var(--n64);letter-spacing:-.11px;line-height:16px;margin-top:2px;">02:25</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- VISUAL STYLE -->
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="font-size:12px;font-weight:700;color:var(--n100);letter-spacing:.06em;text-transform:uppercase;">Visual Style</div>
-            <div onclick="openSceneEditor('Visual Style','sb-visual-style-text')" style="background:var(--n09);border:1px solid var(--border-2);border-radius:14px;padding:10px;min-height:69px;box-sizing:border-box;cursor:pointer;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <div id="sb-visual-style-text" style="font-size:12px;font-weight:500;color:var(--n100);line-height:1.5;flex:1;min-width:0;">Radiant and joyful, with a dreamy yet devoted expression. Her look is glamorous and sophisticated.</div>
-                <img src="assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;flex-shrink:0;filter:invert(66%) sepia(5%) saturate(400%) hue-rotate(210deg) brightness(92%) contrast(90%);">
               </div>
             </div>
           </div>
