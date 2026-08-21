@@ -1700,6 +1700,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <!-- Tap area to toggle play/pause (pointer-events on) -->
         <div onclick="toggleMvPlay()" style="position:absolute;inset:0;right:54px;bottom:140px;top:80px;pointer-events:all;cursor:pointer;"></div>
 
+        <!-- Center Play button (shown only when paused; no pause icon while playing) -->
+        <div id="mvp-play-btn" onclick="toggleMvPlay()" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);border:1px solid rgba(255,255,255,.15);padding:12px;border-radius:30px;align-items:center;justify-content:center;cursor:pointer;pointer-events:all;z-index:5;">
+          <img src="assets/icons/ui/ic_play.svg" width="32" height="32" style="display:block;filter:brightness(0) invert(1);">
+        </div>
+
         <!-- Top navbar -->
         <div style="position:absolute;top:0;left:0;right:0;pointer-events:all;background:linear-gradient(to bottom,rgba(0,0,0,.55),transparent);padding:calc(var(--safe-top) + 12px) 16px 28px;display:flex;align-items:center;gap:6px;">
           <div onclick="goBack();document.getElementById('mv-preview-video').pause();"
@@ -9681,6 +9686,9 @@ function _updateCurrControls() {
   if (ctrlIcon) ctrlIcon.src = 'assets/icons/ui/ic_pause.svg';
   const spkr = document.getElementById('mvp-speaker-icon');
   if (spkr) spkr.src = _mvMuted ? 'assets/icons/ui/ic_speaker_off.svg' : 'assets/icons/ui/ic_speaker_on.svg';
+  // New/rotated video auto-plays — hide the center play button (only shown when paused)
+  const centerBtn = document.getElementById('mvp-play-btn');
+  if (centerBtn) centerBtn.style.display = 'none';
 }
 
 function _updateTitle(idx) {
@@ -10002,9 +10010,10 @@ function cpOptionShare() {
 function toggleMvPlay() {
   const v    = _mvCurrVideo();
   const icon = document.getElementById('mvp-ctrl-icon');
+  const btn  = document.getElementById('mvp-play-btn');
   if (!v) return;
-  if (v.paused) { v.play().catch(() => {}); if (icon) icon.src = 'assets/icons/ui/ic_pause.svg'; }
-  else          { v.pause();                if (icon) icon.src = 'assets/icons/ui/ic_play.svg';  }
+  if (v.paused) { v.play().catch(() => {}); if (icon) icon.src = 'assets/icons/ui/ic_pause.svg'; if (btn) btn.style.display = 'none'; }
+  else          { v.pause();                if (icon) icon.src = 'assets/icons/ui/ic_play.svg';  if (btn) btn.style.display = 'flex'; }
 }
 function toggleMvMute() {
   const v    = _mvCurrVideo();

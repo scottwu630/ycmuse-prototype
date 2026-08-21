@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MV Detail — Drag Up/Down Preview (reusable snippet)</title>
+
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  MV DETAIL — DRAG UP / DOWN TO SWITCH PREVIEW VIDEO
+  ════════════════════════════════════════════════════════════════════════
+  Extracted & cleaned up from muse-prototype-v2.html (screen-mv-preview).
+  This is a self-contained, framework-agnostic snippet — drop the <style>
+  block and the two HTML/JS sections into the YCMuse Website mobile view.
+
+  HOW IT WORKS
+  ────────────
+  - 3 fixed DOM slots (prev / curr / next) are stacked vertically inside a
+    "track" div that is 3× the screen height. The track's `top` is offset by
+    -1 screen-height so slot[curr] lands exactly on screen.
+  - Dragging moves ONLY the track's transform (translateY) — the UI chrome
+    (header, buttons, CTA) is a separate absolutely-positioned layer that
+    never moves, so nothing needs to be re-laid-out mid-drag.
+  - On release past the threshold, instead of reloading video `src` into the
+    same slot (which causes a black-flash/reload delay), we ROTATE which
+    slot plays which role (prev/curr/next). The slot that was already
+    preloaded+decoded as "next" simply becomes "curr" — playback continues
+    with zero delay. Only the now-recycled slot (offscreen) gets a new
+    video src loaded into it, for the NEW prev/next.
+  - Boundary rubber-band: at the first/last item, drag distance is divided
+    by 4 so the track "resists" instead of moving 1:1.
+
+  INTEGRATION NOTES
+  ─────────────────
+  - Replace FEED[] with your real data (style / video url / meta text).
+  - SCREEN_H must equal the actual rendered height (px) of the preview
+    container. If your container is responsive (%/vh) rather than a fixed
+    693px mock height, compute it at runtime instead of hard-coding:
+        const SCREEN_H = document.getElementById('mvp-viewport').clientHeight;
+    (recompute on resize/orientation-change too).
+  - Swap the <video> elements for <img>/canvas if some feed items are
+    static images — the slot-rotation logic doesn't care what's inside
+    a slot, only _loadVideoEl() needs a matching _loadSlotEl() variant.
+  - Icons are inline SVG per project rule (no emoji in UI components).
+
+  EASING NOTE
+  ────────────
+  This vertical feed-swipe uses `.28s cubic-bezier(.4,0,.2,1)` (Material
+  standard ease) — this is what's already shipping in the MV Preview
+  screen and feels right for a fast TikTok-style snap. This is different
+  from Scott's preferred carousel drag easing
+  (`cubic-bezier(.22,1,.36,1)` @ .52s, slower "settle" feel) used for the
+  horizontal song/MV carousels — that one is tuned for a card deck, not a
+  full-screen video snap. Say the word if you'd rather unify the two.
+  ════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap');
+
+  /* ── Design tokens (from YCMuse Design System) ───────────────────── */
+  :root{
+    --bg:#09090B; --card:#151519; --card-2:#212127;
+    --text:#FFFFFF; --text-2:#E1E1E5; --text-muted:#9C9CAB;
+    --border:rgba(255,255,255,.15);
+    --accent:#A855F7; --pink:#EC4899;
+    --mv-grad: linear-gradient(135deg,#6D28D9 0%,#A855F7 50%,#EC4899 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',-apple-system,sans-serif;}
+  body{background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh;}
+
+  /* Typography utility classes (subset used here) */
+  .t-title-s{font-size:17px;font-weight:700;line-height:22px;letter-spacing:0;}
+  .t-cap-m{font-size:11px;font-weight:500;line-height:16px;letter-spacing:-1px;}
+  .t-title-xs{font-size:15px;font-weight:700;line-height:18px;letter-spacing:0;}
+
+  /* ── Phone frame just for this demo — remove in production ───────── */
+  .phone{width:320px;height:693px;border-radius:28px;overflow:hidden;position:relative;
+         box-shadow:0 0 0 8px #111,0 20px 60px rgba(0,0,0,.6);}
+
+  /* ══ THE REUSABLE COMPONENT STARTS HERE ══ */
+  #mvp-viewport{position:absolute;inset:0;background:#000;overflow:hidden;touch-action:none;}
+
+  /* Video track — 3 slots stacked vertically, only this moves during drag */
+  #mvp-track{position:absolute;top:calc(-1 * var(--screen-h));left:0;right:0;
+             height:calc(3 * var(--screen-h));will-change:transform;}
+  .mvp-slot{position:absolute;left:0;right:0;height:var(--screen-h);background:#000;overflow:hidden;}
+  .mvp-slot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  /* Gradient placeholder shown while/if a real video src isn't available */
+  .mvp-slot .mvp-fallback{position:absolute;inset:0;background:var(--mv-grad);opacity:.9;
+                           display:flex;align-items:center;justify-content:center;
+                           color:#fff;font-size:13px;font-weight:600;text-align:center;padding:24px;}
+
+  /* UI chrome — always fixed, never moves during drag */
+  #mvp-ui{position:absolute;inset:0;z-index:10;pointer-events:none;}
+  #mvp-tap-toggle{position:absolute;inset:0;right:54px;bottom:140px;top:80px;pointer-events:all;}
+
+  #mvp-topbar{position:absolute;top:0;left:0;right:0;pointer-events:all;
+              background:linear-gradient(to bottom,rgba(0,0,0,.55),transparent);
+              padding:20px 16px 28px;display:flex;align-items:center;gap:6px;}
+  .mvp-icon-btn{width:28px;height:28px;border-radius:14px;background:var(--card-2);
+                display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+  #mvp-title-wrap{flex:1;text-align:center;}
+  #mvp-title{color:var(--text);}
+  #mvp-meta{color:var(--text-2);margin-top:2px;}
+
+  #mvp-side-actions{position:absolute;right:0;top:0;bottom:0;pointer-events:all;
+                     display:flex;flex-direction:column;align-items:center;justify-content:center;
+                     gap:10px;padding:0 10px;}
+  .mvp-round-btn{width:34px;height:34px;border-radius:50%;background:rgba(9,9,11,.8);
+                 display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .mvp-avatar{border:1.5px solid #fff;background:var(--mv-grad);}
+
+  #mvp-bottom{position:absolute;bottom:0;left:0;right:0;pointer-events:all;
+              background:linear-gradient(to bottom,transparent,rgba(7,7,7,.95));
+              padding:20px 16px calc(env(safe-area-inset-bottom,0px) + 24px);}
+  #mvp-controls-row{display:flex;align-items:center;gap:10px;padding:10px 0;}
+  #mvp-progress-bar{flex:1;position:relative;height:12px;display:flex;align-items:center;cursor:pointer;}
+  #mvp-progress-track{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
+                       height:3px;background:rgba(255,255,255,.3);border-radius:2px;}
+  #mvp-progress-fill{position:absolute;left:0;top:0;width:0%;height:100%;background:#fff;border-radius:2px;}
+  #mvp-progress-thumb{position:absolute;left:0%;top:50%;transform:translate(-50%,-50%);
+                       width:12px;height:12px;border-radius:50%;background:#fff;
+                       box-shadow:0 0 3px rgba(0,0,0,.4);pointer-events:none;}
+
+  #mvp-cta{width:100%;height:46px;border-radius:14px;background:linear-gradient(to right,#FF6BCE,#A855F7,#4338CA);
+           border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
+           gap:4px;transition:opacity .15s;}
+  #mvp-cta:active{opacity:.8;}
+
+  svg{display:block;}
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <!-- ═══ Viewport: set --screen-h to the actual rendered container height ═══ -->
+  <div id="mvp-viewport" style="--screen-h:693px;">
+
+    <!-- VIDEO TRACK -->
+    <div id="mvp-track">
+      <div id="mvp-slot-a" class="mvp-slot"><video playsinline loop muted></video><div class="mvp-fallback"></div></div>
+      <div id="mvp-slot-b" class="mvp-slot"><video playsinline loop></video><div class="mvp-fallback"></div></div>
+      <div id="mvp-slot-c" class="mvp-slot"><video playsinline loop muted></video><div class="mvp-fallback"></div></div>
+    </div>
+
+    <!-- UI CHROME (fixed) -->
+    <div id="mvp-ui">
+      <div id="mvp-tap-toggle" onclick="MvDragPreview.togglePlay()"></div>
+
+      <div id="mvp-topbar">
+        <div class="mvp-icon-btn" onclick="history.back && history.back()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div id="mvp-title-wrap">
+          <div id="mvp-title" class="t-title-s"></div>
+          <div id="mvp-meta" class="t-cap-m"></div>
+        </div>
+        <div style="width:28px;height:28px;opacity:0;flex-shrink:0;"></div>
+      </div>
+
+      <div id="mvp-side-actions">
+        <div class="mvp-round-btn mvp-avatar" style="width:34px;height:34px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c0-4 4-7 8-7s8 3 8 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div id="mvp-fav-btn" class="mvp-round-btn" onclick="MvDragPreview.toggleFavorite()">
+          <svg id="mvp-fav-ico" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.7-10-9.3C.4 8 2 4 6 4c2.2 0 3.7 1.2 4.5 2.6C11.3 5.2 12.8 4 15 4c4 0 5.6 4 4 7.7C19.5 16.3 12 21 12 21z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="mvp-round-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="white" stroke-width="2"/><circle cx="6" cy="12" r="3" stroke="white" stroke-width="2"/><circle cx="18" cy="19" r="3" stroke="white" stroke-width="2"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="white" stroke-width="2"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="white" stroke-width="2"/></svg>
+        </div>
+      </div>
+
+      <div id="mvp-bottom">
+        <div id="mvp-controls-row">
+          <svg id="mvp-ctrl-ico" onclick="MvDragPreview.togglePlay()" width="20" height="20" viewBox="0 0 24 24" fill="white" style="cursor:pointer;flex-shrink:0;"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+          <div id="mvp-progress-bar" onclick="MvDragPreview.seek(event,this)">
+            <div id="mvp-progress-track"><div id="mvp-progress-fill"></div></div>
+            <div id="mvp-progress-thumb"></div>
+          </div>
+          <svg id="mvp-mute-ico" onclick="MvDragPreview.toggleMute()" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="cursor:pointer;flex-shrink:0;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19 9a4 4 0 010 6"/></svg>
+        </div>
+        <button id="mvp-cta" class="t-title-xs" onclick="alert('Create Music Video →')">
+          Create Music Video
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   MvDragPreview — drag up/down to switch preview video
+   Framework-agnostic. Call MvDragPreview.init(feed, startIndex) once
+   the #mvp-viewport markup above is in the DOM.
+   ════════════════════════════════════════════════════════════════════ */
+const MvDragPreview = (function () {
+
+  // ── Replace with your real feed data ──────────────────────────────
+  const DEFAULT_FEED = [
+    { style: 'Cinematic Dark', vid: '', meta: 'Popular · 2-3 min' },
+    { style: 'Nature & Earth', vid: '', meta: 'Trending · 1-2 min' },
+    { style: 'Late Night Stage', vid: '', meta: 'New · 2-3 min' },
+    { style: 'Neon City',      vid: '', meta: 'Hot · 2-3 min' },
+    { style: 'Anime Style',    vid: '', meta: 'Fan fav · 1-2 min' },
+  ];
+
+  const THRESHOLD_RATIO = 80 / 693; // px threshold scaled to screen height
+  let FEED = DEFAULT_FEED;
+  let feedIdx = 0;
+  let muted = true;
+  let favorited = false;
+
+  // Fixed div+video pairs — never renamed. `roles` says which slot
+  // (by array index) currently plays [prev, curr, next].
+  const slots = [
+    { div: 'mvp-slot-a', vid: null },
+    { div: 'mvp-slot-b', vid: null },
+    { div: 'mvp-slot-c', vid: null },
+  ];
+  let roles = [0, 1, 2];
+
+  let viewport, track, screenH, dragging = false, sy = 0;
+
+  function $(id) { return document.getElementById(id); }
+
+  function slotEl(roleIdx) { return $(slots[roles[roleIdx]].div); }
+  function currVideo() { return slotEl(1).querySelector('video'); }
+  function prevVideo() { return slotEl(0).querySelector('video'); }
+  function nextVideo() { return slotEl(2).querySelector('video'); }
+
+  function applySlotTops() {
+    roles.forEach((slotIdx, roleIdx) => {
+      slots[slotIdx].divEl.style.top = (roleIdx * screenH) + 'px';
+    });
+  }
+
+  // Loads either a video src or, if none provided, a gradient fallback
+  // with the style name — so the demo works with no media files at all.
+  function loadSlot(slotIdx, feedIdx) {
+    const el = $(slots[slotIdx].div);
+    const video = el.querySelector('video');
+    const fallback = el.querySelector('.mvp-fallback');
+    const item = FEED[feedIdx];
+    if (!item) { video.removeAttribute('src'); video.load(); fallback.style.display = 'flex'; fallback.textContent = ''; return; }
+    if (item.vid) {
+      if (!video.src.includes(item.vid)) {
+        video.src = item.vid; video.load(); video.currentTime = 0;
+        video.oncanplay = () => { video.play().catch(() => {}); video.oncanplay = null; };
+      }
+      fallback.style.display = 'none';
+    } else {
+      video.removeAttribute('src');
+      fallback.style.display = 'flex';
+      fallback.textContent = item.style; // placeholder text in lieu of real video
+    }
+  }
+
+  function updateTitle(idx) {
+    $('mvp-title').textContent = FEED[idx].style;
+    $('mvp-meta').textContent = FEED[idx].meta;
+  }
+
+  function updateControls() {
+    const fill = $('mvp-progress-fill'), thumb = $('mvp-progress-thumb');
+    fill.style.width = '0%'; thumb.style.left = '0%';
+    const v = currVideo();
+    v.ontimeupdate = () => {
+      if (!v.duration) return;
+      const pct = (v.currentTime / v.duration) * 100;
+      fill.style.width = pct + '%'; thumb.style.left = pct + '%';
+    };
+  }
+
+  function setTrackY(y, animated) {
+    track.style.transition = animated ? 'transform .28s cubic-bezier(.4,0,.2,1)' : 'none';
+    track.style.transform = y === 0 ? '' : `translateY(${y}px)`;
+  }
+
+  // Rotate slots forward/backward — the slot already preloaded as
+  // next/prev becomes curr instantly (no reload, no black flash);
+  // only the freshly-recycled offscreen slot gets new content loaded.
+  function commitForward() {
+    feedIdx++;
+    roles = [roles[1], roles[2], roles[0]];
+    applySlotTops();
+    currVideo().muted = muted;
+    currVideo().play().catch(() => {});
+    loadSlot(roles[2], feedIdx + 1);
+    updateTitle(feedIdx); updateControls();
+  }
+  function commitBackward() {
+    feedIdx--;
+    roles = [roles[2], roles[0], roles[1]];
+    applySlotTops();
+    currVideo().muted = muted;
+    currVideo().play().catch(() => {});
+    loadSlot(roles[0], feedIdx - 1);
+    updateTitle(feedIdx); updateControls();
+  }
+
+  // ── Drag handlers ───────────────────────────────────────────────
+  function onStart(clientY) {
+    sy = clientY; dragging = true;
+    setTrackY(0, false);
+  }
+  function onMove(clientY) {
+    if (!dragging) return;
+    const dy = clientY - sy;
+    const atStart = feedIdx === 0;
+    const atEnd = feedIdx === FEED.length - 1;
+    let clamped = dy;
+    if (dy < 0 && atEnd) clamped = dy / 4;   // rubber-band at last item
+    if (dy > 0 && atStart) clamped = dy / 4; // rubber-band at first item
+    setTrackY(clamped, false);
+  }
+  function onEnd(clientY) {
+    if (!dragging) return;
+    dragging = false;
+    const dy = clientY - sy;
+    const threshold = screenH * THRESHOLD_RATIO;
+
+    if (dy < -threshold && feedIdx < FEED.length - 1) {
+      currVideo().pause();
+      setTrackY(-screenH, true);
+      setTimeout(() => { commitForward(); setTrackY(0, false); }, 270);
+    } else if (dy > threshold && feedIdx > 0) {
+      currVideo().pause();
+      setTrackY(screenH, true);
+      setTimeout(() => { commitBackward(); setTrackY(0, false); }, 270);
+    } else {
+      setTrackY(0, true); // snap back — didn't cross threshold
+    }
+  }
+
+  function bindEvents() {
+    viewport.addEventListener('touchstart', e => onStart(e.touches[0].clientY), { passive: true });
+    viewport.addEventListener('touchmove', e => onMove(e.touches[0].clientY), { passive: true });
+    viewport.addEventListener('touchend', e => onEnd(e.changedTouches[0].clientY), { passive: true });
+    viewport.addEventListener('mousedown', e => onStart(e.clientY));
+    window.addEventListener('mousemove', e => { if (dragging) onMove(e.clientY); });
+    window.addEventListener('mouseup', e => { if (dragging) onEnd(e.clientY); });
+    // Recompute screen height on resize / orientation change if the
+    // container isn't a fixed px height in your real layout.
+    window.addEventListener('resize', () => {
+      screenH = viewport.clientHeight;
+      viewport.style.setProperty('--screen-h', screenH + 'px');
+      applySlotTops();
+    });
+  }
+
+  // ── Public controls (also called from the UI chrome above) ──────
+  function togglePlay() {
+    const v = currVideo();
+    const icon = $('mvp-ctrl-ico');
+    if (v.paused) {
+      v.play().catch(() => {});
+      icon.innerHTML = '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>'; // pause glyph
+    } else {
+      v.pause();
+      icon.innerHTML = '<path d="M8 5v14l11-7z"/>'; // play glyph
+    }
+  }
+  function toggleMute() {
+    muted = !muted;
+    currVideo().muted = muted;
+    $('mvp-mute-ico').innerHTML = muted
+      ? '<path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>'
+      : '<path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19 9a4 4 0 010 6"/>';
+  }
+  function toggleFavorite() {
+    favorited = !favorited;
+    $('mvp-fav-ico').setAttribute('fill', favorited ? '#EC4899' : 'none');
+  }
+  function seek(e, bar) {
+    const v = currVideo();
+    if (!v.duration) return;
+    const rect = bar.getBoundingClientRect();
+    v.currentTime = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * v.duration;
+  }
+
+  function init(feed, startIndex) {
+    FEED = feed && feed.length ? feed : DEFAULT_FEED;
+    feedIdx = startIndex || 0;
+    roles = [0, 1, 2];
+
+    viewport = $('mvp-viewport');
+    track = $('mvp-track');
+    slots.forEach(s => { s.divEl = $(s.div); });
+    screenH = viewport.clientHeight || 693;
+    viewport.style.setProperty('--screen-h', screenH + 'px');
+
+    applySlotTops();
+    loadSlot(roles[0], feedIdx - 1);
+    loadSlot(roles[2], feedIdx + 1);
+    loadSlot(roles[1], feedIdx);
+    currVideo().muted = muted;
+    currVideo().play().catch(() => {});
+
+    updateTitle(feedIdx);
+    updateControls();
+    bindEvents();
+  }
+
+  return { init, togglePlay, toggleMute, toggleFavorite, seek };
+})();
+
+// Boot the demo with placeholder data (no real video files in this snippet)
+MvDragPreview.init([
+  { style: 'Cinematic Dark',   vid: '', meta: 'Popular · 2-3 min' },
+  { style: 'Nature & Earth',   vid: '', meta: 'Trending · 1-2 min' },
+  { style: 'Late Night Stage', vid: '', meta: 'New · 2-3 min' },
+  { style: 'Neon City',        vid: '', meta: 'Hot · 2-3 min' },
+  { style: 'Anime Style',      vid: '', meta: 'Fan fav · 1-2 min' },
+], 0);
+</script>
+</body>
+</html>
