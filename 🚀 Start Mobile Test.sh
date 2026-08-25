@@ -2,7 +2,7 @@
 
 PORT=8888
 FOLDER="/Users/scottwu/Desktop/Perfect Crop/Design Proposal/YCM/Claude/YCMuse App"
-FILE="muse-prototype-v2.html"
+FILE="prototype/muse-prototype-v2.html"
 
 # Try WiFi (en0) then Ethernet (en1)
 IP=$(ipconfig getifaddr en0 2>/dev/null)

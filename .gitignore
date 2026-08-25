@@ -8,3 +8,10 @@ backup/
 
 # Claude internal
 CLAUDE.md
+
+# Local scratch — files moved here for you to delete manually in Finder
+_to_delete/
+
+# Stray large files that shouldn't be committed (assets/ is the real home for media)
+/ziWiITx1
+*.zip
