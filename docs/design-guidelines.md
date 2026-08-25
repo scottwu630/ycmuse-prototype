@@ -165,7 +165,7 @@ Figma 中 Status Bar 圖層命名為 `Status Bar`，設為可選顯示（不影�
 
 | Prototype 檔案 | 對應 QR 頁面 |
 |---|---|
-| `prototype/muse-prototype-v2.html` | `qr.html` |
+| `prototype/muse-prototype-v2.html` | `qr-v2.html` |
 | `prototype/muse-prototype-v1.html` | `qr-v1.html` |
 | `prototype/muse-prototype-xxx.html` | `qr-xxx.html` |
 
@@ -173,7 +173,7 @@ Figma 中 Status Bar 圖層命名為 `Status Bar`，設為可選顯示（不影�
 
 1. 執行 `start-server.sh` 啟動本機 HTTP server（port 8080，綁定 `0.0.0.0`，serve 整個 repo 根目錄）
 2. Script 用 `ipconfig` 取得 Mac 區網 IP，以 `?host=IP:PORT` 帶入 QR 頁面 URL
-3. 桌面瀏覽器開啟對應 QR 頁面（如 `http://localhost:8080/qr.html?host=192.168.x.x:8080`）
+3. 桌面瀏覽器開啟對應 QR 頁面（如 `http://localhost:8080/qr-v2.html?host=192.168.x.x:8080`）
 4. QR 頁面讀取 `?host=` 參數，組出 `http://IP:PORT/` + `TARGET`（`TARGET` 是相對 repo 根目錄的路徑，例如 `prototype/muse-prototype-v2.html`）產生正確 QR code
 5. 手機掃描 QR code，與 Mac 在同一 Wi-Fi 下即可開啟 prototype
 

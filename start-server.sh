@@ -34,7 +34,7 @@ echo "     Local   → http://localhost:$PORT"
 echo "     Network → http://$LOCAL_IP:$PORT"
 echo ""
 echo "  📱 QR Code pages (open on desktop, then scan with phone):"
-echo "     http://localhost:$PORT/qr.html     → muse-prototype-v2 (current)"
+echo "     http://localhost:$PORT/qr-v2.html  → muse-prototype-v2 (current)"
 echo "     http://localhost:$PORT/qr-v1.html  → muse-prototype-v1 (07/23 backup, for RD comparison)"
 echo "     http://localhost:$PORT/qr-draft.html → muse-prototype"
 echo "     http://localhost:$PORT/qr-icon.html  → muse-prototype-icon"
@@ -43,8 +43,8 @@ echo "  ⚠️  Phone must be on the same Wi-Fi as this Mac"
 echo "  Press Ctrl+C to stop."
 echo ""
 
-# ── 開啟 qr.html，並把 LAN IP 帶入 query param ──
-open "http://localhost:$PORT/qr.html?host=$LOCAL_IP:$PORT"
+# ── 開啟 qr-v2.html，並把 LAN IP 帶入 query param ──
+open "http://localhost:$PORT/qr-v2.html?host=$LOCAL_IP:$PORT"
 
 # ── 等待中斷 ─────────────────────────────────
 wait $SERVER_PID

@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/muse-prototype-v1.html", "destination": "/prototype/muse-prototype-v1.html" },
-    { "source": "/muse-prototype-v2.html", "destination": "/prototype/muse-prototype-v2.html" }
+    { "source": "/muse-prototype-v2.html", "destination": "/prototype/muse-prototype-v2.html" },
+    { "source": "/qr.html", "destination": "/qr-v2.html" }
   ]
 }
