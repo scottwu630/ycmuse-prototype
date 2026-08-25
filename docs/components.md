@@ -336,6 +336,9 @@
 
 ---
 
-## 尚未涵蓋
+## 範圍外 / 尚未涵蓋
 
-Figma「UI Components - Desktop」頁（桌面版對照組）跟「🎨 Design System」frame 裡個別 icon/spacing token 還沒有逐一列進這份文件；如果之後需要，可以再擴充。這份文件是某個時間點對 Figma 的快照，Figma 元件如果之後新增/改名，記得回來更新對應章節。
+- Figma「UI Components - Desktop」頁：**刻意不列入**，那一頁是另一個 Web project 用的元件，跟 YCMuse App（手機端）無關。
+- 「🎨 Design System」frame 裡個別 icon / spacing token 還沒有逐一列進這份文件；如果之後需要，可以再擴充。
+
+這份文件是某個時間點對 Figma 的快照，Figma 元件如果之後新增/改名，記得回來更新對應章節。
