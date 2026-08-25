@@ -6,6 +6,7 @@
 - `user-flows/` — User flow 文件。若該流程在 Figma 也有對應的流程圖，請在檔案開頭附上 Figma 連結，這裡的文字版當作可搜尋、可留評論的版本。
 - `specs/` — 詳細功能規格（畫面 × 狀態的行為表，給工程對照實作用），例如 `history-option-menu-spec.md`。
 - `design-guidelines.md` — Figma / UI 設計系統規範（顏色、字型、Icon、命名規則、Prototype 開發流程），工程與設計都照這份走。
+- `YCMuse_Prototype_Update_Log.docx` — 逐日期的 prototype 更新紀錄（Word 檔）。
 
 ## 其他資料夾
 
