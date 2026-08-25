@@ -6,9 +6,6 @@
 # Backup versions (not needed for RD)
 backup/
 
-# Claude internal
-CLAUDE.md
-
 # Local scratch — files moved here for you to delete manually in Finder
 _to_delete/
 

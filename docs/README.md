@@ -18,3 +18,12 @@
 ## 本機預覽原型
 
 雙擊根目錄的 `🚀 Start Mobile Test.sh`，或執行 `./start-server.sh`，就能在手機上用 QR code 掃描預覽最新原型。
+
+## 跟其他人共同編輯：changelog 對齊習慣
+
+repo 根目錄的 `CLAUDE.md`（有進版控，clone 就會拿到）讓任何人用 Claude 編輯這個 repo 時都會：
+
+1. 開始改東西前，Claude 會先問要不要讀一下 `docs/YCMuse_Prototype_Update_Log.docx`，確認手上要做的事跟別人最近的改動沒有衝突。
+2. 準備 push 前，Claude 會問這批改動要不要記一筆進 changelog。
+
+如果沒有用 Claude、直接手動編輯，麻煩照同樣的習慣：開始前看一下 changelog 最新幾筆，改完準備 push 前自己補一筆——這樣不管是誰、用什麼工具編輯，大家看到的異動紀錄都是同一份，才不會兩邊資訊對不齊。
