@@ -123,7 +123,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
   :root{--safe-top:48px;}
   .scr-scroll{scrollbar-width:none;}
   .scr-scroll::-webkit-scrollbar{display:none;}
-  #song-simple-idea::-webkit-scrollbar,#song-lyrics::-webkit-scrollbar,#mvr-describe::-webkit-scrollbar{display:none;}
+  #song-simple-idea::-webkit-scrollbar,#song-lyrics::-webkit-scrollbar,#mvr-describe::-webkit-scrollbar,#profile-scroll::-webkit-scrollbar{display:none;}
 }
 
 /* ── iPhone / mobile: full screen, no frame, scale up to fill screen ──
@@ -4725,7 +4725,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     <div id="screen-profile" class="screen" style="background:#09090B;z-index:110;">
 
       <!-- Scrollable content -->
-      <div style="height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-top:90px;padding-bottom:40px;">
+      <div id="profile-scroll" style="height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-top:90px;padding-bottom:40px;">
 
         <!-- Profile + Stats -->
         <div style="display:flex;flex-direction:column;gap:10px;padding:10px 16px 0;">
@@ -4794,6 +4794,16 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div style="height:1px;background:rgba(255,255,255,.15);width:100%;"></div>
           </div>
 
+          <!-- Restore Purchases -->
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;">
+            <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="../assets/icons/ui/ic_reload.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Restore Purchases</div>
+            </div>
+          </div>
+
           <!-- Notifications -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;">
             <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -4803,7 +4813,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Notifications</div>
               <div style="font-size:11px;font-weight:500;color:#676779;letter-spacing:-.11px;line-height:16px;">On</div>
             </div>
-            <img src="../assets/icons/ui/ic_chevron-right.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;opacity:.4;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="display:block;flex-shrink:0;"><path d="M8.29302 5.29298C8.65913 4.92686 9.23813 4.90427 9.63091 5.22462L9.70708 5.29298L15.7071 11.293C16.0976 11.6835 16.0976 12.3165 15.7071 12.707L9.70708 18.707C9.31655 19.0976 8.68354 19.0976 8.29302 18.707C7.90249 18.3165 7.90249 17.6835 8.29302 17.293L13.586 12L8.29302 6.70704L8.22466 6.63087C7.90431 6.2381 7.9269 5.65909 8.29302 5.29298Z" fill="var(--n14, #212127)"/></svg>
           </div>
 
           <!-- Send Feedback -->
@@ -4814,6 +4824,17 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div style="flex:1;min-width:0;">
               <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Send Feedback</div>
             </div>
+          </div>
+
+          <!-- FAQ -->
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;">
+            <div style="background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <img src="../assets/icons/ui/ic_info.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">FAQ</div>
+            </div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="display:block;flex-shrink:0;"><path d="M8.29302 5.29298C8.65913 4.92686 9.23813 4.90427 9.63091 5.22462L9.70708 5.29298L15.7071 11.293C16.0976 11.6835 16.0976 12.3165 15.7071 12.707L9.70708 18.707C9.31655 19.0976 8.68354 19.0976 8.29302 18.707C7.90249 18.3165 7.90249 17.6835 8.29302 17.293L13.586 12L8.29302 6.70704L8.22466 6.63087C7.90431 6.2381 7.9269 5.65909 8.29302 5.29298Z" fill="var(--n14, #212127)"/></svg>
           </div>
 
           <!-- History -->
@@ -4834,6 +4855,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div style="flex:1;min-width:0;">
               <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Settings</div>
             </div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="display:block;flex-shrink:0;"><path d="M8.29302 5.29298C8.65913 4.92686 9.23813 4.90427 9.63091 5.22462L9.70708 5.29298L15.7071 11.293C16.0976 11.6835 16.0976 12.3165 15.7071 12.707L9.70708 18.707C9.31655 19.0976 8.68354 19.0976 8.29302 18.707C7.90249 18.3165 7.90249 17.6835 8.29302 17.293L13.586 12L8.29302 6.70704L8.22466 6.63087C7.90431 6.2381 7.9269 5.65909 8.29302 5.29298Z" fill="var(--n14, #212127)"/></svg>
           </div>
 
         </div>
