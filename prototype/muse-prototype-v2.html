@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="apple-touch-icon" href="../assets/icons/app/ic_app_ycm_512.png">
-<link rel="icon" type="image/png" href="../assets/icons/app/ic_app_ycm_512.png">
+<link rel="apple-touch-icon" href="../assets/icons/app/ic_app_ycm_dark_512.png">
+<link rel="icon" type="image/png" href="../assets/icons/app/ic_app_ycm_dark_512.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="YouCam Muse">
@@ -571,7 +571,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .splash-particles{position:absolute;inset:0;}
 .sp{position:absolute;border-radius:50%;background:rgba(168,85,247,.55);animation:spFloat linear infinite;}
 @keyframes spFloat{0%{transform:translateY(0) scale(1);opacity:.6;}50%{opacity:.2;transform:translateY(-60px) scale(.7);}100%{transform:translateY(-120px) scale(.4);opacity:0;}}
-.splash-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:18px;}
+.splash-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:18px;transform:translateY(-20px);}
 .logo-mark{width:88px;height:88px;border-radius:26px;background:var(--mv-grad);display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(168,85,247,.6),0 20px 40px rgba(0,0,0,.5);animation:logoFloat 3.2s ease-in-out infinite;}
 @keyframes logoFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
 @keyframes obWiggle{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
@@ -1136,9 +1136,14 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .ds-toggle:disabled,.ds-radio:disabled,.ds-checkbox:disabled{opacity:.35;cursor:not-allowed;}
 
 /* ── SONGS ALL (List) ── */
-.songsall-content{padding:calc(var(--safe-top) + var(--nav-h) + 4px) 0 calc(32px + var(--safe-bot));}
+.songsall-content{padding:calc(var(--safe-top) + var(--nav-h) + 46px) 0 calc(32px + var(--safe-bot));}
 .songsall-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;transition:opacity .15s;}
 .songsall-item:active{opacity:.55;}
+.songsall-tabs{display:flex;gap:6px;align-items:center;overflow-x:auto;padding:0 16px;scrollbar-width:none;}
+.songsall-tabs::-webkit-scrollbar{display:none;}
+.songsall-tab{flex-shrink:0;min-width:48px;padding:5px 10px;border-radius:16px;font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;text-align:center;color:rgba(255,255,255,.6);background:#212127;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap;}
+.songsall-tab.active{background:#A855F7;color:#fff;}
+.songsall-tab:active{opacity:.7;}
 .songsall-art{position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;}
 .songsall-art-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
 .songsall-art img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -1307,10 +1312,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div class="splash-center">
         <!-- App icon -->
         <img src="../assets/icons/app/ic_app_ycm.png" alt="YouCam Muse"
-          style="width:88px;height:88px;border-radius:26px;object-fit:cover;box-shadow:0 0 60px rgba(168,85,247,.6),0 20px 40px rgba(0,0,0,.5);">
-        <!-- Wordmark gradient logo -->
-        <img src="../assets/icons/app/muse_wordmark_logo_gradient.png" alt="MUSE"
-          style="height:26px;width:auto;object-fit:contain;margin-top:4px;">
+          style="width:84px;height:84px;border-radius:26px;object-fit:cover;box-shadow:0 0 60px rgba(168,85,247,.6),0 20px 40px rgba(0,0,0,.5);">
+        <!-- Wordmark logo -->
+        <img src="../assets/icons/app/ycm_wordmark_logo_hor_white.png" alt="YouCam Muse"
+          style="height:20px;width:auto;object-fit:contain;margin-top:4px;">
       </div>
       <!-- Loading dots -->
       <div class="splash-dots" style="left:50%;transform:translateX(-50%)">
@@ -1537,7 +1542,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <!-- Top Picks Songs -->
         <div style="padding:0 16px 10px;display:flex;align-items:center;justify-content:space-between;">
           <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">Top Picks Songs</div>
-          <div onclick="document.querySelector('#screen-songs-all .nav-title').textContent='Top Picks Songs';goTo('songs-all')" style="display:flex;align-items:center;gap:2px;font-size:11px;font-weight:500;color:#A855F7;cursor:pointer;">See all <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;"><path d="M8.29295 5.29298C8.65907 4.92686 9.23807 4.90427 9.63084 5.22462L9.70702 5.29298L15.707 11.293C16.0975 11.6835 16.0975 12.3165 15.707 12.707L9.70702 18.707C9.31649 19.0976 8.68348 19.0976 8.29295 18.707C7.90243 18.3165 7.90243 17.6835 8.29295 17.293L13.5859 12L8.29295 6.70704L8.22459 6.63087C7.90424 6.2381 7.92684 5.65909 8.29295 5.29298Z" fill="#A855F7"/></svg></div>
+          <div onclick="document.querySelector('#screen-songs-all .nav-title').textContent='Top Picks Songs';resetSongsAllFilter();goTo('songs-all')" style="display:flex;align-items:center;gap:2px;font-size:11px;font-weight:500;color:#A855F7;cursor:pointer;">See all <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;"><path d="M8.29295 5.29298C8.65907 4.92686 9.23807 4.90427 9.63084 5.22462L9.70702 5.29298L15.707 11.293C16.0975 11.6835 16.0975 12.3165 15.707 12.707L9.70702 18.707C9.31649 19.0976 8.68348 19.0976 8.29295 18.707C7.90243 18.3165 7.90243 17.6835 8.29295 17.293L13.5859 12L8.29295 6.70704L8.22459 6.63087C7.90424 6.2381 7.92684 5.65909 8.29295 5.29298Z" fill="#A855F7"/></svg></div>
         </div>
         <div style="display:flex;gap:10px;overflow-x:auto;padding:0 16px 22px;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
           <div class="song-card" onclick="openSongPlayer('Pop Anthem','3 min | Upbeat','../assets/images/album-art/album_01.jpg','Pop','Uplifting')"><div class="song-card-cover"><img src="../assets/images/album-art/album_01.jpg" alt=""><div class="badge-new">NEW</div><div class="song-card-badge"><img src="../assets/icons/ui/ic_play.svg" alt="play" style="width:14px;height:14px;filter:brightness(10);"></div></div><div class="song-card-title">Pop Anthem</div><div class="song-card-meta">3 min | Upbeat</div></div>
@@ -1549,7 +1554,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <!-- New Songs -->
         <div style="padding:0 16px 10px;display:flex;align-items:center;justify-content:space-between;">
           <div style="font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;">New Songs</div>
-          <div onclick="document.querySelector('#screen-songs-all .nav-title').textContent='New Songs';goTo('songs-all')" style="display:flex;align-items:center;gap:2px;font-size:11px;font-weight:500;color:#A855F7;cursor:pointer;">See all <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;"><path d="M8.29295 5.29298C8.65907 4.92686 9.23807 4.90427 9.63084 5.22462L9.70702 5.29298L15.707 11.293C16.0975 11.6835 16.0975 12.3165 15.707 12.707L9.70702 18.707C9.31649 19.0976 8.68348 19.0976 8.29295 18.707C7.90243 18.3165 7.90243 17.6835 8.29295 17.293L13.5859 12L8.29295 6.70704L8.22459 6.63087C7.90424 6.2381 7.92684 5.65909 8.29295 5.29298Z" fill="#A855F7"/></svg></div>
+          <div onclick="document.querySelector('#screen-songs-all .nav-title').textContent='New Songs';resetSongsAllFilter();goTo('songs-all')" style="display:flex;align-items:center;gap:2px;font-size:11px;font-weight:500;color:#A855F7;cursor:pointer;">See all <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;"><path d="M8.29295 5.29298C8.65907 4.92686 9.23807 4.90427 9.63084 5.22462L9.70702 5.29298L15.707 11.293C16.0975 11.6835 16.0975 12.3165 15.707 12.707L9.70702 18.707C9.31649 19.0976 8.68348 19.0976 8.29295 18.707C7.90243 18.3165 7.90243 17.6835 8.29295 17.293L13.5859 12L8.29295 6.70704L8.22459 6.63087C7.90424 6.2381 7.92684 5.65909 8.29295 5.29298Z" fill="#A855F7"/></svg></div>
         </div>
         <div id="new-songs-track" style="display:flex;flex-direction:column;">
             <div class="songsall-item" onclick="openSongPlayer('Down the Memory Lane','Lo-fi · Soothing · Cozy','../assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
@@ -2093,16 +2098,19 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
     <!-- ══════ TOP PICKS SONGS — ALL (List) ══════ -->
     <div id="screen-songs-all" class="screen">
-      <div class="nav nav-blur">
-        <div class="nav-back" onclick="goBack()"><img src="../assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
-        <div class="nav-title">Top Picks Songs</div>
-        <div style="width:36px;"></div>
+      <div class="nav nav-blur" style="height:auto;flex-direction:column;align-items:stretch;padding:var(--safe-top) 0 8px;gap:8px;">
+        <div style="display:flex;align-items:center;gap:6px;height:var(--nav-h);padding:0 16px;">
+          <div class="nav-back" onclick="goBack()"><img src="../assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
+          <div class="nav-title">Top Picks Songs</div>
+          <div style="width:36px;"></div>
+        </div>
+        <div class="songsall-tabs" id="songsall-tabs"><!-- populated by buildSongsAllTabs(): only genres with songs get a tab --></div>
       </div>
       <div class="scr-scroll">
-        <div class="songsall-content">
+        <div class="songsall-content" id="songsall-content">
 
           <!-- 01 Whispers of the Past -->
-          <div class="songsall-item" onclick="openSongPlayer('Whispers of the Past','Lo-fi · Soothing · Cozy','../assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
+          <div class="songsall-item" data-genre="Lo-fi" onclick="openSongPlayer('Whispers of the Past','Lo-fi · Soothing · Cozy','../assets/images/album-art/album_05.jpg','Lo-fi','Calm')">
             <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Whispers of the Past','Lo-fi · Soothing · Cozy','../assets/images/album-art/album_05.jpg','Lo-fi','Calm')"><img src="../assets/images/album-art/album_05.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="../assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Whispers of the Past</div>
@@ -2124,7 +2132,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- 02 Down the Memory Lane -->
-          <div class="songsall-item" onclick="openSongPlayer('Down the Memory Lane','Lo-fi · Soothing · Cozy','../assets/images/album-art/album_06.jpg','Lo-fi','Calm')">
+          <div class="songsall-item" data-genre="Lo-fi" onclick="openSongPlayer('Down the Memory Lane','Lo-fi · Soothing · Cozy','../assets/images/album-art/album_06.jpg','Lo-fi','Calm')">
             <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Down the Memory Lane','Lo-fi · Soothing · Cozy','../assets/images/album-art/album_06.jpg','Lo-fi','Calm')"><img src="../assets/images/album-art/album_06.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="../assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Down the Memory Lane</div>
@@ -2146,7 +2154,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- 03 Midnight Drive -->
-          <div class="songsall-item" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','../assets/images/album-art/album_08.jpg','Electronic','Dark')">
+          <div class="songsall-item" data-genre="Electronic" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','../assets/images/album-art/album_08.jpg','Electronic','Dark')">
             <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Midnight Drive','Electronic · Dark','../assets/images/album-art/album_08.jpg','Electronic','Dark')"><img src="../assets/images/album-art/album_08.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="../assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Midnight Drive</div>
@@ -2168,7 +2176,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- 04 Midnight Drive #2 -->
-          <div class="songsall-item" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','../assets/images/album-art/album_02.jpg','Electronic','Dark')">
+          <div class="songsall-item" data-genre="Electronic" onclick="openSongPlayer('Midnight Drive','Electronic · Dark','../assets/images/album-art/album_02.jpg','Electronic','Dark')">
             <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Midnight Drive','Electronic · Dark','../assets/images/album-art/album_02.jpg','Electronic','Dark')"><img src="../assets/images/album-art/album_02.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="../assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Midnight Drive</div>
@@ -2189,7 +2197,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- 05 Forest Morning -->
-          <div class="songsall-item" onclick="openSongPlayer('Forest Morning','Acoustic · Folk','../assets/images/album-art/album_01.jpg','Acoustic','Calm')">
+          <div class="songsall-item" data-genre="Acoustic" onclick="openSongPlayer('Forest Morning','Acoustic · Folk','../assets/images/album-art/album_01.jpg','Acoustic','Calm')">
             <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Forest Morning','Acoustic · Folk','../assets/images/album-art/album_01.jpg','Acoustic','Calm')"><img src="../assets/images/album-art/album_01.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="../assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Forest Morning</div>
@@ -2211,7 +2219,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- 06 Morning Dew -->
-          <div class="songsall-item" onclick="openSongPlayer('Morning Dew','Ambient · Nature','../assets/images/album-art/album_04.jpg','Ambient','Calm')">
+          <div class="songsall-item" data-genre="Ambient" onclick="openSongPlayer('Morning Dew','Ambient · Nature','../assets/images/album-art/album_04.jpg','Ambient','Calm')">
             <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Morning Dew','Ambient · Nature','../assets/images/album-art/album_04.jpg','Ambient','Calm')"><img src="../assets/images/album-art/album_04.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="../assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Morning Dew</div>
@@ -2233,7 +2241,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- 07 Random Access Memories -->
-          <div class="songsall-item" onclick="openSongPlayer('Random Access Memories','Dreamy · Synth · Retro','../assets/images/album-art/album_03.jpg','Electronic','Retro')">
+          <div class="songsall-item" data-genre="Electronic" onclick="openSongPlayer('Random Access Memories','Dreamy · Synth · Retro','../assets/images/album-art/album_03.jpg','Electronic','Retro')">
             <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Random Access Memories','Dreamy · Synth · Retro','../assets/images/album-art/album_03.jpg','Electronic','Retro')"><img src="../assets/images/album-art/album_03.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="../assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Random Access Memories</div>
@@ -2255,7 +2263,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- 08 Foam of the Days -->
-          <div class="songsall-item" onclick="openSongPlayer('Foam of the Days','Lo-fi · Asian · Cozy','../assets/images/album-art/album_07.jpg','Lo-fi','Cozy')">
+          <div class="songsall-item" data-genre="Lo-fi" onclick="openSongPlayer('Foam of the Days','Lo-fi · Asian · Cozy','../assets/images/album-art/album_07.jpg','Lo-fi','Cozy')">
             <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Foam of the Days','Lo-fi · Asian · Cozy','../assets/images/album-art/album_07.jpg','Lo-fi','Cozy')"><img src="../assets/images/album-art/album_07.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="../assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Foam of the Days</div>
@@ -2277,7 +2285,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- 09 Ocean & Silence -->
-          <div class="songsall-item" onclick="openSongPlayer('Ocean &amp; Silence','Ambient · Calm · Peaceful','../assets/images/album-art/album_09.jpg','Ambient','Calm')">
+          <div class="songsall-item" data-genre="Ambient" onclick="openSongPlayer('Ocean &amp; Silence','Ambient · Calm · Peaceful','../assets/images/album-art/album_09.jpg','Ambient','Calm')">
             <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Ocean &amp; Silence','Ambient · Calm · Peaceful','../assets/images/album-art/album_09.jpg','Ambient','Calm')"><img src="../assets/images/album-art/album_09.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="../assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Ocean &amp; Silence</div>
@@ -2299,7 +2307,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- 10 Neon Pulse -->
-          <div class="songsall-item" onclick="openSongPlayer('Neon Pulse','Electronic · Energetic · Urban','../assets/images/album-art/album_10.jpg','Electronic','Energetic')">
+          <div class="songsall-item" data-genre="Electronic" onclick="openSongPlayer('Neon Pulse','Electronic · Energetic · Urban','../assets/images/album-art/album_10.jpg','Electronic','Energetic')">
             <div class="songsall-art" onclick="event.stopPropagation();toggleSongListPlay(this,'Neon Pulse','Electronic · Energetic · Urban','../assets/images/album-art/album_10.jpg','Electronic','Energetic')"><img src="../assets/images/album-art/album_10.jpg" alt=""><div class="songsall-play"><div class="songsall-play-btn"><img src="../assets/icons/ui/ic_play.svg" width="20" height="20" style="display:block;"></div></div></div>
             <div class="songsall-info">
               <div class="songsall-title">Neon Pulse</div>
@@ -4979,14 +4987,14 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- Profile row: avatar + name/email + edit icon -->
           <div style="display:flex;align-items:center;gap:10px;width:100%;">
-            <div style="width:54px;height:54px;border-radius:30px;background:linear-gradient(45deg,#FF6BCE 14.6%,#A855F7 50%,#4338CA 85.4%);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <div onclick="openOwnProfile('mv')" style="width:54px;height:54px;border-radius:30px;background:linear-gradient(45deg,#FF6BCE 14.6%,#A855F7 50%,#4338CA 85.4%);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;">
               <img src="../assets/icons/ui/ic_account.svg" width="26" height="26" style="display:block;filter:brightness(0) invert(1);">
             </div>
-            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:0;">
+            <div onclick="openOwnProfile('mv')" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:0;cursor:pointer;">
               <div style="font-size:20px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:26px;">Scott Wu</div>
               <div style="font-size:12px;font-weight:500;color:#9C9CAB;line-height:1.3;margin-top:1px;">scott_wu@mail.com</div>
             </div>
-            <img src="../assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;cursor:pointer;" onclick="showSheet('edit-profile-sheet')">
+            <img src="../assets/icons/ui/ic_edit.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.6;flex-shrink:0;cursor:pointer;" onclick="event.stopPropagation();showSheet('edit-profile-sheet')">
           </div>
 
           <!-- Stats row: flat with dividers -->
@@ -11662,6 +11670,56 @@ function applySettings() {
 // ── Song context (mv = came from MV Room, standalone = direct) ──
 let _songCtx = 'standalone';
 
+// ── Top Picks Songs / New Songs — genre sort tabs (only genres with songs get a tab) ──
+var SONGSALL_GENRE_ORDER = ['Pop','R&B','Electronic','Hip-Hop','Acoustic','Jazz','Classical','Lo-fi'];
+function buildSongsAllTabs() {
+  const bar = document.getElementById('songsall-tabs');
+  if (!bar) return;
+  const present = [];
+  document.querySelectorAll('#songsall-content .songsall-item[data-genre]').forEach(item => {
+    const g = item.getAttribute('data-genre');
+    if (g && !present.includes(g)) present.push(g);
+  });
+  // Known genres first in the app's canonical order, then any extra tags, so new
+  // songs with unrecognized genres still get a tab instead of being orphaned.
+  const ordered = SONGSALL_GENRE_ORDER.filter(g => present.includes(g));
+  present.forEach(g => { if (!ordered.includes(g)) ordered.push(g); });
+
+  bar.innerHTML = '';
+  const allTab = document.createElement('div');
+  allTab.className = 'songsall-tab active';
+  allTab.textContent = 'All';
+  allTab.onclick = () => filterSongsByGenre(allTab, 'All');
+  bar.appendChild(allTab);
+
+  ordered.forEach(genre => {
+    const tab = document.createElement('div');
+    tab.className = 'songsall-tab';
+    tab.textContent = genre;
+    tab.onclick = () => filterSongsByGenre(tab, genre);
+    bar.appendChild(tab);
+  });
+}
+function filterSongsByGenre(tabEl, genre) {
+  document.querySelectorAll('#songsall-tabs .songsall-tab').forEach(t => t.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.querySelectorAll('#songsall-content .songsall-item').forEach(item => {
+    const g = item.getAttribute('data-genre');
+    item.style.display = (genre === 'All' || g === genre) ? '' : 'none';
+  });
+}
+function resetSongsAllFilter() {
+  const tabs = document.querySelectorAll('#songsall-tabs .songsall-tab');
+  tabs.forEach((t, i) => t.classList.toggle('active', i === 0));
+  const tabsBar = document.getElementById('songsall-tabs');
+  if (tabsBar) tabsBar.scrollLeft = 0;
+  document.querySelectorAll('#songsall-content .songsall-item').forEach(item => { item.style.display = ''; });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', buildSongsAllTabs);
+} else {
+  buildSongsAllTabs();
+}
 // ── Top Picks Songs list play/pause toggle ──
 var _playingSongArt = null;
 var _pauseSVG = '<img src="../assets/icons/ui/ic_pause.svg" width="20" height="20" style="display:block;">';
