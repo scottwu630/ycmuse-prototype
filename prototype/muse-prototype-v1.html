@@ -4473,10 +4473,32 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="../assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
           </div>
 
+          <!-- 5b. Starlight in Your Eyes — Storyboard · Offline (network dropped mid-generation) -->
+          <div class="hist-row" data-htype="storyboard" data-status="offline">
+            <div class="hist-thumb-icon" style="background:#383842;cursor:pointer;" onclick="event.stopPropagation();retryOfflineItem(this)">
+              <img src="../assets/icons/ui/ic_cloud_off.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);opacity:.4;">
+            </div>
+            <div class="hist-info">
+              <div class="hist-name">Starlight in Your Eyes</div>
+              <div class="hist-meta">Storyboard</div>
+              <div class="hist-status">
+                <div class="hist-badge badge-failed">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18" stroke="#FF2600" stroke-width="2.5" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="#FF2600" stroke-width="2.5" stroke-linecap="round"/></svg>
+                  Offline
+                </div>
+                <div class="hist-time">2026-06-02</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
+              <button class="hist-create-btn" onclick="event.stopPropagation();retryOfflineItem(this)">Retry</button>
+              <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="../assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
+            </div>
+          </div>
+
           <!-- 6. Midnight Drive — AI Song · Failed -->
           <div class="hist-row" data-htype="song" data-status="failed">
             <div class="hist-thumb-icon" style="background:#383842;">
-              <img src="../assets/icons/ui/ic_alert.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+              <img src="../assets/icons/ui/ic_alert.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);opacity:.4;">
             </div>
             <div class="hist-info">
               <div class="hist-name">Midnight Drive</div>
@@ -5879,7 +5901,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     <!-- Header -->
     <div style="padding:16px 20px 24px;text-align:center;">
       <!-- App icon -->
-      <img src="../assets/icons/app/ic_app_ycm.png" alt="YouCam Muse"
+      <img src="../assets/icons/app/ic_app_ycm_dark.png" alt="YouCam Muse"
         style="width:56px;height:56px;border-radius:16px;object-fit:cover;display:block;margin:0 auto 14px;box-shadow:0 4px 20px rgba(168,85,247,.35);">
       <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.3px;margin-bottom:6px;">Sign in to YouCam Muse</div>
       <div style="font-size:13px;font-weight:500;color:#9C9CAB;line-height:1.6;">Save your creations, sync across devices,<br>and unlock your full creative history.</div>
@@ -6887,12 +6909,35 @@ const _moreIcons = {
   delete:   `<img src="../assets/icons/ui/ic_delete.svg"   width="20" height="20" style="display:block;filter:brightness(0) invert(1);">`
 };
 
+function retryOfflineItem(el) {
+  const row = el.closest('.hist-row');
+  if (!row || row.dataset.status !== 'offline') return;
+  row.dataset.status = 'proc';
+  const thumb = row.querySelector('.hist-thumb-icon');
+  if (thumb) {
+    thumb.style.background = 'linear-gradient(135deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%)';
+    thumb.removeAttribute('onclick');
+    thumb.style.cursor = '';
+    const img = thumb.querySelector('img');
+    if (img) img.src = '../assets/icons/ui/ic_timer.svg';
+  }
+  const badge = row.querySelector('.hist-badge');
+  if (badge) {
+    badge.className = 'hist-badge badge-proc';
+    badge.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M3.65708 12.9427L7.77876 14.4509C8.61504 14.7685 9.27212 15.4234 9.5708 16.237L11.0642 20.3451C11.3827 21.2183 12.6372 21.2183 12.9358 20.3451L14.4292 16.237C14.7478 15.4234 15.4049 14.7685 16.2212 14.4509L20.3429 12.9427C21.219 12.6251 21.219 11.3749 20.3429 11.0573L16.2212 9.54906C15.385 9.23153 14.7279 8.61632 14.4292 7.76295L12.9358 3.65491C12.6173 2.7817 11.3628 2.7817 11.0642 3.65491L9.5708 7.76295C9.25221 8.57663 8.59513 9.23153 7.77876 9.54906L3.65708 11.0573C2.78097 11.3749 2.78097 12.6251 3.65708 12.9427Z" fill="currentColor"/></svg>Generating...';
+  }
+  const time = row.querySelector('.hist-time');
+  if (time) time.style.display = 'none';
+  const retryBtn = row.querySelector('.hist-create-btn');
+  if (retryBtn) retryBtn.remove();
+}
+
 function openHistMore(btn) {
   _histMoreRow = btn.closest('.hist-row');
   const htype    = _histMoreRow.dataset.htype || '';
   const liked    = _histMoreRow.dataset.liked === 'true';
   const status   = _histMoreRow.dataset.status || '';
-  const isFailed = status === 'failed';
+  const isFailed = status === 'failed' || status === 'offline';
   const isDone   = !isFailed && status !== 'proc'; // done = not failed, not generating
 
   const opts = document.getElementById('hist-more-options');
