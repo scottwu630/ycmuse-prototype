@@ -1061,6 +1061,100 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .sheet-nav-title{font-size:17px;font-weight:700;color:var(--text);}
 .sheet-nav-action{font-size:16px;font-weight:600;color:#A855F7;cursor:pointer;width:40px;text-align:right;}
 
+/* ── CHAT CREATE PANEL (Figma: MV 4021:151560 / Song 4082:152451) ── */
+.cc-wrap{padding:0 16px;margin-top:12px;margin-bottom:12px;}
+@property --cc-ang{syntax:'<angle>';inherits:false;initial-value:0deg;}
+@keyframes cc-spin{to{--cc-ang:360deg;}}
+.cc-card{position:relative;border:1px solid transparent;border-radius:18px;padding:11px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 20px rgba(168,85,247,.35);background:linear-gradient(var(--card),var(--card)) padding-box,conic-gradient(from var(--cc-ang),#FF6BCE,#A855F7,#4338CA,#FF6BCE) border-box;animation:cc-spin 4s linear infinite;}
+@media (prefers-reduced-motion:reduce){.cc-card{animation:none;}}
+/* Song: tabs + instrumental toggle */
+.cc-tabrow{display:flex;align-items:center;gap:10px;}
+.cc-tabs{display:inline-flex;align-items:center;gap:4px;background:var(--n24);border-radius:26px;padding:2px;}
+.cc-tab{min-width:48px;padding:3px 8px;border-radius:16px;font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:rgba(255,255,255,.8);text-align:center;cursor:pointer;transition:background .2s,color .2s;-webkit-tap-highlight-color:transparent;}
+.cc-tab.on{background:var(--accent);color:#fff;}
+.cc-toggrow{margin-left:auto;display:flex;align-items:center;gap:4px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.cc-toglbl{font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:var(--n44);white-space:nowrap;}
+.cc-tog{width:39.6px;height:21.6px;border-radius:14px;background:var(--n24);padding:.9px;display:flex;align-items:center;flex-shrink:0;transition:background .2s;}
+.cc-tog-knob{width:19.8px;height:19.8px;border-radius:50%;background:#fff;transition:transform .2s;}
+.cc-tog.on{background:var(--accent);}
+.cc-tog.on .cc-tog-knob{transform:translateX(18px);}
+/* Song: Figma nests Tabs+Prompt in one 6px-gap frame, then 8px to the bottom row */
+.cc-wrap.song .cc-card{gap:6px;}
+.cc-wrap.song .cc-bottom{margin-top:2px;}
+/* prompt area */
+.cc-prompt{display:flex;align-items:flex-start;gap:8px;}
+.cc-slot{width:48px;flex-shrink:0;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.cc-slot:active{opacity:.75;}
+.cc-slot-box{width:48px;height:48px;border-radius:8px;background:var(--card);border:1.5px dashed rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.cc-slot.filled .cc-slot-box{border-width:1px;border-style:solid;border-color:rgba(255,255,255,.15);padding:2px;align-items:flex-start;justify-content:flex-end;}
+.cc-slot-x{position:relative;z-index:1;width:20px;height:20px;border-radius:18px;background:rgba(9,9,11,.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;}
+.cc-slot-x:active{opacity:.7;}
+.cc-slot-box img.cc-slot-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.cc-slot-lbl{width:100%;font-size:9px;font-weight:500;line-height:11px;letter-spacing:-.09px;color:rgba(255,255,255,.4);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cc-slot.filled .cc-slot-lbl{color:#fff;}
+.cc-ta{flex:1;min-width:0;background:transparent;border:none;outline:none;resize:none;color:#fff;font-family:inherit;font-size:12px;font-weight:500;line-height:15px;letter-spacing:0;height:45px;max-height:60px;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;transition:height .2s cubic-bezier(.22,1,.36,1);}
+.cc-ta::-webkit-scrollbar{display:none;}
+.cc-ta::placeholder{color:rgba(255,255,255,.4);}
+.cc-ta.busy{opacity:.3;}
+/* bottom rows */
+.cc-bottom{display:flex;flex-direction:column;gap:6px;}
+.cc-row{display:flex;align-items:center;gap:4px;}
+.cc-tpl,.cc-style{flex:1;min-width:0;display:flex;align-items:center;gap:4px;padding:2px 0;border-radius:14px;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.cc-style{padding:4px 0;}
+.cc-tpl:active,.cc-style:active{opacity:.7;}
+.cc-thumbs{display:flex;align-items:center;flex-shrink:0;}
+.cc-thumbs img{position:relative;width:20px;height:20px;border-radius:50%;object-fit:cover;display:block;border:.75px solid #fff;}
+.cc-thumbs img:nth-child(1){z-index:3;}
+.cc-thumbs img:nth-child(2){z-index:2;margin-left:-9px;}
+.cc-thumbs img:nth-child(3){z-index:1;margin-left:-9px;}
+.cc-tpl-txt,.cc-style-txt{font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cc-tpl>img:last-child,.cc-style>img:last-child{opacity:.4;}
+.cc-tpl-txt{max-width:120px;}
+.cc-tpl.set .cc-tpl-txt,.cc-style.set .cc-style-txt{color:#fff;}
+.cc-enh{height:24px;padding:4px 10px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;gap:2px;flex-shrink:0;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.cc-enh:active{opacity:.75;}
+.cc-enh img{filter:brightness(0);}
+.cc-enh.busy{background:var(--accent);}
+.cc-enh.busy img{filter:brightness(0) invert(1);animation:cc-rot .8s linear infinite;}
+@keyframes cc-rot{to{transform:rotate(-360deg);}}
+.cc-createbtn{display:flex;align-items:center;justify-content:center;gap:2px;flex-shrink:0;background:var(--n14);border:1px solid var(--accent);border-radius:20px;padding:3px 3px 3px 7px;font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#fff;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.cc-createbtn:active{opacity:.75;}
+.cc-idea{display:flex;align-items:center;justify-content:center;gap:2px;flex-shrink:0;background:var(--n24);border-radius:14px;padding:4px 8px;font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#fff;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.cc-idea:active{opacity:.75;}
+.cc-cta{margin-left:auto;display:flex;align-items:center;justify-content:center;gap:4px;flex-shrink:0;min-width:70px;padding:4px 4px 4px 8px;border-radius:20px;border:none;font-family:inherit;cursor:pointer;background:var(--mv-grad);box-shadow:0 4px 6px rgba(168,85,247,.4);transition:opacity .15s;}
+.cc-wrap.song .cc-cta{min-width:88px;padding-left:6px;background:linear-gradient(135deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);}
+.cc-cta:active{opacity:.8;}
+.cc-cta.off{opacity:.45;box-shadow:none;}
+.cc-cta-txt{font-size:12px;font-weight:600;line-height:15px;letter-spacing:-.12px;color:#fff;}
+.cc-credit{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.15);border-radius:10px;padding:2px 4px;}
+.cc-credit span{font-size:10px;font-weight:700;color:#fff;line-height:12px;}
+/* create-type menu */
+.cc-menu{position:absolute;left:12px;bottom:40px;z-index:8;min-width:142px;background:var(--n14);border:1px solid var(--border);border-radius:14px;padding:4px;box-shadow:0 10px 24px rgba(0,0,0,.5);display:none;}
+.cc-menu.show{display:block;}
+.cc-menu-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;font-size:12px;font-weight:600;letter-spacing:-.12px;color:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.cc-menu-item:active{background:rgba(255,255,255,.06);}
+.cc-menu-item .cc-menu-chk{margin-left:auto;opacity:0;}
+.cc-menu-item.on .cc-menu-chk{opacity:1;}
+.ss-group{display:flex;flex-direction:column;gap:6px;width:100%;}
+.ss-lbl{font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:var(--n64);}
+.ss-lbl span{color:var(--n44);}
+.ss-chips{display:flex;flex-wrap:wrap;gap:6px;width:100%;}
+.ss-chip{display:flex;align-items:center;justify-content:center;padding:6px 10px;border-radius:20px;background:var(--card);border:1px solid var(--border);font-size:12px;font-weight:500;color:#fff;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s,color .15s;-webkit-tap-highlight-color:transparent;}
+.ss-chip:active{opacity:.75;}
+.ss-chip.on{background:rgba(168,85,247,.1);border-color:var(--accent);color:var(--accent);}
+/* ── START WITH VIBE — pre-defined cards (Figma "Top Hero Banner") ── */
+.cc-vibe{display:flex;align-items:center;gap:10px;overflow-x:auto;padding:0 16px 16px;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}
+.cc-vibe::-webkit-scrollbar{display:none;}
+.vibe-card{position:relative;flex-shrink:0;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:8px;cursor:pointer;transition:transform .2s;-webkit-tap-highlight-color:transparent;}
+.vibe-card:active{transform:scale(.96);}
+.vibe-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.vibe-card .vc-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,9,11,0) 50%,rgba(9,9,11,.4) 100%);}
+.vibe-card.vc-mv{width:160px;height:90px;}
+.vibe-card.vc-song{width:70px;height:70px;}
+.vc-sub{position:relative;font-size:9px;font-weight:500;line-height:11px;letter-spacing:-.09px;color:var(--n89);}
+.vc-ttl{position:relative;font-size:13px;font-weight:700;line-height:18px;letter-spacing:-.13px;color:#fff;}
+.vibe-card.vc-song .vc-ttl{font-size:12px;font-weight:600;line-height:15px;letter-spacing:-.12px;}
+
 /* ── HERO BANNER ── */
 .hero-banner{margin:0 20px 22px;height:190px;border-radius:22px;overflow:hidden;position:relative;cursor:pointer;transition:transform .2s;}
 .hero-banner:active{transform:scale(.98);}
@@ -1433,82 +1527,96 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
         </div>
 
-        <!-- Trending Carousel — 272×153px cards -->
-        <div style="margin-top:12px;margin-bottom:10px;overflow:hidden;position:relative;">
-          <div id="trend-track" style="display:flex;gap:8px;transition:transform .48s cubic-bezier(.4,0,.2,1);will-change:transform;">
+        <!-- ══ Chat Create Panel — replaces the old top banner carousel ══
+             Figma: MV 4021:151560 / Song 4082:152451 -->
+        <div class="cc-wrap" id="cc-wrap">
+          <div class="cc-card" id="cc-card">
 
-            <!-- Card 1: Trending MV — Adventurous Echoes -->
-            <div style="min-width:272px;height:153px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
-              onclick="openMvPreview('Adventurous Echoes','../assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','Wide-open landscapes and soaring cinematic shots — earthy tones, golden light.','Fan fav | 2-3 min')">
-              <img src="../assets/videos/sample-mvs/mv_12_Splash.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
-              <div style="display:none;position:absolute;top:8px;left:8px;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">
-                <img src="../assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
-                <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending MV</span>
+            <!-- Song only: Custom / Simple tabs + Instrumental toggle -->
+            <div class="cc-tabrow" id="cc-tabrow" style="display:none;">
+              <div class="cc-tabs">
+                <div class="cc-tab on" id="cc-tab-custom" onclick="ccSetSongTab('custom')">Custom</div>
+                <div class="cc-tab" id="cc-tab-simple" onclick="ccSetSongTab('simple')">Simple</div>
               </div>
-              <div class="trend-info" style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
-                <div>
-                  <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Adventurous Echoes</div>
-                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Adventure · 2-3 min</div>
-                </div>
-                <button onclick="event.stopPropagation();openMvPreview('Adventurous Echoes','../assets/videos/mv-preview/feature_intro_ai_mv_singing_480x640.mp4','Wide-open landscapes and soaring cinematic shots — earthy tones, golden light.','Fan fav | 2-3 min')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create MV</button>
+              <div class="cc-toggrow" onclick="ccToggleInstrumental()">
+                <div class="cc-toglbl">Instrumental</div>
+                <div class="cc-tog" id="cc-tog"><div class="cc-tog-knob"></div></div>
               </div>
             </div>
 
-            <!-- Card 2: Trending MV — Thrilling Harmonies -->
-            <div style="min-width:272px;height:153px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
-              onclick="openMvPreview('Thrilling Harmonies','../assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Sing & Story | 3-4 min')">
-              <img src="../assets/videos/sample-mvs/mv_13_Urban Fashion.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
-              <div style="display:none;position:absolute;top:8px;left:8px;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">
-                <img src="../assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
-                <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending MV</span>
-              </div>
-              <div class="trend-info" style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
-                <div>
-                  <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Thrilling Harmonies</div>
-                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Sing &amp; Story | 3-4 min</div>
+            <!-- Prompt area: MV song slot + textarea -->
+            <div class="cc-prompt">
+              <div class="cc-slot" id="cc-slot" onclick="ccTapSlot()">
+                <div class="cc-slot-box" id="cc-slot-box">
+                  <img src="../assets/icons/ui/ic_add.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.6;">
                 </div>
-                <button onclick="event.stopPropagation();openMvPreview('Thrilling Harmonies','../assets/videos/mv-preview/feature_intro_ai_mv_hybrid_480x640.mp4','A hybrid cinematic journey — bold fashion, vivid energy, soaring harmonies.','Sing & Story | 3-4 min')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create MV</button>
+                <div class="cc-slot-lbl" id="cc-slot-lbl">Song</div>
+              </div>
+              <textarea class="cc-ta" id="cc-ta" rows="1" oninput="ccOnInput()"
+                placeholder="Describe the mood, story, characters, or visuals you want for your MV..."></textarea>
+            </div>
+
+            <!-- Bottom rows -->
+            <div class="cc-bottom">
+              <div class="cc-row">
+                <!-- MV: Templates -->
+                <div class="cc-tpl" id="cc-tpl" onclick="ccOpenTemplates()">
+                  <div class="cc-thumbs">
+                    <img src="../assets/videos/sample-mvs/mv_03_neon_city.jpg" alt="">
+                    <img src="../assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" alt="">
+                    <img src="../assets/videos/sample-mvs/mv_05_anime_style.jpg" alt="">
+                  </div>
+                  <div class="cc-tpl-txt" id="cc-tpl-txt">Templates</div>
+                  <img src="../assets/icons/ui/ic_chevron-right.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
+                </div>
+                <!-- Song: Song Style -->
+                <div class="cc-style" id="cc-style" style="display:none;" onclick="ccOpenSongStyle()">
+                  <img src="../assets/icons/ui/ic_song.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
+                  <div class="cc-style-txt" id="cc-style-txt">Song Style</div>
+                  <img src="../assets/icons/ui/ic_chevron-right.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
+                </div>
+                <div class="cc-enh" id="cc-enh" onclick="ccEnhance()">
+                  <img src="../assets/icons/ui/ic_edit_ai.svg" width="14" height="14" style="display:block;">
+                </div>
+              </div>
+              <div class="cc-row">
+                <div class="cc-createbtn" onclick="ccToggleMenu(event)">
+                  <span id="cc-type-lbl">Create MV</span>
+                  <img src="../assets/icons/ui/ic_chevron-down.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                </div>
+                <div class="cc-idea" onclick="ccIdea()">
+                  <img src="../assets/icons/ui/ic_lightbulb.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                  <span>Idea</span>
+                </div>
+                <button class="cc-cta off" id="cc-cta" onclick="ccSubmit()">
+                  <span class="cc-cta-txt">Create</span>
+                  <img id="cc-cta-arrow" src="../assets/icons/ui/ic_arrow_right.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                  <span class="cc-credit" id="cc-credit" style="display:none;">
+                    <img src="../assets/icons/ui/ic_credit.svg" width="10" height="10" style="display:block;">
+                    <span id="cc-cost">10</span>
+                  </span>
+                </button>
               </div>
             </div>
 
-            <!-- Card 3: Trending MV — Epic Journeys -->
-            <div style="min-width:272px;height:153px;border-radius:14px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;"
-              onclick="openMvPreview('Epic Journeys','../assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','A cinematic road trip — vintage car, golden light, open highway.','Storytelling | 3-4 min')">
-              <img src="../assets/videos/sample-mvs/mv_14_Vintage Car.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-              <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 100%);"></div>
-              <div style="display:none;position:absolute;top:8px;left:8px;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">
-                <img src="../assets/icons/ui/ic_star.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);flex-shrink:0;">
-                <span style="font-size:11px;font-weight:600;color:#fff;letter-spacing:-.1px;">Trending MV</span>
+            <!-- create-type switcher -->
+            <div class="cc-menu" id="cc-menu">
+              <div class="cc-menu-item on" id="cc-menu-mv" onclick="ccPickType('mv')">
+                <img src="../assets/icons/ui/ic_video_ai.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+                <span>Create MV</span>
+                <img class="cc-menu-chk" src="../assets/icons/ui/ic_check.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
               </div>
-              <div class="trend-info" style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;">
-                <div>
-                  <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:20px;">Epic Journeys</div>
-                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:1px;">Storytelling · 3-4 min</div>
-                </div>
-                <button onclick="event.stopPropagation();openMvPreview('Epic Journeys','../assets/videos/mv-preview/feature_intro_ai_mv_storytelling_480x640.mp4','A cinematic road trip — vintage car, golden light, open highway.','Storytelling | 3-4 min')" style="flex-shrink:0;background:#fff;border:none;border-radius:20px;padding:6px 8px;font-size:12px;font-weight:700;color:#09090B;cursor:pointer;white-space:nowrap;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create MV</button>
+              <div class="cc-menu-item" id="cc-menu-song" onclick="ccPickType('song')">
+                <img src="../assets/icons/ui/ic_song_ai.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+                <span>Create Song</span>
+                <img class="cc-menu-chk" src="../assets/icons/ui/ic_check.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
               </div>
             </div>
-
           </div>
         </div>
 
-        <!-- Feature Cards — side by side -->
-        <div id="home-feature-cards" style="padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;margin-bottom:16px;">
-          <div onclick="goTo('mv-style')" style="height:68px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);display:flex;flex-direction:column;justify-content:space-between;padding:8px 10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-            <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <img src="../assets/icons/ui/ic_video_ai.svg" width="16" height="16" style="display:block;filter:brightness(10);">
-            </div>
-            <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:17px;">Music Video</div>
-          </div>
-          <div onclick="resetSongCreate();goTo('song-create')" style="height:68px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(157deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);display:flex;flex-direction:column;justify-content:space-between;padding:8px 10px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
-            <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <img src="../assets/icons/ui/ic_song.svg" width="16" height="16" style="display:block;filter:brightness(10);">
-            </div>
-            <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:17px;">AI Song</div>
-          </div>
-        </div>
+        <!-- Start with vibe — pre-defined cards, swap with the create type -->
+        <div class="cc-vibe" id="cc-vibe"></div>
 
         <!-- Banner Ad — hidden -->
         <div id="home-banner-ad" style="padding:0 16px;margin-bottom:16px;display:none;">
@@ -2805,9 +2913,13 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <textarea id="mvr-describe" oninput="updateDescCount(this)" placeholder="Describe your video to help AI create a more compelling story." style="width:100%;min-height:100px;padding:12px 14px 6px;background:transparent;border:none;color:#fff;font-size:14px;font-family:inherit;resize:none;outline:none;line-height:1.55;scrollbar-width:none;-ms-overflow-style:none;"></textarea>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 10px;">
               <div style="display:flex;gap:4px;align-items:center;">
-                <button id="mvr-templates-btn" class="insp-btn" onclick="showSheet('insp-sheet')" style="display:inline-flex;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
-                  <img src="../assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.8;flex-shrink:0;">
-                  Templates
+                <button id="mvr-templates-btn" class="insp-btn" onclick="showSheet('insp-sheet')" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px 3px 4px;font-size:11px;color:#fff;">
+                  <span class="cc-thumbs" id="mvr-tpl-thumbs">
+                    <img src="../assets/videos/sample-mvs/mv_03_neon_city.jpg" alt="">
+                    <img src="../assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" alt="">
+                    <img src="../assets/videos/sample-mvs/mv_05_anime_style.jpg" alt="">
+                  </span>
+                  <span id="mvr-tpl-txt" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;">Templates</span>
                 </button>
                 <!-- Hidden for now per request — keep markup/handler intact so it can be re-enabled by removing display:none -->
                 <button id="mvr-idea-btn" class="insp-btn" onclick="generateVideoIdea()" style="display:none;align-items:center;gap:2px;padding:4px 8px;font-size:11px;">
@@ -2837,296 +2949,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </button>
       </div>
 
-      <!-- Template Sheet -->
-      <div class="overlay" id="insp-overlay" onclick="hideSheet('insp-sheet')"></div>
-      <div class="sheet" id="insp-sheet" style="padding-bottom:calc(var(--safe-bot) + 24px);">
-        <div class="sheet-handle"></div>
-        <!-- Header -->
-        <div style="display:flex;align-items:center;gap:10px;padding:14px 20px 12px;">
-          <div onclick="hideSheet('insp-sheet')" style="width:28px;height:28px;border-radius:14px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#9C9CAB" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </div>
-          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">Select a Template</div>
-          <div onclick="applyInsp()" style="width:28px;height:28px;border-radius:14px;background:rgba(168,85,247,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#A855F7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-
-        <!-- Large preview -->
-        <div style="margin:0 20px 12px;border-radius:14px;overflow:hidden;height:144px;background:#212127;position:relative;">
-          <img id="insp-preview-img" src="../assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5),transparent);"></div>
-          <div id="insp-preview-name" style="position:absolute;bottom:10px;left:14px;font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Neon City</div>
-        </div>
-
-        <!-- Thumbnail strip -->
-        <div style="padding:0 20px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
-          <div id="insp-thumb-row" style="display:flex;gap:2px;padding-bottom:4px;">
-          </div>
-        </div>
-      </div>
-
-      <!-- Sample Song Sheet -->
-      <div class="overlay" id="sampleSong-overlay" onclick="stopPreview();hideSheet('sampleSong-sheet')"></div>
-      <div class="sheet" id="sampleSong-sheet" style="min-height:557px;max-height:557px;display:flex;flex-direction:column;gap:5px;padding-top:12px;padding-bottom:30px;">
-        <!-- Handle -->
-        <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);margin:0 auto;flex-shrink:0;"></div>
-        <!-- Header -->
-        <div style="display:flex;align-items:center;gap:10px;padding:4px 20px;flex-shrink:0;">
-          <div onclick="stopPreview();hideSheet('sampleSong-sheet')" style="width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </div>
-          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;line-height:18px;">Choose Song</div>
-          <div style="width:28px;flex-shrink:0;"></div>
-        </div>
-        <!-- Tabs — pill style -->
-        <div style="display:flex;gap:6px;padding:0 20px;flex-shrink:0;">
-          <div id="ss-tab-my" onclick="switchSongTab('my')" style="min-width:48px;text-align:center;padding:5px 10px;border-radius:16px;font-size:11px;font-weight:500;background:#212127;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;letter-spacing:-.11px;white-space:nowrap;">My Songs</div>
-          <div id="ss-tab-sample" onclick="switchSongTab('sample')" style="min-width:48px;text-align:center;padding:5px 10px;border-radius:16px;font-size:11px;font-weight:500;background:#A855F7;color:#fff;cursor:pointer;transition:all .2s;letter-spacing:-.11px;white-space:nowrap;">Sample Songs</div>
-        </div>
-        <!-- Sample Songs Panel (shown by default) -->
-        <div id="ss-panel-sample" style="display:flex;flex-direction:column;overflow-y:auto;flex:1;">
-          <div id="sample-song-list">
-            <div class="sample-song-row" onclick="pickSampleSong(this,'Top Flow - Party','01:54','../assets/images/album-art/album_05.jpg','../assets/songs/Top%20Flow%20Production%20-%20Party.mp3')">
-              <div class="ss-art"><img src="../assets/images/album-art/album_05.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
-              <div class="ss-info"><div class="sample-song-name">Top Flow - Party</div><div class="sample-song-dur">01:54</div></div>
-              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
-            </div>
-            <div class="sample-song-row" onclick="pickSampleSong(this,'Party Dance','02:40','../assets/images/album-art/album_08.jpg','../assets/songs/Party%20Dance.mp3')">
-              <div class="ss-art"><img src="../assets/images/album-art/album_08.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
-              <div class="ss-info"><div class="sample-song-name">Party Dance</div><div class="sample-song-dur">02:40</div></div>
-              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
-            </div>
-            <div class="sample-song-row" onclick="pickSampleSong(this,'Forest Morning','01:50','../assets/images/album-art/album_01.jpg')">
-              <div class="ss-art"><img src="../assets/images/album-art/album_01.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
-              <div class="ss-info"><div class="sample-song-name">Forest Morning</div><div class="sample-song-dur">01:50</div></div>
-              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
-            </div>
-            <div class="sample-song-row" onclick="pickSampleSong(this,'Golden Hour','02:30','../assets/images/album-art/album_03.jpg')">
-              <div class="ss-art"><img src="../assets/images/album-art/album_03.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
-              <div class="ss-info"><div class="sample-song-name">Golden Hour</div><div class="sample-song-dur">02:30</div></div>
-              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
-            </div>
-            <div class="sample-song-row" onclick="pickSampleSong(this,'Neon Pulse','03:25','../assets/images/album-art/album_02.jpg')">
-              <div class="ss-art"><img src="../assets/images/album-art/album_02.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
-              <div class="ss-info"><div class="sample-song-name">Neon Pulse</div><div class="sample-song-dur">03:25</div></div>
-              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
-            </div>
-            <div class="sample-song-row" onclick="pickSampleSong(this,'Ethereal Echoes','02:45','../assets/images/album-art/album_06.jpg')">
-              <div class="ss-art"><img src="../assets/images/album-art/album_06.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
-              <div class="ss-info"><div class="sample-song-name">Ethereal Echoes</div><div class="sample-song-dur">02:45</div></div>
-              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
-            </div>
-            <div class="sample-song-row" onclick="pickSampleSong(this,'Elysian Reverie','02:45','../assets/images/album-art/album_07.jpg')">
-              <div class="ss-art"><img src="../assets/images/album-art/album_07.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
-              <div class="ss-info"><div class="sample-song-name">Elysian Reverie</div><div class="sample-song-dur">02:45</div></div>
-              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
-            </div>
-          </div>
-        </div>
-        <!-- My Songs Panel (hidden by default) -->
-        <div id="ss-panel-my" style="display:none;flex-direction:column;overflow-y:auto;flex:1;">
-          <div id="my-song-list">
-            <div class="sample-song-row" onclick="pickSampleSong(this,'My Wedding Ballad','03:12','../assets/images/album-art/album_04.jpg')">
-              <div class="ss-art"><img src="../assets/images/album-art/album_04.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
-              <div class="ss-info"><div class="sample-song-name">My Wedding Ballad</div><div class="sample-song-dur">03:12</div></div>
-              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
-            </div>
-            <div class="sample-song-row" onclick="pickSampleSong(this,'Summer Vibes','02:58','../assets/images/album-art/album_09.jpg')">
-              <div class="ss-art"><img src="../assets/images/album-art/album_09.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
-              <div class="ss-info"><div class="sample-song-name">Summer Vibes</div><div class="sample-song-dur">02:58</div></div>
-              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- iOS File Picker Sheet -->
-      <div class="overlay" id="filePicker-overlay" onclick="hideSheet('filePicker-sheet')"></div>
-      <div class="sheet" id="filePicker-sheet" style="height:82%;display:flex;flex-direction:column;padding-bottom:0;border-radius:14px 14px 0 0;background:#F2F2F7;overflow:hidden;">
-        <!-- iOS Nav Bar -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;background:#F9F9F9;border-bottom:1px solid rgba(0,0,0,.12);flex-shrink:0;">
-          <button onclick="hideSheet('filePicker-sheet')" style="font-size:17px;font-weight:400;color:#007AFF;background:none;border:none;cursor:pointer;font-family:-apple-system,'Inter',sans-serif;padding:0;min-width:60px;text-align:left;">Cancel</button>
-          <span style="font-size:17px;font-weight:600;color:#000;font-family:-apple-system,'Inter',sans-serif;letter-spacing:-.3px;">Recents</span>
-          <div style="min-width:60px;"></div>
-        </div>
-        <!-- iOS Search Bar -->
-        <div style="padding:8px 16px;background:#F9F9F9;flex-shrink:0;">
-          <div style="display:flex;align-items:center;gap:8px;background:#E5E5EA;border-radius:10px;padding:7px 10px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
-            <span style="font-size:14px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;">Search</span>
-          </div>
-        </div>
-        <!-- Breadcrumb -->
-        <div style="display:flex;align-items:center;gap:4px;padding:10px 16px 6px;flex-shrink:0;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          <span style="font-size:14px;font-weight:500;color:#007AFF;font-family:-apple-system,'Inter',sans-serif;">On My iPhone</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          <span style="font-size:14px;font-weight:500;color:#000;font-family:-apple-system,'Inter',sans-serif;">Music</span>
-        </div>
-        <!-- File List -->
-        <div style="flex:1;overflow-y:auto;background:#F2F2F7;">
-          <!-- Section: Recents -->
-          <div style="padding:6px 16px 4px;font-size:13px;font-weight:600;color:#6D6D72;text-transform:uppercase;letter-spacing:.4px;font-family:-apple-system,'Inter',sans-serif;">Recent</div>
-          <div style="background:#fff;border-radius:12px;margin:0 16px 16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);">
-            <!-- File Row -->
-            <div onclick="confirmImportFile('Summer_Memories_2024.mp3','03:24')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #F2F2F7;cursor:pointer;transition:background .12s;active:background:#E5E5EA;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
-              <div style="width:36px;height:36px;background:#E8F0FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#007AFF" opacity=".12"/><path d="M9 17V8l8-2v9" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#007AFF"/><circle cx="15" cy="15" r="2" fill="#007AFF"/></svg>
-              </div>
-              <div style="flex:1;min-width:0;">
-                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Summer_Memories_2024.mp3</div>
-                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Today · 8.2 MB</div>
-              </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-            <!-- File Row -->
-            <div onclick="confirmImportFile('Birthday_Party_Mix.m4a','04:11')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #F2F2F7;cursor:pointer;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
-              <div style="width:36px;height:36px;background:#E8F0FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#007AFF" opacity=".12"/><path d="M9 17V8l8-2v9" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#007AFF"/><circle cx="15" cy="15" r="2" fill="#007AFF"/></svg>
-              </div>
-              <div style="flex:1;min-width:0;">
-                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Birthday_Party_Mix.m4a</div>
-                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Yesterday · 11.4 MB</div>
-              </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-            <!-- File Row -->
-            <div onclick="confirmImportFile('Voice_Recording_042.m4a','02:52')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #F2F2F7;cursor:pointer;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
-              <div style="width:36px;height:36px;background:#FFF0E8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#FF9500" opacity=".15"/><rect x="10" y="6" width="4" height="9" rx="2" fill="#FF9500"/><path d="M7 14c0 2.76 2.24 5 5 5s5-2.24 5-5" stroke="#FF9500" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="19" x2="12" y2="21" stroke="#FF9500" stroke-width="1.8" stroke-linecap="round"/></svg>
-              </div>
-              <div style="flex:1;min-width:0;">
-                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Voice_Recording_042.m4a</div>
-                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Jun 28 · 3.6 MB</div>
-              </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </div>
-          <!-- Section: Music -->
-          <div style="padding:6px 16px 4px;font-size:13px;font-weight:600;color:#6D6D72;text-transform:uppercase;letter-spacing:.4px;font-family:-apple-system,'Inter',sans-serif;">Music</div>
-          <div style="background:#fff;border-radius:12px;margin:0 16px 20px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);">
-            <div onclick="confirmImportFile('Golden_Hour.mp3','03:07')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #F2F2F7;cursor:pointer;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
-              <div style="width:36px;height:36px;background:#E8F0FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#007AFF" opacity=".12"/><path d="M9 17V8l8-2v9" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#007AFF"/><circle cx="15" cy="15" r="2" fill="#007AFF"/></svg>
-              </div>
-              <div style="flex:1;min-width:0;">
-                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Golden_Hour.mp3</div>
-                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Jun 25 · 7.1 MB</div>
-              </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-            <div onclick="confirmImportFile('Neon_Pulse_Remix.mp3','04:33')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #F2F2F7;cursor:pointer;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
-              <div style="width:36px;height:36px;background:#E8F0FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#007AFF" opacity=".12"/><path d="M9 17V8l8-2v9" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#007AFF"/><circle cx="15" cy="15" r="2" fill="#007AFF"/></svg>
-              </div>
-              <div style="flex:1;min-width:0;">
-                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Neon_Pulse_Remix.mp3</div>
-                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Jun 22 · 10.8 MB</div>
-              </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-            <div onclick="confirmImportFile('Midnight_Drive.mp3','05:02')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
-              <div style="width:36px;height:36px;background:#E8F0FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#007AFF" opacity=".12"/><path d="M9 17V8l8-2v9" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#007AFF"/><circle cx="15" cy="15" r="2" fill="#007AFF"/></svg>
-              </div>
-              <div style="flex:1;min-width:0;">
-                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Midnight_Drive.mp3</div>
-                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Jun 18 · 12.3 MB</div>
-              </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Trim Audio Sheet -->
-      <div class="overlay" id="trim-overlay"></div>
-      <div class="sheet" id="trim-sheet" style="padding-bottom:calc(var(--safe-bot) + 40px);">
-        <div class="sheet-handle"></div>
-        <!-- Header -->
-        <div style="display:flex;align-items:center;gap:10px;padding:8px 20px 10px;">
-          <div onclick="stopTrimAudio();hideSheet('trim-sheet')" style="width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </div>
-          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;">Trim Audio</div>
-          <div onclick="confirmTrim()" style="width:28px;height:28px;border-radius:18px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-        </div>
-        <!-- Content -->
-        <div style="padding:0 20px;display:flex;flex-direction:column;gap:10px;">
-          <!-- Title + subtitle -->
-          <div>
-            <div style="font-size:17px;font-weight:700;color:#fff;line-height:22px;margin-bottom:2px;">Trim Audio</div>
-            <div style="font-size:12px;font-weight:500;color:#9C9CAB;">Only trim the audio to the parts you like the best.</div>
-          </div>
-          <!-- Song row -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;height:60px;box-sizing:border-box;">
-            <div onclick="toggleTrimPlay()" style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;cursor:pointer;">
-              <img id="trim-song-img" src="../assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
-              <div style="position:absolute;inset:0;background:rgba(0,0,0,.2);"></div>
-              <div id="trim-play-icon-wrap" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-                <img src="../assets/icons/ui/ic_play.svg" width="18" height="18" style="display:block;">
-              </div>
-            </div>
-            <div style="flex:1;min-width:0;">
-              <div id="trim-song-name" style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Down the Memory Lane</div>
-              <div id="trim-song-dur" style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;">02:25</div>
-            </div>
-          </div>
-          <!-- Trimmer -->
-          <div style="display:flex;flex-direction:column;gap:0px;">
-            <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;">
-              <span id="trim-start">00:29</span>
-              <span id="trim-end">01:03</span>
-            </div>
-            <!-- Outer wrapper: no overflow clip so playhead can extend above/below -->
-            <div style="position:relative;padding:10px 0;">
-              <div class="trim-waveform-wrap" id="trim-waveform-wrap">
-                <!-- bars -->
-                <div id="trim-bars-inner" class="trim-bars"></div>
-                <!-- selection highlight -->
-                <div style="position:absolute;top:0;bottom:0;left:20%;width:51%;background:rgba(168,85,247,.28);pointer-events:none;"></div>
-                <!-- left handle -->
-                <div style="position:absolute;top:0;bottom:0;left:20%;width:12px;background:#A855F7;border-radius:6px 0 0 6px;display:flex;align-items:center;justify-content:center;">
-                  <div style="width:2px;height:16px;background:rgba(9,9,11,0.4);border-radius:2px;"></div>
-                </div>
-                <!-- right handle -->
-                <div style="position:absolute;top:0;bottom:0;left:71%;width:12px;background:#A855F7;border-radius:0 6px 6px 0;display:flex;align-items:center;justify-content:center;">
-                  <div style="width:2px;height:16px;background:rgba(9,9,11,0.4);border-radius:2px;"></div>
-                </div>
-              </div>
-              <!-- Playhead: lives in outer wrapper, extends 14px above and below the waveform -->
-              <div style="position:absolute;top:0;bottom:0;left:calc(20% + 51%/2);width:2px;background:#fff;border-radius:1px;pointer-events:none;transform:translateX(-50%);"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Paste Link Sheet -->
-      <div class="overlay" id="pasteLink-overlay" onclick="hideSheet('pasteLink-sheet')"></div>
-      <div class="sheet" id="pasteLink-sheet" style="padding-bottom:calc(var(--safe-bot) + 8px);">
-        <div class="sheet-handle"></div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;">
-          <div onclick="hideSheet('pasteLink-sheet')" style="font-size:22px;cursor:pointer;color:#9C9CAB;">‹</div>
-          <div style="font-size:17px;font-weight:700;color:#fff;">Edit Audio</div>
-          <div onclick="confirmPasteLink()" style="font-size:16px;font-weight:600;color:#A855F7;cursor:pointer;">Next</div>
-        </div>
-        <div style="padding:0 16px 16px;">
-          <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:12px;">Paste Link</div>
-          <div style="position:relative;">
-            <textarea id="paste-link-input" placeholder="Enter your Suno / TikTok Music / SoundCloud song URL" style="width:100%;min-height:80px;padding:12px 40px 12px 14px;background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;color:#fff;font-size:14px;font-family:inherit;outline:none;resize:none;line-height:1.5;"></textarea>
-            <div onclick="document.getElementById('paste-link-input').value=''" style="position:absolute;right:10px;bottom:10px;width:24px;height:24px;border-radius:50%;background:#383842;display:flex;align-items:center;justify-content:center;font-size:12px;color:#9C9CAB;cursor:pointer;">✕</div>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:8px;margin-top:12px;">
-            <span style="font-size:16px;color:#9C9CAB;">ⓘ</span>
-            <span style="font-size:13px;color:#9C9CAB;line-height:1.55;">Paste your song URL (Suno / TikTok Music / SoundCloud). By submitting a link, you confirm you have permission to use the content.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Settings Sheet -->
       <div class="overlay" id="settings-overlay" onclick="hideSheet('settings-sheet')"></div>
       <div class="sheet" id="settings-sheet" style="max-height:92vh;overflow-y:auto;">
         <div class="sheet-handle"></div>
@@ -4191,18 +4013,18 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
           <!-- TAB BAR -->
           <div style="display:flex;gap:6px;align-items:center;margin-bottom:20px;">
-            <div id="song-tab-simple" onclick="switchSongMode('simple')"
-              style="background:#A855F7;border-radius:16px;padding:5px 10px;font-size:11px;font-weight:500;color:#fff;cursor:pointer;transition:all .2s;letter-spacing:-.11px;">
-              Simple
-            </div>
             <div id="song-tab-custom" onclick="switchSongMode('custom')"
-              style="background:#212127;border-radius:16px;padding:5px 10px;font-size:11px;font-weight:500;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;letter-spacing:-.11px;">
+              style="background:#A855F7;border-radius:16px;padding:5px 10px;font-size:11px;font-weight:500;color:#fff;cursor:pointer;transition:all .2s;letter-spacing:-.11px;">
               Custom
+            </div>
+            <div id="song-tab-simple" onclick="switchSongMode('simple')"
+              style="background:#212127;border-radius:16px;padding:5px 10px;font-size:11px;font-weight:500;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;letter-spacing:-.11px;">
+              Simple
             </div>
           </div>
 
           <!-- ── SIMPLE MODE ─────────────────────────────────────────────── -->
-          <div id="song-panel-simple">
+          <div id="song-panel-simple" style="display:none;">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;">
               <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;">DESCRIBE YOUR SONG</div>
               <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
@@ -4236,7 +4058,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- ── CUSTOM MODE ─────────────────────────────────────────────── -->
-          <div id="song-panel-custom" style="display:none;">
+          <div id="song-panel-custom">
 
             <!-- LYRICS -->
             <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:10px;position:relative;">
@@ -4338,7 +4160,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div class="cta-footer">
         <!-- Simple mode CTA — disabled until text entered -->
         <button id="song-cta-simple" disabled
-          style="display:flex;width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;align-items:center;justify-content:center;gap:6px;transition:all .2s;font-family:inherit;opacity:1;">
+          style="display:none;width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;align-items:center;justify-content:center;gap:6px;transition:all .2s;font-family:inherit;opacity:1;">
           <span style="opacity:.3;">Create Song</span>
           <div style="display:flex;align-items:center;gap:2px;opacity:.3;">
             <img src="../assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;flex-shrink:0;">
@@ -4346,7 +4168,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
         </button>
         <!-- Custom mode CTA — always active -->
-        <button id="song-cta-custom" style="display:none;width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;font-family:inherit;"
+        <button id="song-cta-custom" style="display:flex;width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;font-family:inherit;"
           onclick="requireLogin(()=>goTo('song-creating'))"
           onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           <span>Create Song</span>
@@ -6355,6 +6177,355 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     <div style="display:flex;gap:8px;">
       <div onclick="hideDeleteAccountDialog()" style="flex:1;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:12px 14px;text-align:center;font-size:12px;font-weight:600;color:#fff;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">Cancel</div>
       <div onclick="hideDeleteAccountDialog()" style="flex:1;background:#EF4444;border-radius:20px;padding:12px 14px;text-align:center;font-size:12px;font-weight:600;color:#fff;letter-spacing:-.12px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">Delete</div>
+    </div>
+  </div>
+
+  <!-- ══ Sheets shared by AI MV room and the Home chat panel (moved out of
+       #screen-mv-room so they can open from Home too) ══ -->
+      <!-- Template Sheet -->
+      <div class="overlay" id="insp-overlay" onclick="hideSheet('insp-sheet')"></div>
+      <div class="sheet" id="insp-sheet" style="padding-bottom:calc(var(--safe-bot) + 24px);">
+        <div class="sheet-handle"></div>
+        <!-- Header -->
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 20px 12px;">
+          <div onclick="hideSheet('insp-sheet')" style="width:28px;height:28px;border-radius:14px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#9C9CAB" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;letter-spacing:-.15px;">Select a Template</div>
+          <div onclick="applyInsp()" style="width:28px;height:28px;border-radius:18px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+
+        <!-- Large preview -->
+        <div style="margin:0 20px 12px;border-radius:14px;overflow:hidden;height:144px;background:#212127;position:relative;">
+          <img id="insp-preview-img" src="../assets/videos/sample-mvs/mv_03_neon_city.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5),transparent);"></div>
+          <div id="insp-preview-name" style="position:absolute;bottom:10px;left:14px;font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;">Neon City</div>
+        </div>
+
+        <!-- Thumbnail strip -->
+        <div style="padding:0 20px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+          <div id="insp-thumb-row" style="display:flex;gap:2px;padding-bottom:4px;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Sample Song Sheet -->
+      <div class="overlay" id="sampleSong-overlay" onclick="stopPreview();hideSheet('sampleSong-sheet')"></div>
+      <div class="sheet" id="sampleSong-sheet" style="min-height:557px;max-height:557px;display:flex;flex-direction:column;gap:5px;padding-top:12px;padding-bottom:30px;">
+        <!-- Handle -->
+        <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);margin:0 auto;flex-shrink:0;"></div>
+        <!-- Header -->
+        <div style="display:flex;align-items:center;gap:10px;padding:4px 20px;flex-shrink:0;">
+          <div onclick="stopPreview();hideSheet('sampleSong-sheet')" style="width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;line-height:18px;">Choose Song</div>
+          <div style="width:28px;flex-shrink:0;"></div>
+        </div>
+        <!-- Tabs — pill style -->
+        <div style="display:flex;gap:6px;padding:0 20px;flex-shrink:0;">
+          <div id="ss-tab-my" onclick="switchSongTab('my')" style="min-width:48px;text-align:center;padding:5px 10px;border-radius:16px;font-size:11px;font-weight:500;background:#212127;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;letter-spacing:-.11px;white-space:nowrap;">My Songs</div>
+          <div id="ss-tab-sample" onclick="switchSongTab('sample')" style="min-width:48px;text-align:center;padding:5px 10px;border-radius:16px;font-size:11px;font-weight:500;background:#A855F7;color:#fff;cursor:pointer;transition:all .2s;letter-spacing:-.11px;white-space:nowrap;">Sample Songs</div>
+        </div>
+        <!-- Sample Songs Panel (shown by default) -->
+        <div id="ss-panel-sample" style="display:flex;flex-direction:column;overflow-y:auto;flex:1;">
+          <div id="sample-song-list">
+            <div class="sample-song-row" onclick="pickSampleSong(this,'Top Flow - Party','01:54','../assets/images/album-art/album_05.jpg','../assets/songs/Top%20Flow%20Production%20-%20Party.mp3')">
+              <div class="ss-art"><img src="../assets/images/album-art/album_05.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Top Flow - Party</div><div class="sample-song-dur">01:54</div></div>
+              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
+            </div>
+            <div class="sample-song-row" onclick="pickSampleSong(this,'Party Dance','02:40','../assets/images/album-art/album_08.jpg','../assets/songs/Party%20Dance.mp3')">
+              <div class="ss-art"><img src="../assets/images/album-art/album_08.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Party Dance</div><div class="sample-song-dur">02:40</div></div>
+              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
+            </div>
+            <div class="sample-song-row" onclick="pickSampleSong(this,'Forest Morning','01:50','../assets/images/album-art/album_01.jpg')">
+              <div class="ss-art"><img src="../assets/images/album-art/album_01.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Forest Morning</div><div class="sample-song-dur">01:50</div></div>
+              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
+            </div>
+            <div class="sample-song-row" onclick="pickSampleSong(this,'Golden Hour','02:30','../assets/images/album-art/album_03.jpg')">
+              <div class="ss-art"><img src="../assets/images/album-art/album_03.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Golden Hour</div><div class="sample-song-dur">02:30</div></div>
+              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
+            </div>
+            <div class="sample-song-row" onclick="pickSampleSong(this,'Neon Pulse','03:25','../assets/images/album-art/album_02.jpg')">
+              <div class="ss-art"><img src="../assets/images/album-art/album_02.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Neon Pulse</div><div class="sample-song-dur">03:25</div></div>
+              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
+            </div>
+            <div class="sample-song-row" onclick="pickSampleSong(this,'Ethereal Echoes','02:45','../assets/images/album-art/album_06.jpg')">
+              <div class="ss-art"><img src="../assets/images/album-art/album_06.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Ethereal Echoes</div><div class="sample-song-dur">02:45</div></div>
+              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
+            </div>
+            <div class="sample-song-row" onclick="pickSampleSong(this,'Elysian Reverie','02:45','../assets/images/album-art/album_07.jpg')">
+              <div class="ss-art"><img src="../assets/images/album-art/album_07.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Elysian Reverie</div><div class="sample-song-dur">02:45</div></div>
+              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
+            </div>
+          </div>
+        </div>
+        <!-- My Songs Panel (hidden by default) -->
+        <div id="ss-panel-my" style="display:none;flex-direction:column;overflow-y:auto;flex:1;">
+          <div id="my-song-list">
+            <div class="sample-song-row" onclick="pickSampleSong(this,'My Wedding Ballad','03:12','../assets/images/album-art/album_04.jpg')">
+              <div class="ss-art"><img src="../assets/images/album-art/album_04.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">My Wedding Ballad</div><div class="sample-song-dur">03:12</div></div>
+              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
+            </div>
+            <div class="sample-song-row" onclick="pickSampleSong(this,'Summer Vibes','02:58','../assets/images/album-art/album_09.jpg')">
+              <div class="ss-art"><img src="../assets/images/album-art/album_09.jpg" class="ss-art-img"><div class="ss-art-overlay"></div><div class="song-play-icon ss-art-icon"><img src="../assets/icons/ui/ic_play.svg" width="14" height="14" style="display:block;"></div></div>
+              <div class="ss-info"><div class="sample-song-name">Summer Vibes</div><div class="sample-song-dur">02:58</div></div>
+              <button class="sample-use-btn" onclick="event.stopPropagation();confirmSampleSong()">Use</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- iOS File Picker Sheet -->
+      <div class="overlay" id="filePicker-overlay" onclick="hideSheet('filePicker-sheet')"></div>
+      <div class="sheet" id="filePicker-sheet" style="height:82%;display:flex;flex-direction:column;padding-bottom:0;border-radius:14px 14px 0 0;background:#F2F2F7;overflow:hidden;">
+        <!-- iOS Nav Bar -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;background:#F9F9F9;border-bottom:1px solid rgba(0,0,0,.12);flex-shrink:0;">
+          <button onclick="hideSheet('filePicker-sheet')" style="font-size:17px;font-weight:400;color:#007AFF;background:none;border:none;cursor:pointer;font-family:-apple-system,'Inter',sans-serif;padding:0;min-width:60px;text-align:left;">Cancel</button>
+          <span style="font-size:17px;font-weight:600;color:#000;font-family:-apple-system,'Inter',sans-serif;letter-spacing:-.3px;">Recents</span>
+          <div style="min-width:60px;"></div>
+        </div>
+        <!-- iOS Search Bar -->
+        <div style="padding:8px 16px;background:#F9F9F9;flex-shrink:0;">
+          <div style="display:flex;align-items:center;gap:8px;background:#E5E5EA;border-radius:10px;padding:7px 10px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+            <span style="font-size:14px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;">Search</span>
+          </div>
+        </div>
+        <!-- Breadcrumb -->
+        <div style="display:flex;align-items:center;gap:4px;padding:10px 16px 6px;flex-shrink:0;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          <span style="font-size:14px;font-weight:500;color:#007AFF;font-family:-apple-system,'Inter',sans-serif;">On My iPhone</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span style="font-size:14px;font-weight:500;color:#000;font-family:-apple-system,'Inter',sans-serif;">Music</span>
+        </div>
+        <!-- File List -->
+        <div style="flex:1;overflow-y:auto;background:#F2F2F7;">
+          <!-- Section: Recents -->
+          <div style="padding:6px 16px 4px;font-size:13px;font-weight:600;color:#6D6D72;text-transform:uppercase;letter-spacing:.4px;font-family:-apple-system,'Inter',sans-serif;">Recent</div>
+          <div style="background:#fff;border-radius:12px;margin:0 16px 16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);">
+            <!-- File Row -->
+            <div onclick="confirmImportFile('Summer_Memories_2024.mp3','03:24')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #F2F2F7;cursor:pointer;transition:background .12s;active:background:#E5E5EA;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
+              <div style="width:36px;height:36px;background:#E8F0FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#007AFF" opacity=".12"/><path d="M9 17V8l8-2v9" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#007AFF"/><circle cx="15" cy="15" r="2" fill="#007AFF"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Summer_Memories_2024.mp3</div>
+                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Today · 8.2 MB</div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <!-- File Row -->
+            <div onclick="confirmImportFile('Birthday_Party_Mix.m4a','04:11')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #F2F2F7;cursor:pointer;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
+              <div style="width:36px;height:36px;background:#E8F0FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#007AFF" opacity=".12"/><path d="M9 17V8l8-2v9" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#007AFF"/><circle cx="15" cy="15" r="2" fill="#007AFF"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Birthday_Party_Mix.m4a</div>
+                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Yesterday · 11.4 MB</div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <!-- File Row -->
+            <div onclick="confirmImportFile('Voice_Recording_042.m4a','02:52')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #F2F2F7;cursor:pointer;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
+              <div style="width:36px;height:36px;background:#FFF0E8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#FF9500" opacity=".15"/><rect x="10" y="6" width="4" height="9" rx="2" fill="#FF9500"/><path d="M7 14c0 2.76 2.24 5 5 5s5-2.24 5-5" stroke="#FF9500" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="19" x2="12" y2="21" stroke="#FF9500" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Voice_Recording_042.m4a</div>
+                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Jun 28 · 3.6 MB</div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+          <!-- Section: Music -->
+          <div style="padding:6px 16px 4px;font-size:13px;font-weight:600;color:#6D6D72;text-transform:uppercase;letter-spacing:.4px;font-family:-apple-system,'Inter',sans-serif;">Music</div>
+          <div style="background:#fff;border-radius:12px;margin:0 16px 20px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);">
+            <div onclick="confirmImportFile('Golden_Hour.mp3','03:07')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #F2F2F7;cursor:pointer;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
+              <div style="width:36px;height:36px;background:#E8F0FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#007AFF" opacity=".12"/><path d="M9 17V8l8-2v9" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#007AFF"/><circle cx="15" cy="15" r="2" fill="#007AFF"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Golden_Hour.mp3</div>
+                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Jun 25 · 7.1 MB</div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div onclick="confirmImportFile('Neon_Pulse_Remix.mp3','04:33')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #F2F2F7;cursor:pointer;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
+              <div style="width:36px;height:36px;background:#E8F0FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#007AFF" opacity=".12"/><path d="M9 17V8l8-2v9" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#007AFF"/><circle cx="15" cy="15" r="2" fill="#007AFF"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Neon_Pulse_Remix.mp3</div>
+                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Jun 22 · 10.8 MB</div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div onclick="confirmImportFile('Midnight_Drive.mp3','05:02')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;" onmousedown="this.style.background='#E5E5EA'" onmouseup="this.style.background=''" onmouseleave="this.style.background=''">
+              <div style="width:36px;height:36px;background:#E8F0FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#007AFF" opacity=".12"/><path d="M9 17V8l8-2v9" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#007AFF"/><circle cx="15" cy="15" r="2" fill="#007AFF"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:15px;font-weight:400;color:#000;font-family:-apple-system,'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Midnight_Drive.mp3</div>
+                <div style="font-size:12px;color:#8E8E93;font-family:-apple-system,'Inter',sans-serif;margin-top:1px;">Jun 18 · 12.3 MB</div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trim Audio Sheet -->
+      <div class="overlay" id="trim-overlay"></div>
+      <div class="sheet" id="trim-sheet" style="padding-bottom:calc(var(--safe-bot) + 40px);">
+        <div class="sheet-handle"></div>
+        <!-- Header -->
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 20px 10px;">
+          <div onclick="stopTrimAudio();hideSheet('trim-sheet')" style="width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;">Trim Audio</div>
+          <div onclick="confirmTrim()" style="width:28px;height:28px;border-radius:18px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <!-- Content -->
+        <div style="padding:0 20px;display:flex;flex-direction:column;gap:10px;">
+          <!-- Title + subtitle -->
+          <div>
+            <div style="font-size:17px;font-weight:700;color:#fff;line-height:22px;margin-bottom:2px;">Trim Audio</div>
+            <div style="font-size:12px;font-weight:500;color:#9C9CAB;">Only trim the audio to the parts you like the best.</div>
+          </div>
+          <!-- Song row -->
+          <div style="display:flex;align-items:center;gap:8px;padding:8px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;height:60px;box-sizing:border-box;">
+            <div onclick="toggleTrimPlay()" style="position:relative;width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;cursor:pointer;">
+              <img id="trim-song-img" src="../assets/images/album-art/album_05.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,.2);"></div>
+              <div id="trim-play-icon-wrap" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                <img src="../assets/icons/ui/ic_play.svg" width="18" height="18" style="display:block;">
+              </div>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div id="trim-song-name" style="font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-.13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Down the Memory Lane</div>
+              <div id="trim-song-dur" style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;">02:25</div>
+            </div>
+          </div>
+          <!-- Trimmer -->
+          <div style="display:flex;flex-direction:column;gap:0px;">
+            <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;">
+              <span id="trim-start">00:29</span>
+              <span id="trim-end">01:03</span>
+            </div>
+            <!-- Outer wrapper: no overflow clip so playhead can extend above/below -->
+            <div style="position:relative;padding:10px 0;">
+              <div class="trim-waveform-wrap" id="trim-waveform-wrap">
+                <!-- bars -->
+                <div id="trim-bars-inner" class="trim-bars"></div>
+                <!-- selection highlight -->
+                <div style="position:absolute;top:0;bottom:0;left:20%;width:51%;background:rgba(168,85,247,.28);pointer-events:none;"></div>
+                <!-- left handle -->
+                <div style="position:absolute;top:0;bottom:0;left:20%;width:12px;background:#A855F7;border-radius:6px 0 0 6px;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:2px;height:16px;background:rgba(9,9,11,0.4);border-radius:2px;"></div>
+                </div>
+                <!-- right handle -->
+                <div style="position:absolute;top:0;bottom:0;left:71%;width:12px;background:#A855F7;border-radius:0 6px 6px 0;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:2px;height:16px;background:rgba(9,9,11,0.4);border-radius:2px;"></div>
+                </div>
+              </div>
+              <!-- Playhead: lives in outer wrapper, extends 14px above and below the waveform -->
+              <div style="position:absolute;top:0;bottom:0;left:calc(20% + 51%/2);width:2px;background:#fff;border-radius:1px;pointer-events:none;transform:translateX(-50%);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paste Link Sheet -->
+      <div class="overlay" id="pasteLink-overlay" onclick="hideSheet('pasteLink-sheet')"></div>
+      <div class="sheet" id="pasteLink-sheet" style="padding-bottom:calc(var(--safe-bot) + 8px);">
+        <div class="sheet-handle"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;">
+          <div onclick="hideSheet('pasteLink-sheet')" style="font-size:22px;cursor:pointer;color:#9C9CAB;">‹</div>
+          <div style="font-size:17px;font-weight:700;color:#fff;">Edit Audio</div>
+          <div onclick="confirmPasteLink()" style="font-size:16px;font-weight:600;color:#A855F7;cursor:pointer;">Next</div>
+        </div>
+        <div style="padding:0 16px 16px;">
+          <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:12px;">Paste Link</div>
+          <div style="position:relative;">
+            <textarea id="paste-link-input" placeholder="Enter your Suno / TikTok Music / SoundCloud song URL" style="width:100%;min-height:80px;padding:12px 40px 12px 14px;background:#212127;border:1px solid rgba(255,255,255,.065);border-radius:14px;color:#fff;font-size:14px;font-family:inherit;outline:none;resize:none;line-height:1.5;"></textarea>
+            <div onclick="document.getElementById('paste-link-input').value=''" style="position:absolute;right:10px;bottom:10px;width:24px;height:24px;border-radius:50%;background:#383842;display:flex;align-items:center;justify-content:center;font-size:12px;color:#9C9CAB;cursor:pointer;">✕</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:8px;margin-top:12px;">
+            <span style="font-size:16px;color:#9C9CAB;">ⓘ</span>
+            <span style="font-size:13px;color:#9C9CAB;line-height:1.55;">Paste your song URL (Suno / TikTok Music / SoundCloud). By submitting a link, you confirm you have permission to use the content.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Sheet -->
+
+  <!-- Song Style sheet (Figma 4092:160166) — Home chat panel, Custom mode -->
+  <div class="overlay" id="songstyle-overlay" onclick="hideSheet('songstyle-sheet')"></div>
+  <div class="sheet" id="songstyle-sheet" style="padding:12px 20px calc(40px + var(--safe-bot));display:flex;flex-direction:column;gap:10px;">
+    <div class="sheet-handle" style="margin:0 auto;"></div>
+    <div style="display:flex;align-items:center;gap:10px;padding:4px 0;">
+      <div onclick="hideSheet('songstyle-sheet')" style="width:28px;height:28px;border-radius:18px;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9C9CAB" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+      <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;line-height:18px;">Song Style</div>
+      <div onclick="ccApplySongStyle()" style="width:28px;height:28px;border-radius:18px;background:#A855F7;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;width:100%;max-height:60vh;overflow-y:auto;scrollbar-width:none;">
+      <div class="ss-group">
+        <div class="ss-lbl">GENRE</div>
+        <div class="ss-chips" id="ss-genre"></div>
+      </div>
+      <div class="ss-group">
+        <div class="ss-lbl">MOOD</div>
+        <div class="ss-chips" id="ss-mood"></div>
+      </div>
+      <div class="ss-group">
+        <div class="ss-lbl">VOCAL <span>(Optional)</span></div>
+        <div class="ss-chips" id="ss-vocal"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home chat panel — "add a song" source picker -->
+  <div class="overlay" id="ccsong-overlay" onclick="hideSheet('ccsong-sheet')"></div>
+  <div class="sheet" id="ccsong-sheet" style="padding-bottom:calc(40px + var(--safe-bot));">
+    <div class="sheet-handle"></div>
+    <div class="sheet-ttl">Add a song</div>
+    <div class="sheet-opt" onclick="ccPickSongSource('sample')">
+      <div class="sheet-opt-ico" style="background:#212127;">
+        <img src="../assets/icons/ui/ic_song_list.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div class="sheet-opt-lbl">Song Library</div>
+        <div class="sheet-opt-sub">Pick one of your songs or a sample</div>
+      </div>
+      <img class="sheet-opt-chev" src="../assets/icons/ui/ic_chevron-right.svg" style="display:block;filter:brightness(0) invert(1);">
+    </div>
+    <div class="sheet-opt" onclick="ccPickSongSource('import')">
+      <div class="sheet-opt-ico" style="background:#212127;">
+        <img src="../assets/icons/ui/ic_upload.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div class="sheet-opt-lbl">Import Audio</div>
+        <div class="sheet-opt-sub">Use an audio file on your device</div>
+      </div>
+      <img class="sheet-opt-chev" src="../assets/icons/ui/ic_chevron-right.svg" style="display:block;filter:brightness(0) invert(1);">
     </div>
   </div>
 
@@ -12256,7 +12427,7 @@ function toggleLyricsTooltip(e) {
 }
 
 // ── AI Song create room: Simple / Custom tab switching ──
-let _songMode = 'simple';
+let _songMode = 'custom';
 
 function switchSongMode(mode) {
   _songMode = mode;
@@ -12317,7 +12488,7 @@ function generateSongIdea() {
 
 function resetSongCreate() {
   // Switch back to Simple tab
-  switchSongMode('simple');
+  switchSongMode('custom');
   // Clear Simple textarea
   const simpleTA = document.getElementById('song-simple-idea');
   if (simpleTA) { simpleTA.value = ''; updateSimpleSongCTA(simpleTA); }
@@ -14103,6 +14274,428 @@ function applySongTemplate(title, genre, mood) {
     document.querySelectorAll('[data-group="vocal"] .schip').forEach(c => c.classList.remove('sel'));
   }, 180);
 }
+/* ══════════════ CHAT CREATE PANEL (Home) ══════════════
+   Figma: "Explore - Home - Chat Based_MV"  4021:151556
+          "Explore - Home - Chat Based_Song" 4082:152447
+   The panel replaces the old top banner carousel. The pre-defined
+   "start with vibe" cards under it swap with the selected create type. */
+let ccType = 'mv';              // 'mv' | 'song'
+let ccSongTab = 'custom';       // Song panel only
+let ccInstrumental = false;
+let ccSongAttached = false;     // MV panel song slot
+let ccSong = null;              // {method,title,dur,art,audioSrc} once a song is picked
+let ccTpl = null;               // template picked from the Select-a-Template sheet
+let ccStyle = { mv: null, song: null };   // MV style label carried in from a vibe card
+let ccSongStyle = null;         // {genre, mood, vocal} once Song Style has been set
+let _ssDraft = null;            // the sheet's working copy
+const CC_DRAFT = { mv: '', song: '' };    // prompts are kept per create type
+const SS_GENRE = ['Pop','R&B','Electronic','Hip-Hop','Acoustic','Jazz','Classical','Lo-fi'];
+const SS_MOOD  = ['Uplifting','Melancholic','Romantic','Energetic','Calm','Dark'];
+const SS_VOCAL = ['Male','Female'];
+let _ccTplFromHome = false;     // the Template sheet was opened from the Home panel
+let _ccSongFromHome = false;    // the song flow was started from the Home panel
+const CC_DEFAULT_THUMBS = ['../assets/videos/sample-mvs/mv_03_neon_city.jpg','../assets/videos/sample-mvs/mv_01_cinematic_dark.jpg','../assets/videos/sample-mvs/mv_05_anime_style.jpg'];
+
+const CC_PLACEHOLDER = {
+  mv:   'Describe the mood, story, characters, or visuals you want for your MV...',
+  song: 'Describe your lyrics or song idea here...'
+};
+const CC_TA_H   = { mv: 45, song: 30 };
+const CC_TA_MAX = 60;           // 4 lines of 15px, then the field scrolls
+const CC_TYPELBL= { mv: 'Create MV', song: 'Create Song' };
+const CC_SAMPLE_SONG = { title: 'Down the Memory Lane', dur: '02:48', art: '../assets/images/album-art/album_05.jpg' };
+
+const CC_VIBES = {
+  mv: [
+    { sub:'Storytelling', ttl:'Epic Journeys', img:'../assets/videos/sample-mvs/mv_14_Vintage Car.jpg',
+      style:'Cinematic',
+      prompt:'A cinematic road trip at golden hour — vintage car, open highway, warm dusty light, me singing behind the wheel.' },
+    { sub:'Singing', ttl:'Adventurous Echoes', img:'../assets/videos/sample-mvs/mv_12_Splash.jpg',
+      style:'Nature & Earth',
+      prompt:'Wide-open landscapes and soaring cinematic shots — earthy tones, golden light, big open sky, close-ups on the chorus.' },
+    { sub:'Sing & Story', ttl:'Thrilling Harmonies', img:'../assets/videos/sample-mvs/mv_13_Urban Fashion.jpg',
+      style:'Urban Fashion',
+      prompt:'A bold fashion film — high-contrast studio light, statement outfits, confident poses, sharp beat-matched cuts.' },
+    { sub:'Fan fav', ttl:'Neon City Nights', img:'../assets/videos/sample-mvs/mv_03_neon_city.jpg',
+      style:'Neon City',
+      prompt:'Neon city after midnight — glowing streets, rain on glass, fast cuts, close-ups of me under the signs.' },
+    { sub:'Trending', ttl:'Anime Dreams', img:'../assets/videos/sample-mvs/mv_05_anime_style.jpg',
+      style:'Anime Style',
+      prompt:'An anime-inspired adventure — vivid colours, wind in the hair, sweeping camera moves over rooftops at sunset.' }
+  ],
+  song: [
+    { ttl:'Night Rhythm', img:'../assets/images/album-art/album_06.jpg', song:{genre:'R&B', mood:'Dark', vocal:null},
+      prompt:'A late-night groove about the city after midnight — deep bass, brushed drums, smoky vocals.' },
+    { ttl:'Jazz Vibe', img:'../assets/images/album-art/album_07.jpg', song:{genre:'Jazz', mood:'Calm', vocal:null},
+      prompt:'A smooth jazz number — warm upright bass, soft piano, a voice that feels like a dim-lit bar at closing time.' },
+    { ttl:'Chill R&B', img:'../assets/images/album-art/album_02.jpg', song:{genre:'R&B', mood:'Calm', vocal:null},
+      prompt:'A slow chill R&B track about missing someone — mellow keys, lazy beat, airy layered harmonies.' },
+    { ttl:'Soft Pop Hit', img:'../assets/images/album-art/album_08.jpg', song:{genre:'Pop', mood:'Uplifting', vocal:null},
+      prompt:'A soft pop hit about starting over — bright chorus, gentle synths, hopeful and easy to sing along to.' },
+    { ttl:'Retro Pop', img:'../assets/images/album-art/album_10.jpg', song:{genre:'Pop', mood:'Energetic', vocal:null},
+      prompt:'A retro pop throwback — 80s synths, punchy drums, a neon-bright chorus and a hook that will not leave.' }
+  ]
+};
+
+const CC_IDEAS = {
+  mv: [
+    'Rain on neon streets at 2am — reflections everywhere, slow push-in on my face, cuts landing on the beat.',
+    'A quiet countryside morning turning into a festival night — from soft daylight to strobe and confetti.',
+    'Anime-style adventure — bold colours, wind in the hair, sweeping camera moves over rooftops.'
+  ],
+  song: [
+    'A song about leaving a city you love — warm guitars, a chorus that finally lets go.',
+    'An upbeat track for a summer road trip — handclaps, bright synths, shout-along chorus.',
+    'A slow ballad for someone who is still waiting — piano, strings coming in late, my own voice.'
+  ]
+};
+
+function ccRenderVibes() {
+  const row = document.getElementById('cc-vibe');
+  if (!row) return;
+  row.innerHTML = CC_VIBES[ccType].map(function (v, i) {
+    const sub = v.sub ? '<div class="vc-sub">' + v.sub + '</div>' : '';
+    return '<div class="vibe-card ' + (ccType === 'mv' ? 'vc-mv' : 'vc-song') + '" onclick="ccUseVibe(' + i + ')">' +
+             '<img src="' + v.img + '" alt="">' +
+             '<div class="vc-shade"></div>' + sub +
+             '<div class="vc-ttl">' + v.ttl + '</div>' +
+           '</div>';
+  }).join('');
+  row.scrollLeft = 0;
+}
+
+function ccUseVibe(i) {
+  const v = CC_VIBES[ccType][i];
+  if (!v) return;
+  const ta = document.getElementById('cc-ta');
+  if (ta) ta.value = v.prompt;
+  if (ccType === 'song') ccSongStyle = Object.assign({}, v.song);
+  else ccStyle.mv = v.style;
+  ccSyncStyleLabel();
+  ccOnInput();
+  if (typeof toast === 'function') toast(v.ttl + ' · style applied');
+}
+
+function ccSyncStyleLabel() {
+  const s = ccStyle[ccType];
+  if (ccType === 'mv') {
+    const box = document.getElementById('cc-tpl');
+    const txt = document.getElementById('cc-tpl-txt');
+    const thumbs = document.querySelector('.cc-thumbs');
+    const label = ccTpl ? ccTpl.name : (s || 'Templates');
+    if (txt) txt.textContent = label;
+    if (box) box.classList.toggle('set', !!(ccTpl || s));
+    if (thumbs) {
+      const srcs = ccTpl ? [ccTpl.thumb] : CC_DEFAULT_THUMBS;
+      thumbs.innerHTML = srcs.map(function (u) { return '<img src="' + u + '" alt="">'; }).join('');
+    }
+  } else {
+    const box = document.getElementById('cc-style');
+    const txt = document.getElementById('cc-style-txt');
+    const label = ccSongStyleLabel();
+    if (txt) txt.textContent = label || 'Song Style';
+    if (box) box.classList.toggle('set', !!label);
+  }
+}
+
+function ccSongStyleLabel() {
+  if (!ccSongStyle) return '';
+  return [ccSongStyle.genre, ccSongStyle.mood, ccSongStyle.vocal].filter(Boolean).join(' / ');
+}
+
+/* ── Song Style sheet (Figma 4092:160166) ── */
+function ccOpenSongStyle() {
+  _ssDraft = Object.assign({ genre: 'Pop', mood: 'Uplifting', vocal: null }, ccSongStyle || {});
+  ccRenderSongStyle();
+  showSheet('songstyle-sheet');
+}
+
+function ccRenderSongStyle() {
+  const row = function (id, list, key) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = list.map(function (v) {
+      const on = _ssDraft[key] === v ? ' on' : '';
+      return '<div class="ss-chip' + on + '" onclick="ccPickStyleChip(\'' + key + '\',' + JSON.stringify(v).replace(/"/g, '&quot;') + ')">' + v + '</div>';
+    }).join('');
+  };
+  row('ss-genre', SS_GENRE, 'genre');
+  row('ss-mood', SS_MOOD, 'mood');
+  row('ss-vocal', SS_VOCAL, 'vocal');
+}
+
+function ccPickStyleChip(key, val) {
+  // Vocal is optional, so tapping the selected chip clears it; Genre/Mood always keep one
+  _ssDraft[key] = (key === 'vocal' && _ssDraft[key] === val) ? null : val;
+  ccRenderSongStyle();
+}
+
+function ccApplySongStyle() {
+  ccSongStyle = Object.assign({}, _ssDraft);
+  ccSyncStyleLabel();
+  hideSheet('songstyle-sheet');
+}
+
+/* Simple mode composes from a plain idea, so the style controls are hidden there */
+function ccSyncSongRow() {
+  const box = document.getElementById('cc-style');
+  if (box) box.style.display = (ccType === 'song' && ccSongTab === 'custom') ? 'flex' : 'none';
+}
+
+function ccSetType(t) {
+  const prev = document.getElementById('cc-ta');
+  if (prev && ccType !== t) CC_DRAFT[ccType] = prev.value;   // MV and Song prompts never mix
+  ccType = t;
+  const wrap = document.getElementById('cc-wrap');
+  if (wrap) wrap.classList.toggle('song', t === 'song');
+  const isSong = t === 'song';
+  const show = function (id, on, disp) { const el = document.getElementById(id); if (el) el.style.display = on ? (disp || 'flex') : 'none'; };
+  show('cc-tabrow', isSong);
+  show('cc-slot', !isSong, 'flex');
+  show('cc-tpl', !isSong);
+  show('cc-style', isSong);
+  show('cc-cta-arrow', !isSong, 'block');
+  show('cc-credit', isSong);
+  const lbl = document.getElementById('cc-type-lbl');
+  if (lbl) lbl.textContent = CC_TYPELBL[t];
+  const ta = document.getElementById('cc-ta');
+  if (ta) { ta.value = CC_DRAFT[t] || ''; ta.placeholder = CC_PLACEHOLDER[t]; ta.style.height = CC_TA_H[t] + 'px'; }
+  const mMv = document.getElementById('cc-menu-mv'), mSong = document.getElementById('cc-menu-song');
+  if (mMv) mMv.classList.toggle('on', !isSong);
+  if (mSong) mSong.classList.toggle('on', isSong);
+  ccSyncStyleLabel();
+  ccSyncSongRow();
+  ccRenderVibes();
+  ccOnInput();
+}
+
+function ccToggleMenu(e) {
+  if (e) e.stopPropagation();
+  const m = document.getElementById('cc-menu');
+  if (m) m.classList.toggle('show');
+}
+function ccCloseMenu() {
+  const m = document.getElementById('cc-menu');
+  if (m) m.classList.remove('show');
+}
+function ccPickType(t) {
+  ccCloseMenu();
+  if (t === ccType) return;
+  ccSetType(t);
+}
+
+function ccOnInput() {
+  const ta = document.getElementById('cc-ta');
+  const cta = document.getElementById('cc-cta');
+  if (!ta || !cta) return;
+  ta.style.height = CC_TA_H[ccType] + 'px';
+  if (ta.value) {
+    ta.style.height = 'auto';
+    ta.style.height = Math.min(CC_TA_MAX, Math.max(CC_TA_H[ccType], ta.scrollHeight)) + 'px';
+  }
+  const has = ta.value.trim().length > 0;
+  // MV cannot start without a song — the analysis pass listens to the audio
+  const ready = ccType === 'mv' ? (has && ccSongAttached) : has;
+  cta.classList.toggle('off', !ready);
+  // Enhance only makes sense once there is something to enhance (MV panel only)
+  const enh = document.getElementById('cc-enh');
+  if (enh) enh.style.display = (ccType === 'mv' && has) ? 'flex' : 'none';
+}
+
+function ccIdea() {
+  const ta = document.getElementById('cc-ta');
+  if (!ta) return;
+  const list = CC_IDEAS[ccType];
+  ta.value = list[Math.floor(Math.random() * list.length)];
+  ccOnInput();
+}
+
+function ccEnhance() {
+  const ta = document.getElementById('cc-ta');
+  const btn = document.getElementById('cc-enh');
+  if (!ta || !btn) return;
+  if (!ta.value.trim()) { if (typeof toast === 'function') toast('Write something first'); return; }
+  if (btn.classList.contains('busy')) return;
+  // the spinning refresh icon on a purple pill IS the progress feedback
+  const ico = btn.querySelector('img');
+  btn.classList.add('busy');
+  ta.classList.add('busy');
+  ta.readOnly = true;
+  if (ico) ico.src = '../assets/icons/ui/ic_refresh.svg';
+  setTimeout(function () {
+    ta.value = ta.value.trim().replace(/[.\u3002]$/, '') +
+      ' — soft rim light, shallow depth of field, slow push-in on the chorus, warm amber and deep teal palette.';
+    btn.classList.remove('busy');
+    ta.classList.remove('busy');
+    ta.readOnly = false;
+    if (ico) ico.src = '../assets/icons/ui/ic_edit_ai.svg';
+    ccOnInput();
+  }, 900);
+}
+
+/* The slot always opens the source picker; the X on the thumb clears it.
+   The label underneath stays "Song" whether or not a song is attached. */
+function ccTapSlot() {
+  showSheet('ccsong-sheet');
+}
+
+function ccPickSongSource(src) {
+  hideSheet('ccsong-sheet');
+  _ccSongFromHome = true;
+  setTimeout(function () { startAudio(src); }, 300);
+}
+
+function ccFillSlot(song) {
+  const box = document.getElementById('cc-slot-box');
+  const slot = document.getElementById('cc-slot');
+  if (!box || !slot) return;
+  ccSong = song;
+  ccSongAttached = true;
+  box.innerHTML =
+    '<img class="cc-slot-cover" src="' + (song.art || CC_SAMPLE_SONG.art) + '" alt="">' +
+    '<div class="cc-slot-x" onclick="event.stopPropagation();ccClearSlot()">' +
+      '<img src="../assets/icons/ui/ic_close.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">' +
+    '</div>';
+  slot.classList.add('filled');
+  ccOnInput();
+}
+
+function ccClearSlot() {
+  const box = document.getElementById('cc-slot-box');
+  const slot = document.getElementById('cc-slot');
+  ccSong = null;
+  ccSongAttached = false;
+  if (box) box.innerHTML = '<img src="../assets/icons/ui/ic_add.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.6;">';
+  if (slot) slot.classList.remove('filled');
+  if (typeof clearSong === 'function') clearSong();
+  ccOnInput();
+}
+
+function ccToggleInstrumental() {
+  ccInstrumental = !ccInstrumental;
+  const t = document.getElementById('cc-tog');
+  if (t) t.classList.toggle('on', ccInstrumental);
+}
+
+function ccSetSongTab(tab) {
+  ccSongTab = tab;
+  const c = document.getElementById('cc-tab-custom'), s = document.getElementById('cc-tab-simple');
+  if (c) c.classList.toggle('on', tab === 'custom');
+  if (s) s.classList.toggle('on', tab === 'simple');
+  ccSyncSongRow();
+}
+
+/* Templates / Song Style open the existing full pickers */
+function ccOpenTemplates() { _ccTplFromHome = true; showSheet('insp-sheet'); }
+
+/* ── submit: hand the typed prompt off to the existing create flows ── */
+function ccSubmit() {
+  const ta = document.getElementById('cc-ta');
+  const txt = ta ? ta.value.trim() : '';
+  if (!txt) { if (typeof toast === 'function') toast('Describe what you want to create'); return; }
+  if (ccType === 'mv' && !ccSongAttached) { if (typeof toast === 'function') toast('Add a song first'); return; }
+  requireLogin(function () {
+    if (ccType === 'song') ccHandOffToSong();
+    else ccHandOffToMv();
+  });
+}
+
+/* The panel already holds everything the AI MV room would ask for, so Create
+   fills the room's state in place (without showing it) and jumps straight into
+   the analysis pass, which lands on Scene Setup. */
+function ccHandOffToMv() {
+  const txt = ((document.getElementById('cc-ta') || {}).value || '').trim();
+  _mvFromTemplate = false;
+  resetMvRoom();
+  updateSongClearBtn();
+  restoreCtaNormal('mv-room');
+  const ta = document.getElementById('mvr-describe');
+  if (ta) { ta.value = txt; updateDescCount(ta); }
+  if (ccSong) addSongToRoom(ccSong.method, ccSong.title, ccSong.dur, ccSong.art, ccSong.audioSrc);
+  navStack = ['home'];
+  startGeneration('analysis');
+}
+
+/* Like the MV path: the panel already holds everything AI Song would ask for,
+   so fill the room's state in place and go straight into the processing flow. */
+function ccHandOffToSong() {
+  const txt = ((document.getElementById('cc-ta') || {}).value || '').trim();
+  resetSongCreate();
+  (function () {
+    switchSongMode(ccSongTab);
+    if (ccInstrumental && typeof toggleInstrumental === 'function' && !_instrumentalOn) toggleInstrumental();
+    // carry the Song Style params onto song-create's own chips
+    if (ccSongStyle) {
+      [['genre', ccSongStyle.genre], ['mood', ccSongStyle.mood], ['vocal', ccSongStyle.vocal]].forEach(function (pair) {
+        const group = document.querySelector('[data-group="' + pair[0] + '"]');
+        if (!group) return;
+        group.querySelectorAll('.schip').forEach(function (c) {
+          c.classList.toggle('sel', !!pair[1] && c.textContent.trim() === pair[1]);
+        });
+      });
+    }
+    if (txt) {
+      if (ccSongTab === 'simple') {
+        const s = document.getElementById('song-simple-idea');
+        if (s) { s.value = txt; updateSimpleSongCTA(s); }
+      } else {
+        const l = document.getElementById('song-lyrics');
+        if (l) { l.value = txt; updateLyricsClear(l); }
+      }
+    }
+  })();
+  navStack = ['home'];
+  goTo('song-creating');
+}
+
+/* Both sheets are shared with the AI MV room, so route their "apply" step
+   back to the Home panel only when the panel was what opened them. */
+const _ccOrigApplyInsp = window.applyInsp;
+function mvrSetTplBtn(tpl) {
+  const th = document.getElementById('mvr-tpl-thumbs');
+  const tx = document.getElementById('mvr-tpl-txt');
+  if (th) th.innerHTML = tpl
+    ? '<img src="' + tpl.thumb + '" alt="">'
+    : CC_DEFAULT_THUMBS.map(function (u) { return '<img src="' + u + '" alt="">'; }).join('');
+  if (tx) tx.textContent = tpl ? tpl.name : 'Templates';
+}
+
+const _ccOrigResetMvRoom = window.resetMvRoom;
+window.resetMvRoom = function () { _ccOrigResetMvRoom(); mvrSetTplBtn(null); };
+
+window.applyInsp = function () {
+  if (!_ccTplFromHome) { const t = _templates[_inspIdx]; _ccOrigApplyInsp(); mvrSetTplBtn(t); return; }
+  _ccTplFromHome = false;
+  const tpl = _templates[_inspIdx];
+  ccTpl = tpl;
+  const ta = document.getElementById('cc-ta');
+  if (ta) ta.value = tpl.prompt;
+  ccSyncStyleLabel();
+  ccOnInput();
+  hideSheet('insp-sheet');
+};
+
+const _ccOrigAddSongToRoom = window.addSongToRoom;
+window.addSongToRoom = function (method, title, dur, art, audioSrc) {
+  _ccOrigAddSongToRoom(method, title, dur, art, audioSrc);
+  // only claim the result when the panel started the flow and we are still on Home
+  const act = document.querySelector('.screen.active');
+  if (_ccSongFromHome) {
+    _ccSongFromHome = false;
+    if (act && act.id === 'screen-home') {
+      ccFillSlot({ method: method, title: title, dur: dur, art: art, audioSrc: audioSrc });
+    }
+  }
+};
+
+document.addEventListener('click', function (e) {
+  const m = document.getElementById('cc-menu');
+  if (!m || !m.classList.contains('show')) return;
+  if (!e.target.closest('#cc-menu') && !e.target.closest('.cc-createbtn')) ccCloseMenu();
+});
+
+window.addEventListener('load', function () { ccSetType('mv'); });
+
 function fmtTime(s) {
   if (!isFinite(s)) return '0:00';
   s = Math.floor(s);
