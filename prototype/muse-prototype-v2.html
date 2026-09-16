@@ -1065,7 +1065,8 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .cc-wrap{padding:0 16px;margin-top:12px;margin-bottom:12px;}
 @property --cc-ang{syntax:'<angle>';inherits:false;initial-value:0deg;}
 @keyframes cc-spin{to{--cc-ang:360deg;}}
-.cc-card{position:relative;border:1px solid transparent;border-radius:18px;padding:11px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 20px rgba(168,85,247,.35);background:linear-gradient(var(--card),var(--card)) padding-box,conic-gradient(from var(--cc-ang),#FF6BCE,#A855F7,#4338CA,#FF6BCE) border-box;animation:cc-spin 4s linear infinite;}
+@keyframes cc-breathe{0%,100%{box-shadow:0 10px 20px rgba(168,85,247,.35);}50%{box-shadow:0 6px 14px rgba(168,85,247,.14);}}
+.cc-card{position:relative;border:1px solid transparent;border-radius:18px;padding:11px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 20px rgba(168,85,247,.35);background:linear-gradient(var(--card),var(--card)) padding-box,conic-gradient(from var(--cc-ang),#FF6BCE,#A855F7,#4338CA,#FF6BCE) border-box;animation:cc-spin 4s linear infinite,cc-breathe 4.5s ease-in-out infinite;}
 @media (prefers-reduced-motion:reduce){.cc-card{animation:none;}}
 /* Song: tabs + instrumental toggle */
 .cc-tabrow{display:flex;align-items:center;gap:10px;}
