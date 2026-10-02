@@ -1093,7 +1093,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .cc-slot-box img.cc-slot-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
 .cc-slot-lbl{width:100%;font-size:9px;font-weight:500;line-height:11px;letter-spacing:-.09px;color:rgba(255,255,255,.4);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .cc-slot.filled .cc-slot-lbl{color:#fff;}
-.cc-ta{flex:1;min-width:0;background:transparent;border:none;outline:none;resize:none;color:#fff;font-family:inherit;font-size:12px;font-weight:500;line-height:15px;letter-spacing:0;height:45px;max-height:60px;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;transition:height .2s cubic-bezier(.22,1,.36,1);}
+.cc-ta{flex:1;min-width:0;background:transparent;border:none;outline:none;resize:none;color:#fff;font-family:inherit;font-size:12px;font-weight:500;line-height:15px;letter-spacing:0;height:45px;max-height:60px;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;}
 .cc-ta::-webkit-scrollbar{display:none;}
 .cc-ta::placeholder{color:rgba(255,255,255,.4);}
 .cc-ta.busy{opacity:.3;}
@@ -14623,13 +14623,13 @@ function ccCloseSkill() {
   if (!moved) return;
   void bar.offsetWidth;
   pills.forEach(function (el) {
-    el.style.transition = 'transform .26s cubic-bezier(.22,1,.36,1)';
+    el.style.transition = 'transform ' + CC_DUR + 'ms ' + CC_EASE;
     el.style.transform = '';
   });
   clearTimeout(bar._ccFlip);
   bar._ccFlip = setTimeout(function () {
     pills.forEach(function (el) { el.style.transition = ''; el.style.transform = ''; });
-  }, 300);
+  }, CC_DUR + 20);
 }
 
 function ccPickSub(k) {
@@ -14653,8 +14653,7 @@ function ccAddMaterial() {
   if (ccExtraCount >= 3) { if (typeof toast === 'function') toast('Up to 3 images'); return; }
   ccMat[ccExtraCount] = CC_ART[ccExtraCount % CC_ART.length];
   ccExtraCount++;
-  ccRenderSlots();
-  ccOnInput();
+  ccAnimateCard(function () { ccRenderSlots(); ccOnInput(); });
 }
 
 function ccRenderSlots() {
@@ -14682,8 +14681,7 @@ function ccTapSlot(i) {
   if (!d) return;
   if (d.k === 'song') { showSheet('ccsong-sheet'); return; }
   ccMat[i] = CC_ART[i % CC_ART.length];           // prototype: picking is simulated
-  ccRenderSlots();
-  ccOnInput();
+  ccAnimateCard(function () { ccRenderSlots(); ccOnInput(); });
 }
 
 function ccClearSlot(i) {
@@ -14696,11 +14694,10 @@ function ccClearSlot(i) {
     delete ccMat[ccExtraCount - 1];
     ccExtraCount--;
   } else { delete ccMat[i]; }
-  ccRenderSlots();
-  ccOnInput();
+  ccAnimateCard(function () { ccRenderSlots(); ccOnInput(); });
 }
 
-function ccFillSlot(song) { ccSong = song; ccSongAttached = true; ccRenderSlots(); ccOnInput(); }
+function ccFillSlot(song) { ccSong = song; ccSongAttached = true; ccAnimateCard(function () { ccRenderSlots(); ccOnInput(); }); }
 function ccPickSongSource(src) { hideSheet('ccsong-sheet'); _ccSongFromHome = true; setTimeout(function () { startAudio(src); }, 300); }
 
 /* ── ratio / duration chips ── */
@@ -14721,27 +14718,39 @@ function ccCycleParam(key) {
   ccSyncParams();
 }
 
-/* ── the switcher ── */
-/* The card grows and shrinks as slots / rows come and go, so tween its height
-   around whatever the switch does instead of letting it jump. */
-function ccSetType(t, subKey) {
+/* ── card height ── */
+/* Every change that resizes the card — typing a new line, switching skill,
+   adding a material slot — goes through one tween, so the box and everything
+   that moves with it (skill bar, vibe row, the page below) share a single
+   duration and curve instead of each easing on its own clock. */
+const CC_DUR = 240, CC_EASE = 'cubic-bezier(.22,1,.36,1)';
+let _ccCardDepth = 0;
+function ccAnimateCard(apply) {
   const card = document.getElementById('cc-card');
-  if (!card) { _ccSetType(t, subKey); return; }
-  const h0 = card.offsetHeight;
-  _ccSetType(t, subKey);
-  card.style.height = '';
-  const h1 = card.offsetHeight;
-  if (h0 === h1 || !h0) return;
+  if (!card || _ccCardDepth > 0) { apply(); return; }   // nested call: let the outer one own the tween
+  _ccCardDepth++;
+  let h0, h1;
+  try {
+    h0 = card.offsetHeight;          // current value, even mid-tween
+    card.style.transition = 'none';
+    card.style.height = '';
+    apply();
+    h1 = card.offsetHeight;          // natural height after the change
+  } finally { _ccCardDepth--; }
+  if (!h0 || h0 === h1) { card.style.transition = ''; card.style.overflow = ''; return; }
   card.style.height = h0 + 'px';
   card.style.overflow = 'hidden';
   void card.offsetWidth;
-  card.style.transition = 'height .28s cubic-bezier(.22,1,.36,1)';
+  card.style.transition = 'height ' + CC_DUR + 'ms ' + CC_EASE;
   card.style.height = h1 + 'px';
   clearTimeout(card._ccHT);
   card._ccHT = setTimeout(function () {
     card.style.height = ''; card.style.transition = ''; card.style.overflow = '';
-  }, 300);
+  }, CC_DUR + 20);
 }
+
+/* ── the switcher ── */
+function ccSetType(t, subKey) { ccAnimateCard(function () { _ccSetType(t, subKey); }); }
 
 function _ccSetType(t, subKey) {
   const ta0 = document.getElementById('cc-ta');
@@ -14973,11 +14982,13 @@ function ccOnInput() {
   if (!ta || !cta) return;
   const key = ccType || 'none';
   const base = ccTaH();
-  ta.style.height = base + 'px';
-  if (ta.value) {
-    ta.style.height = 'auto';
-    ta.style.height = Math.min(CC_TA_MAX, Math.max(base, ta.scrollHeight)) + 'px';
-  }
+  ccAnimateCard(function () {
+    ta.style.height = base + 'px';
+    if (ta.value) {
+      ta.style.height = 'auto';
+      ta.style.height = Math.min(CC_TA_MAX, Math.max(base, ta.scrollHeight)) + 'px';
+    }
+  });
   CC_DRAFT[key] = ta.value;
   const has = ta.value.trim().length > 0;
   cta.classList.toggle('off', !(has && !!ccType && ccMaterialsReady()));
