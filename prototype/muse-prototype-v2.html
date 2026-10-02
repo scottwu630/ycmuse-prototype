@@ -14485,6 +14485,14 @@ const CC_PLACEHOLDER = {
   ugc:  'Describe your concept for an engaging UGC video that captivates your audience...'
 };
 const CC_TA_H = { none:30, mv:45, song:30, story:45, mkt:45, ugc:45 };
+/* A video skill with no sub-skill picked has no material slots, so its prompt
+   area is the same two-line box as the landing state — not the 45px one that
+   only makes sense next to a 48px slot. */
+function ccTaH() {
+  if (!ccType || ccType === 'song') return CC_TA_H.none;
+  if (ccType === 'mv') return CC_TA_H.mv;
+  return ccSubDef() ? CC_TA_H[ccType] : CC_TA_H.none;
+}
 
 /* null until the user actually picks a sub-skill — nothing is pre-selected */
 function ccSubDef() {
@@ -14783,7 +14791,7 @@ function _ccSetType(t, subKey) {
   if (ta) {
     ta.placeholder = hasSub ? sub.ph : CC_PLACEHOLDER[key];
     ta.value = CC_DRAFT[key] || '';
-    ta.style.height = CC_TA_H[key] + 'px';
+    ta.style.height = ccTaH() + 'px';
   }
   const u = document.getElementById('cc-url-input');
   if (u && isAgent && !sameSub) u.value = '';
@@ -14964,10 +14972,11 @@ function ccOnInput() {
   const cta = document.getElementById('cc-cta');
   if (!ta || !cta) return;
   const key = ccType || 'none';
-  ta.style.height = CC_TA_H[key] + 'px';
+  const base = ccTaH();
+  ta.style.height = base + 'px';
   if (ta.value) {
     ta.style.height = 'auto';
-    ta.style.height = Math.min(CC_TA_MAX, Math.max(CC_TA_H[key], ta.scrollHeight)) + 'px';
+    ta.style.height = Math.min(CC_TA_MAX, Math.max(base, ta.scrollHeight)) + 'px';
   }
   CC_DRAFT[key] = ta.value;
   const has = ta.value.trim().length > 0;
