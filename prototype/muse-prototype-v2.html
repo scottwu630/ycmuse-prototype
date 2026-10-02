@@ -1118,10 +1118,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .cc-enh.busy{background:var(--accent);}
 .cc-enh.busy img{filter:brightness(0) invert(1);animation:cc-rot .8s linear infinite;}
 @keyframes cc-rot{to{transform:rotate(-360deg);}}
-.cc-createbtn{display:flex;align-items:center;justify-content:center;gap:2px;flex-shrink:0;background:var(--n14);border:1px solid var(--accent);border-radius:20px;padding:3px 3px 3px 7px;font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#fff;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-.cc-createbtn:active{opacity:.75;}
-.cc-createbtn img{transition:transform .18s cubic-bezier(.22,1,.36,1);}
-.cc-card.menu-open .cc-createbtn img{transform:rotate(180deg);}
 .cc-idea{display:flex;align-items:center;justify-content:center;gap:2px;flex-shrink:0;background:var(--n24);border-radius:14px;padding:4px 8px;font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#fff;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .cc-idea:active{opacity:.75;}
 .cc-cta{margin-left:auto;display:flex;align-items:center;justify-content:center;gap:4px;flex-shrink:0;min-width:70px;padding:4px 4px 4px 8px;border-radius:20px;border:none;font-family:inherit;cursor:pointer;background:var(--mv-grad);box-shadow:0 4px 6px rgba(168,85,247,.4);transition:opacity .15s;}
@@ -1132,13 +1128,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .cc-credit{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.15);border-radius:10px;padding:2px 4px;}
 .cc-credit span{font-size:10px;font-weight:700;color:#fff;line-height:12px;}
 /* create-type menu */
-.cc-menu{position:absolute;left:11px;top:calc(100% - 6px);z-index:8;min-width:142px;background:var(--n14);border:1px solid var(--border);border-radius:14px;padding:4px;box-shadow:0 10px 24px rgba(0,0,0,.5);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-10px);transition:opacity .18s ease,transform .18s cubic-bezier(.22,1,.36,1),visibility 0s linear .18s;}
-.cc-menu.show{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);transition:opacity .18s ease,transform .18s cubic-bezier(.22,1,.36,1),visibility 0s;}
-@media (prefers-reduced-motion:reduce){.cc-menu{transition:none;transform:none;}}
-.cc-menu-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;font-size:12px;font-weight:600;letter-spacing:-.12px;color:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-.cc-menu-item:active{background:rgba(255,255,255,.06);}
-.cc-menu-item .cc-menu-chk{margin-left:auto;opacity:0;}
-.cc-menu-item.on .cc-menu-chk{opacity:1;}
 .ss-group{display:flex;flex-direction:column;gap:6px;width:100%;}
 .ss-lbl{font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:var(--n64);}
 .ss-lbl span{color:var(--n44);}
@@ -1146,6 +1135,68 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .ss-chip{display:flex;align-items:center;justify-content:center;padding:6px 10px;border-radius:20px;background:var(--card);border:1px solid var(--border);font-size:12px;font-weight:500;color:#fff;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s,color .15s;-webkit-tap-highlight-color:transparent;}
 .ss-chip:active{opacity:.75;}
 .ss-chip.on{background:rgba(168,85,247,.1);border-color:var(--accent);color:var(--accent);}
+/* ── SKILL BAR + SUB-SKILLS (Figma 4593:69607 / 4593:70028) ── */
+.cc-skills,.cc-subs{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}
+.cc-skills::-webkit-scrollbar,.cc-subs::-webkit-scrollbar{display:none;}
+.cc-skills{margin:0 -16px;padding:10px 16px 0;}
+.cc-skill,.cc-sk-sub{display:flex;align-items:center;flex-shrink:0;height:28px;padding:0 12px;background:var(--n14);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;line-height:15px;letter-spacing:-.12px;color:#fff;white-space:nowrap;cursor:pointer;transition:border-color .2s,background .2s;-webkit-tap-highlight-color:transparent;}
+.cc-skill{gap:6px;}
+.cc-skill.has-ico{padding-left:10px;}
+.cc-skill.has-chev{padding-right:8px;}
+.cc-skill:active,.cc-sk-sub:active{opacity:.75;}
+/* the selected skill keeps the panel's gradient edge */
+.cc-skill.on{border-color:transparent;background:linear-gradient(var(--n14),var(--n14)) padding-box,linear-gradient(90deg,#FF6BCE,#A855F7) border-box;}
+.cc-sk-x{border-radius:50%;}
+.cc-sk-sub.on{background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 100%);border-color:transparent;}
+/* sub-skills slide in from under their parent skill; on close they just go and
+   the pills behind them slide up into the gap (FLIP, see ccCloseSkill) */
+.cc-sk-sub{transition:opacity .2s ease,transform .24s cubic-bezier(.22,1,.36,1),background .2s,border-color .2s;}
+.cc-sk-sub.in-start{opacity:0;transform:translateX(-14px) scale(.94);}
+@media (prefers-reduced-motion:reduce){.cc-sk-sub{transition:none;}.cc-sk-sub.in-start{opacity:1;transform:none;}}
+/* actions row scrolls under the Create pill, with a fade at the seam */
+.cc-btnrow{flex:1;min-width:0;display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 20px),transparent 100%);mask-image:linear-gradient(90deg,#000 calc(100% - 20px),transparent 100%);}
+.cc-btnrow::-webkit-scrollbar{display:none;}
+.cc-add{width:48px;height:24px;padding:0;justify-content:center;}
+/* material slots + URL row */
+.cc-slots{display:flex;gap:6px;flex-shrink:0;}
+.cc-slots:empty{display:none;}
+.cc-url{display:flex;align-items:center;gap:6px;background:var(--n14);border:1px solid var(--border);border-radius:10px;padding:6px 8px;}
+.cc-url input{flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-family:inherit;font-size:11px;font-weight:500;letter-spacing:-.11px;}
+.cc-url input::placeholder{color:rgba(255,255,255,.4);}
+/* ratio / duration chips in the actions row */
+.cc-param{display:flex;align-items:center;justify-content:center;gap:2px;flex-shrink:0;background:var(--n24);border-radius:14px;padding:4px 8px;font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#fff;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.cc-param:active{opacity:.75;}
+/* ── AI AGENT CHAT ── */
+.ag-log{display:flex;flex-direction:column;gap:10px;}
+.ag-row{display:flex;gap:8px;align-items:flex-end;}
+.ag-row.me{justify-content:flex-end;}
+.ag-ava{width:24px;height:24px;border-radius:50%;background:var(--mv-grad);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ag-bub{max-width:76%;padding:9px 12px;border-radius:14px;font-size:13px;font-weight:500;line-height:19px;letter-spacing:-.13px;color:#fff;background:var(--n14);border:1px solid var(--border-2);}
+.ag-row.me .ag-bub{background:rgba(168,85,247,.18);border-color:rgba(168,85,247,.45);border-bottom-right-radius:4px;}
+.ag-row.ai .ag-bub{border-bottom-left-radius:4px;}
+.ag-atts{display:flex;gap:6px;margin-top:6px;}
+.ag-atts img{width:34px;height:34px;border-radius:8px;object-fit:cover;display:block;}
+.ag-card{margin-left:32px;width:150px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;}
+.ag-card>img{width:100%;height:200px;object-fit:cover;display:block;}
+.ag-card .ag-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.25);}
+.ag-dots{display:flex;gap:4px;padding:4px 2px;}
+.ag-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55);animation:ag-blink 1.2s infinite;}
+.ag-dots i:nth-child(2){animation-delay:.18s;}
+.ag-dots i:nth-child(3){animation-delay:.36s;}
+@keyframes ag-blink{0%,80%,100%{opacity:.25;}40%{opacity:1;}}
+.ag-bar{position:absolute;left:0;right:0;bottom:0;padding:10px 16px calc(var(--safe-bot) + 14px);background:rgba(9,9,11,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--border-3);display:flex;flex-direction:column;gap:8px;}
+.ag-chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;}
+.ag-chips::-webkit-scrollbar{display:none;}
+.ag-chips:empty{display:none;}
+.ag-chip{display:flex;align-items:center;flex-shrink:0;background:var(--n14);border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.ag-chip:active{opacity:.75;}
+.ag-chip.go{background:var(--mv-grad);border-color:transparent;}
+.ag-input{display:flex;align-items:center;gap:8px;background:var(--n14);border:1px solid var(--border);border-radius:22px;padding:6px 6px 6px 14px;}
+.ag-input input{flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-family:inherit;font-size:13px;font-weight:500;}
+.ag-input input::placeholder{color:var(--n54);}
+.ag-send{width:30px;height:30px;border-radius:50%;background:var(--mv-grad);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;}
+.ag-send:active{opacity:.8;}
+
 /* ── START WITH VIBE — pre-defined cards (Figma "Top Hero Banner") ── */
 .cc-vibe{display:flex;align-items:center;gap:10px;overflow-x:auto;padding:0 16px 16px;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}
 .cc-vibe::-webkit-scrollbar{display:none;}
@@ -1548,21 +1599,22 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               </div>
             </div>
 
-            <!-- Prompt area: MV song slot + textarea -->
+            <!-- Prompt area: material slots (per skill) + textarea -->
             <div class="cc-prompt">
-              <div class="cc-slot" id="cc-slot" onclick="ccTapSlot()">
-                <div class="cc-slot-box" id="cc-slot-box">
-                  <img src="../assets/icons/ui/ic_add.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.6;">
-                </div>
-                <div class="cc-slot-lbl" id="cc-slot-lbl">Song</div>
-              </div>
+              <div class="cc-slots" id="cc-slots"></div>
               <textarea class="cc-ta" id="cc-ta" rows="1" oninput="ccOnInput()"
                 placeholder="Describe the mood, story, characters, or visuals you want for your MV..."></textarea>
             </div>
 
+            <!-- URL material (Marketing · URL to Video Ad) -->
+            <div class="cc-url" id="cc-url" style="display:none;">
+              <img src="../assets/icons/ui/ic_link.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);opacity:.5;flex-shrink:0;">
+              <input id="cc-url-input" placeholder="Paste your product or landing page URL" oninput="ccOnInput()">
+            </div>
+
             <!-- Bottom rows -->
             <div class="cc-bottom">
-              <div class="cc-row">
+              <div class="cc-row" id="cc-row1">
                 <!-- MV: Templates -->
                 <div class="cc-tpl" id="cc-tpl" onclick="ccOpenTemplates()">
                   <div class="cc-thumbs">
@@ -1583,14 +1635,27 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                   <img src="../assets/icons/ui/ic_edit_ai.svg" width="14" height="14" style="display:block;">
                 </div>
               </div>
-              <div class="cc-row">
-                <div class="cc-createbtn" onclick="ccToggleMenu(event)">
-                  <span id="cc-type-lbl">Create MV</span>
-                  <img src="../assets/icons/ui/ic_chevron-down.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
-                </div>
-                <div class="cc-idea" onclick="ccIdea()">
-                  <img src="../assets/icons/ui/ic_lightbulb.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
-                  <span>Idea</span>
+              <div class="cc-row" id="cc-row2">
+                <div class="cc-btnrow" id="cc-btnrow">
+                  <div class="cc-idea" id="cc-idea" onclick="ccIdea()">
+                    <img src="../assets/icons/ui/ic_lightbulb.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                    <span>Idea</span>
+                  </div>
+                  <div class="cc-idea cc-add" id="cc-add" style="display:none;" onclick="ccAddMaterial()">
+                    <img src="../assets/icons/ui/ic_add.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                  </div>
+                  <div class="cc-param" id="cc-ratio" style="display:none;" onclick="ccCycleParam('ratio')">
+                    <img id="cc-ratio-ico" src="../assets/icons/ui/ic_rectangle_ver.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                    <span id="cc-ratio-txt">9:16</span>
+                  </div>
+                  <div class="cc-param" id="cc-dur" style="display:none;" onclick="ccCycleParam('dur')">
+                    <img src="../assets/icons/ui/ic_clock.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                    <span id="cc-dur-txt">30s</span>
+                  </div>
+                  <div class="cc-param" id="cc-res" style="display:none;" onclick="ccCycleParam('res')">
+                    <img id="cc-res-ico" src="../assets/icons/ui/ic_sd.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
+                    <span id="cc-res-txt">Standard</span>
+                  </div>
                 </div>
                 <button class="cc-cta off" id="cc-cta" onclick="ccSubmit()">
                   <span class="cc-cta-txt">Create</span>
@@ -1602,21 +1667,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                 </button>
               </div>
             </div>
-
-            <!-- create-type switcher -->
-            <div class="cc-menu" id="cc-menu">
-              <div class="cc-menu-item on" id="cc-menu-mv" onclick="ccPickType('mv')">
-                <img src="../assets/icons/ui/ic_video_ai.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
-                <span>Create MV</span>
-                <img class="cc-menu-chk" src="../assets/icons/ui/ic_check.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
-              </div>
-              <div class="cc-menu-item" id="cc-menu-song" onclick="ccPickType('song')">
-                <img src="../assets/icons/ui/ic_song_ai.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
-                <span>Create Song</span>
-                <img class="cc-menu-chk" src="../assets/icons/ui/ic_check.svg" width="14" height="14" style="display:block;filter:brightness(0) invert(1);">
-              </div>
-            </div>
           </div>
+
+          <!-- Skill bar — create types, with the open skill's sub-skills spliced in beside it -->
+          <div class="cc-skills" id="cc-skills"></div>
         </div>
 
         <!-- Start with vibe — pre-defined cards, swap with the create type -->
@@ -4347,7 +4401,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
           <div id="hist-filter-bar" style="display:flex;gap:6px;">
             <button class="ftab on" data-filter="all" onclick="filterTab(this)">All</button>
-            <button class="ftab" data-filter="mv" onclick="filterTab(this)">Music Videos</button>
+            <button class="ftab" data-filter="video" onclick="filterTab(this)">Videos</button>
             <button class="ftab" data-filter="song" onclick="filterTab(this)">Songs</button>
             <button class="ftab" data-filter="liked" onclick="filterTab(this)">Liked</button>
           </div>
@@ -4411,6 +4465,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
             <div class="hist-info">
               <div class="hist-name">Cinematic Night</div>
+              <div class="hist-meta">Music Video</div>
               <div class="hist-social">
                 <div class="hist-stat"><img src="../assets/icons/ui/ic_headphones.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>0</span></div>
                 <div class="hist-stat"><img src="../assets/icons/ui/ic_favorite_off.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>0</span></div>
@@ -4422,6 +4477,31 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
                   Done
                 </div>
                 <div class="hist-time">2026-06-08</div>
+              </div>
+            </div>
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="../assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
+          </div>
+
+          <!-- 1b. Spring Jacket Try-on — made in the AI Agent chat (UGC) · Done -->
+          <div class="hist-row" data-htype="agent" onclick="histMarkPlayed(this);agOpenHistory('ugc','tryon','A creator trying the outfit on in front of a bedroom mirror — three quick angle changes, casual voiceover about the fit and the fabric.','../assets/images/character-photos/acter_1.jpg')">
+            <div class="hist-thumb">
+              <img src="../assets/images/character-photos/acter_1.jpg">
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="../assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+            </div>
+            <div class="hist-info">
+              <div class="hist-name">Spring Jacket Try-on</div>
+              <div class="hist-meta">UGC Try-on</div>
+              <div class="hist-social">
+                <div class="hist-stat"><img src="../assets/icons/ui/ic_headphones.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>24</span></div>
+                <div class="hist-stat"><img src="../assets/icons/ui/ic_favorite_off.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>7</span></div>
+                <div class="hist-stat"><img src="../assets/icons/ui/ic_share.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>2</span></div>
+              </div>
+              <div class="hist-status">
+                <div class="hist-badge badge-done">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#01B37B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Done
+                </div>
+                <div class="hist-time">2026-10-01</div>
               </div>
             </div>
             <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="../assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
@@ -4502,6 +4582,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
             <div class="hist-info">
               <div class="hist-name">Neon City Nights</div>
+              <div class="hist-meta">Music Video</div>
               <div class="hist-social">
                 <div class="hist-stat"><img src="../assets/icons/ui/ic_headphones.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>68</span></div>
                 <div class="hist-stat"><img src="../assets/icons/ui/ic_favorite_off.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>12</span></div>
@@ -5542,6 +5623,30 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
 
     </div><!-- /screen-credits -->
+
+    <!-- ══════ AI AGENT CHAT (Story / Marketing / UGC) ══════ -->
+    <div id="screen-agent" class="screen" style="background:#09090B;">
+      <div class="nav nav-blur">
+        <div class="nav-back" onclick="agBack()">
+          <img src="../assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+        </div>
+        <div class="nav-title" id="ag-title">AI Agent</div>
+        <div style="min-width:36px;"></div>
+      </div>
+      <div class="scr-scroll" id="ag-scroll" style="padding:calc(var(--safe-top) + var(--nav-h) + 14px) 16px 150px;">
+        <div class="ag-log" id="ag-log"></div>
+      </div>
+      <div class="ag-bar">
+        <div class="ag-chips" id="ag-chips"></div>
+        <div class="ag-input">
+          <input id="ag-text" placeholder="Reply to the agent…" onkeydown="if(event.key==='Enter'){agSend();}">
+          <div class="ag-send" onclick="agSend()">
+            <img src="../assets/icons/ui/ic_arrow_up.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div><!-- /screen-wrap -->
 
@@ -9003,6 +9108,7 @@ function histMarkPlayed(row) {
 function goToHistory(type) {
   // Navigate to History tab, then activate the correct filter tab
   tabNav('history');
+  if (type === 'mv' || type === 'agent') type = 'video';   // MV and agent videos share one tab
   var filterBtn = document.querySelector('#screen-history .ftab[data-filter="' + type + '"]');
   if (filterBtn) filterTab(filterBtn);
 }
@@ -9033,7 +9139,7 @@ function filterTab(btn) {
     let visible;
     if (filter === 'all')         visible = !isCommunity;
     else if (filter === 'liked')  visible = liked;
-    else if (filter === 'mv')     visible = !isCommunity && type === 'mv';
+    else if (filter === 'video')  visible = !isCommunity && (type === 'mv' || type === 'agent');
     else                          visible = !isCommunity && filter === type;
     row.style.display = visible ? 'flex' : 'none';
   });
@@ -14279,59 +14385,437 @@ function applySongTemplate(title, genre, mood) {
   }, 180);
 }
 /* ══════════════ CHAT CREATE PANEL (Home) ══════════════
-   Figma: "Explore - Home - Chat Based_MV"  4021:151556
+   Figma: "Explore - Home - Chat Based_MV"   4021:151556
           "Explore - Home - Chat Based_Song" 4082:152447
-   The panel replaces the old top banner carousel. The pre-defined
-   "start with vibe" cards under it swap with the selected create type. */
-let ccType = 'mv';              // 'mv' | 'song'
-let ccSongTab = 'custom';       // Song panel only
+          "Chat Based — Skills"              4854:71391
+   The create-type picker now sits OUTSIDE the card as a skill bar.
+   Story / Marketing / UGC expand a sub-skill row; picking a sub-skill
+   loads its default prompt plus the material slots it needs, and Create
+   hands those three off to the AI Agent chat instead of a fixed flow. */
+let ccType = null;            // null (nothing picked yet) | 'mv' | 'song' | 'story' | 'mkt' | 'ugc'
+let ccSub = null;             // active sub-skill key
+let ccOpenSkill = null;       // which skill's sub-row is expanded
+let ccSongTab = 'custom';
 let ccInstrumental = false;
-let ccSongAttached = false;     // MV panel song slot
-let ccSong = null;              // {method,title,dur,art,audioSrc} once a song is picked
-let ccTpl = null;               // template picked from the Select-a-Template sheet
-let ccStyle = { mv: null, song: null };   // MV style label carried in from a vibe card
-let ccSongStyle = null;         // {genre, mood, vocal} once Song Style has been set
-let _ssDraft = null;            // the sheet's working copy
-const CC_DRAFT = { mv: '', song: '' };    // prompts are kept per create type
+let ccSongAttached = false;
+let ccSong = null;
+let ccTpl = null;
+let ccStyle = { mv: null, song: null };
+let ccSongStyle = null;
+let ccMat = {};               // slot index -> picked image
+let ccParams = { ratio: '9:16', dur: '30s', res: 'Standard' };
+let ccExtraCount = 0;         // loose材料 added with + before a sub-skill is picked
+let _ssDraft = null;
+let _ccTplFromHome = false;
+let _ccSongFromHome = false;
+
+const CC_DRAFT = { none:'', mv:'', song:'', story:'', mkt:'', ugc:'' };
 const SS_GENRE = ['Pop','R&B','Electronic','Hip-Hop','Acoustic','Jazz','Classical','Lo-fi'];
 const SS_MOOD  = ['Uplifting','Melancholic','Romantic','Energetic','Calm','Dark'];
 const SS_VOCAL = ['Male','Female'];
-let _ccTplFromHome = false;     // the Template sheet was opened from the Home panel
-let _ccSongFromHome = false;    // the song flow was started from the Home panel
 const CC_DEFAULT_THUMBS = ['../assets/videos/sample-mvs/mv_03_neon_city.jpg','../assets/videos/sample-mvs/mv_01_cinematic_dark.jpg','../assets/videos/sample-mvs/mv_05_anime_style.jpg'];
+const CC_SAMPLE_SONG = { title:'Down the Memory Lane', dur:'02:48', art:'../assets/images/album-art/album_05.jpg' };
+const CC_TA_MAX = 60;         // 4 lines of 15px, then the field scrolls
+const CC_RATIOS = ['9:16','1:1','16:9'];
+const CC_DURS   = ['15s','30s','60s'];
+const CC_RES    = ['Standard','HD'];
+const CC_RATIO_ICO = { '9:16':'ic_rectangle_ver.svg', '1:1':'ic_square.svg', '16:9':'ic_rectangle_hor.svg' };
+const CC_RES_ICO   = { 'Standard':'ic_sd.svg', 'HD':'ic_hd.svg' };
+
+/* sample material the slots fill with when tapped */
+const CC_ART = [
+  '../assets/images/character-photos/acter_1.jpg',
+  '../assets/images/character-photos/acter_3.jpg',
+  '../assets/images/scene/scene_1.jpg',
+  '../assets/images/scene/scene_3.jpg',
+  '../assets/videos/sample-mvs/mv_01_cinematic_dark.jpg'
+];
+
+/* ── the skill bar (Figma 4854:71391) ── */
+const CC_SKILLS = [
+  { k:'mv',    lbl:'Music Video',     ico:'ic_video_ai.svg' },
+  { k:'song',  lbl:'Song',            ico:'ic_song_ai.svg'  },
+  { k:'story', lbl:'Story Video',     subs:true },      // Figma hides the icon on the
+  { k:'mkt',   lbl:'Marketing Video', subs:true },      // three video skills — text + chevron
+  { k:'ugc',   lbl:'UGC Video',       subs:true }
+];
+
+/* ── sub-skills: default prompt + the material fields each one needs ── */
+const CC_SUBS = {
+  story: [
+    { k:'drama', lbl:'Short Drama', slots:[{lbl:'Character'},{lbl:'Scene'}],
+      ph:'A 60-second office romance — two colleagues keep missing each other at the elevator, until one rainy evening they finally share an umbrella.' },
+    { k:'dance', lbl:'Dance', slots:[{lbl:'Dancer'},{lbl:'Scene'}],
+      ph:'A street dance crew running a high-energy hip-hop routine under neon signs, camera orbiting the lead dancer on the drop.' },
+    { k:'anime', lbl:'Anime Video', slots:[{lbl:'Character'}],
+      ph:'An anime short about a girl who finds a glowing cat in an abandoned train station and follows it into a city of floating lanterns.' },
+    { k:'kids',  lbl:'Kids Video',  slots:[{lbl:'Character'}],
+      ph:'A friendly cartoon bear teaching three little animals to count to ten in a sunny forest clearing — bright colours, gentle motion.' }
+  ],
+  mkt: [
+    { k:'photoad', lbl:'Photo to Video Ad', slots:[{lbl:'Product'}],
+      ph:'Turn my product photo into a 15-second ad — slow rotating hero shot, soft studio light, clean backdrop, closing on the logo.' },
+    { k:'urlad',   lbl:'URL to Video Ad', slots:[], url:true,
+      ph:'Build a 15-second ad from my landing page — pull the key selling points and show them as bold captions over lifestyle footage.' },
+    { k:'clonead', lbl:'Clone Video Ad', slots:[{lbl:'Reference'},{lbl:'Product'}],
+      ph:'Recreate this reference ad with my own product — same pacing, same shot order, same caption rhythm.' },
+    { k:'tvc',     lbl:'TVC Ad', slots:[{lbl:'Product'},{lbl:'Scene'}],
+      ph:'A 30-second TV commercial — a warm family morning routine, the product appearing naturally in three moments, closing on the tagline.' }
+  ],
+  ugc: [
+    { k:'tryon',  lbl:'Try-on', slots:[{lbl:'Model'},{lbl:'Product'}],
+      ph:'A creator trying the outfit on in front of a bedroom mirror — three quick angle changes, casual voiceover about the fit and the fabric.' },
+    { k:'unbox',  lbl:'Unboxing', slots:[{lbl:'Product'}],
+      ph:'A close-up desk unboxing — hands opening the package, the reveal landing on the beat, quick cuts to each item inside.' },
+    { k:'howto',  lbl:'Tutorial', slots:[{lbl:'Product'}],
+      ph:'A step-by-step how-to — three short steps shot overhead, on-screen numbers, friendly upbeat narration.' },
+    { k:'ba',     lbl:'Before & After', slots:[{lbl:'Before'},{lbl:'After'}],
+      ph:'A split-screen before and after — same framing, same light, the change landing on the halfway cut.' },
+    { k:'points', lbl:'Selling Points', slots:[{lbl:'Product'}],
+      ph:'Three selling points straight to camera, one punchy line each, bold captions and a quick product cutaway between them.' }
+  ]
+};
 
 const CC_PLACEHOLDER = {
+  none: 'Describe your idea to create an engaging video...',
   mv:   'Describe the mood, story, characters, or visuals you want for your MV...',
-  song: 'Describe your lyrics or song idea here...'
+  song: 'Describe your lyrics or song idea here...',
+  story:'Describe your idea to create an engaging story video...',
+  mkt:  'Describe your idea to create an engaging marketing video...',
+  ugc:  'Describe your concept for an engaging UGC video that captivates your audience...'
 };
-const CC_TA_H   = { mv: 45, song: 30 };
-const CC_TA_MAX = 60;           // 4 lines of 15px, then the field scrolls
-const CC_TYPELBL= { mv: 'Create MV', song: 'Create Song' };
-const CC_SAMPLE_SONG = { title: 'Down the Memory Lane', dur: '02:48', art: '../assets/images/album-art/album_05.jpg' };
+const CC_TA_H = { none:30, mv:45, song:30, story:45, mkt:45, ugc:45 };
 
+/* null until the user actually picks a sub-skill — nothing is pre-selected */
+function ccSubDef() {
+  const list = CC_SUBS[ccType];
+  if (!list || !ccSub) return null;
+  for (let i = 0; i < list.length; i++) if (list[i].k === ccSub) return list[i];
+  return null;
+}
+
+function ccRenderSkills() {
+  const bar = document.getElementById('cc-skills');
+  if (!bar) return;
+  let html = '';
+  CC_SKILLS.forEach(function (sk) {
+    const open = (ccOpenSkill === sk.k);
+    const cls  = 'cc-skill' + (sk.ico ? ' has-ico' : '') + (sk.subs ? ' has-chev' : '') + (ccType === sk.k ? ' on' : '');
+    const ico  = sk.ico
+      ? '<img src="../assets/icons/ui/' + sk.ico + '" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">'
+      : '';
+    /* an open skill swaps its chevron for an X that clears the selection */
+    const tail = !sk.subs ? ''
+      : open
+        ? '<img class="cc-sk-x" src="../assets/icons/ui/ic_close.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);" onclick="event.stopPropagation();ccCloseSkill()">'
+        : '<img src="../assets/icons/ui/ic_chevron-right.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.4;">';
+    html += '<div class="' + cls + '" data-k="' + sk.k + '" onclick="ccTapSkill(\'' + sk.k + '\')">' + ico + '<span>' + sk.lbl + '</span>' + tail + '</div>';
+    /* the sub-skills live in the same row, right after their parent skill */
+    if (open) {
+      html += (CC_SUBS[sk.k] || []).map(function (u) {
+        return '<div class="cc-sk-sub' + (ccSub === u.k ? ' on' : '') + '" onclick="ccPickSub(\'' + u.k + '\')">' + u.lbl + '</div>';
+      }).join('');
+    }
+  });
+  bar.innerHTML = html;
+  if (_ccAnimateSubs) {
+    _ccAnimateSubs = false;
+    const subs = [].slice.call(bar.querySelectorAll('.cc-sk-sub'));
+    subs.forEach(function (el) { el.classList.add('in-start'); });
+    void bar.offsetWidth;                       // commit the start state
+    subs.forEach(function (el, i) {
+      el.style.transitionDelay = (i * 35) + 'ms';
+      el.classList.remove('in-start');
+    });
+    setTimeout(function () { subs.forEach(function (el) { el.style.transitionDelay = ''; }); }, 500);
+  }
+  if (ccSub) ccScrollSubIntoView(); else ccScrollSkills();
+}
+
+/* Keep the selected sub-skill fully inside the viewport — and the one after it,
+   so there is always a hint of what comes next (unless it IS the last one). */
+function ccScrollSubIntoView() {
+  const bar = document.getElementById('cc-skills');
+  if (!bar) return;
+  const el = bar.querySelector('.cc-sk-sub.on');
+  if (!el) return;
+  const nxt  = el.nextElementSibling;
+  const prev = el.previousElementSibling;
+  const pad = 16;
+  const W = bar.clientWidth - pad * 2;        // usable width between the gutters
+  let L = el.offsetLeft, R = el.offsetLeft + el.offsetWidth;
+  if (nxt  && (nxt.offsetLeft + nxt.offsetWidth - L) <= W) R = nxt.offsetLeft + nxt.offsetWidth;
+  if (prev && (R - prev.offsetLeft) <= W)                  L = prev.offsetLeft;
+  let to = bar.scrollLeft;
+  if (R > to + pad + W) to = R - W - pad;     // pull the right neighbour in
+  if (L < to + pad)     to = L - pad;         // ...without cutting the left one
+  to = Math.max(0, to);
+  if (Math.abs(to - bar.scrollLeft) < 1) return;
+  if (bar.scrollTo) bar.scrollTo({ left: to, behavior: 'smooth' }); else bar.scrollLeft = to;
+}
+
+/* slide the row so the open skill sits in the first position.
+   Closing a skill leaves the row where it is — only opening one scrolls. */
+let _ccAnimateSubs = false;      // play the sub-skill entrance on the next render
+let _ccPrevScroll  = 0;          // where the row sat before a skill was opened
+function ccScrollSkills() {
+  const bar = document.getElementById('cc-skills');
+  if (!bar) return;
+  if (!ccOpenSkill) return;
+  const pill = bar.querySelector('.cc-skill[data-k="' + ccOpenSkill + '"]');
+  if (!pill) return;
+  const to = Math.max(0, pill.offsetLeft - 16);
+  if (bar.scrollTo) bar.scrollTo({ left: to, behavior: 'smooth' }); else bar.scrollLeft = to;
+}
+
+/* Tapping a video skill opens its sub-skills WITHOUT pre-selecting one;
+   the X on the open pill clears the skill and goes back to Music Video. */
+function ccTapSkill(k) {
+  const def = CC_SKILLS.filter(function (s) { return s.k === k; })[0];
+  if (def && def.subs) {
+    if (ccOpenSkill === k) { ccCloseSkill(); return; }   // tap anywhere on the open pill to collapse
+    const bar0 = document.getElementById('cc-skills');
+    if (!ccOpenSkill && bar0) _ccPrevScroll = bar0.scrollLeft;
+    ccOpenSkill = k;
+    _ccAnimateSubs = true;
+    ccSetType(k, null);
+  } else {
+    ccOpenSkill = null;
+    ccSetType(k, null);
+  }
+}
+
+/* Closing: the sub-skills are removed at once (no fade) and every remaining
+   pill glides from where it was to where it lands — the row's scroll jump back
+   to the pre-open position rides along in the same transform, so the whole
+   thing reads as one slide instead of a snap. */
+function ccCloseSkill() {
+  const bar = document.getElementById('cc-skills');
+  if (!bar) { ccOpenSkill = null; ccSetType(null, null); return; }
+  const first = {};
+  [].slice.call(bar.querySelectorAll('.cc-skill')).forEach(function (el) {
+    first[el.getAttribute('data-k')] = el.getBoundingClientRect().left;
+  });
+
+  ccOpenSkill = null;
+  ccSetType(null, null);                       // re-renders the row without the subs
+  bar.scrollLeft = Math.max(0, Math.min(_ccPrevScroll, bar.scrollWidth - bar.clientWidth));
+
+  const pills = [].slice.call(bar.querySelectorAll('.cc-skill'));
+  let moved = false;
+  pills.forEach(function (el) {
+    const from = first[el.getAttribute('data-k')];
+    if (from == null) return;
+    const dx = from - el.getBoundingClientRect().left;
+    if (!dx) return;
+    moved = true;
+    el.style.transition = 'none';
+    el.style.transform = 'translateX(' + dx + 'px)';
+  });
+  if (!moved) return;
+  void bar.offsetWidth;
+  pills.forEach(function (el) {
+    el.style.transition = 'transform .26s cubic-bezier(.22,1,.36,1)';
+    el.style.transform = '';
+  });
+  clearTimeout(bar._ccFlip);
+  bar._ccFlip = setTimeout(function () {
+    pills.forEach(function (el) { el.style.transition = ''; el.style.transform = ''; });
+  }, 300);
+}
+
+function ccPickSub(k) {
+  if (!ccOpenSkill) return;
+  ccSetType(ccOpenSkill, ccSub === k ? null : k);   // tapping the active one clears it
+}
+
+/* ── material slots ── */
+function ccSlotDefs() {
+  if (ccType === 'mv') return [{ k: 'song', lbl: 'Song' }];
+  if (ccType === 'song') return [];
+  const s = ccSubDef();
+  if (s) return s.slots || [];
+  const out = [];                      // no sub-skill yet: whatever the + button added
+  for (let i = 0; i < ccExtraCount; i++) out.push({ lbl: 'Image' });
+  return out;
+}
+
+/* the + pill in the actions row, shown only before a sub-skill is picked */
+function ccAddMaterial() {
+  if (ccExtraCount >= 3) { if (typeof toast === 'function') toast('Up to 3 images'); return; }
+  ccMat[ccExtraCount] = CC_ART[ccExtraCount % CC_ART.length];
+  ccExtraCount++;
+  ccRenderSlots();
+  ccOnInput();
+}
+
+function ccRenderSlots() {
+  const box = document.getElementById('cc-slots');
+  if (!box) return;
+  box.innerHTML = ccSlotDefs().map(function (d, i) {
+    const isSong = d.k === 'song';
+    const filled = isSong ? ccSongAttached : !!ccMat[i];
+    const src = isSong ? ((ccSong && ccSong.art) || CC_SAMPLE_SONG.art) : ccMat[i];
+    const inner = filled
+      ? '<img class="cc-slot-cover" src="' + src + '" alt="">' +
+        '<div class="cc-slot-x" onclick="event.stopPropagation();ccClearSlot(' + i + ')">' +
+          '<img src="../assets/icons/ui/ic_close.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">' +
+        '</div>'
+      : '<img src="../assets/icons/ui/ic_add.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.6;">';
+    return '<div class="cc-slot' + (filled ? ' filled' : '') + '" onclick="ccTapSlot(' + i + ')">' +
+             '<div class="cc-slot-box">' + inner + '</div>' +
+             '<div class="cc-slot-lbl">' + d.lbl + '</div>' +
+           '</div>';
+  }).join('');
+}
+
+function ccTapSlot(i) {
+  const d = ccSlotDefs()[i];
+  if (!d) return;
+  if (d.k === 'song') { showSheet('ccsong-sheet'); return; }
+  ccMat[i] = CC_ART[i % CC_ART.length];           // prototype: picking is simulated
+  ccRenderSlots();
+  ccOnInput();
+}
+
+function ccClearSlot(i) {
+  const d = ccSlotDefs()[i];
+  if (d && d.k === 'song') {
+    ccSong = null; ccSongAttached = false;
+    if (typeof clearSong === 'function') clearSong();
+  } else if (!ccSubDef() && ccType !== 'mv' && ccType !== 'song') {
+    for (let j = i; j < ccExtraCount - 1; j++) ccMat[j] = ccMat[j + 1];
+    delete ccMat[ccExtraCount - 1];
+    ccExtraCount--;
+  } else { delete ccMat[i]; }
+  ccRenderSlots();
+  ccOnInput();
+}
+
+function ccFillSlot(song) { ccSong = song; ccSongAttached = true; ccRenderSlots(); ccOnInput(); }
+function ccPickSongSource(src) { hideSheet('ccsong-sheet'); _ccSongFromHome = true; setTimeout(function () { startAudio(src); }, 300); }
+
+/* ── ratio / duration chips ── */
+function ccSyncParams() {
+  const set = function (id, v) { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('cc-ratio-txt', ccParams.ratio);
+  set('cc-dur-txt', ccParams.dur);
+  set('cc-res-txt', ccParams.res);
+  const ri = document.getElementById('cc-ratio-ico');
+  if (ri) ri.src = '../assets/icons/ui/' + CC_RATIO_ICO[ccParams.ratio];
+  const si = document.getElementById('cc-res-ico');
+  if (si) si.src = '../assets/icons/ui/' + CC_RES_ICO[ccParams.res];
+}
+function ccCycleParam(key) {
+  const list = key === 'ratio' ? CC_RATIOS : key === 'dur' ? CC_DURS : CC_RES;
+  const nxt  = list[(list.indexOf(ccParams[key]) + 1) % list.length];
+  ccParams[key] = nxt;
+  ccSyncParams();
+}
+
+/* ── the switcher ── */
+/* The card grows and shrinks as slots / rows come and go, so tween its height
+   around whatever the switch does instead of letting it jump. */
+function ccSetType(t, subKey) {
+  const card = document.getElementById('cc-card');
+  if (!card) { _ccSetType(t, subKey); return; }
+  const h0 = card.offsetHeight;
+  _ccSetType(t, subKey);
+  card.style.height = '';
+  const h1 = card.offsetHeight;
+  if (h0 === h1 || !h0) return;
+  card.style.height = h0 + 'px';
+  card.style.overflow = 'hidden';
+  void card.offsetWidth;
+  card.style.transition = 'height .28s cubic-bezier(.22,1,.36,1)';
+  card.style.height = h1 + 'px';
+  clearTimeout(card._ccHT);
+  card._ccHT = setTimeout(function () {
+    card.style.height = ''; card.style.transition = ''; card.style.overflow = '';
+  }, 300);
+}
+
+function _ccSetType(t, subKey) {
+  const ta0 = document.getElementById('cc-ta');
+  if (ta0 && ccType !== t) CC_DRAFT[ccType || 'none'] = ta0.value;
+  const sameSub = (ccType === t && ccSub === (subKey || null));
+  ccType = t || null;
+  ccSub  = subKey || null;
+  const key = ccType || 'none';
+
+  /* "none" is the landing state (Figma 4860:71445): no skill picked, so the
+     card is just a prompt box with + and Create. */
+  const isNone = !ccType, isSong = ccType === 'song', isMv = ccType === 'mv';
+  const isAgent = !isNone && !isSong && !isMv;
+  const sub = isAgent ? ccSubDef() : null;
+  const hasSub = !!sub;
+
+  const wrap = document.getElementById('cc-wrap');
+  if (wrap) wrap.classList.toggle('song', isSong);
+  const show = function (id, on, disp) { const el = document.getElementById(id); if (el) el.style.display = on ? (disp || 'flex') : 'none'; };
+  show('cc-tabrow', isSong);
+  show('cc-tpl', isMv);
+  show('cc-style', isSong);
+  show('cc-cta-arrow', !isSong, 'block');
+  show('cc-credit', isSong);
+  show('cc-url', !!(sub && sub.url));
+  /* params and Idea belong to a chosen sub-skill; before that it is just + and Create */
+  show('cc-ratio', hasSub);
+  show('cc-dur', hasSub);
+  show('cc-res', hasSub);
+  show('cc-idea', isMv || isSong || hasSub);
+  show('cc-add', isNone || (isAgent && !hasSub));
+
+  /* no Templates / Song Style row outside MV and Song, and Enhance moves in
+     beside Idea instead of sitting on a row of its own */
+  const enh = document.getElementById('cc-enh');
+  const r1 = document.getElementById('cc-row1'), br = document.getElementById('cc-btnrow');
+  const sideRow = isMv || isSong;
+  if (enh && r1 && br) {
+    if (!sideRow) { if (enh.parentElement !== br) br.appendChild(enh); }
+    else if (enh.parentElement !== r1) r1.appendChild(enh);
+  }
+  if (r1) r1.style.display = sideRow ? 'flex' : 'none';
+
+  if (isAgent && !sameSub) { CC_DRAFT[key] = sub ? sub.ph : ''; ccMat = {}; ccExtraCount = 0; }
+  if (isNone && ccType !== t) { ccMat = {}; ccExtraCount = 0; }
+  const ta = document.getElementById('cc-ta');
+  if (ta) {
+    ta.placeholder = hasSub ? sub.ph : CC_PLACEHOLDER[key];
+    ta.value = CC_DRAFT[key] || '';
+    ta.style.height = CC_TA_H[key] + 'px';
+  }
+  const u = document.getElementById('cc-url-input');
+  if (u && isAgent && !sameSub) u.value = '';
+
+  ccRenderSlots();
+  ccRenderSkills();
+  ccSyncStyleLabel();
+  ccSyncSongRow();
+  ccSyncParams();
+  ccRenderVibes();
+  ccOnInput();
+}
+
+/* ── start-with-vibe cards (MV / Song only) ── */
 const CC_VIBES = {
   mv: [
-    { sub:'Storytelling', ttl:'Epic Journeys', img:'../assets/videos/sample-mvs/mv_14_Vintage Car.jpg',
-      style:'Cinematic',
+    { sub:'Storytelling', ttl:'Epic Journeys', img:'../assets/videos/sample-mvs/mv_14_Vintage Car.jpg', style:'Cinematic',
       prompt:'A cinematic road trip at golden hour — vintage car, open highway, warm dusty light, me singing behind the wheel.' },
-    { sub:'Singing', ttl:'Adventurous Echoes', img:'../assets/videos/sample-mvs/mv_12_Splash.jpg',
-      style:'Nature & Earth',
+    { sub:'Singing', ttl:'Adventurous Echoes', img:'../assets/videos/sample-mvs/mv_12_Splash.jpg', style:'Nature & Earth',
       prompt:'Wide-open landscapes and soaring cinematic shots — earthy tones, golden light, big open sky, close-ups on the chorus.' },
-    { sub:'Sing & Story', ttl:'Thrilling Harmonies', img:'../assets/videos/sample-mvs/mv_13_Urban Fashion.jpg',
-      style:'Urban Fashion',
+    { sub:'Sing & Story', ttl:'Thrilling Harmonies', img:'../assets/videos/sample-mvs/mv_13_Urban Fashion.jpg', style:'Urban Fashion',
       prompt:'A bold fashion film — high-contrast studio light, statement outfits, confident poses, sharp beat-matched cuts.' },
-    { sub:'Fan fav', ttl:'Neon City Nights', img:'../assets/videos/sample-mvs/mv_03_neon_city.jpg',
-      style:'Neon City',
+    { sub:'Fan fav', ttl:'Neon City Nights', img:'../assets/videos/sample-mvs/mv_03_neon_city.jpg', style:'Neon City',
       prompt:'Neon city after midnight — glowing streets, rain on glass, fast cuts, close-ups of me under the signs.' },
-    { sub:'Trending', ttl:'Anime Dreams', img:'../assets/videos/sample-mvs/mv_05_anime_style.jpg',
-      style:'Anime Style',
+    { sub:'Trending', ttl:'Anime Dreams', img:'../assets/videos/sample-mvs/mv_05_anime_style.jpg', style:'Anime Style',
       prompt:'An anime-inspired adventure — vivid colours, wind in the hair, sweeping camera moves over rooftops at sunset.' }
   ],
   song: [
     { ttl:'Night Rhythm', img:'../assets/images/album-art/album_06.jpg', song:{genre:'R&B', mood:'Dark', vocal:null},
       prompt:'A late-night groove about the city after midnight — deep bass, brushed drums, smoky vocals.' },
     { ttl:'Jazz Vibe', img:'../assets/images/album-art/album_07.jpg', song:{genre:'Jazz', mood:'Calm', vocal:null},
-      prompt:'A smooth jazz number — warm upright bass, soft piano, a voice that feels like a dim-lit bar at closing time.' },
+      prompt:'A smooth jazz number — warm upright bass, soft piano, a voice like a dim-lit bar at closing time.' },
     { ttl:'Chill R&B', img:'../assets/images/album-art/album_02.jpg', song:{genre:'R&B', mood:'Calm', vocal:null},
       prompt:'A slow chill R&B track about missing someone — mellow keys, lazy beat, airy layered harmonies.' },
     { ttl:'Soft Pop Hit', img:'../assets/images/album-art/album_08.jpg', song:{genre:'Pop', mood:'Uplifting', vocal:null},
@@ -14351,13 +14835,31 @@ const CC_IDEAS = {
     'A song about leaving a city you love — warm guitars, a chorus that finally lets go.',
     'An upbeat track for a summer road trip — handclaps, bright synths, shout-along chorus.',
     'A slow ballad for someone who is still waiting — piano, strings coming in late, my own voice.'
+  ],
+  story: [
+    'A barista and a regular who only ever speak through notes on the cup — until one note asks a question.',
+    'A kid builds a cardboard rocket in the backyard; the last shot shows it genuinely lifting off.',
+    'Two rival food-stall owners forced to share one generator during a blackout night market.'
+  ],
+  mkt: [
+    'A 15-second spot where the product solves one small daily annoyance, shown three times, three people.',
+    'A bold text-first ad — one claim per second over fast product macro shots, ending on the price.',
+    'A day-in-the-life ad that never names the product until the final two seconds.'
+  ],
+  ugc: [
+    'Hold the product up to camera, say the one thing that surprised you, then show it in use.',
+    'Three outfits, one product, quick whip-pan transitions, captions calling out the fit each time.',
+    'Honest review format — one thing I love, one thing I would change, then the verdict.'
   ]
 };
 
 function ccRenderVibes() {
   const row = document.getElementById('cc-vibe');
   if (!row) return;
-  row.innerHTML = CC_VIBES[ccType].map(function (v, i) {
+  const list = CC_VIBES[ccType];
+  if (!list) { row.innerHTML = ''; row.style.display = 'none'; return; }
+  row.style.display = 'flex';
+  row.innerHTML = list.map(function (v, i) {
     const sub = v.sub ? '<div class="vc-sub">' + v.sub + '</div>' : '';
     return '<div class="vibe-card ' + (ccType === 'mv' ? 'vc-mv' : 'vc-song') + '" onclick="ccUseVibe(' + i + ')">' +
              '<img src="' + v.img + '" alt="">' +
@@ -14369,7 +14871,7 @@ function ccRenderVibes() {
 }
 
 function ccUseVibe(i) {
-  const v = CC_VIBES[ccType][i];
+  const v = (CC_VIBES[ccType] || [])[i];
   if (!v) return;
   const ta = document.getElementById('cc-ta');
   if (ta) ta.value = v.prompt;
@@ -14380,12 +14882,14 @@ function ccUseVibe(i) {
   if (typeof toast === 'function') toast(v.ttl + ' · style applied');
 }
 
+/* ── Templates / Song Style labels ── */
 function ccSyncStyleLabel() {
-  const s = ccStyle[ccType];
+  if (!ccType) return;
   if (ccType === 'mv') {
     const box = document.getElementById('cc-tpl');
     const txt = document.getElementById('cc-tpl-txt');
-    const thumbs = document.querySelector('.cc-thumbs');
+    const thumbs = document.querySelector('#cc-tpl .cc-thumbs');
+    const s = ccStyle.mv;
     const label = ccTpl ? ccTpl.name : (s || 'Templates');
     if (txt) txt.textContent = label;
     if (box) box.classList.toggle('set', !!(ccTpl || s));
@@ -14393,7 +14897,7 @@ function ccSyncStyleLabel() {
       const srcs = ccTpl ? [ccTpl.thumb] : CC_DEFAULT_THUMBS;
       thumbs.innerHTML = srcs.map(function (u) { return '<img src="' + u + '" alt="">'; }).join('');
     }
-  } else {
+  } else if (ccType === 'song') {
     const box = document.getElementById('cc-style');
     const txt = document.getElementById('cc-style-txt');
     const label = ccSongStyleLabel();
@@ -14401,7 +14905,6 @@ function ccSyncStyleLabel() {
     if (box) box.classList.toggle('set', !!label);
   }
 }
-
 function ccSongStyleLabel() {
   if (!ccSongStyle) return '';
   return [ccSongStyle.genre, ccSongStyle.mood, ccSongStyle.vocal].filter(Boolean).join(' / ');
@@ -14409,11 +14912,10 @@ function ccSongStyleLabel() {
 
 /* ── Song Style sheet (Figma 4092:160166) ── */
 function ccOpenSongStyle() {
-  _ssDraft = Object.assign({ genre: 'Pop', mood: 'Uplifting', vocal: null }, ccSongStyle || {});
+  _ssDraft = Object.assign({ genre:'Pop', mood:'Uplifting', vocal:null }, ccSongStyle || {});
   ccRenderSongStyle();
   showSheet('songstyle-sheet');
 }
-
 function ccRenderSongStyle() {
   const row = function (id, list, key) {
     const el = document.getElementById(id);
@@ -14427,98 +14929,57 @@ function ccRenderSongStyle() {
   row('ss-mood', SS_MOOD, 'mood');
   row('ss-vocal', SS_VOCAL, 'vocal');
 }
-
 function ccPickStyleChip(key, val) {
-  // Vocal is optional, so tapping the selected chip clears it; Genre/Mood always keep one
   _ssDraft[key] = (key === 'vocal' && _ssDraft[key] === val) ? null : val;
   ccRenderSongStyle();
 }
-
 function ccApplySongStyle() {
   ccSongStyle = Object.assign({}, _ssDraft);
   ccSyncStyleLabel();
   hideSheet('songstyle-sheet');
 }
-
-/* Simple mode composes from a plain idea, so the style controls are hidden there */
+/* Simple mode composes from a plain idea, so the style entry is hidden there */
 function ccSyncSongRow() {
   const box = document.getElementById('cc-style');
   if (box) box.style.display = (ccType === 'song' && ccSongTab === 'custom') ? 'flex' : 'none';
 }
 
-function ccSetType(t) {
-  const prev = document.getElementById('cc-ta');
-  if (prev && ccType !== t) CC_DRAFT[ccType] = prev.value;   // MV and Song prompts never mix
-  ccType = t;
-  const wrap = document.getElementById('cc-wrap');
-  if (wrap) wrap.classList.toggle('song', t === 'song');
-  const isSong = t === 'song';
-  const show = function (id, on, disp) { const el = document.getElementById(id); if (el) el.style.display = on ? (disp || 'flex') : 'none'; };
-  show('cc-tabrow', isSong);
-  show('cc-slot', !isSong, 'flex');
-  show('cc-tpl', !isSong);
-  show('cc-style', isSong);
-  show('cc-cta-arrow', !isSong, 'block');
-  show('cc-credit', isSong);
-  const lbl = document.getElementById('cc-type-lbl');
-  if (lbl) lbl.textContent = CC_TYPELBL[t];
-  const ta = document.getElementById('cc-ta');
-  if (ta) { ta.value = CC_DRAFT[t] || ''; ta.placeholder = CC_PLACEHOLDER[t]; ta.style.height = CC_TA_H[t] + 'px'; }
-  const mMv = document.getElementById('cc-menu-mv'), mSong = document.getElementById('cc-menu-song');
-  if (mMv) mMv.classList.toggle('on', !isSong);
-  if (mSong) mSong.classList.toggle('on', isSong);
-  ccSyncStyleLabel();
-  ccSyncSongRow();
-  ccRenderVibes();
-  ccOnInput();
-}
-
-function ccToggleMenu(e) {
-  if (e) e.stopPropagation();
-  const m = document.getElementById('cc-menu');
-  if (!m) return;
-  m.classList.toggle('show');
-  ccSyncMenuChevron();
-}
-function ccCloseMenu() {
-  const m = document.getElementById('cc-menu');
-  if (m) m.classList.remove('show');
-  ccSyncMenuChevron();
-}
-/* the Create-type chevron points up while the menu is open */
-function ccSyncMenuChevron() {
-  const m = document.getElementById('cc-menu');
-  const card = document.getElementById('cc-card');
-  if (card) card.classList.toggle('menu-open', !!m && m.classList.contains('show'));
-}
-function ccPickType(t) {
-  ccCloseMenu();
-  if (t === ccType) return;
-  ccSetType(t);
+/* ── input state ── */
+function ccMaterialsReady() {
+  const defs = ccSlotDefs();
+  for (let i = 0; i < defs.length; i++) {
+    if (defs[i].k === 'song') { if (!ccSongAttached) return false; }
+    else if (!ccMat[i]) return false;
+  }
+  const sub = ccSubDef();
+  if (ccType !== 'mv' && ccType !== 'song' && sub && sub.url) {
+    const u = document.getElementById('cc-url-input');
+    if (!u || !u.value.trim()) return false;
+  }
+  return true;
 }
 
 function ccOnInput() {
   const ta = document.getElementById('cc-ta');
   const cta = document.getElementById('cc-cta');
   if (!ta || !cta) return;
-  ta.style.height = CC_TA_H[ccType] + 'px';
+  const key = ccType || 'none';
+  ta.style.height = CC_TA_H[key] + 'px';
   if (ta.value) {
     ta.style.height = 'auto';
-    ta.style.height = Math.min(CC_TA_MAX, Math.max(CC_TA_H[ccType], ta.scrollHeight)) + 'px';
+    ta.style.height = Math.min(CC_TA_MAX, Math.max(CC_TA_H[key], ta.scrollHeight)) + 'px';
   }
+  CC_DRAFT[key] = ta.value;
   const has = ta.value.trim().length > 0;
-  // MV cannot start without a song — the analysis pass listens to the audio
-  const ready = ccType === 'mv' ? (has && ccSongAttached) : has;
-  cta.classList.toggle('off', !ready);
-  // Enhance only makes sense once there is something to enhance (MV panel only)
+  cta.classList.toggle('off', !(has && !!ccType && ccMaterialsReady()));
   const enh = document.getElementById('cc-enh');
-  if (enh) enh.style.display = (ccType === 'mv' && has) ? 'flex' : 'none';
+  if (enh) enh.style.display = (!!ccType && ccType !== 'song' && has) ? 'flex' : 'none';
 }
 
 function ccIdea() {
   const ta = document.getElementById('cc-ta');
   if (!ta) return;
-  const list = CC_IDEAS[ccType];
+  const list = CC_IDEAS[ccType || 'mv'] || CC_IDEAS.mv;
   ta.value = list[Math.floor(Math.random() * list.length)];
   ccOnInput();
 }
@@ -14529,14 +14990,13 @@ function ccEnhance() {
   if (!ta || !btn) return;
   if (!ta.value.trim()) { if (typeof toast === 'function') toast('Write something first'); return; }
   if (btn.classList.contains('busy')) return;
-  // the spinning refresh icon on a purple pill IS the progress feedback
   const ico = btn.querySelector('img');
   btn.classList.add('busy');
   ta.classList.add('busy');
   ta.readOnly = true;
   if (ico) ico.src = '../assets/icons/ui/ic_refresh.svg';
   setTimeout(function () {
-    ta.value = ta.value.trim().replace(/[.\u3002]$/, '') +
+    ta.value = ta.value.trim().replace(/[.。]$/, '') +
       ' — soft rim light, shallow depth of field, slow push-in on the chorus, warm amber and deep teal palette.';
     btn.classList.remove('busy');
     ta.classList.remove('busy');
@@ -14544,44 +15004,6 @@ function ccEnhance() {
     if (ico) ico.src = '../assets/icons/ui/ic_edit_ai.svg';
     ccOnInput();
   }, 900);
-}
-
-/* The slot always opens the source picker; the X on the thumb clears it.
-   The label underneath stays "Song" whether or not a song is attached. */
-function ccTapSlot() {
-  showSheet('ccsong-sheet');
-}
-
-function ccPickSongSource(src) {
-  hideSheet('ccsong-sheet');
-  _ccSongFromHome = true;
-  setTimeout(function () { startAudio(src); }, 300);
-}
-
-function ccFillSlot(song) {
-  const box = document.getElementById('cc-slot-box');
-  const slot = document.getElementById('cc-slot');
-  if (!box || !slot) return;
-  ccSong = song;
-  ccSongAttached = true;
-  box.innerHTML =
-    '<img class="cc-slot-cover" src="' + (song.art || CC_SAMPLE_SONG.art) + '" alt="">' +
-    '<div class="cc-slot-x" onclick="event.stopPropagation();ccClearSlot()">' +
-      '<img src="../assets/icons/ui/ic_close.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);">' +
-    '</div>';
-  slot.classList.add('filled');
-  ccOnInput();
-}
-
-function ccClearSlot() {
-  const box = document.getElementById('cc-slot-box');
-  const slot = document.getElementById('cc-slot');
-  ccSong = null;
-  ccSongAttached = false;
-  if (box) box.innerHTML = '<img src="../assets/icons/ui/ic_add.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);opacity:.6;">';
-  if (slot) slot.classList.remove('filled');
-  if (typeof clearSong === 'function') clearSong();
-  ccOnInput();
 }
 
 function ccToggleInstrumental() {
@@ -14598,24 +15020,25 @@ function ccSetSongTab(tab) {
   ccSyncSongRow();
 }
 
-/* Templates / Song Style open the existing full pickers */
 function ccOpenTemplates() { _ccTplFromHome = true; showSheet('insp-sheet'); }
 
-/* ── submit: hand the typed prompt off to the existing create flows ── */
+/* ── submit ── */
 function ccSubmit() {
   const ta = document.getElementById('cc-ta');
   const txt = ta ? ta.value.trim() : '';
   if (!txt) { if (typeof toast === 'function') toast('Describe what you want to create'); return; }
+  if (!ccType) { if (typeof toast === 'function') toast('Pick what you want to create first'); return; }
   if (ccType === 'mv' && !ccSongAttached) { if (typeof toast === 'function') toast('Add a song first'); return; }
+  if (!ccMaterialsReady()) { if (typeof toast === 'function') toast('Add the required material first'); return; }
   requireLogin(function () {
     if (ccType === 'song') ccHandOffToSong();
-    else ccHandOffToMv();
+    else if (ccType === 'mv') ccHandOffToMv();
+    else agStart(ccType, ccSub, txt);
   });
 }
 
 /* The panel already holds everything the AI MV room would ask for, so Create
-   fills the room's state in place (without showing it) and jumps straight into
-   the analysis pass, which lands on Scene Setup. */
+   fills the room's state in place and jumps straight into the analysis pass. */
 function ccHandOffToMv() {
   const txt = ((document.getElementById('cc-ta') || {}).value || '').trim();
   _mvFromTemplate = false;
@@ -14629,41 +15052,35 @@ function ccHandOffToMv() {
   startGeneration('analysis');
 }
 
-/* Like the MV path: the panel already holds everything AI Song would ask for,
-   so fill the room's state in place and go straight into the processing flow. */
 function ccHandOffToSong() {
   const txt = ((document.getElementById('cc-ta') || {}).value || '').trim();
   resetSongCreate();
-  (function () {
-    switchSongMode(ccSongTab);
-    if (ccInstrumental && typeof toggleInstrumental === 'function' && !_instrumentalOn) toggleInstrumental();
-    // carry the Song Style params onto song-create's own chips
-    if (ccSongStyle) {
-      [['genre', ccSongStyle.genre], ['mood', ccSongStyle.mood], ['vocal', ccSongStyle.vocal]].forEach(function (pair) {
-        const group = document.querySelector('[data-group="' + pair[0] + '"]');
-        if (!group) return;
-        group.querySelectorAll('.schip').forEach(function (c) {
-          c.classList.toggle('sel', !!pair[1] && c.textContent.trim() === pair[1]);
-        });
+  switchSongMode(ccSongTab);
+  if (ccInstrumental && typeof toggleInstrumental === 'function' && !_instrumentalOn) toggleInstrumental();
+  if (ccSongStyle) {
+    [['genre', ccSongStyle.genre], ['mood', ccSongStyle.mood], ['vocal', ccSongStyle.vocal]].forEach(function (pair) {
+      const group = document.querySelector('[data-group="' + pair[0] + '"]');
+      if (!group) return;
+      group.querySelectorAll('.schip').forEach(function (c) {
+        c.classList.toggle('sel', !!pair[1] && c.textContent.trim() === pair[1]);
       });
+    });
+  }
+  if (txt) {
+    if (ccSongTab === 'simple') {
+      const s = document.getElementById('song-simple-idea');
+      if (s) { s.value = txt; updateSimpleSongCTA(s); }
+    } else {
+      const l = document.getElementById('song-lyrics');
+      if (l) { l.value = txt; updateLyricsClear(l); }
     }
-    if (txt) {
-      if (ccSongTab === 'simple') {
-        const s = document.getElementById('song-simple-idea');
-        if (s) { s.value = txt; updateSimpleSongCTA(s); }
-      } else {
-        const l = document.getElementById('song-lyrics');
-        if (l) { l.value = txt; updateLyricsClear(l); }
-      }
-    }
-  })();
+  }
   navStack = ['home'];
   goTo('song-creating');
 }
 
-/* Both sheets are shared with the AI MV room, so route their "apply" step
-   back to the Home panel only when the panel was what opened them. */
-const _ccOrigApplyInsp = window.applyInsp;
+/* Both sheets are shared with the AI MV room, so route their "apply" step back
+   to the Home panel only when the panel was what opened them. */
 function mvrSetTplBtn(tpl) {
   const th = document.getElementById('mvr-tpl-thumbs');
   const tx = document.getElementById('mvr-tpl-txt');
@@ -14673,7 +15090,10 @@ function mvrSetTplBtn(tpl) {
   if (tx) tx.textContent = tpl ? tpl.name : 'Templates';
 }
 
+const _ccOrigApplyInsp = window.applyInsp;
 const _ccOrigResetMvRoom = window.resetMvRoom;
+const _ccOrigAddSongToRoom = window.addSongToRoom;
+
 window.resetMvRoom = function () { _ccOrigResetMvRoom(); mvrSetTplBtn(null); };
 
 window.applyInsp = function () {
@@ -14688,10 +15108,8 @@ window.applyInsp = function () {
   hideSheet('insp-sheet');
 };
 
-const _ccOrigAddSongToRoom = window.addSongToRoom;
 window.addSongToRoom = function (method, title, dur, art, audioSrc) {
   _ccOrigAddSongToRoom(method, title, dur, art, audioSrc);
-  // only claim the result when the panel started the flow and we are still on Home
   const act = document.querySelector('.screen.active');
   if (_ccSongFromHome) {
     _ccSongFromHome = false;
@@ -14701,13 +15119,285 @@ window.addSongToRoom = function (method, title, dur, art, audioSrc) {
   }
 };
 
-document.addEventListener('click', function (e) {
-  const m = document.getElementById('cc-menu');
-  if (!m || !m.classList.contains('show')) return;
-  if (!e.target.closest('#cc-menu') && !e.target.closest('.cc-createbtn')) ccCloseMenu();
-});
+window.addEventListener('load', function () { ccSetType(null, null); });
 
-window.addEventListener('load', function () { ccSetType('mv'); });
+/* ══════════════ AI AGENT CHAT (Story / Marketing / UGC) ══════════════
+   Create on the three video skills opens a fresh chat screen where the agent
+   walks the user through a short question-and-answer flow — each step offers
+   options to tap or a free-text reply — and confirms before generating. */
+let agSkill = null, agSub = null, agStep = 0, agStage = 'q';
+let _agFrom = 'home';           // 'home' (Create) or 'history' (reopened thread)
+let agAnswers = [];
+
+const AG_FLOW = {
+  story: [
+    { k:'Length',   q:'Nice brief. How long should the finished video run?', chips:['15s','30s','60s'] },
+    { k:'Tone',     q:'What tone fits the story best?', chips:['Heartwarming','Suspenseful','Funny','Dramatic'] },
+    { k:'Speech',   q:'How should the characters speak?', chips:['Dialogue','Voiceover only','Music only'] },
+    { k:'Must-have',q:'Anything I must include — a location, a line, an object? Type it, or tap skip.', chips:['Nothing else'] }
+  ],
+  mkt: [
+    { k:'Audience', q:'Who is this ad for?', chips:['Gen Z','Young professionals','Parents','Everyone'] },
+    { k:'Goal',     q:'What should viewers do after watching?', chips:['Buy now','Visit the site','Follow us','Learn more'] },
+    { k:'Length',   q:'How long should it run?', chips:['15s','30s','60s'] },
+    { k:'CTA',      q:'Give me the closing line, or let me write one for you.', chips:['You write it'] }
+  ],
+  ugc: [
+    { k:'Persona',  q:'Which creator persona should deliver this?', chips:['Casual friend','Expert reviewer','Energetic hype','Calm & minimal'] },
+    { k:'Length',   q:'How long should the clip be?', chips:['15s','30s','45s'] },
+    { k:'Delivery', q:'Captions, voiceover, or both?', chips:['Both','Captions only','Voiceover only'] },
+    { k:'Hook',     q:'What is the opening hook line? Type it, or let me suggest one.', chips:['Suggest one'] }
+  ]
+};
+
+function agEsc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function agScroll() {
+  const sc = document.getElementById('ag-scroll');
+  if (sc) sc.scrollTop = sc.scrollHeight;
+}
+function agMats() {
+  const keys = Object.keys(ccMat);
+  if (!keys.length) return '';
+  return '<div class="ag-atts">' + keys.map(function (k) { return '<img src="' + ccMat[k] + '" alt="">'; }).join('') + '</div>';
+}
+function agPush(side, html) {
+  const log = document.getElementById('ag-log');
+  if (!log) return;
+  const ava = side === 'ai'
+    ? '<div class="ag-ava"><img src="../assets/icons/ui/ic_sparkles.svg" width="13" height="13" style="display:block;filter:brightness(0) invert(1);"></div>'
+    : '';
+  const row = document.createElement('div');
+  row.className = 'ag-row ' + side;
+  row.innerHTML = ava + '<div class="ag-bub">' + html + '</div>';
+  log.appendChild(row);
+  agScroll();
+}
+function agTyping(on) {
+  const log = document.getElementById('ag-log');
+  if (!log) return;
+  const old = document.getElementById('ag-typing');
+  if (old) old.remove();
+  if (!on) return;
+  const row = document.createElement('div');
+  row.id = 'ag-typing';
+  row.className = 'ag-row ai';
+  row.innerHTML = '<div class="ag-ava"><img src="../assets/icons/ui/ic_sparkles.svg" width="13" height="13" style="display:block;filter:brightness(0) invert(1);"></div>' +
+                  '<div class="ag-bub"><div class="ag-dots"><i></i><i></i><i></i></div></div>';
+  log.appendChild(row);
+  agScroll();
+}
+function agSetChips(list) {
+  const box = document.getElementById('ag-chips');
+  if (!box) return;
+  box.innerHTML = (list || []).map(function (c) {
+    const v = typeof c === 'string' ? c : c.v;
+    const t = typeof c === 'string' ? c : c.t;
+    const go = (typeof c === 'object' && c.go) ? ' go' : '';
+    return '<div class="ag-chip' + go + '" onclick="agPick(' + JSON.stringify(v).replace(/"/g,'&quot;') + ')">' + t + '</div>';
+  }).join('');
+}
+function agReply(text, after, delay) {
+  agSetChips([]);
+  agTyping(true);
+  setTimeout(function () {
+    agTyping(false);
+    agPush('ai', agEsc(text));
+    if (after) after();
+  }, delay || 700);
+}
+
+function agDismiss(after) {
+  const ag = document.getElementById('screen-agent');
+  if (!ag) { if (after) after(); return; }
+  ag.classList.remove('nav-top', 'behind');
+  ag.style.transform = 'translateX(105%)';
+  setTimeout(function () {
+    ag.classList.remove('active');
+    ag.style.transition = 'none';
+    ag.style.transform = '';
+    ag.offsetHeight;
+    ag.style.transition = '';
+    if (after) after();
+  }, 360);
+}
+
+/* Depending on how goTo() resolved "cur" on the way in, History may still be
+   sitting active underneath (then we just slide this screen away) or may have
+   been deactivated like any other previous screen (then it's a normal back). */
+function agHistoryUnder() {
+  const h = document.getElementById('screen-history');
+  return _agFrom === 'history' && h && h.classList.contains('active');
+}
+function agBack() {
+  agSetChips([]);
+  if (agHistoryUnder()) { agDismiss(); return; }
+  if (_agFrom === 'history') { navStack = ['history']; goTo('history', 'back'); return; }
+  goBack();
+}
+
+function agSubLabel(skill, sub) {
+  const list = CC_SUBS[skill] || [];
+  for (let i = 0; i < list.length; i++) if (list[i].k === sub) return list[i].lbl;
+  const s = CC_SKILLS.filter(function (x) { return x.k === skill; })[0];
+  return s ? s.lbl : 'AI Agent';
+}
+
+function agStart(skill, sub, prompt) {
+  agSkill = skill; agSub = sub; agStep = 0; agAnswers = []; agStage = 'q';
+  _agFrom = 'home';
+  const t = document.getElementById('ag-title');
+  if (t) t.textContent = agSubLabel(skill, sub);
+  const log = document.getElementById('ag-log');
+  if (log) log.innerHTML = '';
+  const inp = document.getElementById('ag-text');
+  if (inp) inp.value = '';
+  goTo('agent');
+  const url = document.getElementById('cc-url-input');
+  const extra = (url && url.value.trim()) ? '<br><span style="opacity:.6;">' + agEsc(url.value.trim()) + '</span>' : '';
+  agPush('me', agEsc(prompt) + extra + agMats());
+  agReply('Got it — ' + agSubLabel(skill, sub).toLowerCase() + '. A few quick questions and I will start building.', agAsk, 900);
+}
+
+function agAsk() {
+  const flow = AG_FLOW[agSkill] || [];
+  if (agStep >= flow.length) { agWrapUp(); return; }
+  const step = flow[agStep];
+  agReply(step.q, function () { agSetChips(step.chips); });
+}
+
+function agAnswer(val) {
+  const flow = AG_FLOW[agSkill] || [];
+  if (agStep >= flow.length) return;
+  agPush('me', agEsc(val));
+  agAnswers.push({ k: flow[agStep].k, v: val });
+  agStep++;
+  agSetChips([]);
+  setTimeout(agAsk, 350);
+}
+
+function agWrapUp() {
+  agStage = 'confirm';
+  const lines = agAnswers.map(function (a) { return '· ' + a.k + ': ' + agEsc(a.v); }).join('<br>');
+  agTyping(true);
+  setTimeout(function () {
+    agTyping(false);
+    agPush('ai', 'Here is what I have:<br><br>' + lines + '<br><br>Shall I start generating?');
+    agSetChips([{ t:'Start generating', v:'__go', go:true }, { t:'Change something', v:'__change' }]);
+  }, 800);
+}
+
+function agGenerate() {
+  agStage = 'busy';
+  agSetChips([]);
+  agPush('me', 'Start generating');
+  agReply('On it. Writing the shot list, then rendering — this usually takes a moment.', function () {
+    agTyping(true);
+    setTimeout(function () {
+      agTyping(false);
+      agStage = 'done';
+      const log = document.getElementById('ag-log');
+      const poster = ccMat[0] || '../assets/videos/sample-mvs/mv_06_cinematic_movie.jpg';
+      const row = document.createElement('div');
+      row.className = 'ag-row ai';
+      row.innerHTML = '<div class="ag-ava"><img src="../assets/icons/ui/ic_sparkles.svg" width="13" height="13" style="display:block;filter:brightness(0) invert(1);"></div>' +
+                      '<div class="ag-bub">Your ' + agEsc(agSubLabel(agSkill, agSub).toLowerCase()) + ' is ready.</div>';
+      if (log) log.appendChild(row);
+      const card = document.createElement('div');
+      card.className = 'ag-card';
+      card.innerHTML = '<img src="' + poster + '" alt="">' +
+                       '<div class="ag-play"><img src="../assets/icons/ui/ic_play.svg" width="26" height="26" style="display:block;filter:brightness(0) invert(1);"></div>';
+      if (log) log.appendChild(card);
+      agScroll();
+      agSetChips([{ t:'Make a variation', v:'__again' }, { t:'Back to Home', v:'__home' }]);
+    }, 2200);
+  }, 700);
+}
+
+function agPick(v) {
+  if (v === '__go') { agGenerate(); return; }
+  if (v === '__change') {
+    agPush('me', 'Change something');
+    agStep = 0; agAnswers = []; agStage = 'q';
+    agReply('No problem — let us go through it again.', agAsk, 600);
+    return;
+  }
+  if (v === '__again') {
+    agPush('me', 'Make a variation');
+    agReply('Rendering a second take with a different cut rhythm.', function () { agGenerate2(); }, 600);
+    return;
+  }
+  if (v === '__home') {
+    agSetChips([]);
+    if (agHistoryUnder()) { agDismiss(function () { tabNav('home'); }); }
+    else { navStack = []; tabNav('home'); }
+    return;
+  }
+  agAnswer(v);
+}
+
+function agGenerate2() {
+  agTyping(true);
+  setTimeout(function () {
+    agTyping(false);
+    const log = document.getElementById('ag-log');
+    const card = document.createElement('div');
+    card.className = 'ag-card';
+    card.innerHTML = '<img src="../assets/videos/sample-mvs/mv_08_dramatic_scene.jpg" alt="">' +
+                     '<div class="ag-play"><img src="../assets/icons/ui/ic_play.svg" width="26" height="26" style="display:block;filter:brightness(0) invert(1);"></div>';
+    if (log) log.appendChild(card);
+    agScroll();
+    agSetChips([{ t:'Make a variation', v:'__again' }, { t:'Back to Home', v:'__home' }]);
+  }, 1800);
+}
+
+/* Reopening a finished agent video from History: the thread comes back with the
+   brief, the result and the follow-up actions, rather than a dead-end player. */
+function agOpenHistory(skill, sub, prompt, poster) {
+  agSkill = skill; agSub = sub; agAnswers = [];
+  _agFrom = 'history';
+  agStep = (AG_FLOW[skill] || []).length;
+  agStage = 'done';
+  const t = document.getElementById('ag-title');
+  if (t) t.textContent = agSubLabel(skill, sub);
+  const log = document.getElementById('ag-log');
+  if (log) log.innerHTML = '';
+  const inp = document.getElementById('ag-text');
+  if (inp) inp.value = '';
+  goTo('agent');
+  agPush('me', agEsc(prompt));
+  agPush('ai', 'Your ' + agEsc(agSubLabel(skill, sub).toLowerCase()) + ' is ready.');
+  if (log) {
+    const card = document.createElement('div');
+    card.className = 'ag-card';
+    card.innerHTML = '<img src="' + poster + '" alt="">' +
+                     '<div class="ag-play"><img src="../assets/icons/ui/ic_play.svg" width="26" height="26" style="display:block;filter:brightness(0) invert(1);"></div>';
+    log.appendChild(card);
+  }
+  agScroll();
+  agSetChips([{ t: 'Make a variation', v: '__again' }, { t: 'Back to Home', v: '__home' }]);
+}
+
+function agSend() {
+  const inp = document.getElementById('ag-text');
+  if (!inp) return;
+  const v = inp.value.trim();
+  if (!v) return;
+  inp.value = '';
+  if (agStage === 'q') { agAnswer(v); return; }
+  if (agStage === 'confirm') {
+    agPush('me', agEsc(v));
+    agReply('Noted — I will fold that in. Ready when you are.', function () {
+      agSetChips([{ t:'Start generating', v:'__go', go:true }, { t:'Change something', v:'__change' }]);
+    }, 700);
+    return;
+  }
+  agPush('me', agEsc(v));
+  agReply('Got it — I will apply that to the next take.', function () {
+    agSetChips([{ t:'Make a variation', v:'__again' }, { t:'Back to Home', v:'__home' }]);
+  }, 700);
+}
 
 function fmtTime(s) {
   if (!isFinite(s)) return '0:00';
