@@ -1157,8 +1157,13 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .cc-btnrow{flex:1;min-width:0;display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 20px),transparent 100%);mask-image:linear-gradient(90deg,#000 calc(100% - 20px),transparent 100%);}
 .cc-btnrow::-webkit-scrollbar{display:none;}
 .cc-add{width:48px;height:24px;padding:0;justify-content:center;}
+#cc-row2 > .cc-enh{margin-left:auto;}
+#cc-row2 > .cc-enh + .cc-cta{margin-left:4px;}
 /* material slots + URL row */
-.cc-slots{display:flex;gap:6px;flex-shrink:0;}
+.cc-slots{display:flex;gap:8px;flex-shrink:0;}
+.cc-prompt.stacked{flex-direction:column;gap:8px;}
+.cc-prompt.stacked .cc-slots{align-self:flex-start;}
+.cc-prompt.stacked .cc-ta{flex:0 0 auto;width:100%;}
 .cc-slots:empty{display:none;}
 .cc-url{display:flex;align-items:center;gap:6px;background:var(--n14);border:1px solid var(--border);border-radius:10px;padding:6px 8px;}
 .cc-url input{flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-family:inherit;font-size:11px;font-weight:500;letter-spacing:-.11px;}
@@ -1185,6 +1190,39 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .ag-dots i:nth-child(3){animation-delay:.36s;}
 @keyframes ag-blink{0%,80%,100%{opacity:.25;}40%{opacity:1;}}
 .ag-bar{position:absolute;left:0;right:0;bottom:0;padding:10px 16px calc(var(--safe-bot) + 14px);background:rgba(9,9,11,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--border-3);display:flex;flex-direction:column;gap:8px;}
+/* copy / like / dislike under every agent message */
+.ag-acts{display:flex;align-items:center;gap:2px;margin:-6px 0 0 32px;}
+.ag-act{width:26px;height:26px;border-radius:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.4;transition:opacity .15s,background .15s;-webkit-tap-highlight-color:transparent;}
+.ag-act:active{background:rgba(255,255,255,.08);}
+.ag-act.on{opacity:1;}
+.ag-act img{display:block;width:15px;height:15px;filter:brightness(0) invert(1);}
+.ag-act svg{display:block;}
+/* question card — options as a list, with a free-text row at the end */
+.ag-qcard{background:var(--n14);border:1px solid var(--border);border-radius:18px;padding:12px 16px;transition:opacity .14s ease;}
+.ag-q-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.ag-q-nav{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;letter-spacing:-.12px;color:var(--n54);}
+.ag-q-arrow{width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.ag-q-arrow img{display:block;filter:brightness(0) invert(1);opacity:.55;}
+.ag-q-arrow:active{background:rgba(255,255,255,.08);}
+.ag-q-arrow.off{pointer-events:none;}
+.ag-q-arrow.off img{opacity:.18;}
+.ag-q-close{width:26px;height:26px;border-radius:13px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
+.ag-q-close img{display:block;filter:brightness(0) invert(1);opacity:.7;}
+.ag-q-close:active{opacity:.6;}
+.ag-q-ttl{font-size:15px;font-weight:700;line-height:20px;letter-spacing:-.15px;color:#fff;padding-bottom:10px;}
+.ag-opt{display:flex;align-items:center;gap:8px;padding:11px 0;border-top:1px solid var(--border-3);font-size:13px;font-weight:600;line-height:18px;letter-spacing:-.13px;color:#fff;cursor:pointer;transition:color .15s;-webkit-tap-highlight-color:transparent;}
+.ag-opt:active{opacity:.6;}
+.ag-opt.sel{color:var(--accent);}
+.ag-opt .ag-opt-chk{margin-left:auto;opacity:0;flex-shrink:0;transition:opacity .15s;}
+.ag-opt.sel .ag-opt-chk{opacity:1;}
+.ag-q-free{display:flex;align-items:center;gap:8px;padding:11px 0;border-top:1px solid var(--border-3);}
+.ag-q-free input{flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-family:inherit;font-size:13px;font-weight:500;letter-spacing:-.13px;}
+.ag-q-free input::placeholder{color:var(--n54);}
+.ag-q-foot{display:flex;justify-content:flex-end;padding-top:10px;}
+.ag-next{display:flex;align-items:center;gap:4px;padding:7px 10px 7px 14px;border-radius:20px;background:var(--mv-grad);font-size:13px;font-weight:600;letter-spacing:-.13px;color:#fff;cursor:pointer;transition:opacity .15s;-webkit-tap-highlight-color:transparent;}
+.ag-next img{display:block;filter:brightness(0) invert(1);}
+.ag-next:active{opacity:.8;}
+.ag-next.off{opacity:.35;pointer-events:none;}
 .ag-chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;}
 .ag-chips::-webkit-scrollbar{display:none;}
 .ag-chips:empty{display:none;}
@@ -5637,6 +5675,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div class="ag-log" id="ag-log"></div>
       </div>
       <div class="ag-bar">
+        <div class="ag-qcard" id="ag-qcard" style="display:none;"></div>
         <div class="ag-chips" id="ag-chips"></div>
         <div class="ag-input">
           <input id="ag-text" placeholder="Reply to the agent…" onkeydown="if(event.key==='Enter'){agSend();}">
@@ -14659,7 +14698,10 @@ function ccAddMaterial() {
 function ccRenderSlots() {
   const box = document.getElementById('cc-slots');
   if (!box) return;
-  box.innerHTML = ccSlotDefs().map(function (d, i) {
+  const defs = ccSlotDefs();
+  const prompt = box.parentElement;
+  if (prompt) prompt.classList.toggle('stacked', defs.length >= 2);
+  box.innerHTML = defs.map(function (d, i) {
     const isSong = d.k === 'song';
     const filled = isSong ? ccSongAttached : !!ccMat[i];
     const src = isSong ? ((ccSong && ccSong.art) || CC_SAMPLE_SONG.art) : ccMat[i];
@@ -14783,13 +14825,16 @@ function _ccSetType(t, subKey) {
   show('cc-idea', isMv || isSong || hasSub);
   show('cc-add', isNone || (isAgent && !hasSub));
 
-  /* no Templates / Song Style row outside MV and Song, and Enhance moves in
-     beside Idea instead of sitting on a row of its own */
+  /* No Templates / Song Style row outside MV and Song. Enhance then leaves row 1
+     and parks immediately left of Create (Figma 4896:72759), outside the
+     scrolling chip row so it never scrolls away. */
   const enh = document.getElementById('cc-enh');
-  const r1 = document.getElementById('cc-row1'), br = document.getElementById('cc-btnrow');
+  const r1 = document.getElementById('cc-row1');
+  const r2 = document.getElementById('cc-row2');
+  const cta = document.getElementById('cc-cta');
   const sideRow = isMv || isSong;
-  if (enh && r1 && br) {
-    if (!sideRow) { if (enh.parentElement !== br) br.appendChild(enh); }
+  if (enh && r1 && r2 && cta) {
+    if (!sideRow) { if (enh.parentElement !== r2 || enh.nextElementSibling !== cta) r2.insertBefore(enh, cta); }
     else if (enh.parentElement !== r1) r1.appendChild(enh);
   }
   if (r1) r1.style.display = sideRow ? 'flex' : 'none';
@@ -15182,7 +15227,9 @@ function agMats() {
   if (!keys.length) return '';
   return '<div class="ag-atts">' + keys.map(function (k) { return '<img src="' + ccMat[k] + '" alt="">'; }).join('') + '</div>';
 }
-function agPush(side, html) {
+const AG_COPY_SVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15.5V5.5A2.5 2.5 0 0 1 7.5 3h10"/></svg>';
+
+function agPush(side, html, noActs) {
   const log = document.getElementById('ag-log');
   if (!log) return;
   const ava = side === 'ai'
@@ -15192,7 +15239,37 @@ function agPush(side, html) {
   row.className = 'ag-row ' + side;
   row.innerHTML = ava + '<div class="ag-bub">' + html + '</div>';
   log.appendChild(row);
+  if (side === 'ai' && !noActs) {
+    const acts = document.createElement('div');
+    acts.className = 'ag-acts';
+    acts.innerHTML =
+      '<div class="ag-act" onclick="agCopy(this)">' + AG_COPY_SVG + '</div>' +
+      '<div class="ag-act" data-r="up" onclick="agRate(this,\'up\')"><img src="../assets/icons/ui/ic_like_off.svg" alt=""></div>' +
+      '<div class="ag-act" data-r="down" onclick="agRate(this,\'down\')"><img src="../assets/icons/ui/ic_dislike_off.svg" alt=""></div>';
+    log.appendChild(acts);
+  }
   agScroll();
+}
+
+function agCopy(el) {
+  const acts = el.parentElement;
+  const bub = acts.previousElementSibling && acts.previousElementSibling.querySelector('.ag-bub');
+  const txt = bub ? bub.innerText : '';
+  if (navigator.clipboard && txt) navigator.clipboard.writeText(txt).catch(function () {});
+  if (typeof toast === 'function') toast('Copied');
+}
+
+function agRate(el, dir) {
+  const on = el.classList.contains('on');
+  el.parentElement.querySelectorAll('.ag-act[data-r]').forEach(function (a) {
+    a.classList.remove('on');
+    const d = a.getAttribute('data-r');
+    a.querySelector('img').src = '../assets/icons/ui/ic_' + (d === 'up' ? 'like' : 'dislike') + '_off.svg';
+  });
+  if (!on) {
+    el.classList.add('on');
+    el.querySelector('img').src = '../assets/icons/ui/ic_' + (dir === 'up' ? 'like' : 'dislike') + '_on.svg';
+  }
 }
 function agTyping(on) {
   const log = document.getElementById('ag-log');
@@ -15208,6 +15285,124 @@ function agTyping(on) {
   log.appendChild(row);
   agScroll();
 }
+/* ── question card: options as a list + a free-text row (Figma / Claude card pattern) ── */
+let agSel = null;                 // option picked in the open card
+
+function agSyncPad(keepScroll) {
+  const sc = document.getElementById('ag-scroll');
+  const bar = document.querySelector('#screen-agent .ag-bar');
+  if (!sc || !bar) return;
+  const atEnd = sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 40;
+  sc.style.paddingBottom = (bar.offsetHeight + 20) + 'px';
+  if (atEnd && !keepScroll) sc.scrollTop = sc.scrollHeight;   // the bar just grew — stay at the latest message
+}
+
+function agShowQ() {
+  const card = document.getElementById('ag-qcard');
+  const flow = AG_FLOW[agSkill] || [];
+  const step = flow[agStep];
+  if (!card || !step) return;
+  agSetChips([]);
+  const prev = agAnswers[agStep];
+  agSel = prev && (step.chips || []).indexOf(prev.v) >= 0 ? prev.v : null;
+  const free = prev && !agSel ? prev.v : '';
+  const opts = (step.chips || []).map(function (c, i) {
+    return '<div class="ag-opt' + (agSel === c ? ' sel' : '') + '" onclick="agSelOpt(' + i + ')">' +
+             '<span>' + agEsc(c) + '</span>' +
+             '<img class="ag-opt-chk" src="../assets/icons/ui/ic_check.svg" width="15" height="15" style="display:block;filter:brightness(0) invert(1);">' +
+           '</div>';
+  }).join('');
+  card.innerHTML =
+    '<div class="ag-q-head">' +
+      '<div class="ag-q-nav">' +
+        '<div class="ag-q-arrow' + (agStep > 0 ? '' : ' off') + '" onclick="agQStep(-1)">' +
+          '<img src="../assets/icons/ui/ic_chevron-left.svg" width="16" height="16"></div>' +
+        '<span>' + (agStep + 1) + ' of ' + flow.length + '</span>' +
+        '<div class="ag-q-arrow' + (agAnswers[agStep] && flow[agStep + 1] ? '' : ' off') + '" onclick="agQStep(1)">' +
+          '<img src="../assets/icons/ui/ic_chevron-right.svg" width="16" height="16"></div>' +
+      '</div>' +
+      '<div class="ag-q-close" onclick="agHideQ()"><img src="../assets/icons/ui/ic_close.svg" width="14" height="14"></div>' +
+    '</div>' +
+    '<div class="ag-q-ttl">' + agEsc(step.q) + '</div>' + opts +
+    '<div class="ag-q-free">' +
+      '<input id="ag-q-other" placeholder="Type your answer…" value="' + agEsc(free).replace(/"/g, '&quot;') +
+      '" oninput="agFreeInput()" onkeydown="if(event.key===\'Enter\'){agQNext();}">' +
+    '</div>' +
+    '<div class="ag-q-foot"><div class="ag-next off" id="ag-q-next" onclick="agQNext()">Next' +
+      '<img src="../assets/icons/ui/ic_arrow_right.svg" width="15" height="15"></div></div>';
+  card.style.display = 'block';
+  card.style.opacity = '0';
+  void card.offsetWidth;
+  card.style.opacity = '1';
+  const comp = document.querySelector('#screen-agent .ag-input');
+  if (comp) comp.style.display = 'none';          // the card has its own "Type your answer…" row
+  agSyncNext();
+  agSyncPad();
+  agScroll();
+}
+
+function agHideQ() {
+  const card = document.getElementById('ag-qcard');
+  if (card) { card.style.display = 'none'; card.innerHTML = ''; }
+  const comp = document.querySelector('#screen-agent .ag-input');
+  if (comp) comp.style.display = 'flex';
+  agSyncPad();
+}
+
+function agSelOpt(i) {
+  const step = (AG_FLOW[agSkill] || [])[agStep];
+  if (!step) return;
+  const v = (step.chips || [])[i];
+  agSel = (agSel === v) ? null : v;
+  const card = document.getElementById('ag-qcard');
+  card.querySelectorAll('.ag-opt').forEach(function (el, j) {
+    el.classList.toggle('sel', agSel === (step.chips || [])[j]);
+  });
+  const other = document.getElementById('ag-q-other');
+  if (agSel && other) other.value = '';
+  agSyncNext();
+}
+
+function agFreeInput() {
+  const other = document.getElementById('ag-q-other');
+  if (other && other.value.trim()) {
+    agSel = null;
+    document.getElementById('ag-qcard').querySelectorAll('.ag-opt').forEach(function (el) { el.classList.remove('sel'); });
+  }
+  agSyncNext();
+}
+
+function agSyncNext() {
+  const btn = document.getElementById('ag-q-next');
+  const other = document.getElementById('ag-q-other');
+  if (btn) btn.classList.toggle('off', !(agSel || (other && other.value.trim())));
+}
+
+function agQStep(d) {
+  const flow = AG_FLOW[agSkill] || [];
+  const n = agStep + d;
+  if (n < 0 || n >= flow.length) return;
+  if (d > 0 && !agAnswers[agStep]) return;
+  agStep = n;
+  agShowQ();
+}
+
+/* Each answer is only recorded — nothing is posted to the thread until the
+   whole set is done, so the user sends one message, not one per question. */
+function agCommit(v) {
+  const flow = AG_FLOW[agSkill] || [];
+  const step = flow[agStep];
+  if (!step || !v) return;
+  agAnswers[agStep] = { k: step.k, v: v };
+  agStep = agAnswers.length;                       // jump past everything answered
+  agAsk();
+}
+
+function agQNext() {
+  const other = document.getElementById('ag-q-other');
+  agCommit((other && other.value.trim()) || agSel);
+}
+
 function agSetChips(list) {
   const box = document.getElementById('ag-chips');
   if (!box) return;
@@ -15217,6 +15412,8 @@ function agSetChips(list) {
     const go = (typeof c === 'object' && c.go) ? ' go' : '';
     return '<div class="ag-chip' + go + '" onclick="agPick(' + JSON.stringify(v).replace(/"/g,'&quot;') + ')">' + t + '</div>';
   }).join('');
+  if ((list || []).length) agHideQ();
+  agSyncPad();
 }
 function agReply(text, after, delay) {
   agSetChips([]);
@@ -15273,6 +15470,7 @@ function agStart(skill, sub, prompt) {
   if (log) log.innerHTML = '';
   const inp = document.getElementById('ag-text');
   if (inp) inp.value = '';
+  agHideQ(); agSetChips([]);
   goTo('agent');
   const url = document.getElementById('cc-url-input');
   const extra = (url && url.value.trim()) ? '<br><span style="opacity:.6;">' + agEsc(url.value.trim()) + '</span>' : '';
@@ -15283,27 +15481,20 @@ function agStart(skill, sub, prompt) {
 function agAsk() {
   const flow = AG_FLOW[agSkill] || [];
   if (agStep >= flow.length) { agWrapUp(); return; }
-  const step = flow[agStep];
-  agReply(step.q, function () { agSetChips(step.chips); });
-}
-
-function agAnswer(val) {
-  const flow = AG_FLOW[agSkill] || [];
-  if (agStep >= flow.length) return;
-  agPush('me', agEsc(val));
-  agAnswers.push({ k: flow[agStep].k, v: val });
-  agStep++;
   agSetChips([]);
-  setTimeout(agAsk, 350);
+  agShowQ();                       // questions follow each other with no wait
 }
 
 function agWrapUp() {
   agStage = 'confirm';
-  const lines = agAnswers.map(function (a) { return '· ' + a.k + ': ' + agEsc(a.v); }).join('<br>');
+  agHideQ();
+  const lines = agAnswers.filter(Boolean)
+    .map(function (a) { return a.k + ': ' + agEsc(a.v); }).join('<br>');
+  agPush('me', lines);                 // one message carrying every answer
   agTyping(true);
   setTimeout(function () {
     agTyping(false);
-    agPush('ai', 'Here is what I have:<br><br>' + lines + '<br><br>Shall I start generating?');
+    agPush('ai', 'Got everything I need. Shall I start generating?');
     agSetChips([{ t:'Start generating', v:'__go', go:true }, { t:'Change something', v:'__change' }]);
   }, 800);
 }
@@ -15330,7 +15521,7 @@ function agGenerate() {
                        '<div class="ag-play"><img src="../assets/icons/ui/ic_play.svg" width="26" height="26" style="display:block;filter:brightness(0) invert(1);"></div>';
       if (log) log.appendChild(card);
       agScroll();
-      agSetChips([{ t:'Make a variation', v:'__again' }, { t:'Back to Home', v:'__home' }]);
+      agSetChips([{ t:'Make a variation', v:'__again' }]);
     }, 2200);
   }, 700);
 }
@@ -15340,6 +15531,7 @@ function agPick(v) {
   if (v === '__change') {
     agPush('me', 'Change something');
     agStep = 0; agAnswers = []; agStage = 'q';
+    agHideQ();
     agReply('No problem — let us go through it again.', agAsk, 600);
     return;
   }
@@ -15348,13 +15540,7 @@ function agPick(v) {
     agReply('Rendering a second take with a different cut rhythm.', function () { agGenerate2(); }, 600);
     return;
   }
-  if (v === '__home') {
-    agSetChips([]);
-    if (agHistoryUnder()) { agDismiss(function () { tabNav('home'); }); }
-    else { navStack = []; tabNav('home'); }
-    return;
-  }
-  agAnswer(v);
+  agCommit(v);
 }
 
 function agGenerate2() {
@@ -15368,7 +15554,7 @@ function agGenerate2() {
                      '<div class="ag-play"><img src="../assets/icons/ui/ic_play.svg" width="26" height="26" style="display:block;filter:brightness(0) invert(1);"></div>';
     if (log) log.appendChild(card);
     agScroll();
-    agSetChips([{ t:'Make a variation', v:'__again' }, { t:'Back to Home', v:'__home' }]);
+    agSetChips([{ t:'Make a variation', v:'__again' }]);
   }, 1800);
 }
 
@@ -15385,6 +15571,7 @@ function agOpenHistory(skill, sub, prompt, poster) {
   if (log) log.innerHTML = '';
   const inp = document.getElementById('ag-text');
   if (inp) inp.value = '';
+  agHideQ();
   goTo('agent');
   agPush('me', agEsc(prompt));
   agPush('ai', 'Your ' + agEsc(agSubLabel(skill, sub).toLowerCase()) + ' is ready.');
@@ -15396,7 +15583,7 @@ function agOpenHistory(skill, sub, prompt, poster) {
     log.appendChild(card);
   }
   agScroll();
-  agSetChips([{ t: 'Make a variation', v: '__again' }, { t: 'Back to Home', v: '__home' }]);
+  agSetChips([{ t: 'Make a variation', v: '__again' }]);
 }
 
 function agSend() {
@@ -15405,7 +15592,7 @@ function agSend() {
   const v = inp.value.trim();
   if (!v) return;
   inp.value = '';
-  if (agStage === 'q') { agAnswer(v); return; }
+  if (agStage === 'q') { agCommit(v); return; }
   if (agStage === 'confirm') {
     agPush('me', agEsc(v));
     agReply('Noted — I will fold that in. Ready when you are.', function () {
@@ -15415,7 +15602,7 @@ function agSend() {
   }
   agPush('me', agEsc(v));
   agReply('Got it — I will apply that to the next take.', function () {
-    agSetChips([{ t:'Make a variation', v:'__again' }, { t:'Back to Home', v:'__home' }]);
+    agSetChips([{ t:'Make a variation', v:'__again' }]);
   }, 700);
 }
 
