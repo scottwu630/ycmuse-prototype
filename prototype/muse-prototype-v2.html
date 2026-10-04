@@ -15075,7 +15075,8 @@ function ccOnInput() {
   });
   CC_DRAFT[key] = ta.value;
   const has = ta.value.trim().length > 0;
-  cta.classList.toggle('off', !(has && !!ccType && ccMaterialsReady()));
+  /* Neutral state: text alone is enough — the agent asks for photos/videos in chat. */
+  cta.classList.toggle('off', !(has && (!ccType || ccMaterialsReady())));
   const enh = document.getElementById('cc-enh');
   if (enh) enh.style.display = has ? 'flex' : 'none';
 }
@@ -15131,7 +15132,7 @@ function ccSubmit() {
   const ta = document.getElementById('cc-ta');
   const txt = ta ? ta.value.trim() : '';
   if (!txt) { if (typeof toast === 'function') toast('Describe what you want to create'); return; }
-  if (!ccType) { if (typeof toast === 'function') toast('Pick what you want to create first'); return; }
+  if (!ccType) { requireLogin(function () { agStart(null, null, txt); }); return; }
   if (ccType === 'mv' && !ccSongAttached) { if (typeof toast === 'function') toast('Add a song first'); return; }
   if (!ccMaterialsReady()) { if (typeof toast === 'function') toast('Add the required material first'); return; }
   requireLogin(function () {
@@ -15236,12 +15237,19 @@ let agAnswers = [];
 /* The agent is a collaborator, not a form: every question says why it is
    being asked, and the copy acknowledges what the user already gave it. */
 const AG_OPEN = {
+  auto:  'Love this — I can already see it. Do you have any photos or videos you want me to use? Tap + to add them, or I can create every shot from scratch.',
   story: 'Nice — I can picture it already. Four quick questions and I will start shaping the story.',
   mkt:   'Good brief. Four quick questions so this lands with the right people, then I will build it.',
   ugc:   'Got it. Four quick questions so this feels like a real creator made it, then I am off.'
 };
 
 const AG_FLOW = {
+  auto: [
+    { k:'Video type', q:'First — what kind of video are we making? That shapes everything else.', chips:['Story video','Marketing video','UGC / Try-on','Not sure yet'] },
+    { k:'Audience',   q:'Who is it for? I will pitch it their way.', chips:['Gen Z','Young professionals','Parents','Everyone'] },
+    { k:'Length',     q:'How long should it run? Short and punchy, or room to breathe?', chips:['15s','30s','60s'] },
+    { k:'Mood',       q:'Last one — what should people feel while they watch?', chips:['Heartwarming','Energetic','Cinematic','Funny'] }
+  ],
   story: [
     { k:'Length',   q:'First — how long should it run? Short and punchy, or room to breathe?', chips:['15s','30s','60s'] },
     { k:'Tone',     q:'What should people feel while they watch?', chips:['Heartwarming','Suspenseful','Funny','Dramatic'] },
@@ -15505,10 +15513,13 @@ function agSubLabel(skill, sub) {
 }
 
 function agStart(skill, sub, prompt) {
-  agSkill = skill; agSub = sub; agStep = 0; agAnswers = []; agStage = 'q';
+  /* Create with no skill picked lands here too — the agent itself asks for
+     the photos or videos instead of the Home input demanding them up front. */
+  const auto = !skill;
+  agSkill = auto ? 'auto' : skill; agSub = auto ? null : sub; agStep = 0; agAnswers = []; agStage = 'q';
   _agFrom = 'home';
   const t = document.getElementById('ag-title');
-  if (t) t.textContent = agSubLabel(skill, sub);
+  if (t) t.textContent = agSubLabel(agSkill, agSub);
   const log = document.getElementById('ag-log');
   if (log) log.innerHTML = '';
   const inp = document.getElementById('ag-text');
@@ -15519,7 +15530,14 @@ function agStart(skill, sub, prompt) {
   const url = document.getElementById('cc-url-input');
   const extra = (url && url.value.trim()) ? '<br><span style="opacity:.6;">' + agEsc(url.value.trim()) + '</span>' : '';
   agPush('me', agEsc(prompt) + extra + agMats());
-  agReply(AG_OPEN[skill] || ('Got it — ' + agSubLabel(skill, sub).toLowerCase() + '. A few quick questions and I will start building.'), agAsk, 900);
+  if (auto && !Object.keys(ccMat).length) {
+    agStage = 'media';
+    agReply(AG_OPEN.auto, function () {
+      agSetChips([{ t:'Add photos or videos', v:'__media' }, { t:'Create from scratch', v:'__nomedia' }]);
+    }, 900);
+    return;
+  }
+  agReply(AG_OPEN[agSkill] || ('Got it — ' + agSubLabel(agSkill, agSub).toLowerCase() + '. A few quick questions and I will start building.'), agAsk, 900);
 }
 
 function agAsk() {
@@ -15568,6 +15586,13 @@ function agGenerate() {
 
 function agPick(v) {
   if (v === '__go') { agGenerate(); return; }
+  if (v === '__media') { agOpenMedia(); return; }
+  if (v === '__nomedia') {
+    agPush('me', 'Create from scratch');
+    agStage = 'q'; agSetChips([]);
+    agReply('No problem at all — I will build every shot for you. Four quick questions first.', agAsk, 600);
+    return;
+  }
   if (v === '__change') {
     agPush('me', 'Change something');
     agStep = 0; agAnswers = []; agStage = 'q';
@@ -15718,6 +15743,15 @@ function agSend() {
   inp.value = '';
   const atts = agAttsHtml();
   if (atts) { agAtts = []; agRenderAtts(); }
+  if (agStage === 'media') {
+    agSetChips([]);
+    agPush('me', (v ? agEsc(v) : 'Here you go') + atts);
+    agStage = 'q';
+    agReply(atts
+      ? 'These are lovely to work with, thank you. Four quick questions and I will start building.'
+      : 'Got it. Four quick questions and I will start building.', agAsk, 700);
+    return;
+  }
   if (agStage === 'q') { agCommit(v || 'See attached'); return; }
   if (agStage === 'confirm') {
     agPush('me', agEsc(v) + atts);
