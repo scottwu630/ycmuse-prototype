@@ -1228,7 +1228,33 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .ag-chip{display:flex;align-items:center;flex-shrink:0;background:var(--n14);border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .ag-chip:active{opacity:.75;}
 .ag-chip.go{background:var(--mv-grad);border-color:transparent;}
-.ag-input{display:flex;align-items:center;gap:8px;background:var(--n14);border:1px solid var(--border);border-radius:22px;padding:6px 6px 6px 14px;}
+.ag-input{display:flex;align-items:center;gap:8px;background:var(--n14);border:1px solid var(--border);border-radius:22px;padding:6px 6px 6px 6px;}
+/* + attach, left of the composer */
+.ag-attach{width:30px;height:30px;border-radius:50%;background:var(--n24);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:opacity .15s;-webkit-tap-highlight-color:transparent;}
+.ag-attach:active{opacity:.7;}
+/* staged media sitting above the composer */
+.ag-atts-bar{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;}
+.ag-atts-bar::-webkit-scrollbar{display:none;}
+.ag-atts-bar:empty{display:none;}
+.ag-att{position:relative;width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;background:var(--n24);}
+.ag-att img{width:100%;height:100%;object-fit:cover;display:block;}
+.ag-att-x{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:9px;background:rgba(9,9,11,.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.ag-att-vid{position:absolute;left:3px;bottom:3px;display:flex;align-items:center;}
+/* media picker sheet */
+.am-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:8px 3px 0;max-height:320px;overflow-y:auto;scrollbar-width:none;}
+.am-grid::-webkit-scrollbar{display:none;}
+.am-cell{position:relative;aspect-ratio:1;overflow:hidden;cursor:pointer;background:var(--n14);-webkit-tap-highlight-color:transparent;}
+.am-cell img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .18s,opacity .18s;}
+.am-cell.on img{transform:scale(.88);border-radius:8px;}
+.am-chk{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:10px;border:1.5px solid rgba(255,255,255,.85);background:rgba(9,9,11,.3);display:flex;align-items:center;justify-content:center;}
+.am-cell.on .am-chk{background:var(--accent);border-color:var(--accent);}
+.am-chk img{width:12px;height:12px;opacity:0;}
+.am-cell.on .am-chk img{opacity:1;}
+.am-dur{position:absolute;left:5px;bottom:5px;display:flex;align-items:center;gap:3px;font-size:10px;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);}
+.am-foot{display:flex;align-items:center;gap:8px;padding:12px 20px 0;}
+.am-add{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;height:44px;border-radius:22px;background:var(--mv-grad);font-size:14px;font-weight:600;color:#fff;cursor:pointer;transition:opacity .15s;-webkit-tap-highlight-color:transparent;}
+.am-add.off{opacity:.35;pointer-events:none;}
+.am-add:active{opacity:.85;}
 .ag-input input{flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-family:inherit;font-size:13px;font-weight:500;}
 .ag-input input::placeholder{color:var(--n54);}
 .ag-send{width:30px;height:30px;border-radius:50%;background:var(--mv-grad);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;}
@@ -5676,7 +5702,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div class="ag-bar">
         <div class="ag-qcard" id="ag-qcard" style="display:none;"></div>
         <div class="ag-chips" id="ag-chips"></div>
+        <div class="ag-atts-bar" id="ag-atts"></div>
         <div class="ag-input">
+          <div class="ag-attach" onclick="agOpenMedia()">
+            <img src="../assets/icons/ui/ic_add.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+          </div>
           <input id="ag-text" placeholder="Reply to the agent…" onkeydown="if(event.key==='Enter'){agSend();}">
           <div class="ag-send" onclick="agSend()">
             <img src="../assets/icons/ui/ic_arrow_up.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
@@ -6673,6 +6703,17 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div class="sheet-opt-sub">Use an audio file on your device</div>
       </div>
       <img class="sheet-opt-chev" src="../assets/icons/ui/ic_chevron-right.svg" style="display:block;filter:brightness(0) invert(1);">
+    </div>
+  </div>
+
+  <!-- ══════ AI AGENT · MEDIA PICKER (photos / videos for the chat composer) ══════ -->
+  <div class="sheet" id="agmedia-sheet" style="padding-bottom:calc(20px + var(--safe-bot));">
+    <div class="sheet-handle"></div>
+    <div class="sheet-ttl">Add photos or videos</div>
+    <div style="font-size:12px;font-weight:500;color:var(--n54);text-align:center;padding:0 20px 4px;">Recents</div>
+    <div class="am-grid" id="am-grid"></div>
+    <div class="am-foot">
+      <div class="am-add off" id="am-add" onclick="agAddMedia()">Add</div>
     </div>
   </div>
 
@@ -14824,17 +14865,16 @@ function _ccSetType(t, subKey) {
   show('cc-idea', isMv || isSong || hasSub);
   show('cc-add', isNone || (isAgent && !hasSub));
 
-  /* No Templates / Song Style row outside MV and Song. Enhance then leaves row 1
-     and parks immediately left of Create (Figma 4896:72759), outside the
-     scrolling chip row so it never scrolls away. */
+  /* Row 1 (Templates / Song Style) belongs to MV and Song only. Enhance always
+     parks immediately left of Create (Figma 4896:72759) — same place for every
+     skill, and outside the scrolling chip row so it never scrolls away. */
   const enh = document.getElementById('cc-enh');
   const r1 = document.getElementById('cc-row1');
   const r2 = document.getElementById('cc-row2');
   const cta = document.getElementById('cc-cta');
   const sideRow = isMv || isSong;
-  if (enh && r1 && r2 && cta) {
-    if (!sideRow) { if (enh.parentElement !== r2 || enh.nextElementSibling !== cta) r2.insertBefore(enh, cta); }
-    else if (enh.parentElement !== r1) r1.appendChild(enh);
+  if (enh && r2 && cta && (enh.parentElement !== r2 || enh.nextElementSibling !== cta)) {
+    r2.insertBefore(enh, cta);
   }
   if (r1) r1.style.display = sideRow ? 'flex' : 'none';
 
@@ -15037,7 +15077,7 @@ function ccOnInput() {
   const has = ta.value.trim().length > 0;
   cta.classList.toggle('off', !(has && !!ccType && ccMaterialsReady()));
   const enh = document.getElementById('cc-enh');
-  if (enh) enh.style.display = (!!ccType && ccType !== 'song' && has) ? 'flex' : 'none';
+  if (enh) enh.style.display = has ? 'flex' : 'none';
 }
 
 function ccIdea() {
@@ -15193,24 +15233,32 @@ let agSkill = null, agSub = null, agStep = 0, agStage = 'q';
 let _agFrom = 'home';           // 'home' (Create) or 'history' (reopened thread)
 let agAnswers = [];
 
+/* The agent is a collaborator, not a form: every question says why it is
+   being asked, and the copy acknowledges what the user already gave it. */
+const AG_OPEN = {
+  story: 'Nice — I can picture it already. Four quick questions and I will start shaping the story.',
+  mkt:   'Good brief. Four quick questions so this lands with the right people, then I will build it.',
+  ugc:   'Got it. Four quick questions so this feels like a real creator made it, then I am off.'
+};
+
 const AG_FLOW = {
   story: [
-    { k:'Length',   q:'Nice brief. How long should the finished video run?', chips:['15s','30s','60s'] },
-    { k:'Tone',     q:'What tone fits the story best?', chips:['Heartwarming','Suspenseful','Funny','Dramatic'] },
-    { k:'Speech',   q:'How should the characters speak?', chips:['Dialogue','Voiceover only','Music only'] },
-    { k:'Must-have',q:'Anything I must include — a location, a line, an object? Type it, or tap skip.', chips:['Nothing else'] }
+    { k:'Length',   q:'First — how long should it run? Short and punchy, or room to breathe?', chips:['15s','30s','60s'] },
+    { k:'Tone',     q:'What should people feel while they watch?', chips:['Heartwarming','Suspenseful','Funny','Dramatic'] },
+    { k:'Speech',   q:'How should your characters come across?', chips:['Dialogue','Voiceover only','Music only'] },
+    { k:'Must-have',q:'Last one — anything you really want in there? A place, a line, a small detail that matters to you.', chips:['Surprise me'] }
   ],
   mkt: [
-    { k:'Audience', q:'Who is this ad for?', chips:['Gen Z','Young professionals','Parents','Everyone'] },
-    { k:'Goal',     q:'What should viewers do after watching?', chips:['Buy now','Visit the site','Follow us','Learn more'] },
-    { k:'Length',   q:'How long should it run?', chips:['15s','30s','60s'] },
-    { k:'CTA',      q:'Give me the closing line, or let me write one for you.', chips:['You write it'] }
+    { k:'Audience', q:'Who are we talking to? I will pitch it their way.', chips:['Gen Z','Young professionals','Parents','Everyone'] },
+    { k:'Goal',     q:'And what would you love them to do after watching?', chips:['Buy now','Visit the site','Follow us','Learn more'] },
+    { k:'Length',   q:'How much time do we get with them?', chips:['15s','30s','60s'] },
+    { k:'CTA',      q:'Last one — how should it sign off? Give me your line, or I will write one.', chips:['You write it'] }
   ],
   ugc: [
-    { k:'Persona',  q:'Which creator persona should deliver this?', chips:['Casual friend','Expert reviewer','Energetic hype','Calm & minimal'] },
+    { k:'Persona',  q:'Who should be telling this? The voice changes everything here.', chips:['Casual friend','Expert reviewer','Energetic hype','Calm & minimal'] },
     { k:'Length',   q:'How long should the clip be?', chips:['15s','30s','45s'] },
-    { k:'Delivery', q:'Captions, voiceover, or both?', chips:['Both','Captions only','Voiceover only'] },
-    { k:'Hook',     q:'What is the opening hook line? Type it, or let me suggest one.', chips:['Suggest one'] }
+    { k:'Delivery', q:'Captions, voiceover, or both? Most people watch on mute.', chips:['Both','Captions only','Voiceover only'] },
+    { k:'Hook',     q:'Last one — the first line has to stop the scroll. Got one in mind?', chips:['Suggest one'] }
   ]
 };
 
@@ -15466,11 +15514,12 @@ function agStart(skill, sub, prompt) {
   const inp = document.getElementById('ag-text');
   if (inp) inp.value = '';
   agHideQ(); agSetChips([]);
+  agAtts = []; agRenderAtts();
   goTo('agent');
   const url = document.getElementById('cc-url-input');
   const extra = (url && url.value.trim()) ? '<br><span style="opacity:.6;">' + agEsc(url.value.trim()) + '</span>' : '';
   agPush('me', agEsc(prompt) + extra + agMats());
-  agReply('Got it — ' + agSubLabel(skill, sub).toLowerCase() + '. A few quick questions and I will start building.', agAsk, 900);
+  agReply(AG_OPEN[skill] || ('Got it — ' + agSubLabel(skill, sub).toLowerCase() + '. A few quick questions and I will start building.'), agAsk, 900);
 }
 
 function agAsk() {
@@ -15489,7 +15538,7 @@ function agWrapUp() {
   agTyping(true);
   setTimeout(function () {
     agTyping(false);
-    agPush('ai', 'Got everything I need. Shall I start generating?');
+    agPush('ai', 'Lovely — that is everything I need, and it is a good set-up. Shall I start building?');
     agSetChips([{ t:'Start generating', v:'__go', go:true }, { t:'Change something', v:'__change' }]);
   }, 800);
 }
@@ -15498,14 +15547,14 @@ function agGenerate() {
   agStage = 'busy';
   agSetChips([]);
   agPush('me', 'Start generating');
-  agReply('On it. Writing the shot list, then rendering — this usually takes a moment.', function () {
+  agReply('On it. Shot list first, then rendering — hang tight, this is the fun part.', function () {
     agTyping(true);
     setTimeout(function () {
       agTyping(false);
       agStage = 'done';
       const log = document.getElementById('ag-log');
       const poster = ccMat[0] || '../assets/videos/sample-mvs/mv_06_cinematic_movie.jpg';
-      agPush('ai', 'Your ' + agEsc(agSubLabel(agSkill, agSub).toLowerCase()) + ' is ready.');
+      agPush('ai', 'Here it is — your ' + agEsc(agSubLabel(agSkill, agSub).toLowerCase()) + '. Have a look and tell me what you think.');
       const card = document.createElement('div');
       card.className = 'ag-card';
       card.innerHTML = '<img src="' + poster + '" alt="">' +
@@ -15523,12 +15572,12 @@ function agPick(v) {
     agPush('me', 'Change something');
     agStep = 0; agAnswers = []; agStage = 'q';
     agHideQ();
-    agReply('No problem — let us go through it again.', agAsk, 600);
+    agReply('Of course — nothing is locked in. Let us run through it again.', agAsk, 600);
     return;
   }
   if (v === '__again') {
     agPush('me', 'Make a variation');
-    agReply('Rendering a second take with a different cut rhythm.', function () { agGenerate2(); }, 600);
+    agReply('Happy to. Same brief, fresh take — I will try a different rhythm on the cut.', function () { agGenerate2(); }, 600);
     return;
   }
   agCommit(v);
@@ -15565,7 +15614,7 @@ function agOpenHistory(skill, sub, prompt, poster) {
   agHideQ();
   goTo('agent');
   agPush('me', agEsc(prompt));
-  agPush('ai', 'Your ' + agEsc(agSubLabel(skill, sub).toLowerCase()) + ' is ready.');
+  agPush('ai', 'Here it is — your ' + agEsc(agSubLabel(skill, sub).toLowerCase()) + '. Have a look and tell me what you think.');
   if (log) {
     const card = document.createElement('div');
     card.className = 'ag-card';
@@ -15577,22 +15626,108 @@ function agOpenHistory(skill, sub, prompt, poster) {
   agSetChips([{ t: 'Make a variation', v: '__again' }]);
 }
 
+/* ── media picker for the chat composer ── */
+const AG_MEDIA = [
+  { s:'../assets/images/character-photos/acter_1.jpg' },
+  { s:'../assets/images/character-photos/acter_3.jpg' },
+  { s:'../assets/videos/sample-mvs/mv_03_neon_city.jpg', v:'0:14' },
+  { s:'../assets/images/scene/scene_1.jpg' },
+  { s:'../assets/images/scene/scene_3.jpg' },
+  { s:'../assets/videos/sample-mvs/mv_12_Splash.jpg', v:'0:22' },
+  { s:'../assets/images/character-photos/acter_4.jpg' },
+  { s:'../assets/images/scene/scene_5.jpg' },
+  { s:'../assets/videos/sample-mvs/mv_05_anime_style.jpg', v:'0:30' },
+  { s:'../assets/images/character-photos/acter_6.jpg' },
+  { s:'../assets/images/scene/scene_7.jpg' },
+  { s:'../assets/videos/sample-mvs/mv_14_Vintage Car.jpg', v:'0:18' }
+];
+let agMediaSel = [];       // indices picked inside the open sheet
+let agAtts = [];           // media staged on the composer
+
+function agOpenMedia() {
+  agMediaSel = [];
+  const grid = document.getElementById('am-grid');
+  if (grid) {
+    grid.innerHTML = AG_MEDIA.map(function (m, i) {
+      const badge = m.v
+        ? '<div class="am-dur"><img src="../assets/icons/ui/ic_play.svg" width="9" height="9" style="display:block;filter:brightness(0) invert(1);"><span>' + m.v + '</span></div>'
+        : '';
+      return '<div class="am-cell" data-i="' + i + '" onclick="agToggleMedia(' + i + ')">' +
+               '<img src="' + m.s + '" alt="">' + badge +
+               '<div class="am-chk"><img src="../assets/icons/ui/ic_check.svg" style="filter:brightness(0) invert(1);"></div>' +
+             '</div>';
+    }).join('');
+    grid.scrollTop = 0;
+  }
+  agSyncMediaBtn();
+  showSheet('agmedia-sheet');
+}
+
+function agToggleMedia(i) {
+  const at = agMediaSel.indexOf(i);
+  if (at >= 0) agMediaSel.splice(at, 1); else agMediaSel.push(i);
+  const cell = document.querySelector('#am-grid .am-cell[data-i="' + i + '"]');
+  if (cell) cell.classList.toggle('on', at < 0);
+  agSyncMediaBtn();
+}
+
+function agSyncMediaBtn() {
+  const btn = document.getElementById('am-add');
+  if (!btn) return;
+  btn.classList.toggle('off', agMediaSel.length === 0);
+  btn.textContent = agMediaSel.length ? 'Add ' + agMediaSel.length : 'Add';
+}
+
+function agAddMedia() {
+  if (!agMediaSel.length) return;
+  agMediaSel.slice().sort(function (a, b) { return a - b; }).forEach(function (i) {
+    if (agAtts.length < 6) agAtts.push(AG_MEDIA[i]);
+  });
+  hideSheet('agmedia-sheet');
+  agRenderAtts();
+}
+
+function agRenderAtts() {
+  const bar = document.getElementById('ag-atts');
+  if (!bar) return;
+  bar.innerHTML = agAtts.map(function (m, i) {
+    const badge = m.v ? '<div class="ag-att-vid"><img src="../assets/icons/ui/ic_play.svg" width="9" height="9" style="display:block;filter:brightness(0) invert(1);"></div>' : '';
+    return '<div class="ag-att"><img src="' + m.s + '" alt="">' + badge +
+             '<div class="ag-att-x" onclick="agDropAtt(' + i + ')">' +
+               '<img src="../assets/icons/ui/ic_close.svg" width="10" height="10" style="display:block;filter:brightness(0) invert(1);">' +
+             '</div>' +
+           '</div>';
+  }).join('');
+  agSyncPad();
+}
+
+function agDropAtt(i) { agAtts.splice(i, 1); agRenderAtts(); }
+
+function agAttsHtml() {
+  if (!agAtts.length) return '';
+  return '<div class="ag-atts">' + agAtts.map(function (m) {
+    return '<img src="' + m.s + '" alt="">';
+  }).join('') + '</div>';
+}
+
 function agSend() {
   const inp = document.getElementById('ag-text');
   if (!inp) return;
   const v = inp.value.trim();
-  if (!v) return;
+  if (!v && !agAtts.length) return;
   inp.value = '';
-  if (agStage === 'q') { agCommit(v); return; }
+  const atts = agAttsHtml();
+  if (atts) { agAtts = []; agRenderAtts(); }
+  if (agStage === 'q') { agCommit(v || 'See attached'); return; }
   if (agStage === 'confirm') {
-    agPush('me', agEsc(v));
-    agReply('Noted — I will fold that in. Ready when you are.', function () {
+    agPush('me', agEsc(v) + atts);
+    agReply('Noted, that is a good call — I will work it in. Ready whenever you are.', function () {
       agSetChips([{ t:'Start generating', v:'__go', go:true }, { t:'Change something', v:'__change' }]);
     }, 700);
     return;
   }
-  agPush('me', agEsc(v));
-  agReply('Got it — I will apply that to the next take.', function () {
+  agPush('me', agEsc(v) + atts);
+  agReply('Got it — I will bring that into the next take.', function () {
     agSetChips([{ t:'Make a variation', v:'__again' }]);
   }, 700);
 }
