@@ -15238,37 +15238,44 @@ let agAnswers = [];
    being asked, and the copy acknowledges what the user already gave it. */
 const AG_OPEN = {
   auto:  'Love this — I can already see it. Do you have any photos or videos you want me to use? Tap + to add them, or I can create every shot from scratch.',
-  story: 'Nice — I can picture it already. Four quick questions and I will start shaping the story.',
-  mkt:   'Good brief. Four quick questions so this lands with the right people, then I will build it.',
-  ugc:   'Got it. Four quick questions so this feels like a real creator made it, then I am off.'
+  story: 'Nice — I can picture it already. Five quick questions and I will start shaping the story.',
+  mkt:   'Good brief. Five quick questions so this lands with the right people, then I will build it.',
+  ugc:   'Got it. Five quick questions so this feels like a real creator made it, then I am off.'
 };
 
 const AG_FLOW = {
   auto: [
     { k:'Video type', q:'First — what kind of video are we making? That shapes everything else.', chips:['Story video','Marketing video','UGC / Try-on','Not sure yet'] },
     { k:'Audience',   q:'Who is it for? I will pitch it their way.', chips:['Gen Z','Young professionals','Parents','Everyone'] },
-    { k:'Length',     q:'How long should it run? Short and punchy, or room to breathe?', chips:['15s','30s','60s'] },
-    { k:'Mood',       q:'Last one — what should people feel while they watch?', chips:['Heartwarming','Energetic','Cinematic','Funny'] }
+    { k:'Mood',       q:'And what should people feel while they watch?', chips:['Heartwarming','Energetic','Cinematic','Funny'] },
+    { k:'Length',     q:'How long should it run? Short and punchy, or room to breathe?', chips:['15s','30s','60s'] }
   ],
   story: [
-    { k:'Length',   q:'First — how long should it run? Short and punchy, or room to breathe?', chips:['15s','30s','60s'] },
-    { k:'Tone',     q:'What should people feel while they watch?', chips:['Heartwarming','Suspenseful','Funny','Dramatic'] },
+    { k:'Tone',     q:'First — what should people feel while they watch?', chips:['Heartwarming','Suspenseful','Funny','Dramatic'] },
     { k:'Speech',   q:'How should your characters come across?', chips:['Dialogue','Voiceover only','Music only'] },
-    { k:'Must-have',q:'Last one — anything you really want in there? A place, a line, a small detail that matters to you.', chips:['Surprise me'] }
+    { k:'Must-have',q:'Anything you really want in there? A place, a line, a small detail that matters to you.', chips:['Surprise me'] },
+    { k:'Length',   q:'How long should it run? Short and punchy, or room to breathe?', chips:['15s','30s','60s'] }
   ],
   mkt: [
     { k:'Audience', q:'Who are we talking to? I will pitch it their way.', chips:['Gen Z','Young professionals','Parents','Everyone'] },
     { k:'Goal',     q:'And what would you love them to do after watching?', chips:['Buy now','Visit the site','Follow us','Learn more'] },
-    { k:'Length',   q:'How much time do we get with them?', chips:['15s','30s','60s'] },
-    { k:'CTA',      q:'Last one — how should it sign off? Give me your line, or I will write one.', chips:['You write it'] }
+    { k:'CTA',      q:'How should it sign off? Give me your line, or I will write one.', chips:['You write it'] },
+    { k:'Length',   q:'How much time do we get with them?', chips:['15s','30s','60s'] }
   ],
   ugc: [
     { k:'Persona',  q:'Who should be telling this? The voice changes everything here.', chips:['Casual friend','Expert reviewer','Energetic hype','Calm & minimal'] },
-    { k:'Length',   q:'How long should the clip be?', chips:['15s','30s','45s'] },
     { k:'Delivery', q:'Captions, voiceover, or both? Most people watch on mute.', chips:['Both','Captions only','Voiceover only'] },
-    { k:'Hook',     q:'Last one — the first line has to stop the scroll. Got one in mind?', chips:['Suggest one'] }
+    { k:'Hook',     q:'The first line has to stop the scroll. Got one in mind?', chips:['Suggest one'] },
+    { k:'Length',   q:'How long should the clip be?', chips:['15s','30s','45s'] }
   ]
 };
+
+/* Nothing gets generated before the user has confirmed the output shape —
+   the same question closes every flow, pre-filled from the Home panel. */
+const AG_RATIO = { k:'Ratio',
+  q:'And what shape? I will frame every shot for it.',
+  chips:['9:16 Vertical','1:1 Square','16:9 Landscape'] };
+Object.keys(AG_FLOW).forEach(function (k) { AG_FLOW[k] = AG_FLOW[k].concat([AG_RATIO]); });
 
 function agEsc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -15356,6 +15363,10 @@ function agShowQ() {
   agSetChips([]);
   const prev = agAnswers[agStep];
   agSel = prev && (step.chips || []).indexOf(prev.v) >= 0 ? prev.v : null;
+  if (!prev && step.k === 'Ratio') {
+    const pre = (step.chips || []).filter(function (c) { return c.indexOf(ccParams.ratio) === 0; })[0];
+    if (pre) agSel = pre;
+  }
   const free = prev && !agSel ? prev.v : '';
   const opts = (step.chips || []).map(function (c, i) {
     return '<div class="ag-opt' + (agSel === c ? ' sel' : '') + '" onclick="agSelOpt(' + i + ')">' +
@@ -15590,7 +15601,7 @@ function agPick(v) {
   if (v === '__nomedia') {
     agPush('me', 'Create from scratch');
     agStage = 'q'; agSetChips([]);
-    agReply('No problem at all — I will build every shot for you. Four quick questions first.', agAsk, 600);
+    agReply('No problem at all — I will build every shot for you. Five quick questions first.', agAsk, 600);
     return;
   }
   if (v === '__change') {
@@ -15748,8 +15759,8 @@ function agSend() {
     agPush('me', (v ? agEsc(v) : 'Here you go') + atts);
     agStage = 'q';
     agReply(atts
-      ? 'These are lovely to work with, thank you. Four quick questions and I will start building.'
-      : 'Got it. Four quick questions and I will start building.', agAsk, 700);
+      ? 'These are lovely to work with, thank you. Five quick questions and I will start building.'
+      : 'Got it. Five quick questions and I will start building.', agAsk, 700);
     return;
   }
   if (agStage === 'q') { agCommit(v || 'See attached'); return; }
