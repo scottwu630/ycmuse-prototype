@@ -4546,14 +4546,14 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
 
           <!-- 1b. Spring Jacket Try-on — made in the AI Agent chat (UGC) · Done -->
-          <div class="hist-row" data-htype="agent" onclick="histMarkPlayed(this);agOpenHistory('ugc','tryon','A creator trying the outfit on in front of a bedroom mirror — three quick angle changes, casual voiceover about the fit and the fabric.','../assets/images/character-photos/acter_1.jpg')">
+          <div class="hist-row" data-htype="agent" onclick="histMarkPlayed(this);agOpenHistory('ugc','review','A creator trying the outfit on in front of a bedroom mirror — three quick angle changes, casual voiceover about the fit and the fabric.','../assets/images/character-photos/acter_1.jpg')">
             <div class="hist-thumb">
               <img src="../assets/images/character-photos/acter_1.jpg">
               <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="../assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
             </div>
             <div class="hist-info">
               <div class="hist-name">Spring Jacket Try-on</div>
-              <div class="hist-meta">UGC Try-on</div>
+              <div class="hist-meta">UGC Review</div>
               <div class="hist-social">
                 <div class="hist-stat"><img src="../assets/icons/ui/ic_headphones.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>24</span></div>
                 <div class="hist-stat"><img src="../assets/icons/ui/ic_favorite_off.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>7</span></div>
@@ -14471,7 +14471,7 @@ function applySongTemplate(title, genre, mood) {
    Story / Marketing / UGC expand a sub-skill row; picking a sub-skill
    loads its default prompt plus the material slots it needs, and Create
    hands those three off to the AI Agent chat instead of a fixed flow. */
-let ccType = null;            // null (nothing picked yet) | 'mv' | 'song' | 'story' | 'mkt' | 'ugc'
+let ccType = null;            // null (nothing picked yet) | 'mv' | 'song' | 'prod' | 'ugc' | 'social' | 'cine'
 let ccSub = null;             // active sub-skill key
 let ccOpenSkill = null;       // which skill's sub-row is expanded
 let ccSongTab = 'custom';
@@ -14488,7 +14488,7 @@ let _ssDraft = null;
 let _ccTplFromHome = false;
 let _ccSongFromHome = false;
 
-const CC_DRAFT = { none:'', mv:'', song:'', story:'', mkt:'', ugc:'' };
+const CC_DRAFT = { none:'', mv:'', song:'', prod:'', ugc:'', social:'', cine:'' };
 const SS_GENRE = ['Pop','R&B','Electronic','Hip-Hop','Acoustic','Jazz','Classical','Lo-fi'];
 const SS_MOOD  = ['Uplifting','Melancholic','Romantic','Energetic','Calm','Dark'];
 const SS_VOCAL = ['Male','Female'];
@@ -14512,46 +14512,55 @@ const CC_ART = [
 
 /* ── the skill bar (Figma 4854:71391) ── */
 const CC_SKILLS = [
-  { k:'mv',    lbl:'Music Video',     ico:'ic_video_ai.svg' },
-  { k:'song',  lbl:'Song',            ico:'ic_song_ai.svg'  },
-  { k:'story', lbl:'Story Video',     subs:true },      // Figma hides the icon on the
-  { k:'mkt',   lbl:'Marketing Video', subs:true },      // three video skills — text + chevron
-  { k:'ugc',   lbl:'UGC Video',       subs:true }
+  { k:'mv',     lbl:'Music Video',    ico:'ic_video_ai.svg' },
+  { k:'song',   lbl:'Song',           ico:'ic_song_ai.svg'  },
+  { k:'prod',   lbl:'Product Video',  subs:true },     // Figma hides the icon on the
+  { k:'ugc',    lbl:'UGC Video',      subs:true },     // four video skills — text + chevron
+  { k:'social', lbl:'Social Content', subs:true },
+  { k:'cine',   lbl:'Cinematic Video',subs:true }
 ];
 
-/* ── sub-skills: default prompt + the material fields each one needs ── */
+/* ── sub-skills: the scenario matrix (C1–C5). Each one carries the default
+   prompt and exactly the materials that scenario asks the user for —
+   slots for images, url:true for the product info row. ── */
 const CC_SUBS = {
-  story: [
-    { k:'drama', lbl:'Short Drama', slots:[{lbl:'Character'},{lbl:'Scene'}],
-      ph:'A 60-second office romance — two colleagues keep missing each other at the elevator, until one rainy evening they finally share an umbrella.' },
-    { k:'dance', lbl:'Dance', slots:[{lbl:'Dancer'},{lbl:'Scene'}],
-      ph:'A street dance crew running a high-energy hip-hop routine under neon signs, camera orbiting the lead dancer on the drop.' },
-    { k:'anime', lbl:'Anime Video', slots:[{lbl:'Character'}],
-      ph:'An anime short about a girl who finds a glowing cat in an abandoned train station and follows it into a city of floating lanterns.' },
-    { k:'kids',  lbl:'Kids Video',  slots:[{lbl:'Character'}],
-      ph:'A friendly cartoon bear teaching three little animals to count to ten in a sunny forest clearing — bright colours, gentle motion.' }
-  ],
-  mkt: [
-    { k:'photoad', lbl:'Photo to Video Ad', slots:[{lbl:'Product'}],
-      ph:'Turn my product photo into a 15-second ad — slow rotating hero shot, soft studio light, clean backdrop, closing on the logo.' },
-    { k:'urlad',   lbl:'URL to Video Ad', slots:[], url:true,
-      ph:'Build a 15-second ad from my landing page — pull the key selling points and show them as bold captions over lifestyle footage.' },
-    { k:'clonead', lbl:'Clone Video Ad', slots:[{lbl:'Reference'},{lbl:'Product'}],
-      ph:'Recreate this reference ad with my own product — same pacing, same shot order, same caption rhythm.' },
-    { k:'tvc',     lbl:'TVC Ad', slots:[{lbl:'Product'},{lbl:'Scene'}],
-      ph:'A 30-second TV commercial — a warm family morning routine, the product appearing naturally in three moments, closing on the tagline.' }
+  prod: [
+    { k:'showcase', lbl:'Showcase Ad', full:'Product Showcase Ad', slots:[{lbl:'Product'}],
+      ph:'Put my product centre frame — slow rotating hero shot, soft studio light, clean backdrop, every detail of the design in focus.' },
+    { k:'demo', lbl:'Demo', full:'Product Demo & Solution', slots:[{lbl:'Product'}], url:true,
+      urlPh:'Paste your product page or key specs',
+      ph:'Show the problem first, then my product solving it in three clear steps — close on the result, not the feature list.' },
+    { k:'brandad', lbl:'Brand Ad', full:'Cinematic Brand Ad', slots:[{lbl:'Product'},{lbl:'Logo'}], url:true,
+      urlPh:'Paste your brand page or key message',
+      ph:'A cinematic brand film — wide atmospheric shots, one quiet human moment, the product arriving late, closing on the logo.' },
+    { k:'offer', lbl:'Offer Ad', full:'Performance & Offer Ad', slots:[{lbl:'Product'}], url:true,
+      urlPh:'Paste your offer, price or landing page',
+      ph:'A direct-response spot — hook in the first second, the offer on screen the whole way, ending on a hard call to action.' }
   ],
   ugc: [
-    { k:'tryon',  lbl:'Try-on', slots:[{lbl:'Model'},{lbl:'Product'}],
-      ph:'A creator trying the outfit on in front of a bedroom mirror — three quick angle changes, casual voiceover about the fit and the fabric.' },
-    { k:'unbox',  lbl:'Unboxing', slots:[{lbl:'Product'}],
-      ph:'A close-up desk unboxing — hands opening the package, the reveal landing on the beat, quick cuts to each item inside.' },
-    { k:'howto',  lbl:'Tutorial', slots:[{lbl:'Product'}],
-      ph:'A step-by-step how-to — three short steps shot overhead, on-screen numbers, friendly upbeat narration.' },
-    { k:'ba',     lbl:'Before & After', slots:[{lbl:'Before'},{lbl:'After'}],
-      ph:'A split-screen before and after — same framing, same light, the change landing on the halfway cut.' },
-    { k:'points', lbl:'Selling Points', slots:[{lbl:'Product'}],
-      ph:'Three selling points straight to camera, one punchy line each, bold captions and a quick product cutaway between them.' }
+    { k:'review', lbl:'UGC Review', slots:[{lbl:'Person'},{lbl:'Product'}],
+      ph:'An honest first-person review — one thing I love, one thing I would change, then the verdict straight to camera.' },
+    { k:'tutorial', lbl:'UGC Tutorial', slots:[{lbl:'Person'},{lbl:'Product'}], url:true,
+      urlPh:'Paste your product page or key steps',
+      ph:'A step-by-step how-to — three short steps, on-screen numbers, friendly narration, the result held up at the end.' },
+    { k:'unbox', lbl:'Unboxing', full:'Unboxing & First-use', slots:[{lbl:'Person'},{lbl:'Product'},{lbl:'Product 2'}],
+      ph:'A desk unboxing — hands opening the package, the reveal landing on the beat, then a genuine first reaction using it.' }
+  ],
+  social: [
+    { k:'interview', lbl:'Interview', full:'Interview & Vox Pop', slots:[{lbl:'Person'},{lbl:'Person 2'},{lbl:'Person 3'}],
+      ph:'Street interviews on one question — three different people, quick cuts between answers, captions on every line.' },
+    { k:'podcast', lbl:'Podcast', full:'Podcast & Expert Dialogue', slots:[{lbl:'Host'},{lbl:'Guest', opt:true}],
+      ph:'A podcast-style conversation — two seats, warm studio light, the sharpest 60 seconds of the exchange, captions throughout.' },
+    { k:'meme', lbl:'Meme', full:'Meme Short', slots:[],
+      ph:'A meme-format short — setup text on screen, the turn at three seconds, punchline on the cut.' }
+  ],
+  cine: [
+    { k:'remix', lbl:'Action Remix', full:'Person Action Remix', slots:[{lbl:'Full body'}],
+      ph:'Keep me exactly as I am, but put me in a new performance — a dance take, a fight beat, a walk-off, same face, new motion.' },
+    { k:'concept', lbl:'Concept Film', slots:[],
+      ph:'A teaser for a film that does not exist yet — establish the world in four shots, no dialogue, one title card.' },
+    { k:'genre', lbl:'Genre Scene', full:'Genre Cinematic Scene', slots:[],
+      ph:'One scene in a clear genre — noir rain, 80s horror, spaghetti western — with the lighting and camera language to match.' }
   ]
 };
 
@@ -14559,11 +14568,12 @@ const CC_PLACEHOLDER = {
   none: 'Describe your idea to create an engaging video...',
   mv:   'Describe the mood, story, characters, or visuals you want for your MV...',
   song: 'Describe your lyrics or song idea here...',
-  story:'Describe your idea to create an engaging story video...',
-  mkt:  'Describe your idea to create an engaging marketing video...',
-  ugc:  'Describe your concept for an engaging UGC video that captivates your audience...'
+  prod:  'Describe the product video you want to create...',
+  ugc:   'Describe your concept for an engaging UGC video that captivates your audience...',
+  social:'Describe the social clip you want to create...',
+  cine:  'Describe the scene, world or performance you want to see...'
 };
-const CC_TA_H = { none:30, mv:45, song:30, story:45, mkt:45, ugc:45 };
+const CC_TA_H = { none:30, mv:45, song:30, prod:45, ugc:45, social:45, cine:45 };
 /* A video skill with no sub-skill picked has no material slots, so its prompt
    area is the same two-line box as the landing state — not the 45px one that
    only makes sense next to a 48px slot. */
@@ -14858,10 +14868,14 @@ function _ccSetType(t, subKey) {
   show('cc-cta-arrow', !isSong, 'block');
   show('cc-credit', isSong);
   show('cc-url', !!(sub && sub.url));
+  const urlIn = document.getElementById('cc-url-input');
+  if (urlIn && sub && sub.url) urlIn.placeholder = sub.urlPh || 'Paste your product or landing page URL';
   /* params and Idea belong to a chosen sub-skill; before that it is just + and Create */
-  show('cc-ratio', hasSub);
-  show('cc-dur', hasSub);
-  show('cc-res', hasSub);
+  /* Ratio / duration / quality are confirmed in the AI Agent chat now, so the
+     card keeps them out of the way — ccParams still carries the defaults. */
+  show('cc-ratio', false);
+  show('cc-dur', false);
+  show('cc-res', false);
   show('cc-idea', isMv || isSong || hasSub);
   show('cc-add', isNone || (isAgent && !hasSub));
 
@@ -14937,12 +14951,7 @@ const CC_IDEAS = {
     'An upbeat track for a summer road trip — handclaps, bright synths, shout-along chorus.',
     'A slow ballad for someone who is still waiting — piano, strings coming in late, my own voice.'
   ],
-  story: [
-    'A barista and a regular who only ever speak through notes on the cup — until one note asks a question.',
-    'A kid builds a cardboard rocket in the backyard; the last shot shows it genuinely lifting off.',
-    'Two rival food-stall owners forced to share one generator during a blackout night market.'
-  ],
-  mkt: [
+  prod: [
     'A 15-second spot where the product solves one small daily annoyance, shown three times, three people.',
     'A bold text-first ad — one claim per second over fast product macro shots, ending on the price.',
     'A day-in-the-life ad that never names the product until the final two seconds.'
@@ -14951,6 +14960,16 @@ const CC_IDEAS = {
     'Hold the product up to camera, say the one thing that surprised you, then show it in use.',
     'Three outfits, one product, quick whip-pan transitions, captions calling out the fit each time.',
     'Honest review format — one thing I love, one thing I would change, then the verdict.'
+  ],
+  social: [
+    'Ask five people the same question on the street and cut only the answers that disagree.',
+    'A two-person studio chat where the first line is the strongest thing either of them says.',
+    'A meme-format short — setup, turn, punchline, under eight seconds.'
+  ],
+  cine: [
+    'A teaser for a film that does not exist — four shots, no dialogue, one title card.',
+    'Same person, new performance — a street dance take shot like a music video.',
+    'One noir scene: rain, a payphone, headlights sweeping across a wet wall.'
   ]
 };
 
@@ -15050,7 +15069,7 @@ function ccMaterialsReady() {
   const defs = ccSlotDefs();
   for (let i = 0; i < defs.length; i++) {
     if (defs[i].k === 'song') { if (!ccSongAttached) return false; }
-    else if (!ccMat[i]) return false;
+    else if (!defs[i].opt && !ccMat[i]) return false;
   }
   const sub = ccSubDef();
   if (ccType !== 'mv' && ccType !== 'song' && sub && sub.url) {
@@ -15238,26 +15257,21 @@ let agAnswers = [];
    being asked, and the copy acknowledges what the user already gave it. */
 const AG_OPEN = {
   auto:  'Love this — I can already see it. Do you have any photos or videos you want me to use? Tap + to add them, or I can create every shot from scratch.',
-  story: 'Nice — I can picture it already. Five quick questions and I will start shaping the story.',
-  mkt:   'Good brief. Five quick questions so this lands with the right people, then I will build it.',
-  ugc:   'Got it. Five quick questions so this feels like a real creator made it, then I am off.'
+  prod:  'Good brief. Five quick questions so this lands with the right people, then I will build it.',
+  ugc:   'Got it. Five quick questions so this feels like a real creator made it, then I am off.',
+  social:'Nice one. Five quick questions so it reads native to the feed, then I will cut it.',
+  cine:  'Oh, I like this. Five quick questions and I will start blocking out the scene.'
 };
 
 const AG_FLOW = {
   auto: [
-    { k:'Video type', q:'First — what kind of video are we making? That shapes everything else.', chips:['Story video','Marketing video','UGC / Try-on','Not sure yet'] },
+    { k:'Video type', q:'First — what kind of video are we making? That shapes everything else.', chips:['Product video','UGC video','Social content','Cinematic video'] },
     { k:'Audience',   q:'Who is it for? I will pitch it their way.', chips:['Gen Z','Young professionals','Parents','Everyone'] },
     { k:'Mood',       q:'And what should people feel while they watch?', chips:['Heartwarming','Energetic','Cinematic','Funny'] },
     { k:'Length',     q:'How long should it run? Short and punchy, or room to breathe?', chips:['15s','30s','60s'] }
   ],
-  story: [
-    { k:'Tone',     q:'First — what should people feel while they watch?', chips:['Heartwarming','Suspenseful','Funny','Dramatic'] },
-    { k:'Speech',   q:'How should your characters come across?', chips:['Dialogue','Voiceover only','Music only'] },
-    { k:'Must-have',q:'Anything you really want in there? A place, a line, a small detail that matters to you.', chips:['Surprise me'] },
-    { k:'Length',   q:'How long should it run? Short and punchy, or room to breathe?', chips:['15s','30s','60s'] }
-  ],
-  mkt: [
-    { k:'Audience', q:'Who are we talking to? I will pitch it their way.', chips:['Gen Z','Young professionals','Parents','Everyone'] },
+  prod: [
+    { k:'Audience', q:'First — who are we talking to? I will pitch it their way.', chips:['Gen Z','Young professionals','Parents','Everyone'] },
     { k:'Goal',     q:'And what would you love them to do after watching?', chips:['Buy now','Visit the site','Follow us','Learn more'] },
     { k:'CTA',      q:'How should it sign off? Give me your line, or I will write one.', chips:['You write it'] },
     { k:'Length',   q:'How much time do we get with them?', chips:['15s','30s','60s'] }
@@ -15267,6 +15281,18 @@ const AG_FLOW = {
     { k:'Delivery', q:'Captions, voiceover, or both? Most people watch on mute.', chips:['Both','Captions only','Voiceover only'] },
     { k:'Hook',     q:'The first line has to stop the scroll. Got one in mind?', chips:['Suggest one'] },
     { k:'Length',   q:'How long should the clip be?', chips:['15s','30s','45s'] }
+  ],
+  social: [
+    { k:'Format',   q:'First — how should this play out on the feed?', chips:['Talking heads','Street interview','Text on screen','Meme format'] },
+    { k:'Tone',     q:'And what is the energy? That sets the whole edit.', chips:['Playful','Thoughtful','Punchy','Warm'] },
+    { k:'Takeaway', q:'What is the one thing someone should remember after watching?', chips:['You decide'] },
+    { k:'Length',   q:'How long should it run?', chips:['15s','30s','60s'] }
+  ],
+  cine: [
+    { k:'Genre',    q:'First — what world are we in? I will light and frame it to match.', chips:['Noir','Sci-fi','Fantasy','Drama','Western'] },
+    { k:'Look',     q:'And the look of it? This decides the grade and the lens.', chips:['Film grain','Clean digital','Handheld','Anamorphic'] },
+    { k:'Moment',   q:'What is the moment that has to land? Give me the beat you can already see.', chips:['Surprise me'] },
+    { k:'Length',   q:'How long should the scene run?', chips:['15s','30s','60s'] }
   ]
 };
 
@@ -15518,7 +15544,7 @@ function agBack() {
 
 function agSubLabel(skill, sub) {
   const list = CC_SUBS[skill] || [];
-  for (let i = 0; i < list.length; i++) if (list[i].k === sub) return list[i].lbl;
+  for (let i = 0; i < list.length; i++) if (list[i].k === sub) return list[i].full || list[i].lbl;
   const s = CC_SKILLS.filter(function (x) { return x.k === skill; })[0];
   return s ? s.lbl : 'AI Agent';
 }
