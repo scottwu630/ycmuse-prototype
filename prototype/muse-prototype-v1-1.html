@@ -659,7 +659,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .len-slider{-webkit-appearance:none;width:100%;height:3px;border-radius:2px;background:linear-gradient(to right,var(--accent) 50%,rgba(255,255,255,.1) 50%);outline:none;cursor:pointer;}
 .len-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4);}
 .len-val{text-align:center;margin-top:10px;font-size:15px;font-weight:600;color:var(--text);}
-.lyrics-area{width:100%;min-height:160px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:15px;font-family:inherit;resize:none;outline:none;line-height:1.6;}
+.lyrics-area{width:100%;min-height:92px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:15px;font-family:inherit;resize:none;outline:none;line-height:1.6;}
 .lyrics-area::placeholder{color:var(--text-3);}
 .title-input{width:100%;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:16px;color:var(--text);font-size:15px;font-family:inherit;outline:none;}
 .title-input::placeholder{color:var(--text-3);}
@@ -774,6 +774,39 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .badge-done{background:rgba(1,179,123,.2);color:#01B37B;}
 .badge-proc{background:var(--n14);color:var(--n100);padding:3px 6px;border-radius:20px;}
 .badge-failed{background:rgba(255,38,0,.2);color:#FF2600;}
+.badge-removed{background:rgba(239,68,68,.15);color:#EF4444;border:1px solid rgba(239,68,68,.25);}
+/* ── Takedown screens ── */
+.td-hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 20px 20px;}
+.td-icon-wrap{width:64px;height:64px;border-radius:22px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.td-icon-wrap.red{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.25);}
+.td-icon-wrap.amber{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.25);}
+.td-title{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.2px;line-height:26px;}
+.td-sub{font-size:13px;font-weight:500;color:#9C9CAB;line-height:20px;margin-top:6px;}
+.td-content-card{margin:0 16px 16px;background:#151519;border:1px solid rgba(255,255,255,.08);border-radius:16px;display:flex;align-items:center;gap:12px;padding:12px;}
+.td-thumb{width:52px;height:52px;border-radius:10px;overflow:hidden;flex-shrink:0;position:relative;}
+.td-thumb img{width:100%;height:100%;object-fit:cover;}
+.td-thumb-overlay{position:absolute;inset:0;background:rgba(0,0,0,.35);}
+.td-section{margin:0 16px 14px;}
+.td-section-label{font-size:10px;font-weight:700;color:#9C9CAB;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.td-reason-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:700;}
+.td-reason-chip.red{background:rgba(239,68,68,.12);color:#EF4444;border:1px solid rgba(239,68,68,.2);}
+.td-reason-chip.amber{background:rgba(245,158,11,.12);color:#F59E0B;border:1px solid rgba(245,158,11,.2);}
+.td-body-text{font-size:13px;font-weight:500;color:rgba(255,255,255,.7);line-height:20px;margin-top:8px;}
+.td-bullet-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.td-bullet{display:flex;align-items:flex-start;gap:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,.75);line-height:19px;}
+.td-bullet-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:7px;}
+.td-alert-box{margin:0 16px 16px;border-radius:14px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;}
+.td-alert-box.amber{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);}
+.td-footer{padding:12px 16px calc(12px + var(--safe-bot));display:flex;flex-direction:column;gap:10px;flex-shrink:0;}
+.td-btn-primary{width:100%;height:48px;border-radius:14px;border:none;font-size:16px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.td-btn-primary.red{background:linear-gradient(135deg,#EF4444,#DC2626);}
+.td-btn-primary.green{background:linear-gradient(135deg,#04B47D,#059669);}
+.td-btn-primary.disabled{background:#212127;color:#9C9CAB;cursor:default;}
+.td-btn-secondary{width:100%;height:44px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:transparent;font-size:14px;font-weight:600;color:#9C9CAB;cursor:pointer;}
+/* Cooldown countdown */
+.td-countdown{background:#151519;border:1px solid rgba(245,158,11,.25);border-radius:16px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:4px;margin:0 16px 14px;}
+.td-countdown-num{font-size:36px;font-weight:800;color:#F59E0B;letter-spacing:-.3px;line-height:42px;}
+.td-countdown-label{font-size:12px;font-weight:600;color:#9C9CAB;}
 
 /* ════════════════════════════
    SCREEN: PROFILE
@@ -1156,15 +1189,55 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .fp-c4{background-position:-203px -12px;}
 
 /* ══════════════════════════════════════════════════════
+   TITLE EFFECTS EDITOR
+   ══════════════════════════════════════════════════════ */
+/* Mini player */
+.tefx-player{position:relative;width:100%;aspect-ratio:9/16;background:#000;overflow:hidden;flex-shrink:0;}
+.tefx-player-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85;}
+/* Timeline bar overlaid at top of player */
+.tefx-timeline{position:absolute;top:0;left:0;right:0;padding:10px 12px 8px;display:flex;flex-direction:column;gap:4px;background:linear-gradient(to bottom,rgba(0,0,0,.7) 0%,rgba(0,0,0,0) 100%);z-index:5;}
+.tefx-tl-track{position:relative;height:3px;background:rgba(255,255,255,.2);border-radius:2px;}
+.tefx-tl-fill{position:absolute;left:0;top:0;height:100%;width:35%;background:#A855F7;border-radius:2px;}
+.tefx-tl-thumb{position:absolute;top:50%;left:35%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 4px rgba(0,0,0,.5);}
+.tefx-tl-segs{display:flex;gap:2px;height:2px;}
+.tefx-tl-seg{flex:1;background:rgba(255,255,255,.25);border-radius:1px;}
+.tefx-tl-seg.active{background:rgba(168,85,247,.8);}
+/* Title overlay on player */
+.tefx-title-overlay{position:absolute;bottom:28px;left:0;right:0;text-align:center;padding:0 16px;z-index:6;pointer-events:none;}
+.tefx-title-text{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.16px;text-shadow:0 2px 8px rgba(0,0,0,.7);line-height:1.25;}
+.tefx-sub-text{font-size:10px;font-weight:500;color:rgba(255,255,255,.85);letter-spacing:.02em;margin-top:3px;text-shadow:0 1px 4px rgba(0,0,0,.7);}
+/* Dropdown */
+.tefx-dropdown-wrap{position:relative;flex-shrink:0;}
+.tefx-dropdown-btn{display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:20px;background:var(--n14);border:1px solid var(--border-2);color:#fff;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s;}
+.tefx-dropdown-btn:active{background:var(--n24);}
+.tefx-dropdown-menu{position:absolute;top:calc(100% + 6px);left:0;background:#1C1C22;border:1px solid var(--border-2);border-radius:12px;overflow:hidden;z-index:50;min-width:140px;box-shadow:0 8px 24px rgba(0,0,0,.5);display:none;}
+.tefx-dropdown-menu.open{display:block;}
+.tefx-dropdown-opt{padding:10px 14px;font-size:13px;font-weight:500;color:#fff;cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.tefx-dropdown-opt:active{background:rgba(255,255,255,.06);}
+.tefx-dropdown-opt.sel{color:#A855F7;font-weight:700;}
+/* Effect cards */
+.tefx-cards-wrap{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 16px 4px;}
+.tefx-cards-wrap::-webkit-scrollbar{display:none;}
+.tefx-card{flex-shrink:0;width:88px;cursor:pointer;border-radius:12px;overflow:hidden;border:2.5px solid transparent;transition:border-color .2s;background:#1C1C24;}
+.tefx-card.sel{border-color:#A855F7;}
+.tefx-card-thumb{width:100%;height:88px;background:#2a2a35;overflow:hidden;position:relative;display:block;}
+.tefx-card-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+/* None card */
+.tefx-card-none .tefx-card-thumb{display:flex !important;align-items:center;justify-content:center;}
+.tefx-card-none .tefx-card-thumb::after{content:'–';font-size:22px;font-weight:300;color:rgba(255,255,255,.3);}
+/* Bottom CTAs */
+.tefx-footer{padding:12px 16px calc(12px + var(--safe-bot));display:flex;gap:10px;background:var(--bg);border-top:1px solid var(--border-3);flex-shrink:0;}
+
+/* ══════════════════════════════════════════════════════
    REPORT SYSTEM — bottom sheet, backdrop, states
    ══════════════════════════════════════════════════════ */
 
 /* Backdrop */
-.rpt-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:300;opacity:0;pointer-events:none;transition:opacity .28s;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
+.rpt-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:2000;opacity:0;pointer-events:none;transition:opacity .28s;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
 .rpt-backdrop.open{opacity:1;pointer-events:all;}
 
 /* Bottom Sheet */
-.rpt-sheet{position:absolute;bottom:0;left:0;right:0;z-index:301;background:var(--n09);border-radius:20px 20px 0 0;padding:0 0 calc(12px + var(--safe-bot));transform:translateY(100%);transition:transform .32s cubic-bezier(.25,.46,.45,.94);will-change:transform;}
+.rpt-sheet{position:absolute;bottom:0;left:0;right:0;z-index:2001;background:var(--n09);border-radius:20px 20px 0 0;padding:0 0 calc(12px + var(--safe-bot));transform:translateY(100%);transition:transform .32s cubic-bezier(.25,.46,.45,.94);will-change:transform;}
 .rpt-sheet.open{transform:translateY(0);}
 
 /* Drag handle */
@@ -1762,7 +1835,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div id="mvp-ui" style="position:absolute;inset:0;z-index:10;pointer-events:none;">
 
         <!-- Tap area to toggle play/pause (pointer-events on) -->
-        <div onclick="toggleMvPlay()" style="position:absolute;inset:0;right:54px;bottom:140px;top:80px;pointer-events:all;cursor:pointer;"></div>
+        <div onclick="toggleMvPlay()" style="position:absolute;inset:0;right:54px;bottom:140px;top:110px;pointer-events:all;cursor:pointer;"></div>
 
         <!-- Center Play button (shown only when paused; no pause icon while playing) -->
         <div id="mvp-play-btn" onclick="toggleMvPlay()" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);border:1px solid rgba(255,255,255,.15);padding:12px;border-radius:30px;align-items:center;justify-content:center;cursor:pointer;pointer-events:all;z-index:5;">
@@ -1779,7 +1852,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             <div id="mv-preview-title" style="font-size:17px;font-weight:700;color:#fff;line-height:22px;"></div>
             <div id="mv-preview-meta" style="font-size:11px;font-weight:500;color:#D3D3D9;line-height:16px;letter-spacing:-.11px;"></div>
           </div>
-          <div style="width:28px;height:28px;opacity:0;flex-shrink:0;"></div>
+          <div class="rpt-icon-btn" onclick="event.stopPropagation();openReport('mv');" onmousedown="event.stopPropagation()" ontouchstart="event.stopPropagation()" ontouchend="event.stopPropagation()" title="Report this content" style="flex-shrink:0;pointer-events:all;z-index:20;position:relative;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
         </div>
 
         <!-- Right-side action buttons -->
@@ -1794,12 +1867,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div style="width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;">
             <img src="../assets/icons/ui/ic_share.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);">
           </div>
-          <!-- Report button -->
-          <div class="rpt-icon-btn" onclick="openReport('mv')" title="Report this content">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
-            </svg>
-          </div>
+
         </div>
 
         <!-- Bottom: controls + CTA -->
@@ -1870,12 +1938,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div onclick="openSpLyricsSheet()" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.6'" onmouseup="this.style.opacity=''">
                 <img src="../assets/icons/ui/ic_singing_mic.svg" width="20" height="20" style="display:block;filter:brightness(0) invert(1);">
               </div>
-              <!-- Report -->
-              <div class="rpt-sp-btn" onclick="openReport('song')" title="Report this song">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
-                </svg>
-              </div>
+
             </div>
           </div>
 
@@ -1919,7 +1982,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <img src="../assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
         </div>
         <div style="flex:1;text-align:center;font-size:17px;font-weight:700;color:#fff;line-height:22px;">Now Playing</div>
-        <div style="width:28px;height:28px;opacity:0;flex-shrink:0;"></div>
+        <div class="rpt-icon-btn" onclick="event.stopPropagation();openReport('song');" onmousedown="event.stopPropagation()" ontouchstart="event.stopPropagation()" ontouchend="event.stopPropagation()" title="Report this song" style="flex-shrink:0;pointer-events:all;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
       </div>
 
       <!-- ── SP Lyrics overlay dim ── -->
@@ -3962,36 +4025,15 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- MV TITLE -->
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <!-- TITLE & SUBTITLE -->
+          <div style="display:flex;flex-direction:column;">
             <div style="display:flex;align-items:center;justify-content:space-between;">
-              <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">MV TITLE</span>
-              <div class="toggle on" id="emv-tog-title" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
+              <div style="display:flex;flex-direction:column;gap:2px;">
+                <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">TITLE &amp; SUBTITLE</div>
+                <div style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;line-height:16px;">Adjust title &amp; subtitle effects, MV title, author name and watermark</div>
+              </div>
+              <button onclick="goTo('title-effects')" style="flex-shrink:0;margin-left:10px;height:30px;padding:0 14px;border-radius:20px;background:#A855F7;border:none;color:#fff;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:-.12px;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">Edit</button>
             </div>
-            <input type="text" value="Starlight in Your Eyes" placeholder="Enter MV title" oninput="setEmvDirty()"
-              style="width:100%;background:#151519;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px 10px;font-size:12px;font-weight:500;color:#fff;font-family:inherit;outline:none;box-sizing:border-box;">
-          </div>
-
-          <!-- AUTHOR NAME -->
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-              <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">AUTHOR NAME</span>
-              <div class="toggle on" id="emv-tog-author" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
-            </div>
-            <input type="text" value="Isabella Rose Thompson" placeholder="Enter author name" oninput="setEmvDirty()"
-              style="width:100%;background:#151519;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px 10px;font-size:12px;font-weight:500;color:#fff;font-family:inherit;outline:none;box-sizing:border-box;">
-          </div>
-
-          <!-- SHOW SUBTITLE -->
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;">
-            <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">SHOW SUBTITLE</span>
-            <div class="toggle on" id="emv-tog-sub" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
-          </div>
-
-          <!-- SHOW WATERMARK -->
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;">
-            <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">SHOW WATERMARK</span>
-            <div class="toggle off" id="emv-tog-wm" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
           </div>
 
           <!-- DELETE PROJECT -->
@@ -4014,6 +4056,234 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </button>
       </div>
     </div>
+
+    <!-- ══════ TITLE & SUBTITLE EFFECTS EDITOR ══════ -->
+    <div id="screen-title-effects" class="screen" style="display:flex;flex-direction:column;background:var(--bg);">
+      <!-- Nav -->
+      <div class="nav nav-blur" style="flex-shrink:0;">
+        <div class="nav-back" onclick="goBack()"><img src="../assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
+        <div class="nav-title">Edit Title &amp; Subtitle</div>
+        <div style="min-width:28px;"></div>
+      </div>
+
+      <!-- Scrollable body -->
+      <div style="flex:1;overflow-y:auto;overflow-x:clip;scrollbar-width:none;display:flex;flex-direction:column;" id="tefx-scroll">
+
+        <!-- Mini timeline: horizontal scrolling clip thumbnails -->
+        <div style="padding:calc(var(--safe-top) + var(--nav-h) + 10px) 0 0;">
+          <div id="tefx-mini-timeline" style="display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 16px 0;">
+            <div onclick="tefxPickClip(this,0)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid #A855F7;transition:border-color .2s;">
+              <img src="../assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-01/60/60'">
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">1</span></div>
+            </div>
+            <div onclick="tefxPickClip(this,1)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
+              <img src="../assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-02/60/60'">
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">2</span></div>
+            </div>
+            <div onclick="tefxPickClip(this,2)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
+              <img src="../assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-03/60/60'">
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">3</span></div>
+            </div>
+            <div onclick="tefxPickClip(this,3)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
+              <img src="../assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-04/60/60'">
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">4</span></div>
+            </div>
+            <div onclick="tefxPickClip(this,4)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
+              <img src="../assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-05/60/60'">
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">5</span></div>
+            </div>
+            <div onclick="tefxPickClip(this,5)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
+              <img src="../assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-06/60/60'">
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">6</span></div>
+            </div>
+            <div onclick="tefxPickClip(this,6)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
+              <img src="../assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-07/60/60'">
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">7</span></div>
+            </div>
+            <div onclick="tefxPickClip(this,7)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
+              <img src="../assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-08/60/60'">
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">8</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video player: loops selected clip -->
+        <div id="tefx-player-wrap" style="margin:10px 16px 0;border-radius:16px;overflow:hidden;background:#151519;flex-shrink:0;">
+          <!-- Video stage: fixed height, video centered with letterbox -->
+          <div style="position:relative;width:100%;height:240px;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;" onclick="tefxTogglePlay(this)">
+            <img id="tefx-player-thumb" class="tefx-player-thumb" src="../assets/videos/storyboard-clips/clip_1.jpg" alt=""
+              style="height:100%;width:100%;object-fit:contain;display:block;"
+              onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-player/135/240'">
+            <!-- Title/subtitle text preview overlay -->
+            <div class="tefx-title-overlay">
+              <div class="tefx-title-text" id="tefx-title-preview">Starlight in Your Eyes</div>
+              <div class="tefx-sub-text" id="tefx-sub-preview">Under the silver moonlight, we dance</div>
+            </div>
+            <!-- Play button -->
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;pointer-events:none;">
+              <div id="tefx-play-ico" style="width:40px;height:40px;border-radius:50%;background:rgba(9,9,11,.65);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;">
+                <svg width="14" height="16" viewBox="0 0 14 16" fill="#fff"><path d="M2 1l11 7-11 7V1z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Controls bar -->
+          <div style="padding:10px 14px 12px;display:flex;align-items:center;gap:10px;background:#151519;">
+            <!-- Play icon -->
+            <svg width="16" height="16" viewBox="0 0 14 16" fill="rgba(255,255,255,.7)" style="flex-shrink:0;"><path d="M2 1l11 7-11 7V1z"/></svg>
+            <!-- Time left -->
+            <span style="font-size:10px;font-weight:600;color:#9C9CAB;font-variant-numeric:tabular-nums;flex-shrink:0;">00:27</span>
+            <!-- Progress bar -->
+            <div style="flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:2px;position:relative;">
+              <div style="position:absolute;left:0;top:0;height:100%;width:55%;background:#A855F7;border-radius:2px;"></div>
+              <div style="position:absolute;top:50%;left:55%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 4px rgba(0,0,0,.5);"></div>
+            </div>
+            <!-- Time right -->
+            <span style="font-size:10px;font-weight:600;color:#9C9CAB;font-variant-numeric:tabular-nums;flex-shrink:0;">00:26</span>
+            <!-- Volume icon -->
+            <svg width="18" height="16" viewBox="0 0 18 16" fill="none" style="flex-shrink:0;">
+              <path d="M1 5h3l4-4v14l-4-4H1V5z" fill="rgba(255,255,255,.7)"/>
+              <path d="M13 2c2.2 1.7 2.2 10.3 0 12" stroke="rgba(255,255,255,.7)" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M10.5 4.5c1.3 1 1.3 6 0 7" stroke="rgba(255,255,255,.7)" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Title / Subtitle tabs -->
+        <div style="display:flex;gap:0;padding:12px 16px 8px;border-bottom:1px solid rgba(255,255,255,.06);">
+          <button id="tefx-tab-title" onclick="tefxSelectMode('title')" style="flex:1;height:36px;border:none;border-radius:20px 0 0 20px;background:#A855F7;color:#fff;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:-.13px;transition:background .2s;">Title</button>
+          <button id="tefx-tab-subtitle" onclick="tefxSelectMode('subtitle')" style="flex:1;height:36px;border:none;border-radius:0 20px 20px 0;background:#212127;color:rgba(255,255,255,.45);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:-.13px;transition:background .2s,color .2s;">Subtitle</button>
+        </div>
+
+        <!-- Effect cards: Title (8) — thumbnail images only -->
+        <div id="tefx-panel-title" class="tefx-cards-wrap" style="display:flex;margin-top:8px;min-height:92px;align-items:flex-start;">
+          <div class="tefx-card sel" onclick="tefxPickCard(this,'title')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/1.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/2.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/3.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/4.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/5.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/6.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/7.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/8.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+        </div>
+
+        <!-- Effect cards: Subtitle (17) — thumbnail images only, hidden by default -->
+        <div id="tefx-panel-subtitle" class="tefx-cards-wrap" style="display:none;margin-top:8px;min-height:92px;align-items:flex-start;">
+          <div class="tefx-card sel" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/1.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/2.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/3.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/4.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/5.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/6.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/7.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/8.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/9.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/10.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/11.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/12.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/13.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/14.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/15.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/16.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
+            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/17.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
+          </div>
+        </div>
+
+        <!-- Other Settings -->
+        <div style="padding:28px 16px 0;display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:11px;font-weight:700;color:#9C9CAB;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Other Settings</div>
+
+          <!-- MV Title -->
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">MV TITLE</span>
+              <div class="toggle on" id="tefx-tog-title" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
+            </div>
+            <input type="text" value="Starlight in Your Eyes" placeholder="Enter MV title"
+              style="width:100%;background:#151519;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px 10px;font-size:12px;font-weight:500;color:#fff;font-family:inherit;outline:none;box-sizing:border-box;">
+          </div>
+
+          <!-- Author Name -->
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">AUTHOR NAME</span>
+              <div class="toggle on" id="tefx-tog-author" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
+            </div>
+            <input type="text" value="Isabella Rose Thompson" placeholder="Enter author name"
+              style="width:100%;background:#151519;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px 10px;font-size:12px;font-weight:500;color:#fff;font-family:inherit;outline:none;box-sizing:border-box;">
+          </div>
+
+          <!-- Show Subtitle -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;">
+            <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">SHOW SUBTITLE</span>
+            <div class="toggle on" id="tefx-tog-sub" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
+          </div>
+
+          <!-- Show Watermark -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;">
+            <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">SHOW WATERMARK</span>
+            <div class="toggle off" id="tefx-tog-wm" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
+          </div>
+        </div>
+
+        <!-- Spacer -->
+        <div style="height:16px;flex-shrink:0;"></div>
+      </div><!-- end scroll -->
+
+      <!-- Cancel / Save footer -->
+      <div class="tefx-footer">
+        <button class="btn btn-secondary" style="flex:1;" onclick="goBack()">Cancel</button>
+        <button class="btn btn-primary" style="flex:2;" onclick="tefxSave()">Save</button>
+      </div>
+    </div><!-- end screen-title-effects -->
 
     <!-- ══════ CREATE SONG ══════ -->
     <div id="screen-song-create" class="screen">
@@ -4397,6 +4667,46 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               <div class="hist-badge badge-proc">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M3.65708 12.9427L7.77876 14.4509C8.61504 14.7685 9.27212 15.4234 9.5708 16.237L11.0642 20.3451C11.3827 21.2183 12.6372 21.2183 12.9358 20.3451L14.4292 16.237C14.7478 15.4234 15.4049 14.7685 16.2212 14.4509L20.3429 12.9427C21.219 12.6251 21.219 11.3749 20.3429 11.0573L16.2212 9.54906C15.385 9.23153 14.7279 8.61632 14.4292 7.76295L12.9358 3.65491C12.6173 2.7817 11.3628 2.7817 11.0642 3.65491L9.5708 7.76295C9.25221 8.57663 8.59513 9.23153 7.77876 9.54906L3.65708 11.0573C2.78097 11.3749 2.78097 12.6251 3.65708 12.9427Z" fill="currentColor"/></svg>
                 Generating...
+              </div>
+            </div>
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="../assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
+          </div>
+
+          <!-- A: Summer Vibes — published, removed from community (status accessible via more menu) -->
+          <div class="hist-row" data-htype="mv" data-liked="false" data-removed="true" data-removed-screen="takedown-fixable" onclick="histMarkPlayed(this);goTo('mv-result')">
+            <div class="hist-thumb">
+              <img src="../assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mv-summer/56/56'">
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="../assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+            </div>
+            <div class="hist-info">
+              <div class="hist-name">Summer Vibes</div>
+              <div class="hist-social">
+                <div class="hist-stat"><img src="../assets/icons/ui/ic_headphones.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>412</span></div>
+                <div class="hist-stat"><img src="../assets/icons/ui/ic_favorite_off.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>88</span></div>
+                <div class="hist-stat"><img src="../assets/icons/ui/ic_share.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>12</span></div>
+              </div>
+              <div class="hist-status">
+                <div class="hist-time">Oct 8, 2026</div>
+              </div>
+            </div>
+            <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="../assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
+          </div>
+
+          <!-- B: Love Melody — published, removed from community (status accessible via more menu) -->
+          <div class="hist-row" data-htype="mv" data-liked="false" data-removed="true" data-removed-screen="takedown-permanent" onclick="histMarkPlayed(this);goTo('mv-result')">
+            <div class="hist-thumb">
+              <img src="../assets/videos/sample-mvs/mv_02_bloom.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mv-melody/56/56'">
+              <div style="position:absolute;left:5px;bottom:5px;width:12px;height:12px;z-index:1;filter:drop-shadow(0px 1px 1px rgba(0,0,0,0.35));"><img src="../assets/icons/ui/ic_video.svg" width="12" height="12" style="display:block;"></div>
+            </div>
+            <div class="hist-info">
+              <div class="hist-name">Love Melody</div>
+              <div class="hist-social">
+                <div class="hist-stat"><img src="../assets/icons/ui/ic_headphones.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>1.3k</span></div>
+                <div class="hist-stat"><img src="../assets/icons/ui/ic_favorite_off.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>307</span></div>
+                <div class="hist-stat"><img src="../assets/icons/ui/ic_share.svg" width="12" height="12" style="display:block;filter:brightness(0) invert(1);opacity:.7;"><span>64</span></div>
+              </div>
+              <div class="hist-status">
+                <div class="hist-time">Sep 22, 2026</div>
               </div>
             </div>
             <button class="hist-more-btn" onclick="event.stopPropagation();openHistMore(this)"><img src="../assets/icons/ui/ic_more.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></button>
@@ -5537,6 +5847,208 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
 
     </div><!-- /screen-credits -->
+
+    <!-- ══════ TAKEDOWN NOTICE — FIXABLE ══════ -->
+    <div id="screen-takedown-fixable" class="screen" style="background:#09090B;display:flex;flex-direction:column;">
+      <!-- Nav -->
+      <div class="nav nav-blur">
+        <div class="nav-back" onclick="goBack()">
+          <img src="../assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+        </div>
+        <div class="nav-title">Content Notice</div>
+        <div style="width:32px;"></div>
+      </div>
+      <!-- Scrollable body -->
+      <div class="scr-scroll" style="padding-top:calc(var(--safe-top) + var(--nav-h));">
+
+        <!-- Hero -->
+        <div class="td-hero">
+          <div class="td-icon-wrap red">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="td-title">Content Removed</div>
+          <div class="td-sub">A reviewer removed this content after a community report.</div>
+        </div>
+
+        <!-- Which content -->
+        <div class="td-content-card">
+          <div class="td-thumb">
+            <img src="../assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="filter:grayscale(.4);" onerror="this.onerror=null;this.src='https://picsum.photos/seed/td-mv-01/52/52'">
+            <div class="td-thumb-overlay"></div>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Summer Vibes</div>
+            <div style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;margin-top:2px;">Music Video · Published Oct 8, 2026</div>
+            <div style="margin-top:6px;"><span class="hist-badge badge-removed" style="font-size:9px;">
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+              Removed Oct 13, 2026
+            </span></div>
+          </div>
+        </div>
+
+        <!-- Removal reason -->
+        <div class="td-section">
+          <div class="td-section-label">Removal Reason</div>
+          <div class="td-reason-chip amber">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Spam or Commercial Advertising
+          </div>
+          <div class="td-body-text">This content contained repetitive spam, fake engagement signals, or deceptive titles and thumbnails that misrepresent the actual content.</div>
+        </div>
+
+        <div style="height:100px;"></div>
+      </div>
+      <!-- Footer -->
+      <div class="td-footer">
+        <button class="td-btn-secondary" onclick="goBack()">Dismiss</button>
+      </div>
+    </div><!-- /screen-takedown-fixable -->
+
+    <!-- ══════ TAKEDOWN NOTICE — PERMANENT ══════ -->
+    <div id="screen-takedown-permanent" class="screen" style="background:#09090B;display:flex;flex-direction:column;">
+      <!-- Nav -->
+      <div class="nav nav-blur">
+        <div class="nav-back" onclick="goBack()">
+          <img src="../assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+        </div>
+        <div class="nav-title">Content Notice</div>
+        <div style="width:32px;"></div>
+      </div>
+      <!-- Scrollable body -->
+      <div class="scr-scroll" style="padding-top:calc(var(--safe-top) + var(--nav-h));">
+
+        <!-- Hero -->
+        <div class="td-hero">
+          <div class="td-icon-wrap red">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#EF4444" stroke-width="2"/><path d="M15 9l-6 6M9 9l6 6" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="td-title">Permanently Removed</div>
+          <div class="td-sub">This content violated our content policy.</div>
+        </div>
+
+        <!-- Which content -->
+        <div class="td-content-card">
+          <div class="td-thumb">
+            <img src="../assets/videos/sample-mvs/mv_02_bloom.jpg" style="filter:grayscale(.6);" onerror="this.onerror=null;this.src='https://picsum.photos/seed/td-mv-02/52/52'">
+            <div class="td-thumb-overlay"></div>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Love Melody</div>
+            <div style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;margin-top:2px;">Music Video · Published Sep 22, 2026</div>
+            <div style="margin-top:6px;"><span class="hist-badge badge-removed" style="font-size:9px;">
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+              Permanently Removed
+            </span></div>
+          </div>
+        </div>
+
+        <!-- Removal reason -->
+        <div class="td-section">
+          <div class="td-section-label">Removal Reason</div>
+          <div class="td-reason-chip red">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M14.83 9.17a4 4 0 100 5.66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Copyright or Unauthorized Use
+          </div>
+          <div class="td-body-text">This content was permanently removed because it contained copyrighted music, video footage, or artwork used without authorisation from the rights holder.</div>
+        </div>
+
+        <!-- Cannot resubmit -->
+        <div class="td-section">
+          <div class="td-section-label">What This Means</div>
+          <div class="td-bullet-list">
+            <div class="td-bullet"><div class="td-bullet-dot" style="background:#EF4444;"></div>This content cannot be edited or resubmitted — copyright claims are legally binding</div>
+            <div class="td-bullet"><div class="td-bullet-dot" style="background:#EF4444;"></div>All copies have been permanently deleted from our platform</div>
+            <div class="td-bullet"><div class="td-bullet-dot" style="background:#EF4444;"></div>Repeated copyright violations may lead to account suspension</div>
+          </div>
+        </div>
+
+        <!-- Policy link -->
+        <div class="td-section" style="margin-bottom:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid rgba(255,255,255,.06);">
+            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.6);">Learn about our content policy</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid rgba(255,255,255,.06);">
+            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.6);">Appeal this decision</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <div style="height:100px;"></div>
+      </div>
+      <!-- Footer -->
+      <div class="td-footer">
+        <button class="td-btn-secondary" onclick="goBack()">Got It</button>
+      </div>
+    </div><!-- /screen-takedown-permanent -->
+
+    <!-- ══════ PUBLISH RESTRICTED ══════ -->
+    <div id="screen-publish-restricted" class="screen" style="background:#09090B;display:flex;flex-direction:column;">
+      <!-- Nav -->
+      <div class="nav nav-blur">
+        <div class="nav-back" onclick="goBack()">
+          <img src="../assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);">
+        </div>
+        <div class="nav-title">Account Status</div>
+        <div style="width:32px;"></div>
+      </div>
+      <!-- Scrollable body -->
+      <div class="scr-scroll" style="padding-top:calc(var(--safe-top) + var(--nav-h));">
+
+        <!-- Hero -->
+        <div class="td-hero" style="padding-bottom:8px;">
+          <div class="td-icon-wrap amber">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="#F59E0B" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="td-title">Publishing Temporarily Paused</div>
+          <div class="td-sub">Your account received 2 content removals within 30 days. Publishing is paused to protect community standards.</div>
+        </div>
+
+        <!-- Countdown -->
+        <div class="td-countdown">
+          <div class="td-countdown-num">7</div>
+          <div class="td-countdown-label">days remaining · Lifts Oct 22, 2026</div>
+        </div>
+
+        <!-- What you can still do -->
+        <div class="td-section">
+          <div class="td-section-label">What You Can Still Do</div>
+          <div class="td-bullet-list">
+            <div class="td-bullet"><div class="td-bullet-dot" style="background:#04B47D;"></div>Create music videos and songs as usual</div>
+            <div class="td-bullet"><div class="td-bullet-dot" style="background:#04B47D;"></div>Save to drafts and share privately</div>
+            <div class="td-bullet"><div class="td-bullet-dot" style="background:#04B47D;"></div>Download and view your existing creations</div>
+            <div class="td-bullet"><div class="td-bullet-dot" style="background:#04B47D;"></div>Edit content to prepare for resubmission</div>
+          </div>
+        </div>
+
+        <!-- What you cannot do -->
+        <div class="td-section">
+          <div class="td-section-label">Temporarily Unavailable</div>
+          <div class="td-bullet-list">
+            <div class="td-bullet"><div class="td-bullet-dot" style="background:#EF4444;"></div>Publishing new content to the community feed</div>
+            <div class="td-bullet"><div class="td-bullet-dot" style="background:#EF4444;"></div>Resubmitting removed content (except fixable items after the pause lifts)</div>
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div class="td-section" style="margin-bottom:0;">
+          <div onclick="tabNav('history')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid rgba(255,255,255,.06);cursor:pointer;">
+            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.6);">View removed content</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid rgba(255,255,255,.06);">
+            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.6);">Learn about content policy</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <div style="height:100px;"></div>
+      </div>
+      <!-- Footer -->
+      <div class="td-footer">
+        <button class="td-btn-primary green" onclick="goBack()">Got It</button>
+      </div>
+    </div><!-- /screen-publish-restricted -->
 
   </div><!-- /screen-wrap -->
 
@@ -6713,6 +7225,123 @@ function buildWaveform() {
   }
 }
 
+// ══════════════════════════════════════════════════════
+// TITLE EFFECTS EDITOR
+// ══════════════════════════════════════════════════════
+var _tefxMode = 'title';       // 'title' | 'subtitle'
+var _tefxSelTitle = 'Center Static';
+var _tefxSelSubtitle = 'Center Static';
+
+function tefxToggleDropdown() {
+  // Legacy — dropdown replaced by tabs; no-op
+}
+
+function tefxSelectMode(mode) {
+  _tefxMode = mode;
+  // Update tab buttons
+  var tabTitle = document.getElementById('tefx-tab-title');
+  var tabSub   = document.getElementById('tefx-tab-subtitle');
+  if (tabTitle) {
+    tabTitle.style.background   = mode === 'title' ? '#A855F7' : '#212127';
+    tabTitle.style.color        = mode === 'title' ? '#fff' : 'rgba(255,255,255,.45)';
+  }
+  if (tabSub) {
+    tabSub.style.background = mode === 'subtitle' ? '#A855F7' : '#212127';
+    tabSub.style.color      = mode === 'subtitle' ? '#fff' : 'rgba(255,255,255,.45)';
+  }
+  // Show / hide panels
+  document.getElementById('tefx-panel-title').style.display = mode === 'title' ? 'flex' : 'none';
+  document.getElementById('tefx-panel-subtitle').style.display = mode === 'subtitle' ? 'flex' : 'none';
+  // Update preview
+  tefxUpdatePreview();
+}
+
+function tefxPickClip(el, idx) {
+  var clips = document.querySelectorAll('#tefx-mini-timeline > div');
+  clips.forEach(function(c) { c.style.borderColor = 'transparent'; });
+  el.style.borderColor = '#A855F7';
+  var thumb = document.getElementById('tefx-player-thumb');
+  if (thumb) {
+    var src = '../assets/videos/storyboard-clips/clip_' + (idx + 1) + '.jpg';
+    thumb.src = src;
+  }
+}
+
+function tefxPickCard(el, panel) {
+  var cards = document.querySelectorAll('#tefx-panel-' + panel + ' .tefx-card');
+  cards.forEach(function(c) { c.classList.remove('sel'); });
+  el.classList.add('sel');
+  tefxUpdatePreview();
+}
+
+function tefxUpdatePreview() {
+  var titleEl = document.getElementById('tefx-title-preview');
+  var subEl = document.getElementById('tefx-sub-preview');
+  if (!titleEl) return;
+  // Apply visual style hints based on selected effect
+  var titleStyles = {
+    'None':       'font-weight:800;color:#fff;text-shadow:none;letter-spacing:-.16px;',
+    'Typewriter': 'font-weight:800;color:#fff;border-right:2px solid #A855F7;padding-right:2px;letter-spacing:-.16px;',
+    'Fade In':    'font-weight:800;color:rgba(255,255,255,.7);text-shadow:none;letter-spacing:-.16px;',
+    'Slide Up':   'font-weight:800;color:#fff;letter-spacing:-.16px;',
+    'Glitch':     'font-weight:800;color:#fff;text-shadow:2px 0 #ff00ff,-2px 0 #00ffff;letter-spacing:-.16px;',
+    'Neon Glow':  'font-weight:800;color:#A855F7;text-shadow:0 0 10px #A855F7,0 0 20px rgba(168,85,247,.5);letter-spacing:-.16px;',
+    'Cinematic':  'font-weight:800;color:#ffd764;letter-spacing:.08em;text-transform:uppercase;font-size:13px;text-shadow:0 2px 8px rgba(0,0,0,.9);',
+    'Minimal':    'font-weight:400;color:#fff;letter-spacing:.18em;text-transform:uppercase;font-size:12px;',
+  };
+  var subStyles = {
+    'None':       'color:rgba(255,255,255,.85);font-weight:500;text-shadow:none;',
+    'Pop':        'color:#fff;font-weight:700;font-size:11px;text-shadow:0 2px 6px rgba(0,0,0,.8);',
+    'Wave':       'color:#38bdf8;font-weight:500;letter-spacing:.02em;',
+    'Float':      'color:rgba(255,255,255,.8);font-weight:400;',
+    'Sparkle':    'color:#ffd700;font-weight:600;',
+    'Typewriter': 'color:#fff;font-weight:500;border-right:1.5px solid #A855F7;padding-right:1px;',
+    'Bounce':     'color:#4ade80;font-weight:700;',
+    'Slide':      'color:#fff;font-weight:600;border-left:2px solid #A855F7;padding-left:4px;',
+    'Fade':       'color:rgba(255,255,255,.5);font-weight:500;',
+    'Glow':       'color:#EC4899;font-weight:600;text-shadow:0 0 8px #EC4899;',
+    'Shake':      'color:#ff4040;font-weight:700;letter-spacing:.04em;',
+    'Zoom':       'color:#fff;font-weight:700;font-size:13px;',
+    'Flip':       'color:#c084fc;font-weight:700;transform:perspective(60px) rotateX(8deg);display:inline-block;',
+    'Blur':       'color:#fff;font-weight:600;filter:blur(0.4px);',
+    'Rotate':     'color:#38bdf8;font-weight:700;transform:rotate(-2deg);display:inline-block;',
+    'Sweep':      'color:#fff;font-weight:600;',
+    'Pulse':      'color:#fff;font-weight:600;box-shadow:0 0 0 2px rgba(168,85,247,.5);border-radius:3px;padding:1px 4px;',
+    'Echo':       'color:#fff;font-weight:700;text-shadow:2px 2px 0 rgba(168,85,247,.35);',
+  };
+  if (_tefxMode === 'title') {
+    var s = titleStyles[_tefxSelTitle] || titleStyles['None'];
+    titleEl.style.cssText = 'font-size:16px;line-height:1.25;text-shadow:0 2px 8px rgba(0,0,0,.7);' + s;
+  } else {
+    var ss = subStyles[_tefxSelSubtitle] || subStyles['None'];
+    subEl.style.cssText = 'margin-top:3px;text-shadow:0 1px 4px rgba(0,0,0,.7);font-size:10px;' + ss;
+  }
+}
+
+function tefxTogglePlay(wrap) {
+  var ico = document.getElementById('tefx-play-ico');
+  if (!ico) return;
+  var isPlaying = ico.dataset.playing === '1';
+  if (isPlaying) {
+    ico.dataset.playing = '0';
+    ico.style.display = 'flex';
+    ico.innerHTML = '<svg width="14" height="16" viewBox="0 0 14 16" fill="#fff"><path d="M2 1l11 7-11 7V1z"/></svg>';
+  } else {
+    ico.dataset.playing = '1';
+    ico.style.display = 'none';
+  }
+}
+
+function tefxSave() {
+  // Toast feedback then go back
+  var btn = document.querySelector('#screen-title-effects .btn-primary');
+  if (btn) { btn.textContent = 'Saved ✓'; btn.style.background = 'var(--green)'; }
+  setTimeout(function() {
+    goBack();
+    if (btn) { btn.textContent = 'Save'; btn.style.background = ''; }
+  }, 600);
+}
+
 // ── Edit MV / Merge MV state ──
 let _emvDirty = false;
 
@@ -7158,6 +7787,28 @@ function openHistMore(btn) {
     opts.appendChild(row);
   }
 
+  const isRemoved   = _histMoreRow.dataset.removed === 'true';
+  const removedScreen = _histMoreRow.dataset.removedScreen || '';
+
+  // ── Removed-from-community notice (injected at top of sheet) ──
+  if (isRemoved) {
+    const notice = document.createElement('div');
+    notice.style.cssText = 'margin:8px 16px 4px;background:#212127;border:1px solid rgba(168,85,247,.25);border-radius:14px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;cursor:pointer;';
+    notice.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:1px;"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;">Removed from community</div>
+        <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.5);margin-top:2px;line-height:16px;">A reviewer removed this content. Tap to see the reason.</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M9 18l6-6-6-6" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    notice.addEventListener('click', () => { closeHistMore(); goTo(removedScreen); });
+    opts.appendChild(notice);
+    // divider
+    const div = document.createElement('div');
+    div.style.cssText = 'height:1px;background:rgba(255,255,255,.06);margin:8px 0 4px;';
+    opts.appendChild(div);
+  }
+
   const isCommunity = _histMoreRow.dataset.source === 'community';
   if (isCommunity) {
     // Community item: Like/Unlike + Share only
@@ -7209,11 +7860,13 @@ function openHistMore(btn) {
     });
     addOpt(_moreIcons.share, 'Share', null, () => { closeHistMore(); });
     if (isDone) {
-      const publishIcon  = isMvReviewing ? _moreIcons.timer : _moreIcons.publish;
-      const publishLabel = isMvReviewing ? 'Publish (Review)' : 'Publish';
-      addOpt(publishIcon, publishLabel,
-        `<button class="hist-opt-toggle${(isMvPublished || isMvReviewing) ? ' on' : ''}" onclick="event.stopPropagation();showMvPublishConfirm(this)"></button>`);
-      opts.lastElementChild.id = 'hist-mv-publish-row';
+      if (!isRemoved) {
+        const publishIcon  = isMvReviewing ? _moreIcons.timer : _moreIcons.publish;
+        const publishLabel = isMvReviewing ? 'Publish (Review)' : 'Publish';
+        addOpt(publishIcon, publishLabel,
+          `<button class="hist-opt-toggle${(isMvPublished || isMvReviewing) ? ' on' : ''}" onclick="event.stopPropagation();showMvPublishConfirm(this)"></button>`);
+        opts.lastElementChild.id = 'hist-mv-publish-row';
+      }
       addOpt(_moreIcons.download, 'Download', null, () => { closeHistMore(); });
       if (!isMvPublished && !isMvReviewing) {
         addOpt(_moreIcons.delete, 'Delete', null, () => { showHistDeleteDialog(); });
@@ -10909,15 +11562,27 @@ function openReport(context) {
   document.getElementById('rpt-form').style.display = '';
   document.getElementById('rpt-success').classList.remove('show');
 
-  // Open
-  document.getElementById('rpt-backdrop').classList.add('open');
-  document.getElementById('rpt-sheet').classList.add('open');
+  // Open — use both class and direct inline style for maximum compatibility
+  var bd = document.getElementById('rpt-backdrop');
+  var sh = document.getElementById('rpt-sheet');
+  bd.classList.add('open');
+  sh.classList.add('open');
+  // Belt + suspenders: force inline styles in case CSS class doesn't apply
+  bd.style.opacity = '1';
+  bd.style.pointerEvents = 'all';
+  sh.style.transform = 'translateY(0)';
   reportState.open = true;
 }
 
 function closeReport() {
-  document.getElementById('rpt-backdrop').classList.remove('open');
-  document.getElementById('rpt-sheet').classList.remove('open');
+  var bd = document.getElementById('rpt-backdrop');
+  var sh = document.getElementById('rpt-sheet');
+  bd.classList.remove('open');
+  sh.classList.remove('open');
+  // Also clear inline styles set by openReport
+  bd.style.opacity = '';
+  bd.style.pointerEvents = '';
+  sh.style.transform = '';
   reportState.open = false;
 }
 
