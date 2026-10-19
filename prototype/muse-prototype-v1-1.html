@@ -1203,7 +1203,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .tefx-tl-seg{flex:1;background:rgba(255,255,255,.25);border-radius:1px;}
 .tefx-tl-seg.active{background:rgba(168,85,247,.8);}
 /* Title overlay on player */
-.tefx-title-overlay{position:absolute;bottom:28px;left:0;right:0;text-align:center;padding:0 16px;z-index:6;pointer-events:none;}
 .tefx-title-text{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.16px;text-shadow:0 2px 8px rgba(0,0,0,.7);line-height:1.25;}
 .tefx-sub-text{font-size:10px;font-weight:500;color:rgba(255,255,255,.85);letter-spacing:.02em;margin-top:3px;text-shadow:0 1px 4px rgba(0,0,0,.7);}
 /* Dropdown */
@@ -1228,6 +1227,77 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 /* Bottom CTAs */
 .tefx-footer{padding:12px 16px calc(12px + var(--safe-bot));display:flex;gap:10px;background:var(--bg);border-top:1px solid var(--border-3);flex-shrink:0;}
 
+/* ── Edit MV rows (Figma 49:53 List) ── */
+.emv-row{display:flex;align-items:center;gap:8px;padding:8px 0;}
+.emv-row-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.emv-row-title{font-size:13px;font-weight:700;line-height:18px;letter-spacing:-.13px;color:#fff;}
+.emv-row-sub{font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#9C9CAB;}
+.emv-row-btn{flex-shrink:0;padding:6px 8px;min-width:48px;border-radius:16px;background:#A855F7;border:none;color:#fff;font-size:12px;font-weight:500;line-height:15px;font-family:inherit;cursor:pointer;transition:opacity .15s;}
+.emv-row-btn:active{opacity:.7;}
+/* Toggle — Selection/Toggle 44×24 (42×22 track, 16px knob) */
+.tefx-tg{width:42px;height:22px;margin:1px;border-radius:14px;background:#383842;position:relative;cursor:pointer;flex-shrink:0;transition:background .2s;}
+.tefx-tg.on{background:#A855F7;}
+.tefx-tg-knob{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s;}
+.tefx-tg.on .tefx-tg-knob{left:23px;}
+
+/* ── Edit Title & Subtitle (Figma 5209:79490) ── */
+.tefx-body{padding:calc(var(--safe-top) + var(--nav-h) + 12px) 16px 122px;display:flex;flex-direction:column;gap:16px;}
+.tefx-preview{position:relative;height:180px;border-radius:14px;background:#151519;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);overflow:hidden;flex-shrink:0;}
+.tefx-video{position:absolute;top:0;bottom:0;left:50%;width:100px;margin-left:-50px;overflow:hidden;cursor:pointer;}
+.tefx-video > img#tefx-player-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.tefx-wm{position:absolute;top:5px;left:5px;width:50px;height:auto;z-index:3;display:none;pointer-events:none;}
+.tefx-wm.show{display:block;}
+.tefx-title-overlay{position:absolute;top:69px;bottom:auto;left:6px;right:6px;padding:0;text-align:center;z-index:2;pointer-events:none;}
+.tefx-sub-overlay{position:absolute;top:138px;left:5px;right:5px;text-align:center;z-index:2;pointer-events:none;}
+#tefx-title-preview{display:inline-block;max-width:100%;color:#fff;text-align:center;}
+#tefx-sub-preview{display:inline-block;max-width:100%;color:#fff;text-align:center;}
+.tefx-ctrl{position:absolute;left:0;right:0;bottom:0;height:36px;padding:8px 10px;box-sizing:border-box;display:flex;align-items:center;gap:6px;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0));z-index:4;}
+.tefx-ctrl-btn{flex-shrink:0;cursor:pointer;display:block;}
+.tefx-ctrl-bar{flex:1;display:flex;align-items:center;gap:6px;min-width:0;}
+.tefx-ctrl-time{width:28px;flex-shrink:0;font-size:10px;font-weight:500;line-height:12px;color:#9C9CAB;font-variant-numeric:tabular-nums;}
+.tefx-ctrl-track{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.4);position:relative;}
+.tefx-ctrl-fill{position:absolute;left:0;top:0;bottom:0;width:39%;border-radius:3px;background:#fff;}
+.tefx-ctrl-knob{position:absolute;top:50%;left:39%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;box-shadow:0 0 2px rgba(0,0,0,.4);}
+.tefx-effects{display:flex;flex-direction:column;gap:12px;}
+.tefx-seg{display:flex;height:27px;border-radius:55px;background:#212127;}
+.tefx-seg-tab{flex:1;display:flex;align-items:center;justify-content:center;border-radius:16px;font-size:9px;font-weight:700;line-height:11px;color:#9C9CAB;cursor:pointer;transition:background .2s,color .2s;}
+.tefx-seg-tab.sel{background:#fff;color:#09090B;}
+.tefx-fx-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px;}
+.tefx-fx-row::-webkit-scrollbar{display:none;}
+.tefx-fx{position:relative;flex-shrink:0;width:67.5px;height:67.5px;border-radius:12px;background:#212127 center/cover no-repeat;cursor:pointer;}
+.tefx-fx::after{content:'';position:absolute;inset:0;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);pointer-events:none;}
+.tefx-fx.sel::after{box-shadow:inset 0 0 0 2.5px #A855F7;}
+.tefx-fx-check{position:absolute;top:6px;right:6px;width:16px;height:16px;border-radius:50%;background:#A855F7;display:none;align-items:center;justify-content:center;}
+.tefx-fx.sel .tefx-fx-check{display:flex;}
+.tefx-list{display:flex;flex-direction:column;gap:12px;}
+/* Subtitle-off state — notice + dimmed subtitle thumbnails (tap a thumb = turn on + select) */
+.tefx-sub-off{display:none;align-items:center;justify-content:space-between;height:15px;}
+#screen-title-effects.sub-off.mode-subtitle .tefx-sub-off{display:flex;}
+.tefx-sub-off-text{font-size:12px;font-weight:500;line-height:15px;letter-spacing:0;color:#fff;}
+.tefx-sub-off-btn{font-size:12px;font-weight:600;line-height:15px;letter-spacing:-.12px;color:#A855F7;cursor:pointer;padding:8px 0 8px 12px;margin:-8px 0;}
+.tefx-sub-off-btn:active{opacity:.6;}
+#screen-title-effects.sub-off #tefx-panel-subtitle .tefx-fx{opacity:.4;}
+/* MV Title off — dim title thumbnails (no notice row) */
+#screen-title-effects.title-off #tefx-panel-title .tefx-fx{opacity:.4;}
+.tefx-fx{transition:opacity .2s;}
+.tefx-field{display:flex;flex-direction:column;gap:6px;}
+.tefx-field-head{display:flex;align-items:center;justify-content:space-between;height:24px;}
+.tefx-field-label{font-size:12px;font-weight:600;line-height:15px;letter-spacing:-.12px;color:#fff;}
+.tefx-input{display:flex;align-items:center;gap:4px;height:48px;padding:0 10px;box-sizing:border-box;border-radius:14px;background:#151519;border:1px solid rgba(255,255,255,.15);transition:opacity .2s;}
+.tefx-input.off{opacity:.4;pointer-events:none;}
+.tefx-input input{flex:1;min-width:0;background:none;border:none;outline:none;padding:0;font-family:inherit;font-size:12px;font-weight:500;line-height:15px;color:#fff;}
+.tefx-input input::placeholder{color:#676779;}
+.tefx-clear{width:20px;height:20px;border-radius:50%;background:#212127;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;}
+.tefx-input.empty .tefx-clear{visibility:hidden;}
+.tefx-row{display:flex;align-items:center;gap:8px;padding:8px 0;}
+.tefx-row-text{flex:1;display:flex;flex-direction:column;gap:2px;}
+.tefx-row-title{font-size:13px;font-weight:700;line-height:18px;letter-spacing:-.13px;color:#fff;}
+.tefx-row-sub{font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#9C9CAB;}
+.tefx-float{position:absolute;left:0;right:0;bottom:0;padding:20px 16px max(40px, calc(12px + var(--safe-bot)));background:linear-gradient(to bottom,rgba(7,7,7,0),#070707);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 20px);mask-image:linear-gradient(to bottom,transparent,#000 20px);z-index:10;}
+.tefx-save{width:100%;height:46px;border-radius:14px;border:none;background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);color:#fff;font-size:15px;font-weight:700;line-height:18px;font-family:inherit;cursor:pointer;transition:opacity .15s,transform .15s;}
+.tefx-save:active{opacity:.85;transform:scale(.97);}
+.tefx-save:disabled{background:#383842;color:rgba(255,255,255,.3);cursor:default;transform:none;opacity:1;}
+
 /* ══════════════════════════════════════════════════════
    REPORT SYSTEM — bottom sheet, backdrop, states
    ══════════════════════════════════════════════════════ */
@@ -1236,54 +1306,60 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .rpt-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:2000;opacity:0;pointer-events:none;transition:opacity .28s;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
 .rpt-backdrop.open{opacity:1;pointer-events:all;}
 
-/* Bottom Sheet */
-.rpt-sheet{position:absolute;bottom:0;left:0;right:0;z-index:2001;background:var(--n09);border-radius:20px 20px 0 0;padding:0 0 calc(12px + var(--safe-bot));transform:translateY(100%);transition:transform .32s cubic-bezier(.25,.46,.45,.94);will-change:transform;}
+/* Bottom Sheet — Figma 5220:80877 (MV Video Player — Report Sheet) */
+.rpt-sheet{position:absolute;bottom:0;left:0;right:0;z-index:2001;background:#151519;border-radius:26px 26px 0 0;padding:12px 20px max(40px, calc(12px + var(--safe-bot)));display:flex;flex-direction:column;gap:10px;transform:translateY(100%);transition:transform .32s cubic-bezier(.25,.46,.45,.94);will-change:transform;}
 .rpt-sheet.open{transform:translateY(0);}
 
 /* Drag handle */
-.rpt-handle{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.2);margin:12px auto 0;}
+.rpt-handle{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);margin:0 auto;flex-shrink:0;}
 
-/* Header */
-.rpt-header{padding:16px 16px 4px;display:flex;align-items:center;justify-content:space-between;}
-.rpt-title{font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;}
-.rpt-close{width:28px;height:28px;border-radius:50%;background:var(--n14);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:opacity .15s;}
+/* Header — close left · title centred · 28px spacer right */
+.rpt-header{display:grid;grid-template-columns:28px 1fr 28px;align-items:center;column-gap:10px;padding:4px 0;}
+.rpt-header::after{content:'';width:28px;height:28px;}
+.rpt-title{grid-column:2;grid-row:1;font-size:15px;font-weight:700;line-height:18px;color:#fff;text-align:center;letter-spacing:0;}
+.rpt-close{grid-column:1;grid-row:1;width:28px;height:28px;border-radius:50%;background:#212127;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:opacity .15s;}
 .rpt-close:active{opacity:.7;}
 
 /* Subheading */
-.rpt-sub{font-size:12px;font-weight:500;color:var(--n64);letter-spacing:-.12px;padding:0 16px 12px;line-height:1.5;}
+.rpt-sub{font-size:12px;font-weight:500;line-height:15px;color:#9C9CAB;letter-spacing:0;}
+
+/* Success state hides title + subheading */
+.rpt-sheet.is-success .rpt-title,.rpt-sheet.is-success .rpt-sub{display:none;}
+
+/* Form wrapper */
+#rpt-form{display:flex;flex-direction:column;gap:10px;}
 
 /* Reason list */
-.rpt-list{display:flex;flex-direction:column;gap:2px;padding:0 8px;}
-.rpt-option{display:flex;align-items:center;gap:12px;padding:11px 10px;border-radius:12px;cursor:pointer;transition:background .15s;-webkit-tap-highlight-color:transparent;}
-.rpt-option:active{background:rgba(255,255,255,.06);}
-.rpt-option.sel{background:rgba(168,85,247,.1);}
-.rpt-option-icon{width:32px;height:32px;border-radius:10px;background:var(--n14);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;}
-.rpt-option.sel .rpt-option-icon{background:rgba(168,85,247,.2);}
-.rpt-option-icon svg{width:16px;height:16px;}
-.rpt-option-text{flex:1;font-size:14px;font-weight:500;color:#fff;letter-spacing:-.14px;line-height:20px;}
-.rpt-option-radio{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
-.rpt-option.sel .rpt-option-radio{border-color:var(--accent);background:var(--accent);}
-.rpt-option-radio-dot{width:6px;height:6px;border-radius:50%;background:#fff;display:none;}
-.rpt-option.sel .rpt-option-radio-dot{display:block;}
+.rpt-list{display:flex;flex-direction:column;gap:2px;}
+.rpt-option{display:flex;align-items:center;gap:12px;min-height:40px;padding:8px 0;box-sizing:border-box;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.rpt-option:active{opacity:.7;}
+.rpt-option-text{flex:1;font-size:13px;font-weight:700;line-height:18px;color:#fff;letter-spacing:-.13px;transition:color .15s;}
+.rpt-option.sel .rpt-option-text{color:#A855F7;}
+.rpt-option-radio{width:20px;height:20px;flex-shrink:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8.33' fill='none' stroke='%23fff' stroke-opacity='.4' stroke-width='1.67'/%3E%3C/svg%3E") center/20px 20px no-repeat;}
+.rpt-option.sel .rpt-option-radio{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8.33' fill='none' stroke='%23A855F7' stroke-width='1.67'/%3E%3Ccircle cx='10' cy='10' r='4.17' fill='%23A855F7'/%3E%3C/svg%3E");}
 
-/* CTA */
-.rpt-cta{padding:12px 16px 0;display:none;}
-.rpt-cta.show{display:block;}
-.rpt-submit{width:100%;height:46px;border-radius:14px;background:var(--mv-grad);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 6px 18px rgba(168,85,247,.28);transition:opacity .15s,transform .15s;}
+/* CTA — disabled until a reason is picked */
+.rpt-cta{padding-top:6px;}
+.rpt-submit{width:100%;height:46px;border-radius:14px;background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);border:none;color:#fff;font-size:15px;font-weight:700;line-height:18px;cursor:pointer;font-family:inherit;transition:opacity .15s,transform .15s;}
 .rpt-submit:active{opacity:.85;transform:scale(.97);}
+.rpt-submit:disabled{background:#383842;color:rgba(255,255,255,.3);cursor:default;}
+.rpt-submit:disabled:active{opacity:1;transform:none;}
 
 /* Success state */
-.rpt-success{display:none;flex-direction:column;align-items:center;padding:20px 24px 8px;text-align:center;gap:12px;}
+.rpt-success{display:none;flex-direction:column;align-items:center;gap:10px;text-align:center;}
 .rpt-success.show{display:flex;}
-.rpt-success-icon{width:56px;height:56px;border-radius:50%;background:rgba(168,85,247,.12);display:flex;align-items:center;justify-content:center;}
-.rpt-success-title{font-size:17px;font-weight:700;color:#fff;letter-spacing:-.17px;}
-.rpt-success-body{font-size:13px;font-weight:500;color:var(--n64);line-height:1.5;letter-spacing:-.13px;max-width:240px;}
-.rpt-done-btn{width:100%;height:46px;border-radius:14px;background:var(--n14);border:1px solid var(--border-2);color:var(--n84);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:4px;transition:opacity .15s;}
+.rpt-success-icon{width:56px;height:56px;border-radius:50%;background:linear-gradient(90deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);display:flex;align-items:center;justify-content:center;}
+.rpt-success-msg{display:flex;flex-direction:column;gap:4px;width:100%;}
+.rpt-success-title{font-size:20px;font-weight:700;line-height:26px;color:#fff;letter-spacing:-.2px;}
+.rpt-success-body{font-size:14px;font-weight:500;line-height:20px;color:#9C9CAB;letter-spacing:-.14px;}
+.rpt-done-wrap{width:100%;padding-top:6px;}
+.rpt-done-btn{width:100%;height:46px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);color:#fff;font-size:14px;font-weight:500;line-height:20px;letter-spacing:-.14px;cursor:pointer;font-family:inherit;transition:opacity .15s;}
 .rpt-done-btn:active{opacity:.7;}
 
 /* Report icon button — floats over MV preview right column */
 .rpt-icon-btn{width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:opacity .15s;}
 .rpt-icon-btn:active{opacity:.7;}
+.rpt-icon-btn svg{opacity:.4;}
 
 /* Small report button for song player row */
 .rpt-sp-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;transition:opacity .15s;}
@@ -4025,21 +4101,28 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
             </div>
           </div>
 
-          <!-- TITLE & SUBTITLE -->
-          <div style="display:flex;flex-direction:column;">
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-              <div style="display:flex;flex-direction:column;gap:2px;">
-                <div style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">TITLE &amp; SUBTITLE</div>
-                <div style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;line-height:16px;">Adjust title &amp; subtitle effects, MV title, author name and watermark</div>
+          <!-- TITLE & SUBTITLE + SHOW WATERMARK (Figma 49:53) -->
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="emv-row">
+              <div class="emv-row-text">
+                <div class="emv-row-title">Title &amp; Subtitle</div>
+                <div class="emv-row-sub">Adjust title and subtitle effects, MV title, author name.</div>
               </div>
-              <button onclick="goTo('title-effects')" style="flex-shrink:0;margin-left:10px;height:30px;padding:0 14px;border-radius:20px;background:#A855F7;border:none;color:#fff;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:-.12px;transition:opacity .15s;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">Edit</button>
+              <button class="emv-row-btn" onclick="goTo('title-effects')">Edit</button>
+            </div>
+            <div class="emv-row">
+              <div class="emv-row-text">
+                <div class="emv-row-title">Show Watermark</div>
+                <div class="emv-row-sub" id="emv-wm-state">Off</div>
+              </div>
+              <div class="tefx-tg" id="emv-tog-wm" onclick="emvToggleWatermark()"><div class="tefx-tg-knob"></div></div>
             </div>
           </div>
 
           <!-- DELETE PROJECT -->
-          <div onclick="showDeleteProjectDialog()" style="display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:opacity .15s;margin-top:4px;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
+          <div onclick="showDeleteProjectDialog()" style="display:flex;align-items:center;justify-content:center;gap:4px;height:44px;box-sizing:border-box;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:opacity .15s;margin-top:4px;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=''">
             <img src="../assets/icons/ui/ic_delete.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);opacity:.7;">
-            <span style="font-size:14px;font-weight:600;color:#fff;letter-spacing:-.14px;">Delete this Project</span>
+            <span style="font-size:14px;font-weight:500;line-height:20px;color:#fff;letter-spacing:-.14px;">Delete this Project</span>
           </div>
 
         </div>
@@ -4058,7 +4141,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     </div>
 
     <!-- ══════ TITLE & SUBTITLE EFFECTS EDITOR ══════ -->
-    <div id="screen-title-effects" class="screen" style="display:flex;flex-direction:column;background:var(--bg);">
+    <div id="screen-title-effects" class="screen" style="display:flex;flex-direction:column;background:#09090B;">
       <!-- Nav -->
       <div class="nav nav-blur" style="flex-shrink:0;">
         <div class="nav-back" onclick="goBack()"><img src="../assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
@@ -4066,222 +4149,94 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div style="min-width:28px;"></div>
       </div>
 
-      <!-- Scrollable body -->
-      <div style="flex:1;overflow-y:auto;overflow-x:clip;scrollbar-width:none;display:flex;flex-direction:column;" id="tefx-scroll">
+      <!-- Scrollable body — Figma 5209:79490 / 5220:80624 -->
+      <div id="tefx-scroll" style="flex:1;overflow-y:auto;overflow-x:clip;scrollbar-width:none;">
+        <div class="tefx-body">
 
-        <!-- Mini timeline: horizontal scrolling clip thumbnails -->
-        <div style="padding:calc(var(--safe-top) + var(--nav-h) + 10px) 0 0;">
-          <div id="tefx-mini-timeline" style="display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 16px 0;">
-            <div onclick="tefxPickClip(this,0)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid #A855F7;transition:border-color .2s;">
-              <img src="../assets/videos/storyboard-clips/clip_1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-01/60/60'">
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">1</span></div>
+          <!-- Preview: 288×180 card, 9:16 video centred -->
+          <div class="tefx-preview">
+            <div class="tefx-video" onclick="tefxTogglePlay()">
+              <img id="tefx-player-thumb" src="../assets/videos/storyboard-clips/clip_1.jpg" alt="">
+              <img id="tefx-wm" class="tefx-wm" src="../assets/icons/app/ycm_watermark_hor.svg" alt="">
+              <div class="tefx-title-overlay"><span id="tefx-title-preview">Starlight in Your Eyes</span></div>
+              <div class="tefx-sub-overlay"><span id="tefx-sub-preview">Under the silver moonlight, we dance</span></div>
             </div>
-            <div onclick="tefxPickClip(this,1)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
-              <img src="../assets/videos/storyboard-clips/clip_2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-02/60/60'">
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">2</span></div>
-            </div>
-            <div onclick="tefxPickClip(this,2)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
-              <img src="../assets/videos/storyboard-clips/clip_3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-03/60/60'">
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">3</span></div>
-            </div>
-            <div onclick="tefxPickClip(this,3)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
-              <img src="../assets/videos/storyboard-clips/clip_4.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-04/60/60'">
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">4</span></div>
-            </div>
-            <div onclick="tefxPickClip(this,4)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
-              <img src="../assets/videos/storyboard-clips/clip_5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-05/60/60'">
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">5</span></div>
-            </div>
-            <div onclick="tefxPickClip(this,5)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
-              <img src="../assets/videos/storyboard-clips/clip_6.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-06/60/60'">
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">6</span></div>
-            </div>
-            <div onclick="tefxPickClip(this,6)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
-              <img src="../assets/videos/storyboard-clips/clip_7.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-07/60/60'">
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">7</span></div>
-            </div>
-            <div onclick="tefxPickClip(this,7)" style="flex-shrink:0;width:60px;height:60px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;border:2.5px solid transparent;transition:border-color .2s;">
-              <img src="../assets/videos/storyboard-clips/clip_8.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-clip-08/60/60'">
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:4px 5px;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0));"><span style="font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);">8</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Video player: loops selected clip -->
-        <div id="tefx-player-wrap" style="margin:10px 16px 0;border-radius:16px;overflow:hidden;background:#151519;flex-shrink:0;">
-          <!-- Video stage: fixed height, video centered with letterbox -->
-          <div style="position:relative;width:100%;height:240px;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;" onclick="tefxTogglePlay(this)">
-            <img id="tefx-player-thumb" class="tefx-player-thumb" src="../assets/videos/storyboard-clips/clip_1.jpg" alt=""
-              style="height:100%;width:100%;object-fit:contain;display:block;"
-              onerror="this.onerror=null;this.src='https://picsum.photos/seed/tefx-player/135/240'">
-            <!-- Title/subtitle text preview overlay -->
-            <div class="tefx-title-overlay">
-              <div class="tefx-title-text" id="tefx-title-preview">Starlight in Your Eyes</div>
-              <div class="tefx-sub-text" id="tefx-sub-preview">Under the silver moonlight, we dance</div>
-            </div>
-            <!-- Play button -->
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;pointer-events:none;">
-              <div id="tefx-play-ico" style="width:40px;height:40px;border-radius:50%;background:rgba(9,9,11,.65);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;">
-                <svg width="14" height="16" viewBox="0 0 14 16" fill="#fff"><path d="M2 1l11 7-11 7V1z"/></svg>
+            <div class="tefx-ctrl">
+              <svg id="tefx-play-ico" class="tefx-ctrl-btn" onclick="tefxTogglePlay()" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 15.8333V4.16667C5 3.24619 5.74619 2.5 6.66667 2.5C7.58714 2.5 8.33333 3.24619 8.33333 4.16667V15.8333C8.33333 16.7538 7.58714 17.5 6.66667 17.5C5.74619 17.5 5 16.7538 5 15.8333ZM11.6667 15.8333V4.16667C11.6667 3.24619 12.4129 2.5 13.3333 2.5C14.2538 2.5 15 3.24619 15 4.16667V15.8333C15 16.7538 14.2538 17.5 13.3333 17.5C12.4129 17.5 11.6667 16.7538 11.6667 15.8333Z" fill="white"/></svg>
+              <div class="tefx-ctrl-bar">
+                <span class="tefx-ctrl-time">00:05</span>
+                <div class="tefx-ctrl-track"><div class="tefx-ctrl-fill"></div><div class="tefx-ctrl-knob"></div></div>
+                <span class="tefx-ctrl-time">00:16</span>
               </div>
+              <svg class="tefx-ctrl-btn" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8.64551 3.51557C8.89565 3.31546 9.23895 3.27671 9.52767 3.41548C9.81624 3.55429 9.99967 3.84637 9.99967 4.16662V15.8333C9.99967 16.1535 9.81624 16.4456 9.52767 16.5844C9.23895 16.7232 8.89565 16.6844 8.64551 16.4843L4.70671 13.3333H1.66634C1.2061 13.3333 0.833008 12.9602 0.833008 12.5V7.49995C0.833008 7.03971 1.2061 6.66662 1.66634 6.66662H4.70671L8.64551 3.51557ZM18.5771 6.91076C18.9026 6.58532 19.4301 6.58532 19.7555 6.91076C20.081 7.23619 20.081 7.76371 19.7555 8.08914L17.8447 9.99995L19.7555 11.9108C20.081 12.2362 20.081 12.7637 19.7555 13.0891C19.4301 13.4146 18.9026 13.4146 18.5771 13.0891L16.6663 11.1783L14.7555 13.0891C14.4301 13.4146 13.9026 13.4146 13.5771 13.0891C13.2517 12.7637 13.2517 12.2362 13.5771 11.9108L15.488 9.99995L13.5771 8.08914C13.2517 7.76371 13.2517 7.23619 13.5771 6.91076C13.9026 6.58532 14.4301 6.58532 14.7555 6.91076L16.6663 8.82156L18.5771 6.91076Z" fill="white"/></svg>
+              <svg class="tefx-ctrl-btn" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.74447 11.0774C8.0699 10.752 8.59741 10.752 8.92285 11.0774C9.24829 11.4029 9.24829 11.9304 8.92285 12.2558L4.51204 16.6666H7.50033C7.96056 16.6666 8.33366 17.0397 8.33366 17.5C8.33366 17.9602 7.96056 18.3333 7.50033 18.3333H2.50033C2.03 18.3333 1.66699 17.97 1.66699 17.5V12.5C1.66699 12.0397 2.04009 11.6666 2.50033 11.6666C2.96056 11.6666 3.33366 12.0397 3.33366 12.5V15.4882L7.74447 11.0774Z" fill="white"/><path d="M17.5003 1.66663C17.97 1.66663 18.3337 2.03 18.3337 2.49996V7.49996C18.3337 7.9602 17.9606 8.33329 17.5003 8.33329C17.0401 8.33329 16.667 7.9602 16.667 7.49996V4.51168L12.2562 8.92249C11.9307 9.2479 11.4032 9.24791 11.0778 8.92249C10.7524 8.59706 10.7524 8.06953 11.0778 7.7441L15.4886 3.33329H12.5003C12.0401 3.33329 11.667 2.9602 11.667 2.49996C11.667 2.03972 12.0401 1.66663 12.5003 1.66663H17.5003Z" fill="white"/></svg>
             </div>
           </div>
-          <!-- Controls bar -->
-          <div style="padding:10px 14px 12px;display:flex;align-items:center;gap:10px;background:#151519;">
-            <!-- Play icon -->
-            <svg width="16" height="16" viewBox="0 0 14 16" fill="rgba(255,255,255,.7)" style="flex-shrink:0;"><path d="M2 1l11 7-11 7V1z"/></svg>
-            <!-- Time left -->
-            <span style="font-size:10px;font-weight:600;color:#9C9CAB;font-variant-numeric:tabular-nums;flex-shrink:0;">00:27</span>
-            <!-- Progress bar -->
-            <div style="flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:2px;position:relative;">
-              <div style="position:absolute;left:0;top:0;height:100%;width:55%;background:#A855F7;border-radius:2px;"></div>
-              <div style="position:absolute;top:50%;left:55%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 4px rgba(0,0,0,.5);"></div>
+
+          <!-- Effects: segment control + style thumbnails -->
+          <div class="tefx-effects">
+            <div class="tefx-seg">
+              <div class="tefx-seg-tab sel" id="tefx-tab-title" onclick="tefxSelectMode('title')">Title</div>
+              <div class="tefx-seg-tab" id="tefx-tab-subtitle" onclick="tefxSelectMode('subtitle')">Subtitle</div>
             </div>
-            <!-- Time right -->
-            <span style="font-size:10px;font-weight:600;color:#9C9CAB;font-variant-numeric:tabular-nums;flex-shrink:0;">00:26</span>
-            <!-- Volume icon -->
-            <svg width="18" height="16" viewBox="0 0 18 16" fill="none" style="flex-shrink:0;">
-              <path d="M1 5h3l4-4v14l-4-4H1V5z" fill="rgba(255,255,255,.7)"/>
-              <path d="M13 2c2.2 1.7 2.2 10.3 0 12" stroke="rgba(255,255,255,.7)" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M10.5 4.5c1.3 1 1.3 6 0 7" stroke="rgba(255,255,255,.7)" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Title / Subtitle tabs -->
-        <div style="display:flex;gap:0;padding:12px 16px 8px;border-bottom:1px solid rgba(255,255,255,.06);">
-          <button id="tefx-tab-title" onclick="tefxSelectMode('title')" style="flex:1;height:36px;border:none;border-radius:20px 0 0 20px;background:#A855F7;color:#fff;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:-.13px;transition:background .2s;">Title</button>
-          <button id="tefx-tab-subtitle" onclick="tefxSelectMode('subtitle')" style="flex:1;height:36px;border:none;border-radius:0 20px 20px 0;background:#212127;color:rgba(255,255,255,.45);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:-.13px;transition:background .2s,color .2s;">Subtitle</button>
-        </div>
-
-        <!-- Effect cards: Title (8) — thumbnail images only -->
-        <div id="tefx-panel-title" class="tefx-cards-wrap" style="display:flex;margin-top:8px;min-height:92px;align-items:flex-start;">
-          <div class="tefx-card sel" onclick="tefxPickCard(this,'title')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/1.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/2.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/3.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/4.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/5.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/6.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/7.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'title')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/title/8.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-        </div>
-
-        <!-- Effect cards: Subtitle (17) — thumbnail images only, hidden by default -->
-        <div id="tefx-panel-subtitle" class="tefx-cards-wrap" style="display:none;margin-top:8px;min-height:92px;align-items:flex-start;">
-          <div class="tefx-card sel" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/1.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/2.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/3.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/4.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/5.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/6.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/7.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/8.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/9.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/10.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/11.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/12.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/13.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/14.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/15.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/16.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-          <div class="tefx-card" onclick="tefxPickCard(this,'subtitle')" style="height:92px;">
-            <div class="tefx-card-thumb" style="height:88px;background:#2a2a35;"><img src="../../v1.1/thumbnail/subtitle/17.webp" alt="" onerror="this.onerror=null;this.style.background='linear-gradient(180deg,#2a2a35,#1a1a22)';this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"></div>
-          </div>
-        </div>
-
-        <!-- Other Settings -->
-        <div style="padding:28px 16px 0;display:flex;flex-direction:column;gap:12px;">
-          <div style="font-size:11px;font-weight:700;color:#9C9CAB;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Other Settings</div>
-
-          <!-- MV Title -->
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-              <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">MV TITLE</span>
-              <div class="toggle on" id="tefx-tog-title" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
+            <!-- Shown only on the Subtitle tab while Show Subtitle is off -->
+            <div class="tefx-sub-off" id="tefx-sub-off">
+              <span class="tefx-sub-off-text">Subtitles are off</span>
+              <span class="tefx-sub-off-btn" onclick="tefxSubOn()">Turn On</span>
             </div>
-            <input type="text" value="Starlight in Your Eyes" placeholder="Enter MV title"
-              style="width:100%;background:#151519;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px 10px;font-size:12px;font-weight:500;color:#fff;font-family:inherit;outline:none;box-sizing:border-box;">
-          </div>
-
-          <!-- Author Name -->
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-              <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">AUTHOR NAME</span>
-              <div class="toggle on" id="tefx-tog-author" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
+            <div class="tefx-fx-row" id="tefx-panel-title">
+            <div class="tefx-fx sel" onclick="tefxPickFx('title',0)" style="background-image:url('../assets/images/title-effect/title_effect_01_cinematic.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('title',1)" style="background-image:url('../assets/images/title-effect/title_effect_02_bold.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('title',2)" style="background-image:url('../assets/images/title-effect/title_effect_03_neon.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('title',3)" style="background-image:url('../assets/images/title-effect/title_effect_04_script.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('title',4)" style="background-image:url('../assets/images/title-effect/title_effect_05_editorial.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('title',5)" style="background-image:url('../assets/images/title-effect/title_effect_06_glitch.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
             </div>
-            <input type="text" value="Isabella Rose Thompson" placeholder="Enter author name"
-              style="width:100%;background:#151519;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px 10px;font-size:12px;font-weight:500;color:#fff;font-family:inherit;outline:none;box-sizing:border-box;">
+            <div class="tefx-fx-row" id="tefx-panel-subtitle" style="display:none;">
+            <div class="tefx-fx sel" onclick="tefxPickFx('subtitle',0)" style="background-image:url('../assets/images/subtitle-style/subtitle_style_01_classic.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('subtitle',1)" style="background-image:url('../assets/images/subtitle-style/subtitle_style_02_box.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('subtitle',2)" style="background-image:url('../assets/images/subtitle-style/subtitle_style_03_outline.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('subtitle',3)" style="background-image:url('../assets/images/subtitle-style/subtitle_style_04_karaoke.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('subtitle',4)" style="background-image:url('../assets/images/subtitle-style/subtitle_style_05_typewriter.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('subtitle',5)" style="background-image:url('../assets/images/subtitle-style/subtitle_style_06_twoline.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('subtitle',6)" style="background-image:url('../assets/images/subtitle-style/subtitle_style_07_italic.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('subtitle',7)" style="background-image:url('../assets/images/subtitle-style/subtitle_style_08_highlight.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('subtitle',8)" style="background-image:url('../assets/images/subtitle-style/subtitle_style_09_glow.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            <div class="tefx-fx" onclick="tefxPickFx('subtitle',9)" style="background-image:url('../assets/images/subtitle-style/subtitle_style_10_spaced.png')"><div class="tefx-fx-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M7.71735 2.11716C7.87356 1.96095 8.12677 1.96095 8.28298 2.11716C8.43919 2.27337 8.43919 2.52657 8.28298 2.68278L3.88298 7.08278C3.72677 7.23899 3.47356 7.23899 3.31735 7.08278L1.31735 5.08278C1.16114 4.92657 1.16114 4.67337 1.31735 4.51716C1.47356 4.36095 1.72677 4.36095 1.88298 4.51716L3.60017 6.23434L7.71735 2.11716Z" fill="white"/></svg></div></div>
+            </div>
           </div>
 
-          <!-- Show Subtitle -->
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;">
-            <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">SHOW SUBTITLE</span>
-            <div class="toggle on" id="tefx-tog-sub" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
+          <!-- Settings list -->
+          <div class="tefx-list">
+          <div class="tefx-field">
+            <div class="tefx-field-head"><span class="tefx-field-label">MV TITLE</span><div class="tefx-tg on" id="tefx-tog-title" onclick="tefxToggle('titleOn')"><div class="tefx-tg-knob"></div></div></div>
+            <div class="tefx-input" id="tefx-box-title">
+              <input type="text" id="tefx-in-title" placeholder="Enter MV title" oninput="tefxInput('title',this.value)">
+              <div class="tefx-clear" onclick="tefxClear('title')"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.64645 2.64645C8.84171 2.45118 9.15822 2.45118 9.35348 2.64645C9.54874 2.84171 9.54874 3.15822 9.35348 3.35348L6.70699 5.99996L9.35348 8.64645C9.54874 8.84171 9.54874 9.15822 9.35348 9.35348C9.15822 9.54874 8.84171 9.54874 8.64645 9.35348L5.99996 6.70699L3.35348 9.35348C3.15822 9.54874 2.84171 9.54874 2.64645 9.35348C2.45118 9.15822 2.45118 8.84171 2.64645 8.64645L5.29293 5.99996L2.64645 3.35348C2.45118 3.15822 2.45118 2.84171 2.64645 2.64645C2.84171 2.45118 3.15822 2.45118 3.35348 2.64645L5.99996 5.29293L8.64645 2.64645Z" fill="white"/></svg></div>
+            </div>
           </div>
-
-          <!-- Show Watermark -->
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;">
-            <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:-.12px;line-height:15px;">SHOW WATERMARK</span>
-            <div class="toggle off" id="tefx-tog-wm" onclick="togEmv(this)"><div class="toggle-knob"></div></div>
+          <div class="tefx-field">
+            <div class="tefx-field-head"><span class="tefx-field-label">AUTHOR NAME</span><div class="tefx-tg on" id="tefx-tog-author" onclick="tefxToggle('authorOn')"><div class="tefx-tg-knob"></div></div></div>
+            <div class="tefx-input" id="tefx-box-author">
+              <input type="text" id="tefx-in-author" placeholder="Enter author name" oninput="tefxInput('author',this.value)">
+              <div class="tefx-clear" onclick="tefxClear('author')"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.64645 2.64645C8.84171 2.45118 9.15822 2.45118 9.35348 2.64645C9.54874 2.84171 9.54874 3.15822 9.35348 3.35348L6.70699 5.99996L9.35348 8.64645C9.54874 8.84171 9.54874 9.15822 9.35348 9.35348C9.15822 9.54874 8.84171 9.54874 8.64645 9.35348L5.99996 6.70699L3.35348 9.35348C3.15822 9.54874 2.84171 9.54874 2.64645 9.35348C2.45118 9.15822 2.45118 8.84171 2.64645 8.64645L5.29293 5.99996L2.64645 3.35348C2.45118 3.15822 2.45118 2.84171 2.64645 2.64645C2.84171 2.45118 3.15822 2.45118 3.35348 2.64645L5.99996 5.29293L8.64645 2.64645Z" fill="white"/></svg></div>
+            </div>
+          </div>
+          <div class="tefx-row">
+            <div class="tefx-row-text"><div class="tefx-row-title">Show Subtitle</div><div class="tefx-row-sub" id="tefx-sub-state">On</div></div>
+            <div class="tefx-tg on" id="tefx-tog-subOn" onclick="tefxToggle('subOn')"><div class="tefx-tg-knob"></div></div>
+          </div>
+          <div class="tefx-row">
+            <div class="tefx-row-text"><div class="tefx-row-title">Show Watermark</div><div class="tefx-row-sub" id="tefx-wm-state">On</div></div>
+            <div class="tefx-tg on" id="tefx-tog-wm" onclick="tefxToggle('wm')"><div class="tefx-tg-knob"></div></div>
+          </div>
           </div>
         </div>
-
-        <!-- Spacer -->
-        <div style="height:16px;flex-shrink:0;"></div>
       </div><!-- end scroll -->
 
-      <!-- Cancel / Save footer -->
-      <div class="tefx-footer">
-        <button class="btn btn-secondary" style="flex:1;" onclick="goBack()">Cancel</button>
-        <button class="btn btn-primary" style="flex:2;" onclick="tefxSave()">Save</button>
+      <!-- Floating Save (disabled until something changes) -->
+      <div class="tefx-float">
+        <button id="tefx-save" class="tefx-save" disabled onclick="tefxSave()">Save</button>
       </div>
     </div><!-- end screen-title-effects -->
 
@@ -6535,111 +6490,59 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
   <div id="rpt-sheet" class="rpt-sheet">
     <div class="rpt-handle"></div>
     <div class="rpt-header">
-      <div class="rpt-title" id="rpt-sheet-title">Report Content</div>
       <div class="rpt-close" onclick="closeReport()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.5288 3.52864C11.7891 3.26829 12.2111 3.26829 12.4715 3.52864C12.7318 3.78899 12.7318 4.211 12.4715 4.47134L8.94282 7.99999L12.4715 11.5286C12.7318 11.789 12.7318 12.211 12.4715 12.4713C12.2111 12.7317 11.7891 12.7317 11.5288 12.4713L8.00011 8.9427L4.47147 12.4713C4.21112 12.7317 3.78911 12.7317 3.52876 12.4713C3.26841 12.211 3.26841 11.789 3.52876 11.5286L7.0574 7.99999L3.52876 4.47134C3.26841 4.211 3.26841 3.78899 3.52876 3.52864C3.78911 3.26829 4.21112 3.26829 4.47147 3.52864L8.00011 7.05728L11.5288 3.52864Z" fill="white"/></svg>
       </div>
+      <div class="rpt-title" id="rpt-sheet-title">Report Content</div>
     </div>
     <div class="rpt-sub">Why are you reporting this? Your report is anonymous.</div>
 
     <!-- Reason list (shown first) -->
     <div id="rpt-form">
       <div class="rpt-list" id="rpt-list">
-
-        <!-- 1. Sexual / adult content -->
         <div class="rpt-option" onclick="selectReason(this,'sexual')">
-          <div class="rpt-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--n64)">
-              <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
-            </svg>
-          </div>
           <div class="rpt-option-text">Sexual or adult content</div>
-          <div class="rpt-option-radio"><div class="rpt-option-radio-dot"></div></div>
+          <div class="rpt-option-radio"></div>
         </div>
-
-        <!-- 2. Harassment / hate speech -->
         <div class="rpt-option" onclick="selectReason(this,'harassment')">
-          <div class="rpt-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--n64)">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-              <line x1="9" y1="10" x2="9" y2="10" stroke-width="3"/><line x1="12" y1="10" x2="12" y2="10" stroke-width="3"/><line x1="15" y1="10" x2="15" y2="10" stroke-width="3"/>
-            </svg>
-          </div>
           <div class="rpt-option-text">Harassment or hate speech</div>
-          <div class="rpt-option-radio"><div class="rpt-option-radio-dot"></div></div>
+          <div class="rpt-option-radio"></div>
         </div>
-
-        <!-- 3. Spam / commercial -->
         <div class="rpt-option" onclick="selectReason(this,'spam')">
-          <div class="rpt-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--n64)">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
-          </div>
           <div class="rpt-option-text">Spam or commercial advertising</div>
-          <div class="rpt-option-radio"><div class="rpt-option-radio-dot"></div></div>
+          <div class="rpt-option-radio"></div>
         </div>
-
-        <!-- 4. Violent / disturbing -->
         <div class="rpt-option" onclick="selectReason(this,'violent')">
-          <div class="rpt-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--n64)">
-              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-              <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17" stroke-width="3"/>
-            </svg>
-          </div>
           <div class="rpt-option-text">Violent or disturbing content</div>
-          <div class="rpt-option-radio"><div class="rpt-option-radio-dot"></div></div>
+          <div class="rpt-option-radio"></div>
         </div>
-
-        <!-- 5. Misinformation -->
         <div class="rpt-option" onclick="selectReason(this,'misinfo')">
-          <div class="rpt-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--n64)">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="3"/>
-            </svg>
-          </div>
           <div class="rpt-option-text">Misinformation or misleading</div>
-          <div class="rpt-option-radio"><div class="rpt-option-radio-dot"></div></div>
+          <div class="rpt-option-radio"></div>
         </div>
-
-        <!-- 6. Copyright -->
         <div class="rpt-option" onclick="selectReason(this,'copyright')">
-          <div class="rpt-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--n64)">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M14.83 14.83A4 4 0 1 1 9.17 9.17"/>
-            </svg>
-          </div>
           <div class="rpt-option-text">Copyright or unauthorized use</div>
-          <div class="rpt-option-radio"><div class="rpt-option-radio-dot"></div></div>
+          <div class="rpt-option-radio"></div>
         </div>
-
       </div><!-- /rpt-list -->
 
-      <!-- Submit CTA (hidden until reason selected) -->
+      <!-- Submit CTA (disabled until a reason is selected) -->
       <div class="rpt-cta" id="rpt-cta">
-        <button class="rpt-submit" onclick="submitReport()">Submit Report</button>
+        <button class="rpt-submit" id="rpt-submit" onclick="submitReport()" disabled>Submit Report</button>
       </div>
     </div><!-- /rpt-form -->
 
     <!-- Success state (hidden until submitted) -->
     <div class="rpt-success" id="rpt-success">
       <div class="rpt-success-icon">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-          <polyline points="22 4 12 14.01 9 11.01"/>
-        </svg>
+        <svg width="38" height="38" viewBox="0 0 38 38" fill="none"><path d="M30.5471 8.38053C31.1654 7.7622 32.1677 7.7622 32.786 8.38053C33.4043 8.99886 33.4043 10.0011 32.786 10.6195L15.3693 28.0361C14.751 28.6545 13.7487 28.6545 13.1304 28.0361L5.21375 20.1195C4.59542 19.5011 4.59542 18.4989 5.21375 17.8805C5.83208 17.2622 6.83435 17.2622 7.45268 17.8805L14.2499 24.6777L30.5471 8.38053Z" fill="white"/></svg>
       </div>
-      <div class="rpt-success-title">Thank you for keeping Muse safe</div>
-      <div class="rpt-success-body">We'll review this content. If it violates our community guidelines, we'll take action — usually within 24 hours.</div>
-      <button class="rpt-done-btn" onclick="closeReport()">Done</button>
+      <div class="rpt-success-msg">
+        <div class="rpt-success-title">Thank you for keeping Muse safe</div>
+        <div class="rpt-success-body">We'll review this content. If it violates our community guidelines, we'll take action — usually within 24 hours.</div>
+      </div>
+      <div class="rpt-done-wrap"><button class="rpt-done-btn" onclick="closeReport()">Done</button></div>
     </div>
-
   </div><!-- /rpt-sheet -->
 
 </div><!-- /device -->
@@ -6817,6 +6720,8 @@ function goTo(id, dir) {
     }
   }
   if (id === 'mv-edit')  setTimeout(checkMergeEnable, 60);
+  if (id === 'mv-edit')  emvSyncWatermark();
+  if (id === 'title-effects') tefxInit();
   if (id === 'onboard') setTimeout(() => obGoTo(0), 50);
   if (id === 'history') {
     // Show processing item if coming from song-creating
@@ -7228,118 +7133,153 @@ function buildWaveform() {
 // ══════════════════════════════════════════════════════
 // TITLE EFFECTS EDITOR
 // ══════════════════════════════════════════════════════
-var _tefxMode = 'title';       // 'title' | 'subtitle'
-var _tefxSelTitle = 'Center Static';
-var _tefxSelSubtitle = 'Center Static';
+// Shared MV text / watermark settings — used by Edit MV and Edit Title & Subtitle
+var mvTextSettings = {
+  titleOn: true,  title: 'Starlight in Your Eyes',
+  authorOn: true, author: 'Isabella Rose Thompson',
+  subOn: true,    wm: false,
+  titleFx: 0,     subFx: 0
+};
+var _tefxDraft = null;
+var _tefxMode = 'title';
 
-function tefxToggleDropdown() {
-  // Legacy — dropdown replaced by tabs; no-op
+// Preview styling per thumbnail (assets/images/title-effect, subtitle-style)
+var TEFX_TITLE_CSS = [
+  /* 01 cinematic */ "font-family:'Times New Roman',Times,serif;font-weight:700;font-size:11px;line-height:13px;letter-spacing:-.11px;text-transform:uppercase;text-shadow:0 2px 4px rgba(0,0,0,.5);border-top:.5px solid rgba(255,255,255,.85);border-bottom:.5px solid rgba(255,255,255,.85);padding:1px 0;",
+  /* 02 bold      */ "font-family:Impact,'Arial Narrow Bold','Arial Black',sans-serif;font-weight:900;font-size:13px;line-height:14px;text-transform:uppercase;text-shadow:0 2px 4px rgba(0,0,0,.5);",
+  /* 03 neon      */ "font-family:Impact,'Arial Black',sans-serif;font-size:13px;line-height:14px;text-transform:uppercase;color:transparent;-webkit-text-stroke:.6px #fff;text-shadow:0 0 6px rgba(255,255,255,.45);",
+  /* 04 script    */ "font-family:'Snell Roundhand','Brush Script MT','Segoe Script',cursive;font-style:italic;font-weight:400;font-size:14px;line-height:16px;text-shadow:0 2px 4px rgba(0,0,0,.5);",
+  /* 05 editorial */ "font-family:'Playfair Display',Didot,Georgia,serif;font-weight:700;font-size:12px;line-height:14px;text-shadow:0 2px 4px rgba(0,0,0,.5);",
+  /* 06 glitch    */ "font-family:Impact,'Arial Black',sans-serif;font-size:13px;line-height:14px;text-transform:uppercase;text-shadow:1px 0 #ff2d55,-1px 0 #00e5ff,0 2px 4px rgba(0,0,0,.5);"
+];
+var TEFX_SUB_CSS = [
+  /* 01 classic    */ "font-family:Helvetica,Arial,sans-serif;font-weight:700;font-size:7px;line-height:9px;letter-spacing:-.07px;-webkit-text-stroke:.5px rgba(0,0,0,.7);paint-order:stroke fill;",
+  /* 02 box        */ "font-weight:700;font-size:7px;line-height:9px;background:rgba(0,0,0,.85);padding:1px 3px;border-radius:2px;",
+  /* 03 outline    */ "font-weight:900;font-size:7px;line-height:9px;-webkit-text-stroke:1.2px #000;paint-order:stroke fill;",
+  /* 04 karaoke    */ "font-weight:700;font-size:7px;line-height:9px;background:linear-gradient(90deg,#fff 50%,rgba(255,255,255,.45) 50%);-webkit-background-clip:text;background-clip:text;color:transparent;",
+  /* 05 typewriter */ "font-family:Menlo,'Courier New',monospace;font-weight:400;font-size:6.5px;line-height:9px;border-right:1px solid #fff;padding-right:1px;",
+  /* 06 two-line   */ "font-weight:700;font-size:7px;line-height:9px;max-width:70px;white-space:normal;text-shadow:0 1px 2px rgba(0,0,0,.6);",
+  /* 07 italic     */ "font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:500;font-size:8px;line-height:10px;text-shadow:0 1px 2px rgba(0,0,0,.6);",
+  /* 08 highlight  */ "font-weight:700;font-size:7px;line-height:9px;background:#fff;color:#09090B;padding:1px 3px;border-radius:2px;",
+  /* 09 glow       */ "font-weight:600;font-size:7px;line-height:9px;text-shadow:0 0 3px #fff,0 0 7px rgba(255,255,255,.75);",
+  /* 10 spaced     */ "font-weight:400;font-size:6px;line-height:9px;letter-spacing:.2em;text-transform:uppercase;text-shadow:0 1px 2px rgba(0,0,0,.6);"
+];
+
+function tefxInit() {
+  _tefxDraft = JSON.parse(JSON.stringify(mvTextSettings));
+  tefxSelectMode('title');
+  tefxRender();
+  var sc = document.getElementById('tefx-scroll'); if (sc) sc.scrollTop = 0;
+}
+
+function tefxSetTog(id, on) {
+  var t = document.getElementById(id); if (t) t.classList.toggle('on', !!on);
+}
+
+function tefxRender() {
+  var d = _tefxDraft; if (!d) return;
+  // Inputs
+  ['title','author'].forEach(function(k){
+    var inp = document.getElementById('tefx-in-' + k);
+    if (inp && document.activeElement !== inp) inp.value = d[k];
+    var box = document.getElementById('tefx-box-' + k);
+    if (box) { box.classList.toggle('off', !d[k + 'On']); box.classList.toggle('empty', !d[k]); }
+    tefxSetTog('tefx-tog-' + k, d[k + 'On']);
+  });
+  tefxSetTog('tefx-tog-subOn', d.subOn);
+  document.getElementById('screen-title-effects').classList.toggle('sub-off', !d.subOn);
+  document.getElementById('screen-title-effects').classList.toggle('title-off', !d.titleOn);
+  tefxSetTog('tefx-tog-wm', d.wm);
+  document.getElementById('tefx-sub-state').textContent = d.subOn ? 'On' : 'Off';
+  document.getElementById('tefx-wm-state').textContent  = d.wm ? 'On' : 'Off';
+  // Effect thumbnails
+  ['title','subtitle'].forEach(function(kind){
+    var sel = kind === 'title' ? d.titleFx : d.subFx;
+    document.querySelectorAll('#tefx-panel-' + kind + ' .tefx-fx').forEach(function(c, i){ c.classList.toggle('sel', i === sel); });
+  });
+  // Preview
+  var tp = document.getElementById('tefx-title-preview');
+  tp.textContent = d.title || 'MV Title';
+  tp.style.cssText = TEFX_TITLE_CSS[d.titleFx] || TEFX_TITLE_CSS[0];
+  tp.style.visibility = d.titleOn ? 'visible' : 'hidden';
+  var sp = document.getElementById('tefx-sub-preview');
+  sp.style.cssText = (TEFX_SUB_CSS[d.subFx] || TEFX_SUB_CSS[0]);
+  sp.style.visibility = d.subOn ? 'visible' : 'hidden';
+  document.getElementById('tefx-wm').classList.toggle('show', !!d.wm);
+  // Save enabled only when the draft differs from saved settings
+  var save = document.getElementById('tefx-save');
+  if (save) save.disabled = JSON.stringify(d) === JSON.stringify(mvTextSettings);
 }
 
 function tefxSelectMode(mode) {
   _tefxMode = mode;
-  // Update tab buttons
-  var tabTitle = document.getElementById('tefx-tab-title');
-  var tabSub   = document.getElementById('tefx-tab-subtitle');
-  if (tabTitle) {
-    tabTitle.style.background   = mode === 'title' ? '#A855F7' : '#212127';
-    tabTitle.style.color        = mode === 'title' ? '#fff' : 'rgba(255,255,255,.45)';
-  }
-  if (tabSub) {
-    tabSub.style.background = mode === 'subtitle' ? '#A855F7' : '#212127';
-    tabSub.style.color      = mode === 'subtitle' ? '#fff' : 'rgba(255,255,255,.45)';
-  }
-  // Show / hide panels
-  document.getElementById('tefx-panel-title').style.display = mode === 'title' ? 'flex' : 'none';
+  document.getElementById('tefx-tab-title').classList.toggle('sel', mode === 'title');
+  document.getElementById('tefx-tab-subtitle').classList.toggle('sel', mode === 'subtitle');
+  document.getElementById('tefx-panel-title').style.display    = mode === 'title' ? 'flex' : 'none';
   document.getElementById('tefx-panel-subtitle').style.display = mode === 'subtitle' ? 'flex' : 'none';
-  // Update preview
-  tefxUpdatePreview();
+  document.getElementById('screen-title-effects').classList.toggle('mode-subtitle', mode === 'subtitle');
 }
 
-function tefxPickClip(el, idx) {
-  var clips = document.querySelectorAll('#tefx-mini-timeline > div');
-  clips.forEach(function(c) { c.style.borderColor = 'transparent'; });
-  el.style.borderColor = '#A855F7';
-  var thumb = document.getElementById('tefx-player-thumb');
-  if (thumb) {
-    var src = '../assets/videos/storyboard-clips/clip_' + (idx + 1) + '.jpg';
-    thumb.src = src;
-  }
+function tefxPickFx(kind, idx) {
+  if (!_tefxDraft) tefxInit();
+  if (kind === 'title') { _tefxDraft.titleFx = idx; _tefxDraft.titleOn = true; }   // picking a style = wants the title
+  else { _tefxDraft.subFx = idx; _tefxDraft.subOn = true; }   // picking a style = wants subtitles
+  tefxRender();
 }
 
-function tefxPickCard(el, panel) {
-  var cards = document.querySelectorAll('#tefx-panel-' + panel + ' .tefx-card');
-  cards.forEach(function(c) { c.classList.remove('sel'); });
-  el.classList.add('sel');
-  tefxUpdatePreview();
+function tefxSubOn() {
+  if (!_tefxDraft) tefxInit();
+  _tefxDraft.subOn = true;
+  tefxRender();
 }
 
-function tefxUpdatePreview() {
-  var titleEl = document.getElementById('tefx-title-preview');
-  var subEl = document.getElementById('tefx-sub-preview');
-  if (!titleEl) return;
-  // Apply visual style hints based on selected effect
-  var titleStyles = {
-    'None':       'font-weight:800;color:#fff;text-shadow:none;letter-spacing:-.16px;',
-    'Typewriter': 'font-weight:800;color:#fff;border-right:2px solid #A855F7;padding-right:2px;letter-spacing:-.16px;',
-    'Fade In':    'font-weight:800;color:rgba(255,255,255,.7);text-shadow:none;letter-spacing:-.16px;',
-    'Slide Up':   'font-weight:800;color:#fff;letter-spacing:-.16px;',
-    'Glitch':     'font-weight:800;color:#fff;text-shadow:2px 0 #ff00ff,-2px 0 #00ffff;letter-spacing:-.16px;',
-    'Neon Glow':  'font-weight:800;color:#A855F7;text-shadow:0 0 10px #A855F7,0 0 20px rgba(168,85,247,.5);letter-spacing:-.16px;',
-    'Cinematic':  'font-weight:800;color:#ffd764;letter-spacing:.08em;text-transform:uppercase;font-size:13px;text-shadow:0 2px 8px rgba(0,0,0,.9);',
-    'Minimal':    'font-weight:400;color:#fff;letter-spacing:.18em;text-transform:uppercase;font-size:12px;',
-  };
-  var subStyles = {
-    'None':       'color:rgba(255,255,255,.85);font-weight:500;text-shadow:none;',
-    'Pop':        'color:#fff;font-weight:700;font-size:11px;text-shadow:0 2px 6px rgba(0,0,0,.8);',
-    'Wave':       'color:#38bdf8;font-weight:500;letter-spacing:.02em;',
-    'Float':      'color:rgba(255,255,255,.8);font-weight:400;',
-    'Sparkle':    'color:#ffd700;font-weight:600;',
-    'Typewriter': 'color:#fff;font-weight:500;border-right:1.5px solid #A855F7;padding-right:1px;',
-    'Bounce':     'color:#4ade80;font-weight:700;',
-    'Slide':      'color:#fff;font-weight:600;border-left:2px solid #A855F7;padding-left:4px;',
-    'Fade':       'color:rgba(255,255,255,.5);font-weight:500;',
-    'Glow':       'color:#EC4899;font-weight:600;text-shadow:0 0 8px #EC4899;',
-    'Shake':      'color:#ff4040;font-weight:700;letter-spacing:.04em;',
-    'Zoom':       'color:#fff;font-weight:700;font-size:13px;',
-    'Flip':       'color:#c084fc;font-weight:700;transform:perspective(60px) rotateX(8deg);display:inline-block;',
-    'Blur':       'color:#fff;font-weight:600;filter:blur(0.4px);',
-    'Rotate':     'color:#38bdf8;font-weight:700;transform:rotate(-2deg);display:inline-block;',
-    'Sweep':      'color:#fff;font-weight:600;',
-    'Pulse':      'color:#fff;font-weight:600;box-shadow:0 0 0 2px rgba(168,85,247,.5);border-radius:3px;padding:1px 4px;',
-    'Echo':       'color:#fff;font-weight:700;text-shadow:2px 2px 0 rgba(168,85,247,.35);',
-  };
-  if (_tefxMode === 'title') {
-    var s = titleStyles[_tefxSelTitle] || titleStyles['None'];
-    titleEl.style.cssText = 'font-size:16px;line-height:1.25;text-shadow:0 2px 8px rgba(0,0,0,.7);' + s;
-  } else {
-    var ss = subStyles[_tefxSelSubtitle] || subStyles['None'];
-    subEl.style.cssText = 'margin-top:3px;text-shadow:0 1px 4px rgba(0,0,0,.7);font-size:10px;' + ss;
-  }
+function tefxToggle(key) {
+  if (!_tefxDraft) tefxInit();
+  _tefxDraft[key] = !_tefxDraft[key];
+  tefxRender();
 }
 
-function tefxTogglePlay(wrap) {
+function tefxInput(key, val) {
+  if (!_tefxDraft) tefxInit();
+  _tefxDraft[key] = val;
+  tefxRender();
+}
+
+function tefxClear(key) {
+  var inp = document.getElementById('tefx-in-' + key);
+  if (inp) { inp.value = ''; inp.focus(); }
+  tefxInput(key, '');
+}
+
+function tefxTogglePlay() {
   var ico = document.getElementById('tefx-play-ico');
   if (!ico) return;
-  var isPlaying = ico.dataset.playing === '1';
-  if (isPlaying) {
-    ico.dataset.playing = '0';
-    ico.style.display = 'flex';
-    ico.innerHTML = '<svg width="14" height="16" viewBox="0 0 14 16" fill="#fff"><path d="M2 1l11 7-11 7V1z"/></svg>';
-  } else {
-    ico.dataset.playing = '1';
-    ico.style.display = 'none';
-  }
+  var playing = ico.dataset.paused !== '1';
+  ico.dataset.paused = playing ? '1' : '0';
+  ico.innerHTML = playing
+    ? '<path d="M6 3.5v13l11-6.5z" fill="white"/>'
+    : '<path d="M5 15.8333V4.16667C5 3.24619 5.74619 2.5 6.66667 2.5C7.58714 2.5 8.33333 3.24619 8.33333 4.16667V15.8333C8.33333 16.7538 7.58714 17.5 6.66667 17.5C5.74619 17.5 5 16.7538 5 15.8333ZM11.6667 15.8333V4.16667C11.6667 3.24619 12.4129 2.5 13.3333 2.5C14.2538 2.5 15 3.24619 15 4.16667V15.8333C15 16.7538 14.2538 17.5 13.3333 17.5C12.4129 17.5 11.6667 16.7538 11.6667 15.8333Z" fill="white"/>';
 }
 
 function tefxSave() {
-  // Toast feedback then go back
-  var btn = document.querySelector('#screen-title-effects .btn-primary');
-  if (btn) { btn.textContent = 'Saved ✓'; btn.style.background = 'var(--green)'; }
-  setTimeout(function() {
-    goBack();
-    if (btn) { btn.textContent = 'Save'; btn.style.background = ''; }
-  }, 600);
+  var save = document.getElementById('tefx-save');
+  if (!_tefxDraft || (save && save.disabled)) return;
+  mvTextSettings = JSON.parse(JSON.stringify(_tefxDraft));
+  emvSyncWatermark();
+  setEmvDirty();          // title / subtitle changes need a re-merge
+  goBack();
+}
+
+// Edit MV page — Show Watermark (shares mvTextSettings.wm with the editor)
+function emvSyncWatermark() {
+  var on = !!mvTextSettings.wm;
+  tefxSetTog('emv-tog-wm', on);
+  var st = document.getElementById('emv-wm-state'); if (st) st.textContent = on ? 'On' : 'Off';
+}
+function emvToggleWatermark() {
+  mvTextSettings.wm = !mvTextSettings.wm;
+  emvSyncWatermark();
+  setEmvDirty();
 }
 
 // ── Edit MV / Merge MV state ──
@@ -11558,9 +11498,10 @@ function openReport(context) {
   // Reset UI
   var opts = document.querySelectorAll('.rpt-option');
   opts.forEach(function(o){ o.classList.remove('sel'); });
-  document.getElementById('rpt-cta').classList.remove('show');
+  document.getElementById('rpt-submit').disabled = true;
   document.getElementById('rpt-form').style.display = '';
   document.getElementById('rpt-success').classList.remove('show');
+  document.getElementById('rpt-sheet').classList.remove('is-success');
 
   // Open — use both class and direct inline style for maximum compatibility
   var bd = document.getElementById('rpt-backdrop');
@@ -11593,8 +11534,8 @@ function selectReason(el, reason) {
   // Select this one
   el.classList.add('sel');
   reportState.selectedReason = reason;
-  // Show CTA
-  document.getElementById('rpt-cta').classList.add('show');
+  // Enable CTA
+  document.getElementById('rpt-submit').disabled = false;
 }
 
 function submitReport() {
@@ -11616,6 +11557,7 @@ function submitReport() {
   // Show success state
   document.getElementById('rpt-form').style.display = 'none';
   document.getElementById('rpt-success').classList.add('show');
+  document.getElementById('rpt-sheet').classList.add('is-success');
 
   // Auto-close after 2.8s
   setTimeout(function() {
@@ -11626,7 +11568,8 @@ function submitReport() {
 function showRptToast(msg) {
   // Reuse any existing toast system or create a simple one
   var t = document.createElement('div');
-  t.style.cssText = 'position:absolute;bottom:90px;left:16px;right:16px;background:#212127;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 14px;font-size:13px;font-weight:500;color:#fff;z-index:400;text-align:center;animation:rptFadeIn .2s ease;pointer-events:none;';
+  // Figma Popup/Toast (5089:61132): bottom edge 97px above frame bottom, hug width, centred
+  t.style.cssText = 'position:absolute;bottom:97px;left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100% - 32px);box-sizing:border-box;background:rgba(9,9,11,.8);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:1px solid rgba(145,50,255,.6);border-radius:14px;padding:15px;font-size:13px;font-weight:700;line-height:18px;letter-spacing:-.13px;color:#fff;z-index:2100;text-align:left;animation:rptFadeIn .2s ease;pointer-events:none;';
   t.textContent = msg;
   var device = document.querySelector('.device') || document.querySelector('.phone-frame');
   if (device) {
