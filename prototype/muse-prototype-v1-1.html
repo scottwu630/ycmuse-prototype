@@ -91,7 +91,7 @@
   --safe-top: env(safe-area-inset-top, 48px);
   --safe-bot: env(safe-area-inset-bottom, 20px);
   --tab-h: 66px;
-  --nav-h: 52px;
+  --nav-h: 42px;
 }
 /* ── Typography utility classes (Figma Design System — Inter) ───────────── */
 .t-display  { font-size:var(--fs-display);  font-weight:var(--fw-display);  line-height:var(--lh-display);  letter-spacing:-.4px;  }
@@ -170,7 +170,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #credit-packs-scroll::-webkit-scrollbar{display:none;}
 
 /* ── TAB BAR ── */
-.tab-bar{position:absolute;bottom:0;left:0;right:0;height:var(--tab-h);background:rgba(9,9,11,.93);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-top:1px solid rgba(255,255,255,.06);display:none;align-items:flex-start;justify-content:space-evenly;padding-top:11px;z-index:100;overflow:visible;}
+.tab-bar{position:absolute;bottom:0;left:0;right:0;height:var(--tab-h);background:rgba(9,9,11,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.06);display:none;align-items:flex-start;justify-content:space-evenly;padding-top:11px;z-index:100;overflow:visible;}
 .tab-bar.show{display:flex;}
 .tab-item{flex:none;width:66px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:0;cursor:pointer;transition:opacity .2s;position:relative;}
 .tab-item .tab-icon,.tab-item .tab-label{opacity:.4;transition:opacity .2s;}
@@ -180,7 +180,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .tab-notif-dot.show{display:block;}
 .tab-icon{display:flex;align-items:center;justify-content:center;width:18px;height:18px;}
 .tab-icon img{width:18px;height:18px;display:block;}
-.tab-label{font-size:10px;font-weight:500;color:#fff;letter-spacing:.01em;}
+.tab-label{font-size:9px;font-weight:400;color:#fff;}
 .tab-create-wrap{flex:none;width:66px;} /* spacer only — button uses absolute positioning */
 .tab-create{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:48px;height:48px;border-radius:39px;background:var(--mv-grad);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 2px rgba(0,0,0,.25);cursor:pointer;transition:transform .18s;padding:14px;box-sizing:border-box;}
 .tab-create:active{transform:translateX(-50%) scale(.93);}
@@ -189,7 +189,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 /* ── NAV BAR ── */
 /* ── NavBar — synced from Figma Design System (2nd Layer) ── */
 .nav{position:absolute;top:0;left:0;right:0;height:calc(var(--safe-top) + var(--nav-h));padding-top:var(--safe-top);display:flex;align-items:center;padding-left:16px;padding-right:16px;gap:6px;z-index:80;}
-.nav-blur{background:#09090B;border-bottom:1px solid rgba(255,255,255,.09);}
+.nav-blur{background:#09090B;border-bottom:1px solid rgba(255,255,255,.15);}
 .nav-back{width:28px;height:28px;border-radius:18px;background:var(--n14);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .15s;flex-shrink:0;}
 .nav-back:active{opacity:.7;}
 .nav-title{flex:1;text-align:center;font-size:17px;font-weight:700;color:#ffffff;line-height:22px;height:24px;letter-spacing:0;}
@@ -197,23 +197,23 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
 /* ── BUTTONS — synced from Figma Design System (Button/Pill) ── */
 /* Base: 46px × full-width, 14px radius, 17px bold */
-.btn{width:100%;height:46px;border-radius:14px;border:none;font-size:17px;font-weight:700;cursor:pointer;transition:transform .15s,opacity .15s;}
+.btn{width:100%;height:44px;border-radius:14px;border:none;font-size:15px;font-weight:700;line-height:18px;cursor:pointer;transition:transform .15s,opacity .15s;}
 .btn:active{transform:scale(.97);opacity:.88;}
 /* Primary (Active): MV gradient, white text, purple shadow */
-.btn-primary{background:var(--mv-grad);color:var(--n100);box-shadow:0 8px 24px rgba(168,85,247,.32);}
+.btn-primary{background:var(--mv-grad);color:var(--n100);}
 /* Primary (Disable): dark bg #383842, 30% opacity text */
-.btn-primary:disabled,.btn-primary.disabled{background:var(--n24);color:var(--n100);opacity:.3;box-shadow:none;cursor:not-allowed;}
+.btn-primary:disabled,.btn-primary.disabled{background:var(--n24);color:rgba(255,255,255,.3);opacity:1;box-shadow:none;cursor:not-allowed;}
 /* Secondary (Active): dark card bg, subtle border, Neutral/Dark/84 text */
-.btn-secondary{background:var(--n14);border:1px solid var(--border-2);color:var(--n84);font-weight:500;}
+.btn-secondary{background:var(--n14);border:1px solid var(--border-2);color:#fff;font-size:14px;font-weight:500;line-height:20px;}
 /* Secondary (Disable) */
 .btn-secondary:disabled,.btn-secondary.disabled{opacity:.3;cursor:not-allowed;}
 /* Ghost: no bg, Neutral/Dark/64 text, 14px Medium */
-.btn-ghost{background:transparent;border:none;color:var(--n64);font-size:14px;font-weight:500;}
+.btn-ghost{background:transparent;border:none;color:var(--n64);font-size:14px;font-weight:500;line-height:20px;}
 /* Outline: transparent bg, border, white text */
-.btn-outline{flex:1;height:46px;border-radius:14px;background:transparent;border:1.5px solid var(--border-2);color:var(--n100);font-size:17px;font-weight:700;cursor:pointer;transition:background .15s;}
-.btn-outline:active{background:rgba(255,255,255,.05);}
+.btn-outline{flex:1;height:44px;border-radius:14px;background:var(--n14);border:1px solid var(--border-2);color:#fff;font-size:14px;font-weight:500;line-height:20px;font-family:inherit;cursor:pointer;transition:opacity .15s;}
+.btn-outline:active{opacity:.7;}
 /* PF / Song gradient variants */
-.btn-pf{flex:2;height:46px;border-radius:14px;background:var(--mv-grad);border:none;color:var(--n100);font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(168,85,247,.3);transition:transform .15s;}
+.btn-pf{flex:2;height:44px;border-radius:14px;background:var(--mv-grad);border:none;color:var(--n100);font-size:15px;font-weight:700;line-height:18px;cursor:pointer;transition:transform .15s;}
 .btn-pf:active{transform:scale(.97);}
 .btn-song{background:var(--song-grad);box-shadow:0 8px 24px rgba(255,100,50,.25);}
 
@@ -222,7 +222,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
    Size: 40px height · rounded-20px · 11px Medium · icon(16px)+text · gap 6px
    Usage: <button class="btn-md btn-md-primary">Label Text</button>
    ════════════════════════════════════════════════════════════════ */
-.btn-md{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 14px;border-radius:20px;border:none;font-size:11px;font-weight:500;font-family:inherit;letter-spacing:-.11px;cursor:pointer;white-space:nowrap;transition:transform .15s,opacity .15s;flex-shrink:0;}
+.btn-md{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 14px;border-radius:20px;border:none;font-size:12px;font-weight:600;line-height:15px;font-family:inherit;letter-spacing:-.12px;cursor:pointer;white-space:nowrap;transition:transform .15s,opacity .15s;flex-shrink:0;}
 .btn-md:active{transform:scale(.96);opacity:.85;}
 /* Primary (Active): accent purple, white text */
 .btn-md-primary{background:var(--accent);color:#fff;}
@@ -251,7 +251,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .btn-sm-secondary{background:#fff;color:#09090b;}
 .btn-sm-secondary:disabled,.btn-sm-secondary.disabled{opacity:.3;cursor:not-allowed;}
 /* Tertiary: dark card-2 bg, border, white text */
-.btn-sm-tertiary{background:var(--n14);border:1px solid var(--border-2);color:#fff;}
+.btn-sm-tertiary{background:var(--n14);border:none;border-radius:14px;color:#fff;}
 .btn-sm-tertiary:disabled,.btn-sm-tertiary.disabled{opacity:.3;cursor:not-allowed;}
 /* Ghost: transparent, muted text */
 .btn-sm-ghost{background:transparent;color:var(--n64);}
@@ -382,9 +382,9 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .kb-sug-item{flex:1;display:flex;align-items:center;justify-content:center;height:100%;font-size:15px;color:#000;cursor:pointer;position:relative;}
 .kb-sug-item+.kb-sug-item::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:rgba(0,0,0,.15);}
 .kb-sug-item:active{background:rgba(0,0,0,.08);}
-.sheet{position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:26px 26px 0 0;z-index:121;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);padding-bottom:var(--safe-bot);}
+.sheet{position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:26px 26px 0 0;z-index:121;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);padding-bottom:calc(var(--safe-bot) + 40px);}
 .sheet.show{transform:translateY(0);}
-.sheet-handle{width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:14px auto 0;}
+.sheet-handle{width:36px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin:12px auto 0;}
 /* ── TRENDING CARD INFO ANIMATION ── */
 .trend-info{opacity:0;transition:opacity .22s ease;pointer-events:none;}
 .trend-info.active{opacity:1;pointer-events:auto;}
@@ -398,7 +398,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .sheet-opt:active{background:rgba(255,255,255,.04);}
 .sheet-opt-ico{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .sheet-opt-lbl{font-size:13px;font-weight:700;color:var(--text);line-height:18px;letter-spacing:-0.13px;}
-.sheet-opt-sub{font-size:11px;font-weight:500;color:var(--n44);margin-top:2px;line-height:16px;letter-spacing:-0.11px;}
+.sheet-opt-sub{font-size:11px;font-weight:500;color:#9C9CAB;margin-top:2px;line-height:16px;letter-spacing:-0.11px;}
 .sheet-opt-chev{width:20px;height:20px;margin-left:auto;flex-shrink:0;opacity:0.4;}
 
 /* ── COMMON ── */
@@ -408,7 +408,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .h-scroll{display:flex;gap:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;}
 .h-scroll::-webkit-scrollbar{display:none;}
 .cta-footer{position:absolute;bottom:0;left:0;right:0;padding:16px 16px calc(40px + var(--safe-bot));background:linear-gradient(to top,rgba(7,7,7,1) 65%,rgba(7,7,7,0) 100%);z-index:10;}
-.input-lbl{font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.input-lbl{font-size:12px;font-weight:600;line-height:15px;color:#fff;text-transform:uppercase;letter-spacing:-.12px;margin-bottom:6px;}
 .input-card{background:var(--card);border:1px solid var(--border);border-radius:16px;cursor:pointer;transition:border-color .2s;}
 .input-row{display:flex;align-items:center;padding:15px 16px;gap:12px;}
 .input-ico{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
@@ -501,7 +501,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .mv-card-title{font-size:13px;font-weight:700;color:#fff;line-height:18px;letter-spacing:-0.13px;}
 .mv-card-meta{font-size:8px;font-weight:500;color:#B7B7C2;line-height:12px;margin-top:2px;}
 /* ── HOT / NEW badge — on MV and Song cards (Figma: Badge component) ── */
-.badge-hot,.badge-new{position:absolute;top:8px;left:8px;z-index:2;display:inline-flex;align-items:center;justify-content:center;padding:2px 6px;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);font-size:9px;font-weight:700;color:#fff;line-height:11px;letter-spacing:.02em;}
+.badge-hot,.badge-new{position:absolute;top:8px;left:8px;z-index:2;display:inline-flex;align-items:center;justify-content:center;padding:2px 6px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:9px;font-weight:700;color:#fff;line-height:11px;letter-spacing:.02em;}
 /* HOT: purple tint, fully rounded (20px) */
 .badge-hot{background:rgba(145,50,255,.6);border:1px solid rgba(168,85,247,.35);border-radius:20px;}
 /* NEW: orange tint, pill (14px), fixed height 15px */
@@ -739,7 +739,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .hist-info{flex:1;min-width:0;}
 .hist-name{font-size:13px;font-weight:700;color:var(--n100);letter-spacing:-.13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .hist-meta{font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.11px;line-height:16px;margin-top:1px;}
-.hist-badge{display:inline-flex;align-items:center;gap:2px;padding:3px 4px;border-radius:14px;font-size:9px;font-weight:700;}
+.hist-badge{display:inline-flex;align-items:center;gap:2px;padding:3px 4px;border-radius:14px;font-size:9px;font-weight:700;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .hist-status{display:flex;align-items:center;gap:6px;margin-top:3px;}
 #screen-history.filter-liked .hist-status .hist-badge{display:none;}
 .hist-time{font-size:11px;font-weight:500;color:var(--n44);letter-spacing:-.11px;line-height:16px;margin-top:3px;}
@@ -758,10 +758,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 #hist-more-sheet.open{transform:translateY(0);}
 #hist-more-toast{position:absolute;left:50%;transform:translateX(-50%) translateY(8px);bottom:calc(100% + 12px);background:rgba(21,21,25,.96);border:1px solid rgba(168,85,247,.35);border-radius:14px;padding:12px 20px;font-size:14px;font-weight:600;color:#fff;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 4px 24px rgba(168,85,247,.2);}
 #hist-more-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.hist-cta-row{display:flex;gap:8px;padding:16px 16px 8px;}
-.hist-cta-primary{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:44px;border-radius:22px;background:linear-gradient(135deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);border:none;color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:opacity .15s;letter-spacing:-.12px;}
+.hist-cta-row{display:flex;gap:8px;padding:16px 20px 6px;}
+.hist-cta-primary{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:40px;border-radius:20px;background:linear-gradient(135deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);border:none;color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:opacity .15s;letter-spacing:-.12px;}
 .hist-cta-primary:active{opacity:.75;}
-.hist-cta-secondary{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:44px;border-radius:22px;background:#fff;border:none;color:#09090B;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s;letter-spacing:-.12px;}
+.hist-cta-secondary{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:40px;border-radius:20px;background:#fff;border:none;color:#09090B;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s;letter-spacing:-.12px;}
 .hist-cta-secondary:active{opacity:.7;}
 .hist-opt-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 16px 4px;}
 .hist-opt-row{display:flex;align-items:center;gap:14px;padding:0 20px;height:40px;cursor:pointer;transition:opacity .15s;}
@@ -771,10 +771,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .hist-opt-toggle.on{background:#A855F7;}
 .hist-opt-toggle::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.4);}
 .hist-opt-toggle.on::after{left:18px;}
-.badge-done{background:rgba(1,179,123,.2);color:#01B37B;}
+.badge-done{background:rgba(1,179,123,.4);color:#fff;}
 .badge-proc{background:var(--n14);color:var(--n100);padding:3px 6px;border-radius:20px;}
 .badge-failed{background:rgba(255,38,0,.2);color:#FF2600;}
-.badge-removed{background:rgba(239,68,68,.15);color:#EF4444;border:1px solid rgba(239,68,68,.25);}
+.badge-removed{background:rgba(255,38,0,.2);color:#FF2600;}
 /* ── Takedown screens ── */
 .td-hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 20px 20px;}
 .td-icon-wrap{width:64px;height:64px;border-radius:22px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
@@ -807,6 +807,42 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .td-countdown{background:#151519;border:1px solid rgba(245,158,11,.25);border-radius:16px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:4px;margin:0 16px 14px;}
 .td-countdown-num{font-size:36px;font-weight:800;color:#F59E0B;letter-spacing:-.3px;line-height:42px;}
 .td-countdown-label{font-size:12px;font-weight:600;color:#9C9CAB;}
+
+/* ── Content Notice (takedown) — Figma section 5264:32167 ── */
+.cn-body{display:flex;flex-direction:column;gap:24px;padding-bottom:24px;}
+.cn-pad{padding:0 16px;}
+.cn-hero{display:flex;flex-direction:column;align-items:center;gap:12px;padding:32px 16px 0;text-align:center;}
+.cn-icon{width:56px;height:56px;border-radius:50%;background:#212127;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cn-msg{display:flex;flex-direction:column;gap:4px;width:100%;}
+.cn-title{font-size:20px;font-weight:700;line-height:26px;letter-spacing:-.2px;color:#fff;}
+.cn-sub{font-size:14px;font-weight:500;line-height:20px;letter-spacing:-.14px;color:#9C9CAB;}
+.cn-card{display:flex;align-items:center;gap:10px;padding:9px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;}
+.cn-art{width:58px;height:58px;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0;background:#212127;}
+.cn-art img{width:100%;height:100%;object-fit:cover;display:block;}
+.cn-art::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.2);}
+.cn-info{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px;}
+.cn-text{display:flex;flex-direction:column;gap:2px;}
+.cn-name{font-size:13px;font-weight:700;line-height:18px;letter-spacing:-.13px;color:#fff;}
+.cn-meta{font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#9C9CAB;}
+.cn-badge{display:inline-flex;align-items:center;gap:2px;padding:3px 4px;border-radius:14px;background:rgba(255,38,0,.2);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:9px;font-weight:700;line-height:11px;color:#FF2600;}
+.cn-section{display:flex;flex-direction:column;gap:8px;}
+.cn-label{font-size:12px;font-weight:600;line-height:15px;letter-spacing:-.12px;color:#fff;}
+.cn-reason{display:flex;align-items:center;justify-content:center;gap:4px;height:52px;box-sizing:border-box;padding:10px;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;font-size:13px;font-weight:700;line-height:16px;color:#fff;}
+.cn-body-text{font-size:14px;font-weight:500;line-height:20px;letter-spacing:-.14px;color:#9C9CAB;}
+.cn-bullets{display:flex;flex-direction:column;gap:8px;}
+.cn-bullet{display:flex;align-items:flex-start;gap:8px;font-size:12px;font-weight:500;line-height:15px;color:#9C9CAB;}
+.cn-bullet i{width:4px;height:4px;border-radius:50%;background:#fff;flex-shrink:0;margin-top:7px;}
+.cn-link{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 0;font-size:13px;font-weight:700;line-height:18px;letter-spacing:-.13px;color:#fff;cursor:pointer;}
+.cn-link:active{opacity:.6;}
+.cn-cta{position:absolute;left:0;right:0;bottom:0;padding:20px 16px max(40px, calc(12px + var(--safe-bot)));background:linear-gradient(to bottom,rgba(7,7,7,0),#070707);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 20px);mask-image:linear-gradient(to bottom,transparent,#000 20px);z-index:10;}
+.cn-btn{width:100%;height:44px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);color:#fff;font-size:14px;font-weight:500;line-height:20px;letter-spacing:-.14px;font-family:inherit;cursor:pointer;}
+.cn-btn:active{opacity:.7;}
+/* History options sheet — removed notice card (Figma 5245:22282) */
+.hist-removed-notice{margin:16px 20px 0;display:flex;align-items:center;gap:8px;padding:9px;background:#212127;border:1px solid rgba(255,255,255,.15);border-radius:14px;cursor:pointer;}
+.hist-removed-notice:active{opacity:.7;}
+.hist-removed-notice .hrn-icon{width:30px;height:30px;border-radius:50%;background:#383842;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.hist-removed-notice .hrn-title{font-size:13px;font-weight:700;line-height:18px;letter-spacing:-.13px;color:#fff;}
+.hist-removed-notice .hrn-sub{font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#9C9CAB;}
 
 /* ════════════════════════════
    SCREEN: PROFILE
@@ -986,22 +1022,22 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .mvall-likes-count{font-size:9px;font-weight:500;color:#E1E1E5;line-height:11px;letter-spacing:-.09px;}
 
 /* ── HOME TOAST ── */
-.home-toast{position:absolute;left:12px;right:12px;bottom:calc(var(--tab-h) + 10px);z-index:95;border-radius:16px;padding:12px 14px;display:flex;align-items:center;gap:10px;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,.10);transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .32s cubic-bezier(.34,1.56,.64,1),opacity .25s ease;will-change:transform,opacity;}
+.home-toast{position:absolute;left:10px;right:10px;bottom:calc(var(--tab-h) + 10px);z-index:95;border-radius:14px;padding:9px;display:flex;align-items:center;gap:8px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.15);transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .32s cubic-bezier(.34,1.56,.64,1),opacity .25s ease;will-change:transform,opacity;}
 .home-toast.visible{transform:translateY(0);opacity:1;pointer-events:auto;}
-.home-toast.processing{background:rgba(21,21,25,.92);}
-.home-toast.done{background:rgba(30,18,45,.94);border-color:rgba(168,85,247,.28);box-shadow:0 0 0 1px rgba(168,85,247,.12),0 8px 32px rgba(168,85,247,.18);}
-.toast-icon{flex-shrink:0;width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
-.toast-icon.processing{background:rgba(168,85,247,.15);}
-.toast-icon.done{background:rgba(168,85,247,.22);}
+.home-toast.processing{background:rgba(9,9,11,.8);}
+.home-toast.done{background:rgba(9,9,11,.8);border-color:rgba(145,50,255,.6);}
+.toast-icon{flex-shrink:0;width:38px;height:38px;border-radius:10px;background:var(--mv-grad);display:flex;align-items:center;justify-content:center;}
+.toast-icon.processing{background:var(--mv-grad);}
+.toast-icon.done{background:var(--mv-grad);}
 .toast-body{flex:1;min-width:0;}
 .toast-title{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.toast-sub{font-size:11px;font-weight:500;color:rgba(255,255,255,.45);letter-spacing:-.09px;line-height:15px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.toast-cta{flex-shrink:0;padding:6px 12px;border-radius:20px;border:0;font-size:12px;font-weight:700;letter-spacing:-.1px;cursor:pointer;transition:opacity .15s;}
+.toast-sub{font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;line-height:16px;margin-top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.toast-cta{flex-shrink:0;height:27px;padding:0 8px;border-radius:16px;border:0;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;transition:opacity .15s;}
 .toast-cta:active{opacity:.7;}
-.toast-cta.dismiss{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);}
-.toast-cta.action{background:#A855F7;color:#fff;}
+.toast-cta.dismiss{background:#212127;color:#fff;border-radius:14px;}
+.toast-cta.action{background:#fff;color:#09090B;}
 @keyframes toast-spin{to{transform:rotate(360deg);}}
-.toast-spinner{width:16px;height:16px;border:2px solid rgba(168,85,247,.25);border-top-color:#A855F7;border-radius:50%;animation:toast-spin .8s linear infinite;}
+.toast-spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:toast-spin .8s linear infinite;}
 
 /* ══════════════════════════════════════════════════════════════
    DESIGN SYSTEM CONTROLS — Toggle · Radio · Checkbox
@@ -1092,7 +1128,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
 /* ── MV FEATURE ROOM NEW ── */
 .mvr2-content{padding:calc(var(--safe-top) + var(--nav-h) + 12px) 20px calc(100px + var(--safe-bot));}
-.sec-head{font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.sec-head{font-size:17px;font-weight:700;line-height:22px;color:var(--text);margin-bottom:10px;}
 .sec-req{font-size:12px;font-weight:500;color:var(--text-3);margin-left:6px;}
 .mvr-style-row{display:flex;gap:10px;margin-bottom:20px;}
 .mvr-mini{flex:1;border-radius:14px;overflow:hidden;position:relative;height:78px;cursor:pointer;border:2px solid transparent;transition:border-color .2s;}
@@ -1142,10 +1178,10 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .coin{width:17px;height:17px;border-radius:50%;background:#f59e0b;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;flex-shrink:0;}
 .insp-chip{padding:8px 16px;border-radius:20px;border:1.5px solid var(--border-2);color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;}
 .insp-chip.sel{border-color:#A855F7;background:rgba(168,85,247,.1);color:#A855F7;}
-.toggle{width:36px;height:20px;border-radius:10px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
-.toggle.on{background:#A855F7;}.toggle.off{background:rgba(255,255,255,.2);}
-.toggle-knob{position:absolute;top:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3);transition:left .2s;}
-.toggle.on .toggle-knob{left:18px;}.toggle.off .toggle-knob{left:2px;}
+.toggle{width:42px;height:22px;margin:1px;border-radius:14px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.toggle.on{background:#A855F7;}.toggle.off{background:#383842;}
+.toggle-knob{position:absolute;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s;}
+.toggle.on .toggle-knob{left:23px;}.toggle.off .toggle-knob{left:3px;}
 .sett-input{width:100%;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:14px;font-family:inherit;outline:none;margin-top:8px;}
 .sett-input::placeholder{color:var(--text-3);}
 .sett-input:focus{border-color:var(--border-2);}
@@ -1294,7 +1330,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .tefx-row-title{font-size:13px;font-weight:700;line-height:18px;letter-spacing:-.13px;color:#fff;}
 .tefx-row-sub{font-size:11px;font-weight:500;line-height:16px;letter-spacing:-.11px;color:#9C9CAB;}
 .tefx-float{position:absolute;left:0;right:0;bottom:0;padding:20px 16px max(40px, calc(12px + var(--safe-bot)));background:linear-gradient(to bottom,rgba(7,7,7,0),#070707);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 20px);mask-image:linear-gradient(to bottom,transparent,#000 20px);z-index:10;}
-.tefx-save{width:100%;height:46px;border-radius:14px;border:none;background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);color:#fff;font-size:15px;font-weight:700;line-height:18px;font-family:inherit;cursor:pointer;transition:opacity .15s,transform .15s;}
+.tefx-save{width:100%;height:44px;border-radius:14px;border:none;background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);color:#fff;font-size:15px;font-weight:700;line-height:18px;font-family:inherit;cursor:pointer;transition:opacity .15s,transform .15s;}
 .tefx-save:active{opacity:.85;transform:scale(.97);}
 .tefx-save:disabled{background:#383842;color:rgba(255,255,255,.3);cursor:default;transform:none;opacity:1;}
 
@@ -1340,7 +1376,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
 /* CTA — disabled until a reason is picked */
 .rpt-cta{padding-top:6px;}
-.rpt-submit{width:100%;height:46px;border-radius:14px;background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);border:none;color:#fff;font-size:15px;font-weight:700;line-height:18px;cursor:pointer;font-family:inherit;transition:opacity .15s,transform .15s;}
+.rpt-submit{width:100%;height:44px;border-radius:14px;background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);border:none;color:#fff;font-size:15px;font-weight:700;line-height:18px;cursor:pointer;font-family:inherit;transition:opacity .15s,transform .15s;}
 .rpt-submit:active{opacity:.85;transform:scale(.97);}
 .rpt-submit:disabled{background:#383842;color:rgba(255,255,255,.3);cursor:default;}
 .rpt-submit:disabled:active{opacity:1;transform:none;}
@@ -1353,7 +1389,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 .rpt-success-title{font-size:20px;font-weight:700;line-height:26px;color:#fff;letter-spacing:-.2px;}
 .rpt-success-body{font-size:14px;font-weight:500;line-height:20px;color:#9C9CAB;letter-spacing:-.14px;}
 .rpt-done-wrap{width:100%;padding-top:6px;}
-.rpt-done-btn{width:100%;height:46px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);color:#fff;font-size:14px;font-weight:500;line-height:20px;letter-spacing:-.14px;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+.rpt-done-btn{width:100%;height:44px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);color:#fff;font-size:14px;font-weight:500;line-height:20px;letter-spacing:-.14px;cursor:pointer;font-family:inherit;transition:opacity .15s;}
 .rpt-done-btn:active{opacity:.7;}
 
 /* Report icon button — floats over MV preview right column */
@@ -1489,7 +1525,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div id="ob-dot-0" onclick="obGoTo(0)" style="width:16px;height:4px;background:#fff;border-radius:3px;transition:all .3s;cursor:pointer;"></div>
           <div id="ob-dot-1" onclick="obGoTo(1)" style="width:6px;height:4px;background:rgba(255,255,255,0.4);border-radius:3px;transition:all .3s;cursor:pointer;"></div>
         </div>
-        <button id="ob-cta" onclick="obNext()" style="width:100%;height:46px;border-radius:14px;border:none;font-size:17px;font-weight:700;color:#fff;cursor:pointer;background:linear-gradient(135deg,#ff6bce,#a855f7,#4338ca);box-shadow:0 8px 12px rgba(168,85,247,0.32);transition:opacity .15s;">Continue</button>
+        <button id="ob-cta" onclick="obNext()" style="width:100%;height:44px;border-radius:14px;border:none;font-size:15px;font-weight:700;color:#fff;cursor:pointer;background:linear-gradient(135deg,#ff6bce,#a855f7,#4338ca);transition:opacity .15s;">Continue</button>
         <button id="ob-skip" onclick="localStorage.setItem('muse_onboarded','1');navStack=[];goTo('home')" style="background:transparent;border:none;padding:14px;width:100%;font-size:15px;font-weight:500;color:rgba(255,255,255,0.52);cursor:pointer;letter-spacing:-0.15px;">Skip</button>
       </div>
     </div>
@@ -1961,7 +1997,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
               style="display:block;filter:brightness(0) invert(1);flex-shrink:0;cursor:pointer;" onclick="toggleMvMute()">
           </div>
           <button onclick="createMvFromTemplate()"
-            style="width:100%;height:46px;border-radius:14px;background:linear-gradient(to right,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit;transition:opacity .15s;"
+            style="width:100%;height:44px;border-radius:14px;background:linear-gradient(to right,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit;transition:opacity .15s;"
             onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
             Create Music Video
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2049,7 +2085,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- CTA: Create AI Song — anchored to bottom, 20px gap clears home indicator without lifting above the controller -->
       <div style="position:absolute;bottom:0;left:0;right:0;padding:0 16px calc(40px + var(--safe-bot));z-index:5;">
-        <button onclick="requireLogin(()=>createSongFromTemplate())" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create AI Song</button>
+        <button onclick="requireLogin(()=>createSongFromTemplate())" style="width:100%;height:44px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create AI Song</button>
       </div>
 
       <!-- NavBar -->
@@ -2810,7 +2846,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
         <!-- CTA — Figma Button/Pill Primary -->
         <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 16px calc(40px + var(--safe-bot));">
-          <button onclick="_mvFromTemplate=false;resetMvRoom();updateSongClearBtn();goTo('mv-room')" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Try Now</button>
+          <button onclick="_mvFromTemplate=false;resetMvRoom();updateSongClearBtn();goTo('mv-room')" style="width:100%;height:44px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Try Now</button>
         </div>
       </div>
     </div>
@@ -2980,12 +3016,12 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- CTA — Figma Button/Pill Primary-PAYG -->
       <div class="cta-footer">
-        <button id="mv-room-cta" onclick="requireLogin(()=>showSheet('mv-mode-sheet'))" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create Music Video <img src="../assets/icons/ui/ic_arrow_right.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);"></button>
+        <button id="mv-room-cta" onclick="requireLogin(()=>showSheet('mv-mode-sheet'))" style="width:100%;height:44px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:4px;font-family:inherit;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">Create Music Video <img src="../assets/icons/ui/ic_arrow_right.svg" width="18" height="18" style="display:block;filter:brightness(0) invert(1);"></button>
       </div>
 
       <!-- Template Sheet -->
       <div class="overlay" id="insp-overlay" onclick="hideSheet('insp-sheet')"></div>
-      <div class="sheet" id="insp-sheet" style="padding-bottom:calc(var(--safe-bot) + 24px);">
+      <div class="sheet" id="insp-sheet">
         <div class="sheet-handle"></div>
         <!-- Header -->
         <div style="display:flex;align-items:center;gap:10px;padding:14px 20px 12px;">
@@ -3252,7 +3288,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- Paste Link Sheet -->
       <div class="overlay" id="pasteLink-overlay" onclick="hideSheet('pasteLink-sheet')"></div>
-      <div class="sheet" id="pasteLink-sheet" style="padding-bottom:calc(var(--safe-bot) + 8px);">
+      <div class="sheet" id="pasteLink-sheet">
         <div class="sheet-handle"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;">
           <div onclick="hideSheet('pasteLink-sheet')" style="font-size:22px;cursor:pointer;color:#9C9CAB;">‹</div>
@@ -3659,7 +3695,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       </div>
       <!-- CTA -->
       <div class="cta-footer">
-        <button onclick="requireLogin(()=>goTo('mv-creating'))" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+        <button onclick="requireLogin(()=>goTo('mv-creating'))" style="width:100%;height:44px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Create MV
           <span style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
             <img src="../assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
@@ -3960,7 +3996,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
       </div>
       <div class="cta-footer">
-        <button id="sb-recreate-btn" disabled style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;opacity:.38;box-shadow:0 8px 12px rgba(168,85,247,.32);" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=this.disabled?'.38':'1'" onclick="recreateScene()">
+        <button id="sb-recreate-btn" disabled style="width:100%;height:44px;border-radius:14px;background:linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;opacity:.38;" onmousedown="this.style.opacity='.7'" onmouseup="this.style.opacity=this.disabled?'.38':'1'" onclick="recreateScene()">
           Recreate
           <span style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
             <img src="../assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;">
@@ -4128,7 +4164,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         </div>
       </div>
       <div class="cta-footer">
-        <button id="merge-mv-btn" disabled style="width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:17px;font-weight:700;cursor:default;display:flex;align-items:center;justify-content:center;gap:6px;" onmousedown="if(!this.disabled)this.style.opacity='.7'" onmouseup="if(!this.disabled)this.style.opacity='1'" onclick="mergeAndProcess()">
+        <button id="merge-mv-btn" disabled style="width:100%;height:44px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;display:flex;align-items:center;justify-content:center;gap:6px;" onmousedown="if(!this.disabled)this.style.opacity='.7'" onmouseup="if(!this.disabled)this.style.opacity='1'" onclick="mergeAndProcess()">
           <span id="merge-mv-content" style="display:flex;align-items:center;gap:6px;opacity:0.3;">
             Merge MV
             <span style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px;font-size:14px;font-weight:700;">
@@ -4409,7 +4445,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div class="cta-footer">
         <!-- Simple mode CTA — disabled until text entered -->
         <button id="song-cta-simple" disabled
-          style="display:none;width:100%;height:46px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;align-items:center;justify-content:center;gap:6px;transition:all .2s;font-family:inherit;opacity:1;">
+          style="display:none;width:100%;height:44px;border-radius:14px;background:#383842;border:none;color:#fff;font-size:15px;font-weight:700;cursor:default;align-items:center;justify-content:center;gap:6px;transition:all .2s;font-family:inherit;opacity:1;">
           <span style="opacity:.3;">Create Song</span>
           <div style="display:flex;align-items:center;gap:2px;opacity:.3;">
             <img src="../assets/icons/ui/ic_credit@3x.png" width="16" height="16" style="display:block;flex-shrink:0;">
@@ -4417,7 +4453,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           </div>
         </button>
         <!-- Custom mode CTA — always active -->
-        <button id="song-cta-custom" style="display:flex;width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 12px rgba(168,85,247,.32);transition:opacity .15s;font-family:inherit;"
+        <button id="song-cta-custom" style="display:flex;width:100%;height:44px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;font-family:inherit;"
           onclick="requireLogin(()=>goTo('song-creating'))"
           onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           <span>Create Song</span>
@@ -4520,11 +4556,11 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- CTAs — top:551px, left:16px per Figma node 50-84 -->
       <div style="position:absolute;top:551px;left:16px;width:288px;display:flex;flex-direction:column;gap:10px;">
-        <button onclick="useAISongInMV()" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+        <button onclick="useAISongInMV()" style="width:100%;height:44px;border-radius:14px;background:linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9);border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Use in Music Video
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button onclick="goTo('song-create')" style="width:100%;height:46px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);color:#D3D3D9;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
+        <button onclick="goTo('song-create')" style="width:100%;height:44px;border-radius:14px;background:#212127;border:1px solid rgba(255,255,255,.15);color:#D3D3D9;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.8'" onmouseup="this.style.opacity=''">
           Recreate
         </button>
       </div>
@@ -4996,7 +5032,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <!-- Unlock CTA + footer -->
           <div style="display:flex;flex-direction:column;gap:10px;">
             <button
-              style="width:100%;height:46px;border-radius:14px;background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);border:none;color:#fff;font-size:15px;font-weight:700;font-family:Inter,sans-serif;cursor:pointer;transition:opacity .15s;"
+              style="width:100%;height:44px;border-radius:14px;background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);border:none;color:#fff;font-size:15px;font-weight:700;font-family:Inter,sans-serif;cursor:pointer;transition:opacity .15s;"
               onmousedown="this.style.opacity='.75'" onmouseup="this.style.opacity=''"
               ontouchstart="this.style.opacity='.75'" ontouchend="this.style.opacity=''">
               Unlock For $4.90
@@ -5410,7 +5446,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <!-- Footer CTA (absolute bottom) -->
       <div style="position:absolute;left:0;bottom:0;width:320px;background:linear-gradient(to bottom,rgba(0,0,0,0),#070707);padding:10px 16px 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;align-items:center;">
         <p style="font-size:11px;font-weight:500;color:#9c9cab;text-align:center;letter-spacing:-.11px;line-height:16px;width:100%;margin:0;">Automatically renew and cancel at any time</p>
-        <button onclick="showIAPConfirm()" style="width:288px;height:46px;border-radius:14px;border:none;background:linear-gradient(to right,#ffb347,#ff4e50 50%,#d63af9);color:#fff;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0;transition:transform .15s;" onmousedown="this.style.transform='scale(.97)'" onmouseup="this.style.transform=''">Subscribe</button>
+        <button onclick="showIAPConfirm()" style="width:288px;height:44px;border-radius:14px;border:none;background:linear-gradient(to right,#ffb347,#ff4e50 50%,#d63af9);color:#fff;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0;transition:transform .15s;" onmousedown="this.style.transform='scale(.97)'" onmouseup="this.style.transform=''">Subscribe</button>
         <div style="display:flex;align-items:center;gap:12px;font-size:11px;font-weight:500;color:#9c9cab;width:288px;justify-content:center;white-space:nowrap;letter-spacing:-.11px;line-height:16px;">
           <span>Terms of Use</span>
           <span>|</span>
@@ -5791,7 +5827,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
       <!-- ── Fixed CTA ── -->
       <div class="cta-footer" style="flex-shrink:0;">
-        <button id="credits-buy-btn" onclick="buyCreditPack()" style="width:100%;height:46px;border-radius:14px;background:linear-gradient(90deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);border:none;color:#ffffff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.75'" onmouseup="this.style.opacity=''">
+        <button id="credits-buy-btn" onclick="buyCreditPack()" style="width:100%;height:44px;border-radius:14px;background:linear-gradient(90deg,#FFB347 0%,#FF4E50 50%,#D63AF9 100%);border:none;color:#ffffff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;" onmousedown="this.style.opacity='.75'" onmouseup="this.style.opacity=''">
           <span id="credits-btn-label">Buy Now</span>
         </button>
         <div style="display:flex;align-items:center;gap:12px;justify-content:center;font-size:11px;font-weight:500;color:#9c9cab;margin-top:8px;letter-spacing:-.11px;white-space:nowrap;">
@@ -5813,50 +5849,42 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div class="nav-title">Content Notice</div>
         <div style="width:32px;"></div>
       </div>
-      <!-- Scrollable body -->
+      <!-- Scrollable body — Figma section 5264:32167 -->
       <div class="scr-scroll" style="padding-top:calc(var(--safe-top) + var(--nav-h));">
-
-        <!-- Hero -->
-        <div class="td-hero">
-          <div class="td-icon-wrap red">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="cn-body">
+          <!-- Hero -->
+          <div class="cn-hero">
+            <div class="cn-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 1.89722C12.5155 1.89726 13.0225 2.03004 13.4717 2.28296C13.8647 2.50422 14.2017 2.81107 14.459 3.17944L14.5645 3.34155L23.0381 17.4861L23.0459 17.4998C23.3079 17.9534 23.4468 18.4681 23.4483 18.9919C23.4497 19.5157 23.3131 20.0311 23.0537 20.4861C22.7943 20.941 22.4201 21.3201 21.9688 21.5857C21.5174 21.8512 21.0042 21.994 20.4805 21.9998H3.51857C2.99484 21.994 2.48169 21.8513 2.03028 21.5857C1.57891 21.3201 1.20471 20.941 0.945324 20.4861C0.685963 20.0311 0.550348 19.5157 0.551769 18.9919C0.553236 18.4681 0.692165 17.9534 0.954113 17.4998C0.956737 17.4952 0.959229 17.4906 0.961925 17.4861L9.43458 3.34155C9.70199 2.90071 10.079 2.53591 10.5283 2.28296C10.9775 2.03011 11.4845 1.89722 12 1.89722ZM12 3.89722C11.8281 3.89722 11.6586 3.9418 11.5088 4.02612C11.3592 4.11043 11.2336 4.23185 11.1445 4.37866L2.68556 18.4998C2.59832 18.6508 2.55234 18.8224 2.55177 18.9968C2.55128 19.1713 2.59633 19.3433 2.68263 19.4949C2.7691 19.6466 2.89444 19.7735 3.04493 19.8621C3.19536 19.9505 3.36654 19.9978 3.54103 19.9998H20.459C20.6335 19.9978 20.8047 19.9506 20.9551 19.8621C21.1056 19.7735 21.23 19.6466 21.3164 19.4949C21.4028 19.3432 21.4487 19.1713 21.4483 18.9968C21.4477 18.8224 21.4007 18.6508 21.3135 18.4998L12.8545 4.37866L12.7813 4.27319C12.7014 4.17313 12.6025 4.08934 12.4902 4.02612C12.3405 3.94184 12.1718 3.89726 12 3.89722ZM12.0098 15.9998C12.562 15.9998 13.0096 16.4476 13.0098 16.9998C13.0098 17.552 12.5621 17.9998 12.0098 17.9998H12C11.4477 17.9998 11 17.552 11 16.9998C11.0001 16.4476 11.4478 15.9998 12 15.9998H12.0098ZM11 12.9998V8.99976C11.0001 8.44758 11.4478 7.99976 12 7.99976C12.5521 7.99989 12.9999 8.44766 13 8.99976V12.9998C13 13.552 12.5522 13.9996 12 13.9998C11.4477 13.9998 11 13.552 11 12.9998Z" fill="white"/></svg></div>
+            <div class="cn-msg">
+              <div class="cn-title">Content Removed</div>
+              <div class="cn-sub">A reviewer removed this content after a community report.</div>
+            </div>
           </div>
-          <div class="td-title">Content Removed</div>
-          <div class="td-sub">A reviewer removed this content after a community report.</div>
+          <!-- Which content -->
+          <div class="cn-pad">
+            <div class="cn-card">
+              <div class="cn-art"><img src="../assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" alt=""></div>
+              <div class="cn-info">
+                <div class="cn-text">
+                  <div class="cn-name">Summer Vibes</div>
+                  <div class="cn-meta">Music Video · Published Oct 8, 2026</div>
+                </div>
+                <span class="cn-badge"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.64645 2.64648C8.84171 2.45121 9.15822 2.45121 9.35348 2.64648C9.54874 2.84174 9.54874 3.15825 9.35348 3.35351L6.70699 5.99999L9.35348 8.64648C9.54874 8.84174 9.54874 9.15825 9.35348 9.35351C9.15822 9.54877 8.84171 9.54877 8.64645 9.35351L5.99996 6.70702L3.35348 9.35351C3.15822 9.54877 2.84171 9.54877 2.64645 9.35351C2.45118 9.15825 2.45118 8.84174 2.64645 8.64648L5.29293 5.99999L2.64645 3.35351C2.45118 3.15825 2.45118 2.84174 2.64645 2.64648C2.84171 2.45121 3.15822 2.45121 3.35348 2.64648L5.99996 5.29296L8.64645 2.64648Z" fill="#FF2600"/></svg>Removed Oct 13, 2026</span>
+              </div>
+            </div>
+          </div>
+          <!-- Removal reason -->
+          <div class="cn-pad cn-section">
+            <div class="cn-label">REMOVAL REASON</div>
+            <div class="cn-reason"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9.00732 11.25C9.42154 11.25 9.75732 11.5858 9.75732 12C9.75732 12.4142 9.42154 12.75 9.00732 12.75H9C8.58579 12.75 8.25 12.4142 8.25 12C8.25 11.5858 8.58579 11.25 9 11.25H9.00732Z" fill="white"/><path d="M9 5.25C9.41421 5.25 9.75 5.58579 9.75 6V9C9.75 9.41421 9.41421 9.75 9 9.75C8.58579 9.75 8.25 9.41421 8.25 9V6C8.25 5.58579 8.58579 5.25 9 5.25Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M9 0.75C9.38759 0.75 9.7622 0.888624 10.0569 1.14038L10.0635 1.14551C11.2931 2.22049 12.9922 3 14.25 3C14.6477 3 15.0293 3.15825 15.3105 3.43945C15.5917 3.72066 15.7499 4.10237 15.75 4.5V9.75C15.7499 11.8229 15.0157 13.417 13.8347 14.6287C12.6741 15.8193 11.1153 16.6085 9.50171 17.1709L9.49585 17.1731C9.17482 17.2819 8.82651 17.2779 8.50781 17.1636C8.50343 17.1621 8.49901 17.1607 8.49463 17.1592C8.49351 17.1588 8.4921 17.1588 8.49097 17.1584C6.8791 16.6001 5.32466 15.8138 4.16675 14.6279C2.98445 13.417 2.25008 11.8228 2.25 9.75V4.5C2.25009 4.10237 2.40833 3.72066 2.68945 3.43945C2.97074 3.15825 3.35225 3 3.75 3C5.00722 3 6.71367 2.21368 7.93652 1.14551L7.94312 1.14038C8.23781 0.888624 8.61241 0.75 9 0.75ZM9 2.25C8.96963 2.25 8.94032 2.26104 8.91724 2.28076L8.9165 2.28003C7.5295 3.48927 5.48999 4.5 3.75 4.5V9.75C3.75007 11.4266 4.32801 12.6459 5.23975 13.5798C6.17208 14.5346 7.48775 15.2251 8.99707 15.7463C9.0025 15.7482 9.00853 15.7495 9.01392 15.7515C10.5176 15.2267 11.8296 14.536 12.7603 13.5813C13.6717 12.6462 14.2499 11.4267 14.25 9.75V4.5C12.5104 4.5 10.4779 3.49749 9.08276 2.28003C9.05972 2.26046 9.03024 2.25 9 2.25Z" fill="white"/></svg>Spam or Commercial Advertising</div>
+            <div class="cn-body-text">This content contained repetitive spam, fake engagement signals, or deceptive titles and thumbnails that misrepresent the actual content.</div>
+          </div>
+
         </div>
-
-        <!-- Which content -->
-        <div class="td-content-card">
-          <div class="td-thumb">
-            <img src="../assets/videos/sample-mvs/mv_01_cinematic_dark.jpg" style="filter:grayscale(.4);" onerror="this.onerror=null;this.src='https://picsum.photos/seed/td-mv-01/52/52'">
-            <div class="td-thumb-overlay"></div>
-          </div>
-          <div style="flex:1;min-width:0;">
-            <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Summer Vibes</div>
-            <div style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;margin-top:2px;">Music Video · Published Oct 8, 2026</div>
-            <div style="margin-top:6px;"><span class="hist-badge badge-removed" style="font-size:9px;">
-              <svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-              Removed Oct 13, 2026
-            </span></div>
-          </div>
-        </div>
-
-        <!-- Removal reason -->
-        <div class="td-section">
-          <div class="td-section-label">Removal Reason</div>
-          <div class="td-reason-chip amber">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Spam or Commercial Advertising
-          </div>
-          <div class="td-body-text">This content contained repetitive spam, fake engagement signals, or deceptive titles and thumbnails that misrepresent the actual content.</div>
-        </div>
-
-        <div style="height:100px;"></div>
+        <div style="height:104px;"></div>
       </div>
-      <!-- Footer -->
-      <div class="td-footer">
-        <button class="td-btn-secondary" onclick="goBack()">Dismiss</button>
-      </div>
+      <!-- Floating CTA -->
+      <div class="cn-cta"><button class="cn-btn" onclick="goBack()">Got It</button></div>
     </div><!-- /screen-takedown-fixable -->
 
     <!-- ══════ TAKEDOWN NOTICE — PERMANENT ══════ -->
@@ -5869,72 +5897,55 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
         <div class="nav-title">Content Notice</div>
         <div style="width:32px;"></div>
       </div>
-      <!-- Scrollable body -->
+      <!-- Scrollable body — Figma section 5264:32167 -->
       <div class="scr-scroll" style="padding-top:calc(var(--safe-top) + var(--nav-h));">
-
-        <!-- Hero -->
-        <div class="td-hero">
-          <div class="td-icon-wrap red">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#EF4444" stroke-width="2"/><path d="M15 9l-6 6M9 9l6 6" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/></svg>
+        <div class="cn-body">
+          <!-- Hero -->
+          <div class="cn-hero">
+            <div class="cn-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 1.89722C12.5155 1.89726 13.0225 2.03004 13.4717 2.28296C13.8647 2.50422 14.2017 2.81107 14.459 3.17944L14.5645 3.34155L23.0381 17.4861L23.0459 17.4998C23.3079 17.9534 23.4468 18.4681 23.4483 18.9919C23.4497 19.5157 23.3131 20.0311 23.0537 20.4861C22.7943 20.941 22.4201 21.3201 21.9688 21.5857C21.5174 21.8512 21.0042 21.994 20.4805 21.9998H3.51857C2.99484 21.994 2.48169 21.8513 2.03028 21.5857C1.57891 21.3201 1.20471 20.941 0.945324 20.4861C0.685963 20.0311 0.550348 19.5157 0.551769 18.9919C0.553236 18.4681 0.692165 17.9534 0.954113 17.4998C0.956737 17.4952 0.959229 17.4906 0.961925 17.4861L9.43458 3.34155C9.70199 2.90071 10.079 2.53591 10.5283 2.28296C10.9775 2.03011 11.4845 1.89722 12 1.89722ZM12 3.89722C11.8281 3.89722 11.6586 3.9418 11.5088 4.02612C11.3592 4.11043 11.2336 4.23185 11.1445 4.37866L2.68556 18.4998C2.59832 18.6508 2.55234 18.8224 2.55177 18.9968C2.55128 19.1713 2.59633 19.3433 2.68263 19.4949C2.7691 19.6466 2.89444 19.7735 3.04493 19.8621C3.19536 19.9505 3.36654 19.9978 3.54103 19.9998H20.459C20.6335 19.9978 20.8047 19.9506 20.9551 19.8621C21.1056 19.7735 21.23 19.6466 21.3164 19.4949C21.4028 19.3432 21.4487 19.1713 21.4483 18.9968C21.4477 18.8224 21.4007 18.6508 21.3135 18.4998L12.8545 4.37866L12.7813 4.27319C12.7014 4.17313 12.6025 4.08934 12.4902 4.02612C12.3405 3.94184 12.1718 3.89726 12 3.89722ZM12.0098 15.9998C12.562 15.9998 13.0096 16.4476 13.0098 16.9998C13.0098 17.552 12.5621 17.9998 12.0098 17.9998H12C11.4477 17.9998 11 17.552 11 16.9998C11.0001 16.4476 11.4478 15.9998 12 15.9998H12.0098ZM11 12.9998V8.99976C11.0001 8.44758 11.4478 7.99976 12 7.99976C12.5521 7.99989 12.9999 8.44766 13 8.99976V12.9998C13 13.552 12.5522 13.9996 12 13.9998C11.4477 13.9998 11 13.552 11 12.9998Z" fill="white"/></svg></div>
+            <div class="cn-msg">
+              <div class="cn-title">Permanently Removed</div>
+              <div class="cn-sub">This content violated our content policy.</div>
+            </div>
           </div>
-          <div class="td-title">Permanently Removed</div>
-          <div class="td-sub">This content violated our content policy.</div>
-        </div>
-
-        <!-- Which content -->
-        <div class="td-content-card">
-          <div class="td-thumb">
-            <img src="../assets/videos/sample-mvs/mv_02_bloom.jpg" style="filter:grayscale(.6);" onerror="this.onerror=null;this.src='https://picsum.photos/seed/td-mv-02/52/52'">
-            <div class="td-thumb-overlay"></div>
+          <!-- Which content -->
+          <div class="cn-pad">
+            <div class="cn-card">
+              <div class="cn-art"><img src="../assets/videos/sample-mvs/mv_02_late_night_stage.jpg" alt=""></div>
+              <div class="cn-info">
+                <div class="cn-text">
+                  <div class="cn-name">Love Melody</div>
+                  <div class="cn-meta">Music Video · Published Sep 22, 2026</div>
+                </div>
+                <span class="cn-badge"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.64645 2.64648C8.84171 2.45121 9.15822 2.45121 9.35348 2.64648C9.54874 2.84174 9.54874 3.15825 9.35348 3.35351L6.70699 5.99999L9.35348 8.64648C9.54874 8.84174 9.54874 9.15825 9.35348 9.35351C9.15822 9.54877 8.84171 9.54877 8.64645 9.35351L5.99996 6.70702L3.35348 9.35351C3.15822 9.54877 2.84171 9.54877 2.64645 9.35351C2.45118 9.15825 2.45118 8.84174 2.64645 8.64648L5.29293 5.99999L2.64645 3.35351C2.45118 3.15825 2.45118 2.84174 2.64645 2.64648C2.84171 2.45121 3.15822 2.45121 3.35348 2.64648L5.99996 5.29296L8.64645 2.64648Z" fill="#FF2600"/></svg>Permanently Removed</span>
+              </div>
+            </div>
           </div>
-          <div style="flex:1;min-width:0;">
-            <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:-.13px;line-height:18px;">Love Melody</div>
-            <div style="font-size:11px;font-weight:500;color:#9C9CAB;letter-spacing:-.11px;margin-top:2px;">Music Video · Published Sep 22, 2026</div>
-            <div style="margin-top:6px;"><span class="hist-badge badge-removed" style="font-size:9px;">
-              <svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-              Permanently Removed
-            </span></div>
+          <!-- Removal reason -->
+          <div class="cn-pad cn-section">
+            <div class="cn-label">REMOVAL REASON</div>
+            <div class="cn-reason"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9.00732 11.25C9.42154 11.25 9.75732 11.5858 9.75732 12C9.75732 12.4142 9.42154 12.75 9.00732 12.75H9C8.58579 12.75 8.25 12.4142 8.25 12C8.25 11.5858 8.58579 11.25 9 11.25H9.00732Z" fill="white"/><path d="M9 5.25C9.41421 5.25 9.75 5.58579 9.75 6V9C9.75 9.41421 9.41421 9.75 9 9.75C8.58579 9.75 8.25 9.41421 8.25 9V6C8.25 5.58579 8.58579 5.25 9 5.25Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M9 0.75C9.38759 0.75 9.7622 0.888624 10.0569 1.14038L10.0635 1.14551C11.2931 2.22049 12.9922 3 14.25 3C14.6477 3 15.0293 3.15825 15.3105 3.43945C15.5917 3.72066 15.7499 4.10237 15.75 4.5V9.75C15.7499 11.8229 15.0157 13.417 13.8347 14.6287C12.6741 15.8193 11.1153 16.6085 9.50171 17.1709L9.49585 17.1731C9.17482 17.2819 8.82651 17.2779 8.50781 17.1636C8.50343 17.1621 8.49901 17.1607 8.49463 17.1592C8.49351 17.1588 8.4921 17.1588 8.49097 17.1584C6.8791 16.6001 5.32466 15.8138 4.16675 14.6279C2.98445 13.417 2.25008 11.8228 2.25 9.75V4.5C2.25009 4.10237 2.40833 3.72066 2.68945 3.43945C2.97074 3.15825 3.35225 3 3.75 3C5.00722 3 6.71367 2.21368 7.93652 1.14551L7.94312 1.14038C8.23781 0.888624 8.61241 0.75 9 0.75ZM9 2.25C8.96963 2.25 8.94032 2.26104 8.91724 2.28076L8.9165 2.28003C7.5295 3.48927 5.48999 4.5 3.75 4.5V9.75C3.75007 11.4266 4.32801 12.6459 5.23975 13.5798C6.17208 14.5346 7.48775 15.2251 8.99707 15.7463C9.0025 15.7482 9.00853 15.7495 9.01392 15.7515C10.5176 15.2267 11.8296 14.536 12.7603 13.5813C13.6717 12.6462 14.2499 11.4267 14.25 9.75V4.5C12.5104 4.5 10.4779 3.49749 9.08276 2.28003C9.05972 2.26046 9.03024 2.25 9 2.25Z" fill="white"/></svg>Copyright or Unauthorized Use</div>
+            <div class="cn-body-text">This content was permanently removed because it contained copyrighted music, video footage, or artwork used without authorisation from the rights holder.</div>
           </div>
-        </div>
-
-        <!-- Removal reason -->
-        <div class="td-section">
-          <div class="td-section-label">Removal Reason</div>
-          <div class="td-reason-chip red">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M14.83 9.17a4 4 0 100 5.66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            Copyright or Unauthorized Use
+          <!-- What this means -->
+          <div class="cn-pad cn-section" style="gap:10px;">
+            <div class="cn-label">WHAT THIS MEANS</div>
+            <div class="cn-bullets">
+              <div class="cn-bullet"><i></i>This content cannot be edited or resubmitted — copyright claims are legally binding</div>
+              <div class="cn-bullet"><i></i>All copies have been permanently deleted from our platform</div>
+              <div class="cn-bullet"><i></i>Repeated copyright violations may lead to account suspension</div>
+            </div>
           </div>
-          <div class="td-body-text">This content was permanently removed because it contained copyrighted music, video footage, or artwork used without authorisation from the rights holder.</div>
-        </div>
-
-        <!-- Cannot resubmit -->
-        <div class="td-section">
-          <div class="td-section-label">What This Means</div>
-          <div class="td-bullet-list">
-            <div class="td-bullet"><div class="td-bullet-dot" style="background:#EF4444;"></div>This content cannot be edited or resubmitted — copyright claims are legally binding</div>
-            <div class="td-bullet"><div class="td-bullet-dot" style="background:#EF4444;"></div>All copies have been permanently deleted from our platform</div>
-            <div class="td-bullet"><div class="td-bullet-dot" style="background:#EF4444;"></div>Repeated copyright violations may lead to account suspension</div>
+          <!-- Links -->
+          <div class="cn-pad">
+            <div class="cn-link"><span>Learn about our content policy</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6.91107 4.41082C7.21617 4.10572 7.69867 4.08689 8.02598 4.35385L8.08946 4.41082L13.0895 9.41082C13.4149 9.73625 13.4149 10.2638 13.0895 10.5892L8.08946 15.5892C7.76402 15.9146 7.23651 15.9146 6.91107 15.5892C6.58563 15.2638 6.58563 14.7363 6.91107 14.4108L11.3219 10L6.91107 5.5892L6.8541 5.52572C6.58715 5.19841 6.60597 4.71591 6.91107 4.41082Z" fill="#383842"/></svg></div>
+            <div class="cn-link"><span>Appeal this decision</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6.91107 4.41082C7.21617 4.10572 7.69867 4.08689 8.02598 4.35385L8.08946 4.41082L13.0895 9.41082C13.4149 9.73625 13.4149 10.2638 13.0895 10.5892L8.08946 15.5892C7.76402 15.9146 7.23651 15.9146 6.91107 15.5892C6.58563 15.2638 6.58563 14.7363 6.91107 14.4108L11.3219 10L6.91107 5.5892L6.8541 5.52572C6.58715 5.19841 6.60597 4.71591 6.91107 4.41082Z" fill="#383842"/></svg></div>
           </div>
         </div>
-
-        <!-- Policy link -->
-        <div class="td-section" style="margin-bottom:0;">
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid rgba(255,255,255,.06);">
-            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.6);">Learn about our content policy</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid rgba(255,255,255,.06);">
-            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.6);">Appeal this decision</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-
-        <div style="height:100px;"></div>
+        <div style="height:104px;"></div>
       </div>
-      <!-- Footer -->
-      <div class="td-footer">
-        <button class="td-btn-secondary" onclick="goBack()">Got It</button>
-      </div>
+      <!-- Floating CTA -->
+      <div class="cn-cta"><button class="cn-btn" onclick="goBack()">Got It</button></div>
     </div><!-- /screen-takedown-permanent -->
 
     <!-- ══════ PUBLISH RESTRICTED ══════ -->
@@ -6239,7 +6250,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
   <!-- Enhance Direction Sheet — Custom Mode Lyrics/Idea box -->
   <div class="overlay" id="enhance-direction-overlay" onclick="hideSheet('enhance-direction-sheet')"></div>
-  <div class="sheet" id="enhance-direction-sheet" style="padding-bottom:calc(24px + var(--safe-bot));">
+  <div class="sheet" id="enhance-direction-sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-ttl">What would you like to enhance?</div>
     <!-- Refine Idea -->
@@ -6452,12 +6463,12 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
     <!-- Sign-in buttons -->
     <div style="padding:0 16px;display:flex;flex-direction:column;gap:10px;">
       <!-- Apple -->
-      <button onclick="signInWith('Apple')" style="width:100%;height:46px;border-radius:14px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''">
+      <button onclick="signInWith('Apple')" style="width:100%;height:44px;border-radius:14px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.05 12.536c-.028-2.87 2.346-4.254 2.45-4.318-1.335-1.953-3.41-2.22-4.147-2.248-1.763-.178-3.44 1.04-4.333 1.04-.893 0-2.27-1.014-3.733-.987-1.916.028-3.69 1.11-4.678 2.814-1.99 3.454-.512 8.577 1.434 11.382.953 1.374 2.09 2.916 3.58 2.858 1.44-.058 1.983-.927 3.724-.927 1.74 0 2.23.927 3.74.9 1.55-.028 2.527-1.402 3.47-2.782 1.097-1.594 1.548-3.14 1.576-3.22-.035-.014-3.017-1.157-3.047-4.597-.003-.005-.034-.005-.037-.005zM14.236 4.16c.79-.957 1.323-2.287 1.178-3.61-1.138.047-2.517.757-3.336 1.714-.732.847-1.375 2.202-1.202 3.503 1.27.098 2.568-.644 3.36-1.607z" fill="#000"/></svg>
         <span style="font-size:15px;font-weight:700;color:#000;">Continue with Apple</span>
       </button>
       <!-- Google -->
-      <button onclick="signInWith('Google')" style="width:100%;height:46px;border-radius:14px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''">
+      <button onclick="signInWith('Google')" style="width:100%;height:44px;border-radius:14px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:opacity .15s;" onmousedown="this.style.opacity='.85'" onmouseup="this.style.opacity=''">
         <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         <span style="font-size:15px;font-weight:700;color:#000;">Continue with Google</span>
       </button>
@@ -7297,7 +7308,7 @@ function checkMergeEnable() {
   btn.disabled = !_emvDirty;
   if (_emvDirty) {
     btn.style.background = 'linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA)';
-    btn.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+    btn.style.boxShadow = 'none';
     btn.style.cursor = 'pointer';
     if (content) content.style.opacity = '1';
   } else {
@@ -7733,20 +7744,15 @@ function openHistMore(btn) {
   // ── Removed-from-community notice (injected at top of sheet) ──
   if (isRemoved) {
     const notice = document.createElement('div');
-    notice.style.cssText = 'margin:8px 16px 4px;background:#212127;border:1px solid rgba(168,85,247,.25);border-radius:14px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;cursor:pointer;';
+    notice.className = 'hist-removed-notice';
     notice.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:1px;"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="hrn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 1.89722C12.5155 1.89726 13.0225 2.03004 13.4717 2.28296C13.8647 2.50422 14.2017 2.81107 14.459 3.17944L14.5645 3.34155L23.0381 17.4861L23.0459 17.4998C23.3079 17.9534 23.4468 18.4681 23.4483 18.9919C23.4497 19.5157 23.3131 20.0311 23.0537 20.4861C22.7943 20.941 22.4201 21.3201 21.9688 21.5857C21.5174 21.8512 21.0042 21.994 20.4805 21.9998H3.51857C2.99484 21.994 2.48169 21.8513 2.03028 21.5857C1.57891 21.3201 1.20471 20.941 0.945324 20.4861C0.685963 20.0311 0.550348 19.5157 0.551769 18.9919C0.553236 18.4681 0.692165 17.9534 0.954113 17.4998C0.956737 17.4952 0.959229 17.4906 0.961925 17.4861L9.43458 3.34155C9.70199 2.90071 10.079 2.53591 10.5283 2.28296C10.9775 2.03011 11.4845 1.89722 12 1.89722ZM12 3.89722C11.8281 3.89722 11.6586 3.9418 11.5088 4.02612C11.3592 4.11043 11.2336 4.23185 11.1445 4.37866L2.68556 18.4998C2.59832 18.6508 2.55234 18.8224 2.55177 18.9968C2.55128 19.1713 2.59633 19.3433 2.68263 19.4949C2.7691 19.6466 2.89444 19.7735 3.04493 19.8621C3.19536 19.9505 3.36654 19.9978 3.54103 19.9998H20.459C20.6335 19.9978 20.8047 19.9506 20.9551 19.8621C21.1056 19.7735 21.23 19.6466 21.3164 19.4949C21.4028 19.3432 21.4487 19.1713 21.4483 18.9968C21.4477 18.8224 21.4007 18.6508 21.3135 18.4998L12.8545 4.37866L12.7813 4.27319C12.7014 4.17313 12.6025 4.08934 12.4902 4.02612C12.3405 3.94184 12.1718 3.89726 12 3.89722ZM12.0098 15.9998C12.562 15.9998 13.0096 16.4476 13.0098 16.9998C13.0098 17.552 12.5621 17.9998 12.0098 17.9998H12C11.4477 17.9998 11 17.552 11 16.9998C11.0001 16.4476 11.4478 15.9998 12 15.9998H12.0098ZM11 12.9998V8.99976C11.0001 8.44758 11.4478 7.99976 12 7.99976C12.5521 7.99989 12.9999 8.44766 13 8.99976V12.9998C13 13.552 12.5522 13.9996 12 13.9998C11.4477 13.9998 11 13.552 11 12.9998Z" fill="white"/></svg></div>
       <div style="flex:1;min-width:0;">
-        <div style="font-size:13px;font-weight:700;color:#fff;line-height:18px;">Removed from community</div>
-        <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.5);margin-top:2px;line-height:16px;">A reviewer removed this content. Tap to see the reason.</div>
-      </div>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M9 18l6-6-6-6" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+        <div class="hrn-title">Removed from community</div>
+        <div class="hrn-sub">A reviewer removed this content. Tap to see the reason.</div>
+      </div>`;
     notice.addEventListener('click', () => { closeHistMore(); goTo(removedScreen); });
     opts.appendChild(notice);
-    // divider
-    const div = document.createElement('div');
-    div.style.cssText = 'height:1px;background:rgba(255,255,255,.06);margin:8px 0 4px;';
-    opts.appendChild(div);
   }
 
   const isCommunity = _histMoreRow.dataset.source === 'community';
@@ -8827,8 +8833,8 @@ function obGoTo(idx, animated = true) {
       ? 'linear-gradient(to right,#ff6bce,#a855f7,#4338ca)'
       : 'linear-gradient(to right,#ffb347,#ff4e50,#d63af9)';
     btn.style.boxShadow = obIdx === 0
-      ? '0 8px 12px rgba(168,85,247,0.32)'
-      : '0 8px 12px rgba(255,78,80,0.28)';
+      ? 'none'
+      : 'none';
   }
   const skip = document.getElementById('ob-skip');
   if (skip) skip.style.visibility = obIdx === 0 ? 'visible' : 'hidden';
@@ -9856,7 +9862,7 @@ function updateSimpleSongCTA(ta) {
     btn.disabled = false;
     btn.style.background = 'linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9)';
     btn.style.cursor = 'pointer';
-    btn.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+    btn.style.boxShadow = 'none';
     btn.querySelector('span').style.opacity = '1';
     btn.querySelector('div').style.opacity = '1';
     btn.onclick = () => requireLogin(() => goTo('song-creating'));
@@ -10033,7 +10039,7 @@ function enhancePrompt(type) {
         cta.disabled = false;
         cta.style.opacity = '1';
         cta.style.background = 'linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA)';
-        cta.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+        cta.style.boxShadow = 'none';
         cta.style.cursor = 'pointer';
       } else if (isScene || isCover) {
         cta.style.opacity = '';
@@ -10041,14 +10047,14 @@ function enhancePrompt(type) {
         cta.disabled = false;
         cta.style.opacity = '';
         cta.style.background = 'linear-gradient(135deg,#FF6BCE,#A855F7,#4338CA)';
-        cta.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+        cta.style.boxShadow = 'none';
         cta.style.cursor = 'pointer';
       } else {
         cta.disabled = false;
         Array.from(cta.children).forEach(c => c.style.opacity = '');
         if (!isSimple) {
           cta.style.background = 'linear-gradient(135deg,#FFB347,#FF4E50,#D63AF9)';
-          cta.style.boxShadow = '0 8px 12px rgba(168,85,247,.32)';
+          cta.style.boxShadow = 'none';
           cta.style.cursor = 'pointer';
         }
       }
