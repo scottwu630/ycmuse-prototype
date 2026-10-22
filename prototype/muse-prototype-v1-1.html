@@ -1376,6 +1376,32 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 
 /* CTA — disabled until a reason is picked */
 .rpt-cta{padding-top:6px;}
+/* Something else row + free-text step */
+.rpt-option-more svg{flex-shrink:0;display:block;}
+.rpt-other{display:none;flex-direction:column;gap:12px;flex:1;min-height:0;}
+#rpt-form.is-other .rpt-list{display:none;}
+#rpt-form.is-other .rpt-other{display:flex;}
+#rpt-form.is-other{flex:1;min-height:0;}
+/* Something else step (Figma 5375:179009): subtitle → divider */
+.rpt-divider{display:none;height:1px;background:rgba(255,255,255,.15);flex-shrink:0;}
+.rpt-sheet.is-other .rpt-sub{display:none;}
+.rpt-sheet.is-other .rpt-divider{display:block;}
+.rpt-other-back{display:flex;align-items:center;gap:8px;cursor:pointer;align-self:flex-start;}
+.rpt-other-back:active{opacity:.7;}
+.rpt-other-back-btn{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.rpt-other-back span{font-size:13px;font-weight:700;line-height:18px;letter-spacing:-.13px;color:#fff;}
+.rpt-other-help{font-size:12px;font-weight:500;line-height:15px;color:#9C9CAB;}
+.rpt-other-field{display:flex;flex-direction:column;gap:6px;}
+.rpt-other-label{font-size:12px;font-weight:600;line-height:15px;letter-spacing:-.12px;color:#fff;}
+.rpt-other-box{display:flex;flex-direction:column;gap:8px;height:127px;padding:10px;box-sizing:border-box;background:#151519;border:1px solid rgba(255,255,255,.15);border-radius:14px;transition:border-color .15s;}
+.rpt-other-box:focus-within{border-color:rgba(255,255,255,.4);}
+.rpt-other-box textarea{flex:1;min-height:0;resize:none;background:none;border:none;outline:none;padding:0;font-family:inherit;font-size:12px;font-weight:500;line-height:15px;color:#fff;}
+.rpt-other-box textarea::placeholder{color:rgba(255,255,255,.4);}
+.rpt-other-foot{display:flex;align-items:center;justify-content:flex-end;gap:4px;min-height:20px;}
+.rpt-other-clear{width:20px;height:20px;border-radius:50%;background:#212127;display:none;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;}
+.rpt-other-clear.show{display:flex;}
+.rpt-other-clear:active{opacity:.7;}
+.rpt-other-count{font-size:12px;font-weight:500;line-height:15px;color:rgba(255,255,255,.4);font-variant-numeric:tabular-nums;}
 .rpt-submit{width:100%;height:44px;border-radius:14px;background:linear-gradient(90deg,#FF6BCE 0%,#A855F7 50%,#4338CA 100%);border:none;color:#fff;font-size:15px;font-weight:700;line-height:18px;cursor:pointer;font-family:inherit;transition:opacity .15s,transform .15s;}
 .rpt-submit:active{opacity:.85;transform:scale(.97);}
 .rpt-submit:disabled{background:#383842;color:rgba(255,255,255,.3);cursor:default;}
@@ -1395,7 +1421,6 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
 /* Report icon button — floats over MV preview right column */
 .rpt-icon-btn{width:34px;height:34px;border-radius:33px;background:rgba(9,9,11,.8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:opacity .15s;}
 .rpt-icon-btn:active{opacity:.7;}
-.rpt-icon-btn svg{opacity:.4;}
 
 /* Small report button for song player row */
 .rpt-sp-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;transition:opacity .15s;}
@@ -6493,6 +6518,7 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
       <div class="rpt-title" id="rpt-sheet-title">Report Content</div>
     </div>
     <div class="rpt-sub">Why are you reporting this? Your report is anonymous.</div>
+    <div class="rpt-divider"></div>
 
     <!-- Reason list (shown first) -->
     <div id="rpt-form">
@@ -6521,7 +6547,28 @@ html,body{width:100%;height:100%;background:#000;font-family:'Inter',-apple-syst
           <div class="rpt-option-text">Copyright or unauthorized use</div>
           <div class="rpt-option-radio"></div>
         </div>
+        <!-- Something else → opens free-text step -->
+        <div class="rpt-option rpt-option-more" onclick="rptOpenOther()">
+          <div class="rpt-option-text">Something else</div>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6.91107 4.41082C7.21617 4.10572 7.69867 4.08689 8.02598 4.35385L8.08946 4.41082L13.0895 9.41082C13.4149 9.73625 13.4149 10.2638 13.0895 10.5892L8.08946 15.5892C7.76402 15.9146 7.23651 15.9146 6.91107 15.5892C6.58563 15.2638 6.58563 14.7363 6.91107 14.4108L11.3219 10L6.91107 5.5892L6.8541 5.52572C6.58715 5.19841 6.60597 4.71591 6.91107 4.41082Z" fill="#676779"/></svg>
+        </div>
       </div><!-- /rpt-list -->
+
+      <!-- Something else: free-text step -->
+      <div class="rpt-other" id="rpt-other">
+        <div class="rpt-other-back" onclick="rptBackToList()">
+          <div class="rpt-other-back-btn"><img src="../assets/icons/ui/ic_arrow_left.svg" width="16" height="16" style="display:block;filter:brightness(0) invert(1);"></div>
+          <span>Something else</span>
+        </div>
+        <div class="rpt-other-help">Share as much detail as you can. Don’t include personal or sensitive info.</div>
+        <div class="rpt-other-field">
+          <div class="rpt-other-label">Details</div>
+          <div class="rpt-other-box">
+            <textarea id="rpt-other-input" maxlength="1000" placeholder="Tell us what’s wrong with this content" oninput="rptOtherInput(this)"></textarea>
+            <div class="rpt-other-foot"><div class="rpt-other-count"><span id="rpt-other-count">0</span>/1000</div><div class="rpt-other-clear" id="rpt-other-clear" onclick="rptOtherClear()"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8.64645 2.64645C8.84171 2.45118 9.15822 2.45118 9.35348 2.64645C9.54874 2.84171 9.54874 3.15822 9.35348 3.35348L6.70699 5.99996L9.35348 8.64645C9.54874 8.84171 9.54874 9.15822 9.35348 9.35348C9.15822 9.54874 8.84171 9.54874 8.64645 9.35348L5.99996 6.70699L3.35348 9.35348C3.15822 9.54874 2.84171 9.54874 2.64645 9.35348C2.45118 9.15822 2.45118 8.84171 2.64645 8.64645L5.29293 5.99996L2.64645 3.35348C2.45118 3.15822 2.45118 2.84171 2.64645 2.64645C2.84171 2.45118 3.15822 2.45118 3.35348 2.64645L5.99996 5.29293L8.64645 2.64645Z" fill="white"/></svg></div></div>
+          </div>
+        </div>
+      </div>
 
       <!-- Submit CTA (disabled until a reason is selected) -->
       <div class="rpt-cta" id="rpt-cta">
@@ -11491,6 +11538,13 @@ function openReport(context) {
   var opts = document.querySelectorAll('.rpt-option');
   opts.forEach(function(o){ o.classList.remove('sel'); });
   document.getElementById('rpt-submit').disabled = true;
+  document.getElementById('rpt-form').classList.remove('is-other');
+  document.getElementById('rpt-sheet').classList.remove('is-other');
+  document.getElementById('rpt-sheet').style.height = '';
+  var otherIn = document.getElementById('rpt-other-input'); if (otherIn) otherIn.value = '';
+  var otherCt = document.getElementById('rpt-other-count'); if (otherCt) otherCt.textContent = '0';
+  var otherClr = document.getElementById('rpt-other-clear'); if (otherClr) otherClr.classList.remove('show');
+  reportState.prevReason = null;
   document.getElementById('rpt-form').style.display = '';
   document.getElementById('rpt-success').classList.remove('show');
   document.getElementById('rpt-sheet').classList.remove('is-success');
@@ -11530,8 +11584,41 @@ function selectReason(el, reason) {
   document.getElementById('rpt-submit').disabled = false;
 }
 
+// "Something else" — second step with free-text input (max 1000 chars)
+function rptOpenOther() {
+  reportState.prevReason = reportState.selectedReason === 'other' ? reportState.prevReason : reportState.selectedReason;
+  reportState.selectedReason = 'other';
+  // keep the sheet exactly as tall as the reason list (keyboard will open over it)
+  var sh = document.getElementById('rpt-sheet');
+  sh.style.height = sh.offsetHeight + 'px';
+  sh.classList.add('is-other');
+  document.getElementById('rpt-form').classList.add('is-other');
+  var inp = document.getElementById('rpt-other-input');
+  document.getElementById('rpt-submit').disabled = !inp.value.trim();
+  setTimeout(function(){ inp.focus(); }, 50);
+}
+function rptBackToList() {
+  document.getElementById('rpt-form').classList.remove('is-other');
+  var sh = document.getElementById('rpt-sheet'); sh.classList.remove('is-other'); sh.style.height = '';
+  reportState.selectedReason = reportState.prevReason || null;
+  document.getElementById('rpt-submit').disabled = !reportState.selectedReason;
+}
+function rptOtherClear() {
+  var inp = document.getElementById('rpt-other-input');
+  inp.value = '';
+  rptOtherInput(inp);
+  inp.focus();
+}
+function rptOtherInput(el) {
+  if (el.value.length > 1000) el.value = el.value.slice(0, 1000);
+  document.getElementById('rpt-other-count').textContent = el.value.length;
+  document.getElementById('rpt-other-clear').classList.toggle('show', el.value.length > 0);
+  document.getElementById('rpt-submit').disabled = !el.value.trim();
+}
+
 function submitReport() {
   if (!reportState.selectedReason) return;
+  if (reportState.selectedReason === 'other' && !document.getElementById('rpt-other-input').value.trim()) return;
 
   // Record the submission
   reportState.submitted.add(reportState.contentKey);
@@ -11543,6 +11630,7 @@ function submitReport() {
     context: reportState.context,
     contentKey: reportState.contentKey,
     reason: reportState.selectedReason,
+    detail: reportState.selectedReason === 'other' ? document.getElementById('rpt-other-input').value.trim() : undefined,
     sessionCount: reportState.count
   });
 
@@ -11550,6 +11638,8 @@ function submitReport() {
   document.getElementById('rpt-form').style.display = 'none';
   document.getElementById('rpt-success').classList.add('show');
   document.getElementById('rpt-sheet').classList.add('is-success');
+  document.getElementById('rpt-sheet').classList.remove('is-other');
+  document.getElementById('rpt-sheet').style.height = '';
 
   // Auto-close after 2.8s
   setTimeout(function() {
